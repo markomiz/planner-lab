@@ -101,13 +101,13 @@ intersection_result line_line_intersect(line l1, line l2)
         }
         else
         {
-            result.validity = false;
+            result.validity = true;
             return result;
         }
     }
 }
 
-int line_arc_intersect(line l1, arc arc1)
+intersection_result line_arc_intersect(line l1, arc arc1)
 {
     intersection_result result;
     point line_vector;
@@ -148,6 +148,7 @@ int line_arc_intersect(line l1, arc arc1)
         else
             result.validity = true;
     }
+    return result;
 }
 
 // I dont really know if this is necessary. Depends on what kind of info we get from the environment
@@ -163,5 +164,29 @@ int line_arc_intersect(line l1, arc arc1)
 
 int main()
 {
+    point p1_1, p1_2, p2_1, p2_2;
+    p1_1.x = 0.0;
+    p1_1.y = 0.0;
 
+    p1_2.x = 1.0;
+    p1_2.y = 0.0;
+
+    p2_1.x = 0.0;
+    p2_1.y = 0.5;
+
+    p2_2.x = 1.0;
+    p2_2.y = 1.0;
+
+    line l1, l2;
+    l1.p_initial = p1_1;
+    l1.p_final = p1_2;
+    l2.p_initial = p2_1;
+    l2.p_final = p2_2;
+
+    intersection_result test_result;
+    test_result = line_line_intersect(l1,l2);
+
+    std::cout << test_result.validity << std::endl;
+    
+    return true;
 }
