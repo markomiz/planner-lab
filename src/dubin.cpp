@@ -82,8 +82,14 @@ class dubinCurve
     geometry_msgs::msg::PoseStamped p;
     p.pose.position.x = pose.x.x;
     p.pose.position.y = pose.x.y;
-    p.pose.orientation.x = cos(pose.theta / 2);
 
+    tf2::Quaternion quaternion_;
+    quaternion_.setRPY(0,0,pose.theta);
+    quaternion_ = quaternion_.normalize();
+    p.pose.orientation.x = quaternion_.x();
+    p.pose.orientation.y = quaternion_.y();
+    p.pose.orientation.z = quaternion_.z();
+    p.pose.orientation.w = quaternion_.w();
     return p;
 
   }
