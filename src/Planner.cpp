@@ -12,7 +12,7 @@ class Planner
         point2d uniform_point(bool no_collision);
         void generate_roadmap(int num_nodes);
         vector<point2d> nodes;
-        void generate_path(point2d start, point2d finish);
+        void get_path(point2d start, point2d finish);
         bool check_point_collision(point2d point);
 
     private:
@@ -56,6 +56,7 @@ bool  Planner::check_point_collision(point2d point)
     // TODO: use collision detection file
 
 }
+
 bool Planner::generate_roadmap(int num_nodes)
 {
     for (int n = 0; n < num_nodes; n++)
@@ -63,6 +64,9 @@ bool Planner::generate_roadmap(int num_nodes)
         point2d node = this->uniform_point(true);
 
     }
+    // TODO - the rest of this
 }
-
-
+void Planner::get_path(point2d start, point2d finish)
+{
+    // TODO - using the roadmap - give intermediate points
+}

@@ -15,6 +15,8 @@
 #include "nav_msgs/msg/path.hpp"
 #include "geometry_msgs/msg/pose_stamped.hpp"
 
+
+using namespace std::chrono_literals;
 struct point2d
 {
   float x;
@@ -352,27 +354,22 @@ class dubinCurve
 /* This example creates a subclass of Node and uses std::bind() to register a
  * member function as a callback from the timer. */
 
+
+
+
+
 class Dubin : public rclcpp::Node
 {
 
 public:
   Dubin()
-  : Node("dubin_publisher")
+  : Node("dubin_publisher"), count_(0)
   {
-    rclcpp::Publisher<nav_msgs::msg::Path>::SharedPtr publisher_ = this->create_publisher<nav_msgs::msg::Path>("plan", 10);
-    
-    float delta = 0.01;
-    pose2d x0 = this->subscribeToPos();
-    pose2d x1(3.0,2.0,0.0);
+    publisher_ = this->create_publisher<nav_msgs::msg::Path>("/plan", 10);
+    // timer_ = this->create_wall_timer(
+    //   500ms, std::bind(&Dubin::timer_callback, this));
+    this->timer_callback();
 
-    std::vector<point2d> mids;
-    //// RCLCPP_INFO(this->get_logger(),"psd");
-    dubinCurve d;
-    d._K = 3;
-    nav_msgs::msg::Path message =  d.generatePathFromDubins(x0, d.calculateMultiPoint(x0, x1, mids, 3), delta);
-
-    publisher_->publish(message);
-    // RCLCPP_INFO(this->get_logger(),"nmsdl");
   }
 
   pose2d subscribeToPos(){
@@ -390,7 +387,6 @@ public:
       //rclcpp::sleep_for(std::chrono::nanoseconds(5000000000));
     t = tf_buffer->lookupTransform(toFrameRel, fromFrameRel, tf2::TimePointZero, tf2::Duration(50000000000));
     } catch (const tf2::TransformException & ex) {
-    //RCLCPP_INFO(this->get_logger(), "Could not transform %s to %s: %s",toFrameRel.c_str(), fromFrameRel.c_str(), ex.what());
     return xyth;
     }
     tf2::Quaternion q(t.transform.rotation.x,t.transform.rotation.y,t.transform.rotation.z,t.transform.rotation.w);
@@ -406,9 +402,43 @@ public:
   }
 
 private:
-  
+   void timer_callback()
+   {
+    
+    RCLCPP_INFO(this->get_logger(),"123");
+    float delta = 0.01;
+    //pose2d x0 = this->subscribeToPos();
+    pose2d x0(0.0,0.0,4.0);
+    pose2d x1(3.0,5.0,0.0);
+
+    std::vector<point2d> mids;
+    //// RCLCPP_INFO(this->get_logger(),"psd");
+    dubinCurve d;
+    d._K = 3;
+    nav_msgs::msg::Path message =  d.generatePathFromDubins(x0, d.calculateMultiPoint(x0, x1, mids, 3), delta);
+    message.header.stamp = this->get_clock()->now();
+    
+    publisher_->publish(message);
+    RCLCPP_INFO(this->get_logger(),"message shoud have sent!");
+   }
+    rclcpp::TimerBase::SharedPtr timer_;
+    rclcpp::Publisher<nav_msgs::msg::Path>::SharedPtr publisher_;
+    size_t count_;
+
   
 };
+
+
+
+
+
+
+
+
+
+
+
+
 
 int main(int argc, char * argv[])
 {
