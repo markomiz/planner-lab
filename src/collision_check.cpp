@@ -1,29 +1,23 @@
 #include <iostream>
 #include <string>
 #include <bits/stdc++.h>
+#include "helpers.h"
 using namespace std;
 
-struct point{
-    float x;
-    float y;
-    float norm()
-    {
-        return sqrt(x*x + y*y);
-    }
-};
+
 struct line{
-    point p_initial;
-    point p_final;
+    point2d p_initial;
+    point2d p_final;
     float length()
     {
         return sqrt((p_final.x-p_initial.x)*(p_final.x-p_initial.x)+(p_final.y-p_initial.y)*(p_final.y-p_initial.y));
     }
 };
 struct arc{
-    point center;
+    point2d center;
     float radius;
-    point starting_point;
-    point ending_point;
+    point2d starting_point;
+    point2d ending_point;
     float theta[2];
     
     void angles() {
@@ -45,11 +39,11 @@ struct arc{
     }
 };
 struct intersection_result{
-    point intersection;
+    point2d intersection;
     bool validity; //false if it intersects, true if not
 };
 
-float distance(point p1, point p2)
+float distance(point2d p1, point2d p2)
 {
     return sqrt((p1.x-p2.x)*(p1.x-p2.x) + (p1.y-p2.y)*(p1.y-p2.y));
 }
@@ -110,10 +104,10 @@ intersection_result line_line_intersect(line l1, line l2)
 intersection_result line_arc_intersect(line l1, arc arc1)
 {
     intersection_result result;
-    point line_vector;
+    point2d line_vector;
     line_vector.x = l1.p_final.x-l1.p_initial.x;
     line_vector.y = l1.p_final.y-l1.p_initial.y;
-    point center2initial;
+    point2d center2initial;
     center2initial.x = l1.p_initial.x - arc1.center.x;
     center2initial.y = l1.p_initial.y - arc1.center.y;
     
@@ -153,7 +147,7 @@ intersection_result line_arc_intersect(line l1, arc arc1)
 
 // I dont really know if this is necessary. Depends on what kind of info we get from the environment
 // 
-// intersection_result is_line_or_arc(point path_1, point path_2, point obstacle_1, point obstacle_2)
+// intersection_result is_line_or_arc(point2d path_1, point2d path_2, point2d obstacle_1, point2d obstacle_2)
 // {
 
 // }
@@ -164,7 +158,7 @@ intersection_result line_arc_intersect(line l1, arc arc1)
 
 int main()
 {
-    point p1_1, p1_2, p2_1, p2_2;
+    point2d p1_1, p1_2, p2_1, p2_2;
     p1_1.x = 0.0;
     p1_1.y = 0.0;
 
