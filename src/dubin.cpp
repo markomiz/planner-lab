@@ -384,8 +384,7 @@ public:
     pose2d xyth(0,0,0);
 
     try {
-      //rclcpp::sleep_for(std::chrono::nanoseconds(5000000000));
-    t = tf_buffer->lookupTransform(toFrameRel, fromFrameRel, tf2::TimePointZero, tf2::Duration(50000000000));
+    t = tf_buffer->lookupTransform(toFrameRel, fromFrameRel, tf2::TimePointZero, 5000ms);
     } catch (const tf2::TransformException & ex) {
     return xyth;
     }
@@ -407,8 +406,8 @@ private:
     
     RCLCPP_INFO(this->get_logger(),"123");
     float delta = 0.01;
-    //pose2d x0 = this->subscribeToPos();
-    pose2d x0(0.0,0.0,4.0);
+    pose2d x0 = this->subscribeToPos();
+    //pose2d x0(0.0,0.0,4.0);
     pose2d x1(3.0,5.0,0.0);
 
     std::vector<point2d> mids;
