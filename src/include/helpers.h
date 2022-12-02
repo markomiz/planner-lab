@@ -1,7 +1,13 @@
+using namespace std;
+
 struct point2d
 {
   float x;
   float y;
+  float norm()
+    {
+        return sqrt(x*x + y*y);
+    }
 };
 struct pose2d 
 {
