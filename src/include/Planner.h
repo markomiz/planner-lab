@@ -2,6 +2,7 @@
 #include <string>
 #include <bits/stdc++.h>
 #include <random>
+#include <boost/graph/adjacency_list.hpp>
 
 
 class Planner
@@ -19,6 +20,9 @@ class Planner
 
         void set_start(point2d s) {start = s;};
         void set_goal(point2d g) {goal = g;};
+
+        void add_edge(Vertex &u, Vertex &v);
+        void add_vertex(Vertex &u);
 
     protected:
         point2d start;
