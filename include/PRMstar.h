@@ -1,4 +1,5 @@
-import "Planner.h"
+#pragma once
+#include "Planner.h"
 
 class PRMstar : public Planner
 {

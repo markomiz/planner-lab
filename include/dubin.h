@@ -1,3 +1,4 @@
+#pragma once
 #include <chrono>
 #include <memory>
 #include <vector>
@@ -14,8 +15,9 @@
 #include "rclcpp/rclcpp.hpp"
 #include "nav_msgs/msg/path.hpp"
 #include "geometry_msgs/msg/pose_stamped.hpp"
-#include "dubin.h"
+
 #include "helpers.h"
+
 using namespace std::chrono_literals;
 
 class dubinCurve
@@ -39,22 +41,30 @@ class dubinCurve
   dubins_params calculateSinglePath( pose2d x0, pose2d x1 );
   dubins_params DUBINATOR( float th0, float th1, float lambda, ksigns ks );
 
+};
 
 class Dubin : public rclcpp::Node
 {
 
 public:
   Dubin()
-  : Node("dubin_publisher"), count_(0);
-  ~Dubin();
+: Node("dubin_publisher"), count_(0)
+{
+  publisher_ = this->create_publisher<nav_msgs::msg::Path>("/plan", 10);
+  // timer_ = this->create_wall_timer(
+  //   500ms, std::bind(&Dubin::timer_callback, this));
+  this->timer_callback();
+
+};
+  ~Dubin(){};
 
   pose2d subscribeToPos();
 
 private:
-   void timer_callback();
-    rclcpp::TimerBase::SharedPtr timer_;
-    rclcpp::Publisher<nav_msgs::msg::Path>::SharedPtr publisher_;
-    size_t count_;
+  void timer_callback();
+  rclcpp::TimerBase::SharedPtr timer_;
+  rclcpp::Publisher<nav_msgs::msg::Path>::SharedPtr publisher_;
+  size_t count_;
 
   
 };

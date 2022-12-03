@@ -1,8 +1,10 @@
+#pragma once
 #include <iostream>
 #include <string>
 #include <bits/stdc++.h>
 #include <random>
-
+#include <boost/graph/adjacency_list.hpp>
+#include "helpers.h"
 
 class Planner
 {
@@ -20,8 +22,16 @@ class Planner
         void set_start(point2d s) {start = s;};
         void set_goal(point2d g) {goal = g;};
 
+        void add_edge(Vertex &u, Vertex &v, Tree& tree);
+        void add_vertex(Vertex &u, Tree& tree);
+
+        bool close_enough(point2d a, point2d b); 
+
     protected:
         point2d start;
         point2d goal;
+
+        float dist_thr;
+        
 
 };

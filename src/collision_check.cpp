@@ -1,54 +1,7 @@
-#include <iostream>
-#include <string>
-#include <bits/stdc++.h>
 #include "helpers.h"
-using namespace std;
+#include "collision_check.h"
 
-
-struct line{
-    point2d p_initial;
-    point2d p_final;
-    float length()
-    {
-        return sqrt((p_final.x-p_initial.x)*(p_final.x-p_initial.x)+(p_final.y-p_initial.y)*(p_final.y-p_initial.y));
-    }
-};
-struct arc{
-    point2d center;
-    float radius;
-    point2d starting_point;
-    point2d ending_point;
-    float theta[2];
-    
-    void angles() {
-        static const double TWOPI = 6.2831853071795865;
-        static const double RAD2DEG = 57.2957795130823209;
-        // if (a1 = b1 and a2 = b2) throw an error
-        theta[0] = atan2(starting_point.x - center.x, center.y - starting_point.y);
-        theta[1] = atan2(ending_point.x - center.x, center.y - ending_point.y);
-        if (theta[0] < 0.0)
-            theta[0] += TWOPI;
-        if (theta[1] < 0.0)
-            theta[1] += TWOPI;
-         if (theta[1] < theta[0])
-         {
-            float temp = theta[0];
-            theta[0] = theta[1];
-            theta[1] = temp;
-         }
-    }
-};
-struct intersection_result{
-    point2d intersection;
-    bool validity; //false if it intersects, true if not
-};
-
-float distance(point2d p1, point2d p2)
-{
-    return sqrt((p1.x-p2.x)*(p1.x-p2.x) + (p1.y-p2.y)*(p1.y-p2.y));
-}
-
-intersection_result line_line_intersect(line l1, line l2)
+static intersection_result CollisionCheck::line_line_intersect(line l1, line l2)
 {
     intersection_result result;
     // Line AB represented as a1x + b1y = c1
@@ -73,12 +26,12 @@ intersection_result line_line_intersect(line l1, line l2)
         result.intersection.y = FLT_MAX;
         if (d == 0)
         {
-            result.validity = false;
+            result.intersects = true;
             return result;
         }
         else
         {
-            result.validity = true;
+            result.intersects = false;
             return result;
         }
     }
@@ -90,18 +43,18 @@ intersection_result line_line_intersect(line l1, line l2)
         bool cond2 = l2.length() == distance(l2.p_initial,result.intersection) + distance(result.intersection, l2.p_final);
         if (cond1 && cond2)
         {
-            result.validity = false;
+            result.intersects = true;
             return result;
         }
         else
         {
-            result.validity = true;
+            result.intersects = false;
             return result;
         }
     }
 }
 
-intersection_result line_arc_intersect(line l1, arc arc1)
+static intersection_result CollisionCheck::line_arc_intersect(line l1, arc arc1)
 {
     intersection_result result;
     point2d line_vector;
@@ -120,7 +73,7 @@ intersection_result line_arc_intersect(line l1, arc arc1)
     if( discriminant < 0 )
     {
         // no intersection
-        result.validity = true;
+        result.intersects = true;
     }
     else
     {
@@ -137,50 +90,86 @@ intersection_result line_arc_intersect(line l1, arc arc1)
             float angle = atan2(result.intersection.y - arc1.center.y, result.intersection.x - arc1.center.x);
             arc1.angles();
             if (angle > arc1.theta[0] && angle < arc1.theta[1])
-                result.validity = false;
+                result.intersects = false;
         }
         else
-            result.validity = true;
+            result.intersects = true;
     }
     return result;
 }
 
-// I dont really know if this is necessary. Depends on what kind of info we get from the environment
-// 
-// intersection_result is_line_or_arc(point2d path_1, point2d path_2, point2d obstacle_1, point2d obstacle_2)
-// {
-
-// }
-
-/*One thing to explore is prior to checking colision checking the values of the coordinat points. 
-  Colision cant happen if obstacle is not in bounnds of the segment coords so we can reduce a priori the number of edges to check
-*/
-
-int main()
+static bool CollisionCheck::point_in_polygon(point2d p, Polygon shape)
 {
-    point2d p1_1, p1_2, p2_1, p2_2;
-    p1_1.x = 0.0;
-    p1_1.y = 0.0;
+    // for each line of polygon - see if line from point crosses
+    line l;
+    l.p_initial = p;
+    point2d end;
+    end.x = p.x + 100000000000.0;
+    end.y = p.y;
+    l.p_final = end;
 
-    p1_2.x = 1.0;
-    p1_2.y = 0.0;
+    int num_intersections = 0;
+    for (int i = 0; i < shape.edges.size(); i++)
+    {
+        intersection_result i = line_line_intersect(shape.edges[i], l);
 
-    p2_1.x = 0.0;
-    p2_1.y = 0.5;
+        if (i.intersects) num_intersections +=1;
+    }
 
-    p2_2.x = 1.0;
-    p2_2.y = 1.0;
+    if (num_intersection % 2 == 1) return true;
+    return false;
+};
 
-    line l1, l2;
-    l1.p_initial = p1_1;
-    l1.p_final = p1_2;
-    l2.p_initial = p2_1;
-    l2.p_final = p2_2;
+static bool CollisionCheck::arc_with_polygon(arc a, Polygon shape)
+{
+    // for each line of polygon - see if arc crosses
+    for (int i = 0; i < shape.edges.size(); i++)
+    {
+        intersection_result i = line_arc_intersect(shape.edges[i], a);
 
-    intersection_result test_result;
-    test_result = line_line_intersect(l1,l2);
+        if (i.intersects) return true;
+    }
 
-    std::cout << test_result.validity << std::endl;
-    
-    return true;
-}
+    return false;
+};
+
+static float CollisionCheck::point_lineseg_dist(point2d p, line l)
+{
+    double minDistance(Point A, Point B, Point E)
+    point2d ab = l.p_final - l.p_inital;
+    point2d be = p - l.p_final;
+    point2d ae = p - l.p_initial;
+    // Variables to store dot product
+    double ab_be, ab_ae;
+    // Calculating the dot product
+    ab_be = (ab.x * be.x + ab.y * be.y);
+    ab_ae = (ab.x * ae.x + ab.y * ae.y);
+    // Minimum distance from
+    // point E to the line segment
+    double reqAns = 0;
+    // Case 1
+    if (ab_ae > 0) {
+        // Finding the magnitude
+        double y = p.y - l.p_final.y;
+        double x = p.x - l.p_final.x;
+        reqAns = sqrt(x * x + y * y);
+    }
+    // Case 2
+    else if (ab_ae < 0) {
+        double y = p.y - l.p_initial.y;
+        double x = p.x - l.p_initial.x;
+        reqAns = sqrt(x * x + y * y);
+    }
+    // Case 3
+    else {
+        // Finding the perpendicular distance
+        double x1 = ab.x;
+        double y1 = ab.y;
+        double x2 = ae.x;
+        double y2 = ae.y;
+        double mod = sqrt(x1 * x1 + y1 * y1);
+        reqAns = abs(x1 * y2 - y1 * x2) / mod;
+    }
+    return reqAns;
+
+};
