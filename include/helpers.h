@@ -1,3 +1,4 @@
+//#pragma once
 #include <memory>
 #include <boost/graph/adjacency_list.hpp>
 #include <boost/graph/graph_traits.hpp>
@@ -66,36 +67,73 @@ struct transformedVars
   float th1;
   float lambda;
 };
+struct line{
+    point2d p_initial;
+    point2d p_final;
+    float length()
+    {
+        return sqrt((p_final.x-p_initial.x)*(p_final.x-p_initial.x)+(p_final.y-p_initial.y)*(p_final.y-p_initial.y));
+    }
+};
+struct arc{
+    point2d center;
+    float radius;
+    point2d starting_point;
+    point2d ending_point;
+    float theta[2];
+    
+    void angles() {
+        static const double TWOPI = 6.2831853071795865;
+        static const double RAD2DEG = 57.2957795130823209;
+        // if (a1 = b1 and a2 = b2) throw an error
+        theta[0] = atan2(starting_point.x - center.x, center.y - starting_point.y);
+        theta[1] = atan2(ending_point.x - center.x, center.y - ending_point.y);
+        if (theta[0] < 0.0)
+            theta[0] += TWOPI;
+        if (theta[1] < 0.0)
+            theta[1] += TWOPI;
+         if (theta[1] < theta[0])
+         {
+            float temp = theta[0];
+            theta[0] = theta[1];
+            theta[1] = temp;
+         }
+    }
+};
+struct intersection_result{
+    point2d intersection;
+    bool intersects;
+};
 
 ///   -----------  GRAPH RELATED TYPES   ---------- ///
-struct VertexBundle
-{
-  size_t index;
+// struct VertexBundle
+// {
+//   size_t index;
   
-  point2d& q; // change to point2d?
-};
-struct TreeBundle;
-typedef boost::adjacency_list<
-  boost::listS,
-  boost::listS,
-  boost::bidirectionalS,
-  shared_ptr<VertexBundle>,
-  boost::no_property,
-  TreeBundle
-  > Tree;
-typedef boost::adjacency_list_traits<
-  boost::listS,
-  boost::listS,
-  boost::bidirectionalS,
-  boost::listS
-  >::vertex_descriptor Vertex;
-struct TreeBundle
-{
-  // NearestNeighbors* nn;
-};
-typedef boost::graph_traits<Tree>::edge_descriptor Edge;
-typedef boost::graph_traits<Tree>::edge_iterator EdgeIterator;
-typedef pair<EdgeIterator, EdgeIterator> EdgeIteratorPair;
-typedef pair<float, Vertex> Neighbor;
-typedef boost::graph_traits<Tree>::vertex_iterator VertexIterator;
-typedef pair<VertexIterator, VertexIterator> VertexIteratorPair;
+//   point2d& q; // change to point2d?
+// };
+// struct TreeBundle;
+// struct boost::adjacency_list<
+//   boost::listS,
+//   boost::listS,
+//   boost::bidirectionalS,
+//   shared_ptr<VertexBundle>,
+//   boost::no_property,
+//   TreeBundle
+//   > Tree;
+// struct boost::adjacency_list_traits<
+//   boost::listS,
+//   boost::listS,
+//   boost::bidirectionalS,
+//   boost::listS
+//   >::vertex_descriptor Vertex;
+// struct TreeBundle
+// {
+//   // NearestNeighbors* nn;
+// };
+// struct boost::graph_traits<Tree>::edge_descriptor Edge;
+// struct boost::graph_traits<Tree>::edge_iterator EdgeIterator;
+// struct pair<EdgeIterator, EdgeIterator> EdgeIteratorPair;
+// struct pair<float, Vertex> Neighbor;
+// struct boost::graph_traits<Tree>::vertex_iterator VertexIterator;
+// struct pair<VertexIterator, VertexIterator> VertexIteratorPair;

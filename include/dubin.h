@@ -1,3 +1,4 @@
+#pragma once
 #include <chrono>
 #include <memory>
 #include <vector>
@@ -14,7 +15,7 @@
 #include "rclcpp/rclcpp.hpp"
 #include "nav_msgs/msg/path.hpp"
 #include "geometry_msgs/msg/pose_stamped.hpp"
-#include "dubin.h"
+
 #include "helpers.h"
 
 using namespace std::chrono_literals;
@@ -46,8 +47,16 @@ class Dubin : public rclcpp::Node
 {
 
 public:
-  Dubin();
-  ~Dubin();
+  Dubin()
+: Node("dubin_publisher"), count_(0)
+{
+  publisher_ = this->create_publisher<nav_msgs::msg::Path>("/plan", 10);
+  // timer_ = this->create_wall_timer(
+  //   500ms, std::bind(&Dubin::timer_callback, this));
+  this->timer_callback();
+
+};
+  ~Dubin(){};
 
   pose2d subscribeToPos();
 

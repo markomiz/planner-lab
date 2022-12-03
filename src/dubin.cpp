@@ -1,3 +1,4 @@
+
 #include <chrono>
 #include <memory>
 #include <vector>
@@ -16,11 +17,10 @@
 #include "geometry_msgs/msg/pose_stamped.hpp"
 
 #include "dubin.h"
-#include "helpers.h"
-#include "map.h"
+// #include "helpers.h"
+// #include "map.h"
 
 using namespace std::chrono_literals;
-
 
 float dubinCurve::mod2pi(float theta) // DONE
 {
@@ -29,7 +29,6 @@ float dubinCurve::mod2pi(float theta) // DONE
   while (out >= 2 * M_PI) out = out - 2 * M_PI;
   return out;
 };
-
 float dubinCurve::sinc(float x)
 {
   if (abs(x) < 0.002) return 1 - (x*x)/6 * (1 - (x*x)/20);
@@ -94,7 +93,6 @@ nav_msgs::msg::Path dubinCurve::generatePathFromDubins(pose2d start, std::vector
   myfile.close();
   return final_path;
 };
-
 
 std::vector<dubins_params> dubinCurve::calculateMultiPoint(pose2d start, pose2d end, std::vector<point2d> mid_points, int n_angles) // DONE
 {
@@ -308,19 +306,6 @@ dubins_params dubinCurve::DUBINATOR( float th0, float th1, float lambda, ksigns 
 };
 
 
-/* This example creates a subclass of Node and uses std::bind() to register a
- * member function as a callback from the timer. */
-
-
-Dubin::Dubin()
-: Node("dubin_publisher"), count_(0)
-{
-  publisher_ = this->create_publisher<nav_msgs::msg::Path>("/plan", 10);
-  // timer_ = this->create_wall_timer(
-  //   500ms, std::bind(&Dubin::timer_callback, this));
-  this->timer_callback();
-
-};
 
 pose2d Dubin::subscribeToPos(){
   std::string target_frame_ = this->declare_parameter<std::string>("target_frame", "shelfino2/base_link");

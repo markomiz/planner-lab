@@ -1,3 +1,4 @@
+#pragma once
 #include "Planner.h"
 
 class PRMstar : public Planner

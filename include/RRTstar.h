@@ -1,3 +1,4 @@
+#pragma once
 import "Planner.h"
 
 class RRTstar : public Planner
