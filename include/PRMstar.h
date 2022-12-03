@@ -1,5 +1,9 @@
 #pragma once
 #include "Planner.h"
+#include "helpers.h"
+#include "graph.h"
+
+using namespace std;
 
 class PRMstar : public Planner
 {
@@ -7,7 +11,12 @@ class PRMstar : public Planner
         PRMstar() : Planner(){}; 
         ~PRMstar();
 
-        void Solve(int n);
+        void genRoadmap(int n);
+        vector<point2d> getPath(point2d start, pointe2d end);
+
+    private:
+        Graph *graph;
+
 
 
 };

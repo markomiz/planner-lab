@@ -9,6 +9,8 @@ using namespace std;
 ///  -------------------- POINT DEFS ------------- ///
 struct point2d
 {
+  point2d(){};
+  point2d(float X, float Y): x(X), y(Y) {};
   float x;
   float y;
   float norm()
@@ -34,7 +36,7 @@ struct pose2d
 {
   point2d x;
   float theta;
-
+  pose2d(){};
   pose2d(float xx,float yy,float th)
   {
     x.x = xx;

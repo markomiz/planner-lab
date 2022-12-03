@@ -33,7 +33,7 @@ class Planner
         point2d goal;
 
         float dist_thr;
-        Map map;
+        Map *map;
         
 
 };
