@@ -17,8 +17,7 @@
 #include "geometry_msgs/msg/pose_stamped.hpp"
 
 #include "dubin.h"
-// #include "helpers.h"
-// #include "map.h"
+#include "PRMstar.h"
 
 using namespace std::chrono_literals;
 
@@ -345,7 +344,13 @@ pose2d x0 = this->subscribeToPos();
 //pose2d x0(0.0,0.0,4.0);
 pose2d x1(3.0,5.0,0.0);
 
-std::vector<point2d> mids;
+
+map = Map(0.0, 0.0, 10.0, 10.0);
+PRMstar *planner = new PRMstar(&map);
+planner->genRoadmap(1000);
+std::vector<point2d> mids = planner->getPath(x0,x1);
+mids.pop_back();
+mids.erase(mids.begin());
 //// RCLCPP_INFO(this->get_logger(),"psd");
 dubinCurve d;
 d._K = 3;

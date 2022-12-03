@@ -16,13 +16,12 @@ void PRMstar::genRoadmap(int n)
             line l;
             l.p_final = new_point;
             l.p_initial = nearest[x].point;
-            if (! map.uncolliding(l)) graph.add(new_point, nearest[x]);
+            if (map.uncolliding(l)) graph.add(new_point, nearest[x]);
         }
-
     }
 };
 
 void PRMstar::getPath(point2d start, point2d end)
 {
-    
+ // TODO - implement Dijkstra
 }

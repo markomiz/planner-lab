@@ -20,14 +20,11 @@ class quad
     public:
 
         bool insert(point2d* node);
-        bool isRoot(){return root;};
-        bool withinRange(point2d p , float dist);
-        vector<point2d*> nearest(float radius);
+        vector<point2d*> in_range(float radius);
 
         int max_depth;
 
     private:
-        bool root;
         point2d tl;
         point2d br;
         vector<point2d*> nodes;

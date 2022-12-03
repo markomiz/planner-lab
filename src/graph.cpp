@@ -3,14 +3,6 @@
 
 using namespace std;
 
-struct edge
-{
-    point2d* a;
-    point2d* b;
-    float dist;
-}
-
-
 bool quad::insert(point2d* node)
 {
     if (max_depth == 0) {
@@ -60,9 +52,17 @@ bool quad::insert(point2d* node)
 };
 
 
-vector<point2d*> quad::nearest(point2d pt, float radius)
+vector<point2d*> quad::in_range(point2d pt, float radius)
 {
+    vector<point2d*> all;
+    // TODO
+    // if no nodes or subtrees, return 
 
+    // otherwise, choose which subtree is within range,
+    // get in range from that
+    // add it to all
+
+    return all;
 };
 
 void Graph::add(edge* e)

@@ -25,6 +25,8 @@ class Map
 {
     public:
         Map();
+        Map(float min_x ,float min_y ,float max_x ,float max_y)
+        : min_x(minx), min_y(min_y), max_x(max_x), max_y(max_y){ processBounds();};
         ~Map();
 
         void addObstacle(Polygon shape);

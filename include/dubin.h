@@ -17,6 +17,7 @@
 #include "geometry_msgs/msg/pose_stamped.hpp"
 
 #include "helpers.h"
+#include "PRMstar.h"
 
 using namespace std::chrono_literals;
 

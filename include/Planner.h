@@ -10,7 +10,7 @@
 class Planner
 {
     public:
-        Planner(Map m) : map(m)  {};
+        Planner(Map *m) : map(m)  {};
         ~Planner(){};
 
         point2d uniform_point();
