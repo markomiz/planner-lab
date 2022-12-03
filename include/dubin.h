@@ -16,6 +16,7 @@
 #include "geometry_msgs/msg/pose_stamped.hpp"
 #include "dubin.h"
 #include "helpers.h"
+
 using namespace std::chrono_literals;
 
 class dubinCurve
@@ -39,22 +40,22 @@ class dubinCurve
   dubins_params calculateSinglePath( pose2d x0, pose2d x1 );
   dubins_params DUBINATOR( float th0, float th1, float lambda, ksigns ks );
 
+};
 
 class Dubin : public rclcpp::Node
 {
 
 public:
-  Dubin()
-  : Node("dubin_publisher"), count_(0);
+  Dubin();
   ~Dubin();
 
   pose2d subscribeToPos();
 
 private:
-   void timer_callback();
-    rclcpp::TimerBase::SharedPtr timer_;
-    rclcpp::Publisher<nav_msgs::msg::Path>::SharedPtr publisher_;
-    size_t count_;
+  void timer_callback();
+  rclcpp::TimerBase::SharedPtr timer_;
+  rclcpp::Publisher<nav_msgs::msg::Path>::SharedPtr publisher_;
+  size_t count_;
 
   
 };
