@@ -5,14 +5,15 @@
 #include <random>
 #include <boost/graph/adjacency_list.hpp>
 #include "helpers.h"
+#include "map.h"
 
 class Planner
 {
     public:
-        Planner() {};
+        Planner(Map m) : map(m)  {};
         ~Planner(){};
 
-        point2d uniform_point(float min_x, float max_x, float min_y, float max_y);
+        point2d uniform_point();
 
         virtual vector<point2d> get_path(point2d start, point2d finish);
 
@@ -32,6 +33,7 @@ class Planner
         point2d goal;
 
         float dist_thr;
+        Map map;
         
 
 };

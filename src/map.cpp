@@ -70,6 +70,8 @@ bool Map::uncolliding(poin2d point)
         // otherwise check for polygon collision
         if (CollisionCheck::point_in_polygon(point, obs)) return true;
     }
+    if ( ! inbounds(point)) return true;
+    return false;
 };
 bool Map::uncolliding(arc a)
 {
@@ -83,7 +85,11 @@ bool Map::uncolliding(arc a)
         // otherwise check for polygon edge collision
         if (CollisionCheck::arc_with_polygon(a, obs)) return true;
     }
-    // TODO - bounds check
+    //  bounds check
+    for (int i = 0; i < bounds.size(); i++)
+    {
+        if (CollisionCheck::line_arc_intersect(bounds[i], a).intersects) return true;
+    }
 };
 bool Map::uncolliding(line l)
 {
@@ -97,11 +103,59 @@ bool Map::uncolliding(line l)
         // second check more detailed check if rough pass not passing
         for (int j = 0; j < obs.edges.size(); j++)
         {
-            if (CollisionCheck::line_line_intersect(obs.edges[j], l)) return true;
+            if (CollisionCheck::line_line_intersect(obs.edges[j], l).intersects) return true;
         }
         
     }
-    
+    if ( ! inBounds(l.p_final)) return true;
+    if ( ! inBounds(l.p_initial)) return true;
     // TODO - bounds check
     return false;
+};
+
+bool Map::inBounds(point2d p)
+{
+    if (p.x > max_x ) return false;
+    if (p.y > max_y ) return false;
+    if (p.x < min_x ) return false;
+    if (p.y < min_y ) return false;
+    return true;
+};
+
+void Map::processBounds(){
+
+    point2d tl;
+    tl.x = min_x;
+    tl.y = ax_y;
+    point2d tr;
+    tr.x = max_x;
+    tr.y = max_y
+    point2d bl;
+    bl.x = min_x;
+    bl.y = min_y;
+    point2d br;
+    br.x = max_x;
+    br.y = min_y;
+    // left
+    line l;
+    l.p_initial = tl;
+    l.p_final = bl;
+    // right
+    line r;
+    r.p_initial = tr;
+    r.p_final = br;
+    // top
+    line t;
+    t.p_initial = tl;
+    t.p_final = tr;
+    // bottom
+    line b;
+    b.p_initial = br;
+    b.p_final = bl;
+
+    bounds.push_back(l);
+    bounds.push_back(r);
+    bounds.push_back(t);
+    bounds.push_back(b);
+
 };
