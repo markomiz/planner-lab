@@ -82,7 +82,7 @@ struct arc{
     point2d ending_point;
     float theta[2];
     
-    void angles() {
+    void angles() { // DOESNT THIS MEAN WE ARE ALWAYS TAKIN GTHE SHORTEST ARC? we don't really want that.
         static const double TWOPI = 6.2831853071795865;
         static const double RAD2DEG = 57.2957795130823209;
         // if (a1 = b1 and a2 = b2) throw an error
