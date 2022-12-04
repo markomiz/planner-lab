@@ -353,8 +353,12 @@ planner->genRoadmap(100);
 RCLCPP_INFO(this->get_logger(),"ROADMAP GENERATED");
 std::vector<point2d> mids = planner->getPath(x0.x,x1.x);
 RCLCPP_INFO(this->get_logger(),"PATH GOT");
-mids.pop_back();
-mids.erase(mids.begin());
+if (mids.size() >= 2)
+{
+  mids.pop_back();
+  mids.erase(mids.begin());
+}
+
 //// RCLCPP_INFO(this->get_logger(),"psd");
 dubinCurve d;
 d._K = 3;

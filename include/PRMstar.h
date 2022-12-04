@@ -11,7 +11,10 @@ class PRMstar
         PRMstar(Map* m) : map(m){
             graph = new Graph(7, point2d(m->min_x, m->max_y), point2d(m->max_x, m->min_y));
         }; 
-        ~PRMstar();
+        ~PRMstar(){
+            delete map;
+            delete graph;
+        };
 
         void genRoadmap(int n);
         vector<point2d> getPath(point2d start, point2d end);

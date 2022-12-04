@@ -77,5 +77,7 @@ vector<point2d> PRMstar::getPath(point2d start, point2d end)
     graph->nodes.push_back(end_node);
     graph->points_quad.insert(end_node);
     cout << "good 7\n";
-    return graph->getPath(start_node, end_node);
+    std::vector<point2d> points = graph->getPath(start_node, end_node);
+    cout << "good 8\n";
+    return points;
 }
