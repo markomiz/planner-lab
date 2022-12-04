@@ -2,13 +2,21 @@
 #include "helpers.h"
 #include "graph.h"
 using namespace std;
+Graph::Graph(int max_depth, point2d tl, point2d br) : points_quad(max_depth, tl, br)
+{
 
+};
 quad::quad(int max_depth, point2d tl, point2d br) : tl(tl), br(br), max_depth(max_depth)
 {
+    bl.x = tl.x;
+    bl.y = br.y;
+    tr.x = br.x;
+    tr.y = tl.y;
     tl_tree = NULL;
     bl_tree = NULL;
     tr_tree = NULL;
     br_tree = NULL;
+    nodes;
 }
 
 bool quad::insert(Node* node)
@@ -70,10 +78,9 @@ bool quad::overlaps(point2d pt, float radius)
 vector<Node*> quad::in_range(point2d pt, float radius)
 {
     vector<Node*> all;
-
     for (int i = 0; i < nodes.size(); i++)
     {
-        if ((*nodes[i]->pt - pt).norm() < radius) all.push_back(nodes[i]);
+        if ((*(nodes[i]->pt) - pt).norm() < radius) all.push_back(nodes[i]);
     }
     // otherwise, choose which subtrees within range,
     if (tl_tree)
@@ -108,12 +115,9 @@ vector<Node*> quad::in_range(point2d pt, float radius)
             all.insert(all.end(), br_all.begin(), br_all.end());
         }
     }
-    // get in range from that
-    // add it to all
 
     return all;
 };
-
 Node* Graph::add(Node* point, Node  *existing)
 {
     
@@ -151,6 +155,7 @@ vector<point2d> Graph::getPath(Node* start, Node* end)
     vector<Node*> OPEN;
     // add start node on open list
     Node* current = nullptr;
+    OPEN.push_back(start);
     while (OPEN.size() > 0)
     {
         current = OPEN[0];
@@ -164,15 +169,7 @@ vector<point2d> Graph::getPath(Node* start, Node* end)
                 cur_it = it;
             }
         }
-        // for (int i = 0; i < OPEN.size(); i++)
-        // {
-        //     if (OPEN[i]->cost < current->cost)
-        //     {
-        //         current = OPEN[i];
-        //         cur_pos = i;
-        //     }
-        // }
-        // if current is final we're done 
+
         if (current == end) break;
 
         // for all nodes connected to current
