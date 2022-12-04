@@ -3,20 +3,6 @@
 
 // max nodes
 // radius of neighbourhood
-std::random_device rd;
-std::mt19937 mt(rd());
-std::uniform_real_distribution<double> dist(0.0, 1.0);
-
-
-// // Uniform non colliding sample
-// point2d uniform_point(float min_x)
-// {
-//     point2d p;
-//     p.x = dist(mt) * (map->max_x - map->min_x) + map->min_x;
-//     p.y = dist(mt)* (map->max_y - map->min_y) + map->min_y;
-
-//     return p;
-// };
 
 void PRMstar::genRoadmap(int n)
 {
@@ -26,8 +12,7 @@ void PRMstar::genRoadmap(int n)
     for (int i = 0; i < n; i ++)
     {
         cout << "good 2";
-        point2d new_point = point2d(float(i)/10,float(i % 10));
-        // new_point = uniform_point();
+        point2d new_point = map->uniform_sample();
         float rad = yprm*sqrt(log(i)/(i));
         std::vector<Node*> nearest = graph->in_range(new_point,rad); //find all nodes within a Rad 
         cout << "good 3";
