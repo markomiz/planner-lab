@@ -1,7 +1,13 @@
+#pragma once
 #include "helpers.h"
 #include "collision_check.h"
+#include "map.h"
 
-static intersection_result CollisionCheck::line_line_intersect(line l1, line l2)
+float CollisionCheck::distance(point2d p1, point2d p2){
+    return (p2 - p1).norm();
+}
+
+intersection_result CollisionCheck::line_line_intersect(line l1, line l2)
 {
     intersection_result result;
     // Line AB represented as a1x + b1y = c1
@@ -54,7 +60,7 @@ static intersection_result CollisionCheck::line_line_intersect(line l1, line l2)
     }
 }
 
-static intersection_result CollisionCheck::line_arc_intersect(line l1, arc arc1)
+intersection_result CollisionCheck::line_arc_intersect(line l1, arc arc1)
 {
     intersection_result result;
     point2d line_vector;
@@ -98,7 +104,7 @@ static intersection_result CollisionCheck::line_arc_intersect(line l1, arc arc1)
     return result;
 }
 
-static bool CollisionCheck::point_in_polygon(point2d p, Polygon shape)
+bool CollisionCheck::point_in_polygon(point2d p, Polygon shape)
 {
     // for each line of polygon - see if line from point crosses
     line l;
@@ -109,23 +115,23 @@ static bool CollisionCheck::point_in_polygon(point2d p, Polygon shape)
     l.p_final = end;
 
     int num_intersections = 0;
-    for (int i = 0; i < shape.edges.size(); i++)
+    for (int j = 0; j < shape.edges.size(); j++)
     {
-        intersection_result i = line_line_intersect(shape.edges[i], l);
+        intersection_result i = line_line_intersect(shape.edges[j], l);
 
         if (i.intersects) num_intersections +=1;
     }
 
-    if (num_intersection % 2 == 1) return true;
+    if (num_intersections % 2 == 1) return true;
     return false;
 };
 
-static bool CollisionCheck::arc_with_polygon(arc a, Polygon shape)
+bool CollisionCheck::arc_with_polygon(arc a, Polygon shape)
 {
     // for each line of polygon - see if arc crosses
-    for (int i = 0; i < shape.edges.size(); i++)
+    for (int j = 0; j < shape.edges.size(); j++)
     {
-        intersection_result i = line_arc_intersect(shape.edges[i], a);
+        intersection_result i = line_arc_intersect(shape.edges[j], a);
 
         if (i.intersects) return true;
     }
@@ -133,10 +139,10 @@ static bool CollisionCheck::arc_with_polygon(arc a, Polygon shape)
     return false;
 };
 
-static float CollisionCheck::point_lineseg_dist(point2d p, line l)
+float CollisionCheck::point_lineseg_dist(point2d p, line l)
 {
-    double minDistance(Point A, Point B, Point E)
-    point2d ab = l.p_final - l.p_inital;
+
+    point2d ab = l.p_final - l.p_initial;
     point2d be = p - l.p_final;
     point2d ae = p - l.p_initial;
     // Variables to store dot product

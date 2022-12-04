@@ -9,21 +9,12 @@ std::uniform_real_distribution<double> dist(0.0, 1.0);
 
 
 // Uniform non colliding sample
-point2d Planner::uniform_point();
+point2d Planner::uniform_point()
 {
     point2d p;
-    p.x = dist(mt) * (map.max_x - map.min_x) + map.min_x;
-    p.y = dist(mt)* (map.max_y - map.min_y) + map.min_y;;
+    p.x = dist(mt) * (map->max_x - map->min_x) + map->min_x;
+    p.y = dist(mt)* (map->max_y - map->min_y) + map->min_y;
 
     return p;
 };
-bool Planner::close_enough(point2d &a, point2d& b)
-{
-    if ((a - b).norm() <= dist_thr)
-    {
-        return true;
-    }
-    return false;
-
-}
 

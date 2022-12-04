@@ -8,14 +8,15 @@ class Polygon
         {
             processEdges();
             calculateCenter();
+            calculateArea();
         }
-
-    private:
+        void calculateArea();
         void calculateCenter();
         void processEdges();
         void expandShape(float size);
         point2d center;
         float radius;
+        float area;
         std::vector<point2d> verteces;
         std::vector<line> edges;
 
@@ -25,14 +26,16 @@ class Map
 {
     public:
         Map();
+        Map(float min_x ,float min_y ,float max_x ,float max_y)
+        : min_x(min_x), min_y(min_y), max_x(max_x), max_y(max_y){ processBounds();};
         ~Map();
 
         void addObstacle(Polygon shape);
-        bool uncolliding(poin2d point);
+        bool uncolliding(point2d point);
         bool uncolliding(arc a);
         bool uncolliding(line l);
 
-        bool inBounds(point2s point);
+        bool inBounds(point2d point);
 
         float min_x;
         float min_y;
@@ -40,8 +43,9 @@ class Map
         float max_y;
 
         void processBounds();
-        
+        float getFreeSpace() { return freeSpace;};
     private:
+        float freeSpace;
         std::vector<Polygon> obstacles;
         std::vector<line> bounds;
         

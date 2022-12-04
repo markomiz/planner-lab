@@ -17,7 +17,14 @@ find_package(geometry_msgs REQUIRED)
 find_package(tf2 REQUIRED)
 find_package(tf2_ros REQUIRED)
 
-add_executable(dubin src/dubin.cpp)
+
+add_executable(dubin src/dubin.cpp
+src/collision_check.cpp
+src/graph.cpp
+src/map.cpp
+src/Planner.cpp
+src/PRMstar.cpp
+)
 
 ament_target_dependencies(dubin rclcpp nav_msgs tf2 tf2_ros geometry_msgs)
 
