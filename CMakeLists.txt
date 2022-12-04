@@ -22,7 +22,6 @@ add_executable(dubin src/dubin.cpp
 src/collision_check.cpp
 src/graph.cpp
 src/map.cpp
-src/Planner.cpp
 src/PRMstar.cpp
 )
 

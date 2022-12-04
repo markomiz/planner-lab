@@ -340,17 +340,25 @@ void Dubin::timer_callback()
 
 RCLCPP_INFO(this->get_logger(),"123");
 float delta = 0.01;
-pose2d x0 = this->subscribeToPos();
-//pose2d x0(0.0,0.0,4.0);
+//pose2d x0 = this->subscribeToPos();
+pose2d x0(0.0,0.0,4.0);
 pose2d x1(3.0,5.0,0.0);
 
 
 Map* map = new Map(0.0, 0.0, 10.0, 10.0);
+RCLCPP_INFO(this->get_logger(),"MAP MADE");
 PRMstar *planner = new PRMstar(map);
-planner->genRoadmap(1000);
+RCLCPP_INFO(this->get_logger(),"PLANNER MADE");
+planner->genRoadmap(100);
+RCLCPP_INFO(this->get_logger(),"ROADMAP GENERATED");
 std::vector<point2d> mids = planner->getPath(x0.x,x1.x);
-mids.pop_back();
-mids.erase(mids.begin());
+RCLCPP_INFO(this->get_logger(),"PATH GOT");
+if (mids.size() >= 2)
+{
+  mids.pop_back();
+  mids.erase(mids.begin());
+}
+
 //// RCLCPP_INFO(this->get_logger(),"psd");
 dubinCurve d;
 d._K = 3;

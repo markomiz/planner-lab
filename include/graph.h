@@ -45,7 +45,7 @@ class quad
 class Graph
 {
     public:
-        Graph();
+        Graph(int max_depth, point2d tl, point2d br);
         ~Graph();
         // creates node for point adds, returns new node ptr
         Node* add(Node* pt, Node  *existing);

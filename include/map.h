@@ -44,6 +44,7 @@ class Map
 
         void processBounds();
         float getFreeSpace() { return freeSpace;};
+        point2d uniform_sample();
     private:
         float freeSpace;
         std::vector<Polygon> obstacles;

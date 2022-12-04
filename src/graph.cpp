@@ -1,14 +1,23 @@
 #pragma once
 #include "helpers.h"
 #include "graph.h"
+#include <iostream>
 using namespace std;
+Graph::Graph(int max_depth, point2d tl, point2d br) : points_quad(max_depth, tl, br)
+{
 
+};
 quad::quad(int max_depth, point2d tl, point2d br) : tl(tl), br(br), max_depth(max_depth)
 {
+    bl.x = tl.x;
+    bl.y = br.y;
+    tr.x = br.x;
+    tr.y = tl.y;
     tl_tree = NULL;
     bl_tree = NULL;
     tr_tree = NULL;
     br_tree = NULL;
+    nodes;
 }
 
 bool quad::insert(Node* node)
@@ -70,10 +79,9 @@ bool quad::overlaps(point2d pt, float radius)
 vector<Node*> quad::in_range(point2d pt, float radius)
 {
     vector<Node*> all;
-
     for (int i = 0; i < nodes.size(); i++)
     {
-        if ((*nodes[i]->pt - pt).norm() < radius) all.push_back(nodes[i]);
+        if ((*(nodes[i]->pt) - pt).norm() < radius) all.push_back(nodes[i]);
     }
     // otherwise, choose which subtrees within range,
     if (tl_tree)
@@ -108,12 +116,9 @@ vector<Node*> quad::in_range(point2d pt, float radius)
             all.insert(all.end(), br_all.begin(), br_all.end());
         }
     }
-    // get in range from that
-    // add it to all
 
     return all;
 };
-
 Node* Graph::add(Node* point, Node  *existing)
 {
     
@@ -138,7 +143,7 @@ void Graph::reset_nodes()
 {
     for (int i = 0; i < nodes.size(); i++)
     {
-        nodes[i]->parent = nullptr;
+        // delete nodes[i]->parent;
         nodes[i]->cost = 0;
         nodes[i]->opened = false;
     }
@@ -151,28 +156,24 @@ vector<point2d> Graph::getPath(Node* start, Node* end)
     vector<Node*> OPEN;
     // add start node on open list
     Node* current = nullptr;
+    OPEN.push_back(start);
     while (OPEN.size() > 0)
     {
-        current = OPEN[0];
+        std::cout << "working\n";
+        
         auto cur_it = OPEN.begin();
+        current = *cur_it;
         // always work on minimal cost node in open set
         for (auto it = OPEN.begin(); it != OPEN.end(); it++)
         {
             if ((*it)->cost < current->cost)
             {
-                current = *it;
+                
                 cur_it = it;
+                current = *cur_it;
             }
         }
-        // for (int i = 0; i < OPEN.size(); i++)
-        // {
-        //     if (OPEN[i]->cost < current->cost)
-        //     {
-        //         current = OPEN[i];
-        //         cur_pos = i;
-        //     }
-        // }
-        // if current is final we're done 
+
         if (current == end) break;
 
         // for all nodes connected to current
@@ -190,6 +191,12 @@ vector<point2d> Graph::getPath(Node* start, Node* end)
         }
 
         OPEN.erase(cur_it);
+        
+    }
+    std::cout << "still working \n";
+    if (!current->parent) {
+        std::cout << "oops \n";
+        return points;
     }
 
     while (current->parent != start)
@@ -197,6 +204,11 @@ vector<point2d> Graph::getPath(Node* start, Node* end)
         points.push_back(*current->pt);
         current = current->parent;
     }
-    reset_nodes();
+    std::cout << "we made it this far! \n";
+    reset_nodes(); 
+    
+    current = nullptr;
+    OPEN.clear();
+    std::cout << "further! \n";
     return points;
 }

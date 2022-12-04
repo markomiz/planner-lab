@@ -169,3 +169,15 @@ void Map::processBounds(){
     freeSpace = (max_x - min_x) * (max_y - min_y);
 
 };
+std::random_device rd;
+std::mt19937 mt(rd());
+std::uniform_real_distribution<double> dist(0.0, 1.0);
+
+point2d Map::uniform_sample()
+{
+    point2d p;
+    p.x = dist(mt) * (max_x - min_x) + min_x;
+    p.y = dist(mt)* (max_y - min_y) + min_y;
+
+    return p;
+};
