@@ -115,20 +115,80 @@ vector<point2d*> quad::in_range(point2d pt, float radius)
     return all;
 };
 
-void Graph::add(edge* e)
+Node* Graph::add(Node* point, Node  *existing)
 {
-    edges.push_back(e);
-}
+    
+    float dist = (point->pt - existing->pt).norm();
+    connection c1;
+    c1.node = existing;
+    c1.cost = dist;
+    n->connected.push_back(c1);
+    connection c2;
+    c2.node = point;
+    c2.cost = dist;
+    existing->connected.push_back(c2);
 
-void Graph::add(point2d* pt, point2d  *existing)
-{
-    edge *e = new edge(pt, existing);
-    add(e);
+    return point;
 
 };
 vector<point2d*> Graph::in_range(point2d pt, float rad)
 {
     return graph->in_range(point2d pt, float rad);
 };
+void Graph::reset_nodes()
+{
+    for (int i = 0; i < nodes.size(); i++)
+    {
+        nodes[i]->parent = nullptr;
+        nodes[i]->cost = 0;
+        nodes[i]->opened = false;
+    }
+}
+vector<point2d> Graph::getPath(Node* start, Node* end)
+{
+    // add start and end points to graph - connecting them to nearest TODO
+    vector<point2d> points;
+    // init open list
+    vector<Node*> OPEN;
+    // add start node on open list
+    Node* current = nullptr;
+    while (OPEN.size() > 0)
+    {
+        current = OPEN.begin();
 
+        // always work on minimal cost node in open set
+        for (auto it = OPEN.begin(); it != OPEN.end(); it++)
+        {
+            if (it->cost < current->cost)
+            {
+                current = it;
+            }
+        }
+        // if current is final we're done 
+        if (current == end) break;
 
+        // for all nodes connected to current
+        for (int i = 0; i < current->connected.size(); i++)
+        {
+            if ( ! connected[i]->node->opened )
+            {
+                // if not opened, add to open, store that current is parent
+                // update their cost to current + dist between nodes
+                connected[i]->node->parent = current;
+                OPEN.push_back(connected[i].node);
+                connected[i]->node->opened = true;
+                connected[i]->node->cost = current->cost + connected[i].cost;
+            }
+        }
+
+        OPEN.erase(current);
+    }
+
+    while (current->parent.pt != start)
+    {
+        points.push_back(current.pt);
+        current = current->parent;
+    }
+    reset_nodes();
+    return points;
+}

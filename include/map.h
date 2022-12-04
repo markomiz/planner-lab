@@ -8,6 +8,7 @@ class Polygon
         {
             processEdges();
             calculateCenter();
+            calculateArea();
         }
 
     private:
@@ -16,6 +17,7 @@ class Polygon
         void expandShape(float size);
         point2d center;
         float radius;
+        float area;
         std::vector<point2d> verteces;
         std::vector<line> edges;
 
@@ -42,8 +44,9 @@ class Map
         float max_y;
 
         void processBounds();
-        
+        float getFreeSpace() { return freeSpace};
     private:
+        float freeSpace;
         std::vector<Polygon> obstacles;
         std::vector<line> bounds;
         

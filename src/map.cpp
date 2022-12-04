@@ -53,10 +53,18 @@ void Polygon::expandShape(float size)
         verteces[i] = vec;
     };
 };
+void Polygon::calculateArea()
+{
+    float a = edges[0].length();
+
+    area = verteces.size() * a * a / (4 * sin(M_PI/ a));
+
+}
 
 void Map::addObstacle(Polygon shape)
 {
     obstacles.push_back(shape);
+    freeSpace -= shape.area;
 };
 
 bool Map::uncolliding(poin2d point)
@@ -157,5 +165,7 @@ void Map::processBounds(){
     bounds.push_back(r);
     bounds.push_back(t);
     bounds.push_back(b);
+
+    freeSpace = (max_x - min_x) * (max_y - min_y);
 
 };
