@@ -67,7 +67,7 @@ void Map::addObstacle(Polygon shape)
     freeSpace -= shape.area;
 };
 
-bool Map::uncolliding(poin2d point)
+bool Map::uncolliding(point2d point)
 {
     for (int i = 0; i < obstacles.size(); i++)
     {
@@ -78,7 +78,7 @@ bool Map::uncolliding(poin2d point)
         // otherwise check for polygon collision
         if (CollisionCheck::point_in_polygon(point, obs)) return true;
     }
-    if ( ! inbounds(point)) return true;
+    if ( ! inBounds(point)) return true;
     return false;
 };
 bool Map::uncolliding(arc a)
@@ -134,10 +134,10 @@ void Map::processBounds(){
 
     point2d tl;
     tl.x = min_x;
-    tl.y = ax_y;
+    tl.y = max_y;
     point2d tr;
     tr.x = max_x;
-    tr.y = max_y
+    tr.y = max_y;
     point2d bl;
     bl.x = min_x;
     bl.y = min_y;

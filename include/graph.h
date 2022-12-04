@@ -3,25 +3,26 @@
 
 using namespace std;
 
-struct connection
-{
-    Node* node;
-    float cost;
-}
+struct connection;
 struct Node
 {
-    Node(Point2d &pt): pt(pt), opened(false), cost(0), parent(nullptr) {};
+    Node(point2d *pt): pt(pt), opened(false), cost(0), parent(nullptr) {};
     point2d* pt;
     vector<connection> connected;
     float cost;
     bool opened;
     Node* parent;
-}
+};
+struct connection
+{
+    Node* node;
+    float cost;
+};
 
 class quad
 {
     public:
-        quad(point2d tl, point2d br);
+        quad(int max_depth, point2d tl, point2d br);
         bool insert(Node* node);
         vector<Node*> in_range(point2d pt, float radius);
         bool overlaps(point2d pt, float radius);
@@ -39,7 +40,7 @@ class quad
         quad* bl_tree;
         quad* br_tree;
 
-}
+};
 
 class Graph
 {
@@ -47,13 +48,14 @@ class Graph
         Graph();
         ~Graph();
         // creates node for point adds, returns new node ptr
-        Node* add(point2d pt, Node  *existing);
-        vector<point2d> in_range(point2d pt, float rad);
+        Node* add(Node* pt, Node  *existing);
+        vector<Node*> in_range(point2d pt, float rad);
         void reset_nodes();
-
-
-    private:
+        vector<point2d> getPath(Node* start, Node* end);
         quad points_quad;
         vector<Node*> nodes;
 
-}
+    private:
+
+
+};

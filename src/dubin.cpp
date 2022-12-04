@@ -345,10 +345,10 @@ pose2d x0 = this->subscribeToPos();
 pose2d x1(3.0,5.0,0.0);
 
 
-map = Map(0.0, 0.0, 10.0, 10.0);
-PRMstar *planner = new PRMstar(&map);
+Map* map = new Map(0.0, 0.0, 10.0, 10.0);
+PRMstar *planner = new PRMstar(map);
 planner->genRoadmap(1000);
-std::vector<point2d> mids = planner->getPath(x0,x1);
+std::vector<point2d> mids = planner->getPath(x0.x,x1.x);
 mids.pop_back();
 mids.erase(mids.begin());
 //// RCLCPP_INFO(this->get_logger(),"psd");

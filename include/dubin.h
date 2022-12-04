@@ -18,6 +18,7 @@
 
 #include "helpers.h"
 #include "PRMstar.h"
+#include "graph.h"
 
 using namespace std::chrono_literals;
 

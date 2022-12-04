@@ -1,4 +1,4 @@
-//#pragma once
+#pragma once
 #include <memory>
 #include <boost/graph/adjacency_list.hpp>
 #include <boost/graph/graph_traits.hpp>
@@ -16,21 +16,21 @@ struct point2d
   float norm()
     {
         return sqrt(x*x + y*y);
-    }
+    };
   point2d operator+(point2d &b)
   {
     point2d c;
     c.x = x + b.x;
     c.y = y + b.y;
     return c;
-  }
+  };
   point2d operator-(point2d &b)
   {
     point2d c;
     c.x = x - b.x;
     c.y = y - b.y;
     return c;
-  }
+  };
 };
 struct pose2d 
 {
@@ -86,7 +86,6 @@ struct arc{
     
     void angles() { // DOESNT THIS MEAN WE ARE ALWAYS TAKIN GTHE SHORTEST ARC? we don't really want that.
         static const double TWOPI = 6.2831853071795865;
-        static const double RAD2DEG = 57.2957795130823209;
         // if (a1 = b1 and a2 = b2) throw an error
         theta[0] = atan2(starting_point.x - center.x, center.y - starting_point.y);
         theta[1] = atan2(ending_point.x - center.x, center.y - ending_point.y);
