@@ -3,6 +3,14 @@
 
 using namespace std;
 
+quad::quad(int max_depth, point2d tl, point2d br) : tl(tl), br(br), max_depth(max_depth)
+{
+    tl_tree = NULL;
+    bl_tree = NULL;
+    tr_tree = NULL;
+    br_tree = NULL;
+}
+
 bool quad::insert(point2d* node)
 {
     if (max_depth == 0) {
@@ -50,15 +58,57 @@ bool quad::insert(point2d* node)
         }
     }
 };
-
+bool quad::overlaps(point2d pt, float radius)
+{
+    if ((bl - pt).norm() < radius) return true;
+    if ((tr - pt).norm() < radius) return true;
+    if ((tl - pt).norm() < radius) return true;
+    if ((br - pt).norm() < radius) return true;
+    return false;
+}
 
 vector<point2d*> quad::in_range(point2d pt, float radius)
 {
     vector<point2d*> all;
     // TODO
-    // if no nodes or subtrees, return 
 
-    // otherwise, choose which subtree is within range,
+    for (int i = 0; i < nodes.size(); i++)
+    {
+        if ((nodes[i] - pt).norm() < radius) all.push_back(nodes[i]);
+    }
+    // otherwise, choose which subtrees within range,
+    if (tl_tree)
+    {
+        if (tl_tree->overlaps(pt,radius))
+        {
+            vector<point2d*> tl_all = tl_tree->in_range(pt, radius);
+            all.insert(all.end(), tl_all.begin(), tl_all.end());
+        }
+    }
+    if (bl_tree)
+    {
+        if (bl_tree->overlaps(pt,radius))
+        {
+            vector<point2d*> bl_all = bl_tree->in_range(pt, radius);
+            all.insert(all.end(), bl_all.begin(), bl_all.end());
+        }
+    }
+    if (tr_tree)
+    {
+        if (tr_tree->overlaps(pt,radius))
+        {
+            vector<point2d*> tr_all = tr_tree->in_range(pt, radius);
+            all.insert(all.end(), tr_all.begin(), tr_all.end());
+        }
+    }
+    if (br_tree)
+    {
+        if (br_tree->overlaps(pt,radius))
+        {
+            vector<point2d*> br_all = br_tree->in_range(pt, radius);
+            all.insert(all.end(), br_all.begin(), br_all.end());
+        }
+    }
     // get in range from that
     // add it to all
 
@@ -76,9 +126,9 @@ void Graph::add(point2d* pt, point2d  *existing)
     add(e);
 
 };
-vector<point2d*> Graph::nearest(point2d pt, float rad)
+vector<point2d*> Graph::in_range(point2d pt, float rad)
 {
-    return graph->nearest(point2d pt, float rad);
+    return graph->in_range(point2d pt, float rad);
 };
 
 

@@ -10,7 +10,7 @@ void PRMstar::genRoadmap(int n)
     {
         point2d new_point = uniform_point();
         float rad = yprm*(log(itr)/(itr))^(1/d)
-        std::vector<Node> nearest = graph.nearest(point,rad); //find all nodes within a Rad
+        std::vector<Node> nearest = graph.in_range(point,rad); //find all nodes within a Rad
         for (int x = 0; x < nearest.size(); x++)
         {
             line l;

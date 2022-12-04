@@ -18,7 +18,7 @@ struct Node
 class quad
 {
     public:
-
+        quad(point2d tl, point2d br);
         bool insert(point2d* node);
         vector<point2d*> in_range(float radius);
 
@@ -27,6 +27,8 @@ class quad
     private:
         point2d tl;
         point2d br;
+        point2d tr;
+        point2d bl;
         vector<point2d*> nodes;
         quad* tl_tree;
         quad* tr_tree;
