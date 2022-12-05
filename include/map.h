@@ -1,5 +1,5 @@
 #pragma once
-#include "helpers.h"
+#include "geometry.h"
 
 class Polygon
 {
@@ -28,7 +28,6 @@ class Map
         Map();
         Map(float min_x ,float min_y ,float max_x ,float max_y)
         : min_x(min_x), min_y(min_y), max_x(max_x), max_y(max_y){ processBounds();};
-        ~Map();
 
         void addObstacle(Polygon shape);
         bool colliding(point2d point);

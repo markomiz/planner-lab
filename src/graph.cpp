@@ -1,5 +1,5 @@
 #pragma once
-#include "helpers.h"
+#include "geometry.h"
 #include "graph.h"
 #include <iostream>
 using namespace std;
@@ -81,7 +81,7 @@ bool quad::overlaps(point2d pt, float r)
 vector<shared_ptr<Node>> quad::in_range(point2d pt, float radius)
 {
     vector<shared_ptr<Node>> all;
-    for (int i = 0; i < nodes.size(); i++)
+    for (auto i = 0; i < nodes.size(); i++)
     {
         if (((nodes[i]->pt) - pt).norm() < radius) {
             all.push_back(nodes[i]);
@@ -146,7 +146,7 @@ vector<shared_ptr<Node>> Graph::in_range(point2d pt, float rad)
 };
 void Graph::reset_nodes()
 {
-    for (int i = 0; i < nodes.size(); i++)
+    for (auto i = 0; i < nodes.size(); i++)
     {
         // delete nodes[i]->parent;
         nodes[i]->cost = 0;
@@ -185,7 +185,7 @@ vector<point2d> Graph::getPath(shared_ptr<Node> start, shared_ptr<Node> end)
         }
         
         // for all nodes connected to current
-        for (int i = 0; i < current->connected.size(); i++)
+        for (auto i = 0; i < current->connected.size(); i++)
         {
             
             if ( ! current->connected[i].node->opened )
@@ -224,7 +224,7 @@ vector<point2d> Graph::getPath(shared_ptr<Node> start, shared_ptr<Node> end)
     return points;
 };
 void Graph::print_nodes(){
-    for (int i = 0; i < nodes.size(); i++)
+    for (auto i = 0; i < nodes.size(); i++)
     {
         cout << (nodes[i]->pt).x << " x ins y " << (nodes[i]->pt).y << "\n";
     }
