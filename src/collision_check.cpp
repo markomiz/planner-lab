@@ -1,5 +1,5 @@
 #pragma once
-#include "helpers.h"
+#include "geometry.h"
 #include "collision_check.h"
 #include "map.h"
 
@@ -69,13 +69,10 @@ intersection_result CollisionCheck::line_arc_intersect(line l1, arc arc1)
     point2d center2initial;
     center2initial.x = l1.p_initial.x - arc1.center.x;
     center2initial.y = l1.p_initial.y - arc1.center.y;
-    
     float a = line_vector.x*line_vector.x + line_vector.y*line_vector.y;
     float b = 2*(center2initial.x*line_vector.x + center2initial.y*line_vector.y);
     float c = (center2initial.x*center2initial.x + center2initial.y*center2initial.y) - arc1.radius*arc1.radius;
-
     float discriminant = b*b-4*a*c;
-
     if( discriminant < 0 )
     {
         // no intersection
@@ -83,19 +80,15 @@ intersection_result CollisionCheck::line_arc_intersect(line l1, arc arc1)
     }
     else
     {
-        
         discriminant = sqrt( discriminant);
         float t1 = (-b - discriminant)/(2*a);
         float t2 = (-b + discriminant)/(2*a);
-
-        
         if( t1 >= 0 && t1 <= 1 && t2 >= 0 && t2 <= 1)
         {
             result.intersection.x = a*t1*t1 + 2*b*t1 + c;
             result.intersection.y = a*t2*t2 + 2*b*t2 + c;
             float angle = atan2(result.intersection.y - arc1.center.y, result.intersection.x - arc1.center.x);
-            arc1.angles();
-            if (angle > arc1.theta[0] && angle < arc1.theta[1])
+            if (angle > arc1.start.theta && angle < arc1.end.theta)
                 result.intersects = false;
         }
         else
@@ -115,7 +108,7 @@ bool CollisionCheck::point_in_polygon(point2d p, Polygon shape)
     l.p_final = end;
 
     int num_intersections = 0;
-    for (int j = 0; j < shape.edges.size(); j++)
+    for (auto j = 0; j < shape.edges.size(); j++)
     {
         intersection_result i = line_line_intersect(shape.edges[j], l);
 
@@ -129,7 +122,7 @@ bool CollisionCheck::point_in_polygon(point2d p, Polygon shape)
 bool CollisionCheck::arc_with_polygon(arc a, Polygon shape)
 {
     // for each line of polygon - see if arc crosses
-    for (int j = 0; j < shape.edges.size(); j++)
+    for (auto j = 0; j < shape.edges.size(); j++)
     {
         intersection_result i = line_arc_intersect(shape.edges[j], a);
 

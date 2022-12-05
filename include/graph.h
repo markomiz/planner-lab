@@ -1,5 +1,5 @@
 #pragma once
-#include "helpers.h"
+#include "geometry.h"
 
 using namespace std;
 
@@ -47,7 +47,6 @@ class Graph
 {
     public:
         Graph(int max_depth, point2d tl, point2d br);
-        ~Graph();
         // creates node for point adds, returns new node ptr
         shared_ptr<Node> add(shared_ptr<Node> pt, shared_ptr<Node> existing);
         vector<shared_ptr<Node>> in_range(point2d pt, float rad);

@@ -9,14 +9,14 @@ void PRMstar::genRoadmap(int n)
     float yprm  = sqrt(2*(1+ 1/2)) * sqrt(map->getFreeSpace()/M_PI) * 1.0;
     //  init empty graph
     int cons = 0;
-    for (int i = 0; i < n; i ++)
+    for (auto i = 0; i < n; i ++)
     {
         point2d new_point = map->uniform_sample();
         float rad = yprm*sqrt(log(i+1)/(i+1));
         std::vector<shared_ptr<Node>> nearest = graph->in_range(new_point,rad); //find all nodes within a Rad 
         shared_ptr<Node> new_node(new Node(new_point));
         // cout << " rad - " << rad << "   " << nearest.size() << " num near  \n";
-        for (int x = 0; x < nearest.size(); x++)
+        for (auto x = 0; x < nearest.size(); x++)
         {
             line l;
             l.p_final = new_point;
@@ -40,7 +40,7 @@ vector<point2d> PRMstar::getPath(point2d start, point2d end)
     std::vector<shared_ptr<Node>> nearest_s = graph->in_range(start, TRSH); // find all nodes within a Rad
     shared_ptr<Node> start_node(new Node(start));
     int num = nearest_s.size();
-    for (int x = 0; x < nearest_s.size(); x++)
+    for (auto x = 0; x < nearest_s.size(); x++)
     {
         line l;
         l.p_final = start;
@@ -53,7 +53,7 @@ vector<point2d> PRMstar::getPath(point2d start, point2d end)
     std::vector<shared_ptr<Node>> nearest_e = graph->in_range(end, TRSH); // find all nodes within a Rad
     shared_ptr<Node> end_node( new Node(end));
     int nume = nearest_e.size();
-    for (int x = 0; x < nearest_e.size(); x++)
+    for (auto x = 0; x < nearest_e.size(); x++)
     {
         line l;
         l.p_final = end;
