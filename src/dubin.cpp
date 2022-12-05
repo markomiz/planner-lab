@@ -338,21 +338,17 @@ pose2d Dubin::subscribeToPos(){
 void Dubin::timer_callback()
 {
 
-RCLCPP_INFO(this->get_logger(),"123");
+print_message();
 float delta = 0.01;
 //pose2d x0 = this->subscribeToPos();
-pose2d x0(0.0,0.0,4.0);
+pose2d x0(0.1,0.1,4.0);
 pose2d x1(3.0,5.0,0.0);
 
 
 Map* map = new Map(0.0, 0.0, 10.0, 10.0);
-RCLCPP_INFO(this->get_logger(),"MAP MADE");
-PRMstar *planner = new PRMstar(map);
-RCLCPP_INFO(this->get_logger(),"PLANNER MADE");
-planner->genRoadmap(10000);
-RCLCPP_INFO(this->get_logger(),"ROADMAP GENERATED");
+planner = new PRMstar(map);
+planner->genRoadmap(100);
 std::vector<point2d> mids = planner->getPath(x0.x,x1.x);
-RCLCPP_INFO(this->get_logger(),"PATH GOT");
 if (mids.size() >= 2)
 {
   mids.pop_back();

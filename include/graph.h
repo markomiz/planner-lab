@@ -6,16 +6,16 @@ using namespace std;
 struct connection;
 struct Node
 {
-    Node(point2d *pt): pt(pt), opened(false), cost(0), parent(nullptr) {};
-    point2d* pt;
+    Node(point2d pt): pt(pt), opened(false), cost(0), parent(nullptr) {};
+    point2d pt;
     vector<connection> connected;
     float cost;
     bool opened;
-    Node* parent;
+    shared_ptr<Node> parent;
 };
 struct connection
 {
-    Node* node;
+    shared_ptr<Node> node;
     float cost;
 };
 
@@ -23,10 +23,9 @@ class quad
 {
     public:
         quad(int max_depth, point2d tl, point2d br);
-        bool insert(Node* node);
-        vector<Node*> in_range(point2d pt, float radius);
+        bool insert(shared_ptr<Node> node);
+        vector<shared_ptr<Node>> in_range(point2d pt, float radius);
         bool overlaps(point2d pt, float radius);
-
         int max_depth;
 
     private:
@@ -34,11 +33,13 @@ class quad
         point2d br;
         point2d tr;
         point2d bl;
-        vector<Node*> nodes;
+        vector<shared_ptr<Node>> nodes;
         quad* tl_tree;
         quad* tr_tree;
         quad* bl_tree;
         quad* br_tree;
+        point2d center;
+        float radius;
 
 };
 
@@ -48,12 +49,13 @@ class Graph
         Graph(int max_depth, point2d tl, point2d br);
         ~Graph();
         // creates node for point adds, returns new node ptr
-        Node* add(Node* pt, Node  *existing);
-        vector<Node*> in_range(point2d pt, float rad);
+        shared_ptr<Node> add(shared_ptr<Node> pt, shared_ptr<Node> existing);
+        vector<shared_ptr<Node>> in_range(point2d pt, float rad);
         void reset_nodes();
-        vector<point2d> getPath(Node* start, Node* end);
+        vector<point2d> getPath(shared_ptr<Node> start, shared_ptr<Node> end);
         quad points_quad;
-        vector<Node*> nodes;
+        vector<shared_ptr<Node>> nodes;
+        void print_nodes();
 
     private:
 

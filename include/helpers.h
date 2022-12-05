@@ -3,6 +3,7 @@
 #include <boost/graph/adjacency_list.hpp>
 #include <boost/graph/graph_traits.hpp>
 #include <boost/graph/graph_selectors.hpp>
+#include <iostream>
 
 using namespace std;
 
@@ -138,3 +139,4 @@ struct intersection_result{
 // struct pair<float, Vertex> Neighbor;
 // struct boost::graph_traits<Tree>::vertex_iterator VertexIterator;
 // struct pair<VertexIterator, VertexIterator> VertexIteratorPair;
+
