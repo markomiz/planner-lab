@@ -67,7 +67,7 @@ void Map::addObstacle(Polygon shape)
     freeSpace -= shape.area;
 };
 
-bool Map::uncolliding(point2d point)
+bool Map::colliding(point2d point)
 {
     for (int i = 0; i < obstacles.size(); i++)
     {
@@ -81,7 +81,7 @@ bool Map::uncolliding(point2d point)
     if ( ! inBounds(point)) return true;
     return false;
 };
-bool Map::uncolliding(arc a)
+bool Map::colliding(arc a)
 {
     // obstacle check
     for (int i = 0; i < obstacles.size(); i++)
@@ -99,7 +99,7 @@ bool Map::uncolliding(arc a)
         if (CollisionCheck::line_arc_intersect(bounds[i], a).intersects) return true;
     }
 };
-bool Map::uncolliding(line l)
+bool Map::colliding(line l)
 {
     
     for (int i = 0; i < obstacles.size(); i++)
@@ -169,6 +169,7 @@ void Map::processBounds(){
     freeSpace = (max_x - min_x) * (max_y - min_y);
 
 };
+// RANDOM NUMBER STUFF ////
 std::random_device rd;
 std::mt19937 mt(rd());
 std::uniform_real_distribution<double> dist(0.0, 1.0);
@@ -178,6 +179,13 @@ point2d Map::uniform_sample()
     point2d p;
     p.x = dist(mt) * (max_x - min_x) + min_x;
     p.y = dist(mt)* (max_y - min_y) + min_y;
+    while (colliding(p))
+    {
+        p.x = dist(mt) * (max_x - min_x) + min_x;
+        p.y = dist(mt)* (max_y - min_y) + min_y;
+        std::cout << "colliding\n";
+        std::cout << p.x;
+    }
 
     return p;
 };

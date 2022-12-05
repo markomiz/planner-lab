@@ -158,9 +158,7 @@ vector<point2d> Graph::getPath(Node* start, Node* end)
     Node* current = nullptr;
     OPEN.push_back(start);
     while (OPEN.size() > 0)
-    {
-        std::cout << "working\n";
-        
+    {   
         auto cur_it = OPEN.begin();
         current = *cur_it;
         // always work on minimal cost node in open set

@@ -349,7 +349,7 @@ Map* map = new Map(0.0, 0.0, 10.0, 10.0);
 RCLCPP_INFO(this->get_logger(),"MAP MADE");
 PRMstar *planner = new PRMstar(map);
 RCLCPP_INFO(this->get_logger(),"PLANNER MADE");
-planner->genRoadmap(100);
+planner->genRoadmap(10000);
 RCLCPP_INFO(this->get_logger(),"ROADMAP GENERATED");
 std::vector<point2d> mids = planner->getPath(x0.x,x1.x);
 RCLCPP_INFO(this->get_logger(),"PATH GOT");
