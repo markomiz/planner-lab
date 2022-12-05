@@ -111,7 +111,11 @@ bool Map::colliding(line l)
         // second check more detailed check if rough pass not passing
         for (int j = 0; j < obs.edges.size(); j++)
         {
-            if (CollisionCheck::line_line_intersect(obs.edges[j], l).intersects) return true;
+            if (CollisionCheck::line_line_intersect(obs.edges[j], l).intersects)
+            {
+                cout << "line intersects";
+                return true;
+            } 
         }
         
     }
@@ -179,6 +183,7 @@ point2d Map::uniform_sample()
     point2d p;
     p.x = dist(mt) * (max_x - min_x) + min_x;
     p.y = dist(mt)* (max_y - min_y) + min_y;
+
     while (colliding(p))
     {
         p.x = dist(mt) * (max_x - min_x) + min_x;

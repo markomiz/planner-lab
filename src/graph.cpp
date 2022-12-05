@@ -17,19 +17,24 @@ quad::quad(int max_depth, point2d tl, point2d br) : tl(tl), br(br), max_depth(ma
     bl_tree = NULL;
     tr_tree = NULL;
     br_tree = NULL;
-    nodes;
+    
+    center.x = (tr.x + bl.x) / 2;
+    center.y = (tr.x + bl.x) / 2;
+    radius = (tr - bl).norm() / 2;
+
 }
 
-bool quad::insert(Node* node)
+bool quad::insert(shared_ptr<Node> node)
 {
     if (max_depth == 0) {
+        
         nodes.push_back(node);
         return true;
     }
 
-    if ((tl.x + br.x) / 2 >= node->pt->x) {
+    if ((tl.x + br.x) / 2 >= node->pt.x) {
         // Indicates tl_tree
-        if ((tl.y + br.y) / 2 >= node->pt->y) {
+        if ((tl.y + br.y) / 2 >= node->pt.y) {
             if (tl_tree == NULL)
                 tl_tree = new quad( max_depth - 1,
                     point2d(tl.x, tl.y),
@@ -48,7 +53,7 @@ bool quad::insert(Node* node)
         }
     }
     else {
-        if ((tl.y + br.y) / 2 >= node->pt->y) {
+        if ((tl.y + br.y) / 2 >= node->pt.y) {
             if (tr_tree == NULL)
                 tr_tree = new quad( max_depth - 1,
                     point2d((tl.x + br.x) / 2,
@@ -67,28 +72,27 @@ bool quad::insert(Node* node)
         }
     }
 };
-bool quad::overlaps(point2d pt, float radius)
+bool quad::overlaps(point2d pt, float r)
 {
-    if ((bl - pt).norm() < radius) return true;
-    if ((tr - pt).norm() < radius) return true;
-    if ((tl - pt).norm() < radius) return true;
-    if ((br - pt).norm() < radius) return true;
+    if ((pt - center).norm() < r + radius) return true; // circular approx
     return false;
 }
 
-vector<Node*> quad::in_range(point2d pt, float radius)
+vector<shared_ptr<Node>> quad::in_range(point2d pt, float radius)
 {
-    vector<Node*> all;
+    vector<shared_ptr<Node>> all;
     for (int i = 0; i < nodes.size(); i++)
     {
-        if ((*(nodes[i]->pt) - pt).norm() < radius) all.push_back(nodes[i]);
+        if (((nodes[i]->pt) - pt).norm() < radius) {
+            all.push_back(nodes[i]);
+        }
     }
     // otherwise, choose which subtrees within range,
     if (tl_tree)
     {
         if (tl_tree->overlaps(pt,radius))
         {
-            vector<Node*> tl_all = tl_tree->in_range(pt, radius);
+            vector<shared_ptr<Node>> tl_all = tl_tree->in_range(pt, radius);
             all.insert(all.end(), tl_all.begin(), tl_all.end());
         }
     }
@@ -96,7 +100,7 @@ vector<Node*> quad::in_range(point2d pt, float radius)
     {
         if (bl_tree->overlaps(pt,radius))
         {
-            vector<Node*> bl_all = bl_tree->in_range(pt, radius);
+            vector<shared_ptr<Node>> bl_all = bl_tree->in_range(pt, radius);
             all.insert(all.end(), bl_all.begin(), bl_all.end());
         }
     }
@@ -104,7 +108,7 @@ vector<Node*> quad::in_range(point2d pt, float radius)
     {
         if (tr_tree->overlaps(pt,radius))
         {
-            vector<Node*> tr_all = tr_tree->in_range(pt, radius);
+            vector<shared_ptr<Node>> tr_all = tr_tree->in_range(pt, radius);
             all.insert(all.end(), tr_all.begin(), tr_all.end());
         }
     }
@@ -112,17 +116,17 @@ vector<Node*> quad::in_range(point2d pt, float radius)
     {
         if (br_tree->overlaps(pt,radius))
         {
-            vector<Node*> br_all = br_tree->in_range(pt, radius);
+            vector<shared_ptr<Node>> br_all = br_tree->in_range(pt, radius);
             all.insert(all.end(), br_all.begin(), br_all.end());
         }
     }
 
     return all;
 };
-Node* Graph::add(Node* point, Node  *existing)
+shared_ptr<Node> Graph::add(shared_ptr<Node> point, shared_ptr<Node> existing)
 {
     
-    float dist = (*point->pt - *existing->pt).norm();
+    float dist = (point->pt - existing->pt).norm();
     connection c1;
     c1.node = existing;
     c1.cost = dist;
@@ -135,9 +139,10 @@ Node* Graph::add(Node* point, Node  *existing)
     return point;
 
 };
-vector<Node*> Graph::in_range(point2d pt, float rad)
+vector<shared_ptr<Node>> Graph::in_range(point2d pt, float rad)
 {
-    return points_quad.in_range( pt, rad);
+    vector<shared_ptr<Node>> points = points_quad.in_range( pt, rad);
+    return points;
 };
 void Graph::reset_nodes()
 {
@@ -148,17 +153,18 @@ void Graph::reset_nodes()
         nodes[i]->opened = false;
     }
 }
-vector<point2d> Graph::getPath(Node* start, Node* end)
+vector<point2d> Graph::getPath(shared_ptr<Node> start, shared_ptr<Node> end)
 {
     // add start and end points to graph - connecting them to nearest TODO
     vector<point2d> points;
     // init open list
-    vector<Node*> OPEN;
+    vector<shared_ptr<Node>> OPEN;
     // add start node on open list
-    Node* current = nullptr;
+    shared_ptr<Node> current = nullptr;
     OPEN.push_back(start);
     while (OPEN.size() > 0)
     {   
+        
         auto cur_it = OPEN.begin();
         current = *cur_it;
         // always work on minimal cost node in open set
@@ -171,35 +177,42 @@ vector<point2d> Graph::getPath(Node* start, Node* end)
                 current = *cur_it;
             }
         }
-
-        if (current == end) break;
-
+        OPEN.erase(cur_it);
+        
+        if (current == end) {
+            
+            break;
+        }
+        
         // for all nodes connected to current
         for (int i = 0; i < current->connected.size(); i++)
         {
+            
             if ( ! current->connected[i].node->opened )
             {
                 // if not opened, add to open, store that current is parent
                 // update their cost to current + dist between nodes
+                
                 current->connected[i].node->parent = current;
+                
                 OPEN.push_back(current->connected[i].node);
                 current->connected[i].node->opened = true;
                 current->connected[i].node->cost = current->cost + current->connected[i].cost;
             }
         }
 
-        OPEN.erase(cur_it);
+        
         
     }
     std::cout << "still working \n";
     if (!current->parent) {
-        std::cout << "oops \n";
+        std::cout << "oopsie no path \n";
         return points;
     }
 
     while (current->parent != start)
     {
-        points.push_back(*current->pt);
+        points.push_back(current->pt);
         current = current->parent;
     }
     std::cout << "we made it this far! \n";
@@ -209,4 +222,11 @@ vector<point2d> Graph::getPath(Node* start, Node* end)
     OPEN.clear();
     std::cout << "further! \n";
     return points;
+};
+void Graph::print_nodes(){
+    for (int i = 0; i < nodes.size(); i++)
+    {
+        cout << (nodes[i]->pt).x << " x ins y " << (nodes[i]->pt).y << "\n";
+    }
 }
+
