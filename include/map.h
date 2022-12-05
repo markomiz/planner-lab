@@ -31,9 +31,9 @@ class Map
         ~Map();
 
         void addObstacle(Polygon shape);
-        bool uncolliding(point2d point);
-        bool uncolliding(arc a);
-        bool uncolliding(line l);
+        bool colliding(point2d point);
+        bool colliding(arc a);
+        bool colliding(line l);
 
         bool inBounds(point2d point);
 
