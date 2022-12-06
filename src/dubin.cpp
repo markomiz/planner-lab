@@ -61,28 +61,21 @@ void Dubin::timer_callback()
   //pose2d x0 = this->subscribeToPos();
   pose2d x0(0.1,0.1,4.0);
   pose2d x1(3.0,5.0,0.0);
-
-
   shared_ptr<Map> map (new Map(0.0, 0.0, 10.0, 10.0));
+  shared_ptr<dubinCurve> d (new dubinCurve());
+  d->map = map;
+  d->_K = 3;
   planner = new PRMstar(map);
-  planner->genRoadmap(100);
-  std::vector<point2d> mids = planner->getPath(x0.x,x1.x);
-  if (mids.size() >= 2)
-  {
-    mids.pop_back();
-    mids.erase(mids.begin());
-  }
-  else return;
+  planner->dCurve = d;
+  planner->genRoadmapPlus(100, 6);
+  std::vector<arcs> mids = planner->getPath(x0,x1);
 
   //// RCLCPP_INFO(this->get_logger(),"psd");
-  dubinCurve d;
-  d.map = map;
-  d._K = 3;
+  
   RCLCPP_INFO(this->get_logger()," gen path!");
-  nav_msgs::msg::Path message =  d.generatePathFromDubins(x0, d.calculateMultiPoint(x0, x1, mids, 12), delta);
-  message.header.stamp = this->get_clock()->now();
-  publisher_->publish(message);
-  RCLCPP_INFO(this->get_logger(),"message shoud have sent!");
+  //nav_msgs::msg::Path message =  d->generatePathFromDubins(x0, d->calculateMultiPoint(x0, x1, mids, 12), delta);
+  // message.header.stamp = this->get_clock()->now();
+  // publisher_->publish(message);
 };
 
 int main(int argc, char * argv[])

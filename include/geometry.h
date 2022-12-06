@@ -85,6 +85,8 @@ struct dubins_params
   float L;
   ksigns k = ksigns(0,0,0);
   bool valid;
+  float K;
+
 };
 struct transformedVars
 {
@@ -106,6 +108,8 @@ struct intersection_result{
 };
 struct arc // TODO replace all arcs with this - make dubins stuff play nice with it.
 {
+
+  arc(){};
   arc(pose2d start, float K, float s) : start(start), s(s), K(K)
   {
     radius = 0;
@@ -142,4 +146,40 @@ struct arc // TODO replace all arcs with this - make dubins stuff play nice with
   else
     return sin(x)/x;
   };
+};
+struct arcs
+{
+  arcs(){};
+  arcs(pose2d start, dubins_params dp) {
+    a[0] = arc(start, dp.K * dp.k.l[0] , dp.s[0]);
+    a[1] = arc(a[0].end, dp.K * dp.k.l[1] , dp.s[1]);
+    a[2] = arc(a[1].end, dp.K * dp.k.l[2] , dp.s[2]);
+    L = dp.L;
+  };
+  
+  arc a[3];
+  float L;
+  arcs get_inverse(){
+    arcs ARCS = *this;
+    ARCS.a[0].start = this->a[2].end;
+    ARCS.a[0].start.theta = arc::mod2pi(this->a[2].end.theta + M_PI);
+    ARCS.a[0].K = - this->a[2].K;
+    ARCS.a[0].end = this->a[2].start;
+    ARCS.a[0].end.theta = arc::mod2pi(this->a[2].start.theta + M_PI);
+
+    ARCS.a[1].start = this->a[1].end;
+    ARCS.a[1].start.theta = arc::mod2pi(this->a[1].end.theta + M_PI);
+    ARCS.a[1].K = - this->a[1].K;
+    ARCS.a[1].end = this->a[1].start;
+    ARCS.a[1].end.theta = arc::mod2pi(this->a[1].start.theta + M_PI);
+
+    ARCS.a[2].start = this->a[0].end;
+    ARCS.a[2].start.theta = arc::mod2pi(this->a[0].end.theta + M_PI);
+    ARCS.a[2].K = - this->a[0].K;
+    ARCS.a[2].end = this->a[0].start;
+    ARCS.a[2].end.theta = arc::mod2pi(this->a[0].start.theta + M_PI);
+    
+    return ARCS;
+
+  }
 };

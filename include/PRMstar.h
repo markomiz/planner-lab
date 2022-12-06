@@ -2,6 +2,7 @@
 #include "geometry.h"
 #include "graph.h"
 #include "map.h"
+#include "dubinCurve.h"
 
 using namespace std;
 
@@ -15,7 +16,10 @@ class PRMstar
         };
 
         void genRoadmap(int n);
+        void genRoadmapPlus(int n, int angles);
         vector<point2d> getPath(point2d start, point2d end);
+        vector<arcs> getPath(pose2d start, pose2d end);
+        shared_ptr<dubinCurve> dCurve;
 
     private:
         shared_ptr<Graph> graph;
