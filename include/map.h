@@ -33,6 +33,7 @@ class Map
         bool colliding(point2d point);
         bool colliding(arc a);
         bool colliding(line l);
+        bool colliding(arcs A);
 
         bool inBounds(point2d point);
 

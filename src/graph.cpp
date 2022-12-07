@@ -23,18 +23,14 @@ quad::quad(int max_depth, point2d tl, point2d br) : tl(tl), br(br), max_depth(ma
     radius = (tr - bl).norm() / 2;
 
 }
-
 bool quad::insert(shared_ptr<Node> node)
 {
-    if (max_depth == 0) {
-        
-        nodes.push_back(node);
+    if (max_depth == 0) { nodes.push_back(node);
         return true;
     }
-
-    if ((tl.x + br.x) / 2 >= node->pt.x) {
+    if ((tl.x + br.x) / 2 >= node->pt.x.x) {
         // Indicates tl_tree
-        if ((tl.y + br.y) / 2 >= node->pt.y) {
+        if ((tl.y + br.y) / 2 >= node->pt.x.y) {
             if (tl_tree == NULL)
                 tl_tree = new quad( max_depth - 1,
                     point2d(tl.x, tl.y),
@@ -53,7 +49,7 @@ bool quad::insert(shared_ptr<Node> node)
         }
     }
     else {
-        if ((tl.y + br.y) / 2 >= node->pt.y) {
+        if ((tl.y + br.y) / 2 >= node->pt.x.y) {
             if (tr_tree == NULL)
                 tr_tree = new quad( max_depth - 1,
                     point2d((tl.x + br.x) / 2,
@@ -77,13 +73,12 @@ bool quad::overlaps(point2d pt, float r)
     if ((pt - center).norm() < r + radius) return true; // circular approx
     return false;
 }
-
 vector<shared_ptr<Node>> quad::in_range(point2d pt, float radius)
 {
     vector<shared_ptr<Node>> all;
     for (auto i = 0; i < nodes.size(); i++)
     {
-        if (((nodes[i]->pt) - pt).norm() < radius) {
+        if (((nodes[i]->pt.x) - pt).norm() < radius) {
             all.push_back(nodes[i]);
         }
     }
@@ -126,7 +121,7 @@ vector<shared_ptr<Node>> quad::in_range(point2d pt, float radius)
 shared_ptr<Node> Graph::add(shared_ptr<Node> point, shared_ptr<Node> existing)
 {
     
-    float dist = (point->pt - existing->pt).norm();
+    float dist = (point->pt.x - existing->pt.x).norm();
     connection c1;
     c1.node = existing;
     c1.cost = dist;
@@ -135,7 +130,21 @@ shared_ptr<Node> Graph::add(shared_ptr<Node> point, shared_ptr<Node> existing)
     c2.node = point;
     c2.cost = dist;
     existing->connected.push_back(c2);
+    return point;
 
+};
+shared_ptr<Node> Graph::add(shared_ptr<Node> point, shared_ptr<Node> existing, arcs A)
+{
+    connection c1;
+    c1.node = existing;
+    c1.cost = A.L;
+    c1.A = A.get_inverse();
+    point->connected.push_back(c1);
+    connection c2;
+    c2.node = point;
+    c2.cost = A.L;
+    c2.A = A;
+    existing->connected.push_back(c2);
     return point;
 
 };
@@ -164,55 +173,100 @@ vector<point2d> Graph::getPath(shared_ptr<Node> start, shared_ptr<Node> end)
     OPEN.push_back(start);
     while (OPEN.size() > 0)
     {   
-        
         auto cur_it = OPEN.begin();
         current = *cur_it;
         // always work on minimal cost node in open set
         for (auto it = OPEN.begin(); it != OPEN.end(); it++)
         {
             if ((*it)->cost < current->cost)
-            {
-                
+            { 
                 cur_it = it;
                 current = *cur_it;
             }
         }
         OPEN.erase(cur_it);
-        
         if (current == end) {
-            
             break;
         }
-        
         // for all nodes connected to current
         for (auto i = 0; i < current->connected.size(); i++)
         {
-            
             if ( ! current->connected[i].node->opened )
             {
                 // if not opened, add to open, store that current is parent
                 // update their cost to current + dist between nodes
-                
                 current->connected[i].node->parent = current;
-                
                 OPEN.push_back(current->connected[i].node);
                 current->connected[i].node->opened = true;
                 current->connected[i].node->cost = current->cost + current->connected[i].cost;
             }
         }
-
-        
-        
     }
     std::cout << "still working \n";
     if (!current->parent) {
         std::cout << "oopsie no path \n";
         return points;
     }
-
     while (current->parent != start)
     {
-        points.push_back(current->pt);
+        points.push_back(current->pt.x);
+        current = current->parent;
+    }
+    std::cout << "we made it this far! \n";
+    reset_nodes(); 
+    
+    current = nullptr;
+    OPEN.clear();
+    std::cout << "further! \n";
+    return points;
+};
+vector<arcs> Graph::getPathPlus(shared_ptr<Node> start, shared_ptr<Node> end)
+{
+    std::cout << "start get path \n";
+    // add start and end points to graph - connecting them to nearest TODO
+    vector<arcs> points;
+    // init open list
+    vector<shared_ptr<Node>> OPEN;
+    // add start node on open list
+    shared_ptr<Node> current = nullptr;
+    OPEN.push_back(start);
+    while (OPEN.size() > 0)
+    {   
+        auto cur_it = OPEN.begin();
+        current = *cur_it;
+        // always work on minimal cost node in open set
+        for (auto it = OPEN.begin(); it != OPEN.end(); it++)
+        {
+            if ((*it)->cost < current->cost)
+            { 
+                cur_it = it;
+                current = *cur_it;
+            }
+        }
+        OPEN.erase(cur_it);
+        if (current == end) break;
+        // for all nodes connected to current
+        for (auto i = 0; i < current->connected.size(); i++)
+        {
+            if ( ! current->connected[i].node->opened )
+            {
+                // if not opened, add to open, store that current is parent
+                // update their cost to current + dist between nodes
+                current->connected[i].node->parent = current;
+                current->connected[i].node->parent_connection = make_shared<connection>(current->connected[i]);
+                OPEN.push_back(current->connected[i].node);
+                current->connected[i].node->opened = true;
+                current->connected[i].node->cost = current->cost + current->connected[i].cost;
+            }
+        }
+    }
+    if (!current->parent) {
+        std::cout << "oopsie no path \n";
+        return points;
+    }
+    while (current->parent != start)
+    {
+        points.push_back(current->parent_connection->A);
         current = current->parent;
     }
     std::cout << "we made it this far! \n";
@@ -226,7 +280,7 @@ vector<point2d> Graph::getPath(shared_ptr<Node> start, shared_ptr<Node> end)
 void Graph::print_nodes(){
     for (auto i = 0; i < nodes.size(); i++)
     {
-        cout << (nodes[i]->pt).x << " x ins y " << (nodes[i]->pt).y << "\n";
+        cout << (nodes[i]->pt).x.x << " x ins y " << (nodes[i]->pt).x.y << "\n";
     }
 }
 

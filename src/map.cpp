@@ -81,6 +81,11 @@ bool Map::colliding(point2d point)
     if ( ! inBounds(point)) return true;
     return false;
 };
+bool Map::colliding(arcs A)
+{
+    for (int i; i < 3; i++){ if (colliding(A.a[i])) return true; }
+    return false;
+}
 bool Map::colliding(arc a)
 {
     // obstacle check

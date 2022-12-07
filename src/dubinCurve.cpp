@@ -65,14 +65,7 @@ std::vector<dubins_params> dubinCurve::calculateMultiPoint(pose2d start, pose2d 
       {
         x0.theta = theta;
         auto solution = calculateSinglePath(x0, x1);
-
-        bool col_arc = false;
-        arc a1(start, this->_K * solution.k.l[0] , solution.s[0]);
-        arc a2(start, this->_K * solution.k.l[1] , solution.s[1]);
-        arc a3(start, this->_K * solution.k.l[2] , solution.s[2]);
-        col_arc = (col_arc || (map->colliding( a1)));
-        col_arc = (col_arc || (map->colliding( a2)));
-        col_arc = (col_arc || (map->colliding( a3)));
+        bool col_arc = map->colliding(arcs(start, solution));
 
         // create arc from x1, x0 and see if it collides, TODO
         if (solution.L < best_solution.L && !col_arc)
@@ -125,7 +118,6 @@ dubins_params dubinCurve::scaleFromStandard(float lambda, dubins_params params)
 };
 
 dubins_params dubinCurve::calculateSinglePath( pose2d x0, pose2d x1 ){
-  
   dubins_params best_path;
   best_path.L = __FLT_MAX__;
   dubins_params path;
@@ -147,6 +139,7 @@ dubins_params dubinCurve::calculateSinglePath( pose2d x0, pose2d x1 ){
   }
   // unscale
   best_path = scaleFromStandard( v.lambda, best_path);
+  best_path.K = this->_K;
   return best_path;
 };
 
