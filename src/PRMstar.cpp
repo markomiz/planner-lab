@@ -78,7 +78,7 @@ vector<point2d> PRMstar::getPath(point2d start, point2d end)
 
 void PRMstar::genRoadmapPlus(int n, int angles)
 {
-    float yprm  = sqrt(2*(1+ 1/2)) * sqrt(4*map->getFreeSpace()/M_PI) * 1.0;
+    float yprm  = sqrt(2*(1+ 1/2)) * sqrt(map->getFreeSpace()/M_PI) * 1.0;
     //  init empty graph
     int cons = 0;
     float d_ang = M_PI * 2/float(angles);
@@ -99,8 +99,7 @@ void PRMstar::genRoadmapPlus(int n, int angles)
                 bool col_arc = false;
                 dubins_params sol = dCurve->calculateSinglePath(new_pose, nearest[x]->pt);
                 arcs A(new_node->pt, sol);
-                // if doesn't collide add connections to graph
-                if (map->colliding(A) || A.L > 2* rad) continue;
+                if (map->colliding(A) || A.L > rad) continue;
                 graph->add(new_node, nearest[x], A);
                 cons ++;
             };
@@ -108,6 +107,7 @@ void PRMstar::genRoadmapPlus(int n, int angles)
             graph->points_quad.insert(new_node);
         }
     }
+    cout << cons <<" connections  \n";
 };
 
 vector<arcs> PRMstar::getPath(pose2d start, pose2d end)
@@ -128,13 +128,12 @@ vector<arcs> PRMstar::getPath(pose2d start, pose2d end)
     };
 
     std::vector<shared_ptr<Node>> nearest_e = graph->in_range(end.x, TRSH); // find all nodes within a Rad
-
     shared_ptr<Node> end_node( new Node(end));
     for (auto x = 0; x < nearest_s.size(); x++)
     {
         // gen dubins
         bool col_arc = false;
-        dubins_params sol = dCurve->calculateSinglePath(end, nearest_e[x]->pt);
+        dubins_params sol = dCurve->calculateSinglePath(end, nearest_s[x]->pt);
         arcs A(end, sol);
         // if doesn't collide add connections to graph
         if (map->colliding(A)) continue;
@@ -144,6 +143,7 @@ vector<arcs> PRMstar::getPath(pose2d start, pose2d end)
     graph->points_quad.insert(start_node);
     graph->nodes.push_back(end_node);
     graph->points_quad.insert(end_node);
+    cout << "hiit the graph \n";
     std::vector<arcs> points = graph->getPathPlus(start_node, end_node);
     return points;
 }

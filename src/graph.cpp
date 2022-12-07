@@ -23,15 +23,11 @@ quad::quad(int max_depth, point2d tl, point2d br) : tl(tl), br(br), max_depth(ma
     radius = (tr - bl).norm() / 2;
 
 }
-
 bool quad::insert(shared_ptr<Node> node)
 {
-    if (max_depth == 0) {
-        
-        nodes.push_back(node);
+    if (max_depth == 0) { nodes.push_back(node);
         return true;
     }
-
     if ((tl.x + br.x) / 2 >= node->pt.x.x) {
         // Indicates tl_tree
         if ((tl.y + br.y) / 2 >= node->pt.x.y) {
@@ -77,7 +73,6 @@ bool quad::overlaps(point2d pt, float r)
     if ((pt - center).norm() < r + radius) return true; // circular approx
     return false;
 }
-
 vector<shared_ptr<Node>> quad::in_range(point2d pt, float radius)
 {
     vector<shared_ptr<Node>> all;
@@ -140,7 +135,6 @@ shared_ptr<Node> Graph::add(shared_ptr<Node> point, shared_ptr<Node> existing)
 };
 shared_ptr<Node> Graph::add(shared_ptr<Node> point, shared_ptr<Node> existing, arcs A)
 {
-    
     connection c1;
     c1.node = existing;
     c1.cost = A.L;
@@ -151,6 +145,7 @@ shared_ptr<Node> Graph::add(shared_ptr<Node> point, shared_ptr<Node> existing, a
     c2.cost = A.L;
     c2.A = A;
     existing->connected.push_back(c2);
+    return point;
 
 };
 vector<shared_ptr<Node>> Graph::in_range(point2d pt, float rad)
@@ -227,6 +222,7 @@ vector<point2d> Graph::getPath(shared_ptr<Node> start, shared_ptr<Node> end)
 };
 vector<arcs> Graph::getPathPlus(shared_ptr<Node> start, shared_ptr<Node> end)
 {
+    std::cout << "start get path \n";
     // add start and end points to graph - connecting them to nearest TODO
     vector<arcs> points;
     // init open list

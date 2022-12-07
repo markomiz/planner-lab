@@ -118,7 +118,6 @@ dubins_params dubinCurve::scaleFromStandard(float lambda, dubins_params params)
 };
 
 dubins_params dubinCurve::calculateSinglePath( pose2d x0, pose2d x1 ){
-  
   dubins_params best_path;
   best_path.L = __FLT_MAX__;
   dubins_params path;

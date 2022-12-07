@@ -58,21 +58,20 @@ void Dubin::timer_callback()
 
   print_message();
   float delta = 0.01;
-  //pose2d x0 = this->subscribeToPos();
   pose2d x0(0.1,0.1,4.0);
   pose2d x1(3.0,5.0,0.0);
   shared_ptr<Map> map (new Map(0.0, 0.0, 10.0, 10.0));
+  RCLCPP_INFO(this->get_logger()," gmap made");
   shared_ptr<dubinCurve> d (new dubinCurve());
   d->map = map;
   d->_K = 3;
   planner = new PRMstar(map);
+  RCLCPP_INFO(this->get_logger()," planner made");
   planner->dCurve = d;
-  planner->genRoadmapPlus(100, 6);
+  planner->genRoadmapPlus(10000, 6);
+  RCLCPP_INFO(this->get_logger()," gen roadmap!");
   std::vector<arcs> mids = planner->getPath(x0,x1);
-
-  //// RCLCPP_INFO(this->get_logger(),"psd");
-  
-  RCLCPP_INFO(this->get_logger()," gen path!");
+  RCLCPP_INFO(this->get_logger()," got path!");
   //nav_msgs::msg::Path message =  d->generatePathFromDubins(x0, d->calculateMultiPoint(x0, x1, mids, 12), delta);
   // message.header.stamp = this->get_clock()->now();
   // publisher_->publish(message);
