@@ -27,7 +27,7 @@ class Map
     public:
         Map();
         Map(float min_x ,float min_y ,float max_x ,float max_y)
-        : min_x(min_x), min_y(min_y), max_x(max_x), max_y(max_y){ processBounds();};
+        : min_x(min_x), min_y(min_y), max_x(max_x), max_y(max_y), halton_index(0){ processBounds();};
 
         void addObstacle(Polygon shape);
         bool colliding(point2d point);
@@ -45,7 +45,11 @@ class Map
         void processBounds();
         float getFreeSpace() { return freeSpace;};
         point2d uniform_sample();
+        float halton_min(int index, int base, float min, float max);
+        point2d halton_sample();
+
     private:
+        int halton_index;
         float freeSpace;
         std::vector<Polygon> obstacles;
         std::vector<line> bounds;
