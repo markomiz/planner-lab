@@ -16,6 +16,9 @@
 #include "nav_msgs/msg/path.hpp"
 #include "geometry_msgs/msg/pose_stamped.hpp"
 
+#include "nav2_msgs/action/follow_path.hpp"
+#include "rclcpp_action/rclcpp_action.hpp"
+
 #include "dubin.h"
 #include "PRMstar.h"
 #include "map.h"
@@ -25,7 +28,7 @@ using namespace std::chrono_literals;
 
 
 pose2d Dubin::subscribeToPos(){
-  std::string target_frame_ = this->declare_parameter<std::string>("target_frame", "shelfino2/base_link");
+  std::string target_frame_ = this->declare_parameter<std::string>("target_frame", "gazebo/base_link");
   std::shared_ptr<tf2_ros::TransformListener> tf_listener{nullptr};
   std::unique_ptr<tf2_ros::Buffer> tf_buffer;
   tf_buffer = std::make_unique<tf2_ros::Buffer>(this->get_clock());
@@ -55,26 +58,66 @@ pose2d Dubin::subscribeToPos(){
 
 void Dubin::timer_callback()
 {
+  /*
+    PUBLISHER AND SUBSCRIBER PART 
+  */
 
   print_message();
   float delta = 0.01;
-  pose2d x0(0.1,0.1,4.0);
-  pose2d x1(3.0,5.0,0.0);
-  shared_ptr<Map> map (new Map(0.0, 0.0, 10.0, 10.0));
-  RCLCPP_INFO(this->get_logger()," gmap made");
-  shared_ptr<dubinCurve> d (new dubinCurve());
-  d->map = map;
-  d->_K = 3;
-  planner = new PRMstar(map);
-  RCLCPP_INFO(this->get_logger()," planner made");
-  planner->dCurve = d;
-  planner->genRoadmapPlus(10000, 8);
-  RCLCPP_INFO(this->get_logger()," gen roadmap!");
-  std::vector<arcs> mids = planner->getPath(x0,x1);
-  RCLCPP_INFO(this->get_logger()," got path!");
-  //nav_msgs::msg::Path message =  d->generatePathFromDubins(x0, d->calculateMultiPoint(x0, x1, mids, 12), delta);
-  // message.header.stamp = this->get_clock()->now();
+  pose2d x0 = this->subscribeToPos();
+  //pose2d x0(0.1,0.1,4.0);
+  pose2d x1(0.0,0.0,0.0);
+
+
+  // Map* map = new Map(0.0, 0.0, 10.0, 10.0);
+  // planner = new PRMstar(map);
+  // planner->genRoadmap(100);
+  // std::vector<point2d> mids = planner->getPath(x0.x,x1.x);
+  // if (mids.size() >= 2)
+  // {
+  //   mids.pop_back();
+  //   mids.erase(mids.begin());
+  // }
+
+  std::vector<point2d> mids;
+  //// RCLCPP_INFO(this->get_logger(),"psd");
+  dubinCurve d;
+  d._K = 3;
+  nav_msgs::msg::Path message =  d.generatePathFromDubins(x0, d.calculateMultiPoint(x0, x1, mids, 3), delta);
+  message.header.stamp = this->get_clock()->now();
+
   // publisher_->publish(message);
+  // RCLCPP_INFO(this->get_logger(),"message shoud have sent!");
+
+
+  /*
+      ACTION CLIENT AND SERVER PART
+  */
+
+  using FollowPath = nav2_msgs::action::FollowPath;
+
+  rclcpp_action::Client<FollowPath>::SharedPtr client_ptr_;
+  
+  client_ptr_ = rclcpp_action::create_client<FollowPath>(this,"follow_path");
+  
+  if (!client_ptr_->wait_for_action_server()) {
+    RCLCPP_ERROR(this->get_logger(), "Action server not available after waiting");
+    rclcpp::shutdown();
+  }
+
+  auto goal_msg = FollowPath::Goal();
+  goal_msg.path = message;
+  goal_msg.controller_id = "FollowPath";
+
+  RCLCPP_INFO(this->get_logger(), "Sending goal position");
+  client_ptr_->async_send_goal(goal_msg);
+
+  for(int i = 0; i<2; i++)
+  {
+      publisher_->publish(message);
+      usleep(1000000);
+      RCLCPP_INFO(this->get_logger(), "%s", message.header.frame_id.c_str());
+  }
 };
 
 int main(int argc, char * argv[])
