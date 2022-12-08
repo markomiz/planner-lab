@@ -68,7 +68,7 @@ void Dubin::timer_callback()
   planner = new PRMstar(map);
   RCLCPP_INFO(this->get_logger()," planner made");
   planner->dCurve = d;
-  planner->genRoadmapPlus(10000, 6);
+  planner->genRoadmapPlus(10000, 8);
   RCLCPP_INFO(this->get_logger()," gen roadmap!");
   std::vector<arcs> mids = planner->getPath(x0,x1);
   RCLCPP_INFO(this->get_logger()," got path!");
