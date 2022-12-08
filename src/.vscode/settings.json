@@ -6,5 +6,9 @@
         "/home/marko/orc",
         "/home/marko"
     ],
-    "C_Cpp.errorSquiggles": "Disabled"
+    "C_Cpp.errorSquiggles": "Disabled",
+    "files.associations": {
+        "*.tcc": "cpp",
+        "random": "cpp"
+    }
 }

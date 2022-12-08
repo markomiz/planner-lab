@@ -200,3 +200,36 @@ point2d Map::uniform_sample()
 
     return p;
 };
+
+float Map::halton_min(int index, int base, float min, float max)
+{
+    while (index > 0)
+        {
+            max = max / base;
+
+            min += max*(index % base);
+
+            index = index / base;
+        }
+        return min;
+};
+
+point2d Map::halton_sample()
+{
+    point2d p;
+    int base_x = 2, base_y = 3;
+
+    p.x = halton_min(halton_index, base_x, min_x, max_x);
+    p.y = halton_min(halton_index, base_y, min_y, max_y);
+
+    while (colliding(p))
+    {
+        p.x = halton_min(halton_index, base_x, min_x, max_x);
+        p.y = halton_min(halton_index, base_y, min_y, max_y);
+        std::cout << "colliding\n";
+        std::cout << p.x;
+        halton_index++;
+    }
+    
+    return p;
+}
