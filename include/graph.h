@@ -1,22 +1,24 @@
 #pragma once
-#include "helpers.h"
+#include "geometry.h"
 
 using namespace std;
 
 struct connection;
 struct Node
 {
-    Node(point2d pt): pt(pt), opened(false), cost(0), parent(nullptr) {};
-    point2d pt;
+    Node(pose2d pt): pt(pt), opened(false), cost(0), parent(nullptr) {};
+    pose2d pt;
     vector<connection> connected;
     float cost;
     bool opened;
     shared_ptr<Node> parent;
+    shared_ptr<connection> parent_connection;
 };
 struct connection
 {
     shared_ptr<Node> node;
     float cost;
+    arcs A; // these go from the connected node to the node which owns this
 };
 
 class quad
@@ -47,12 +49,13 @@ class Graph
 {
     public:
         Graph(int max_depth, point2d tl, point2d br);
-        ~Graph();
         // creates node for point adds, returns new node ptr
         shared_ptr<Node> add(shared_ptr<Node> pt, shared_ptr<Node> existing);
+        shared_ptr<Node> add(shared_ptr<Node> pt, shared_ptr<Node> existing, arcs A);
         vector<shared_ptr<Node>> in_range(point2d pt, float rad);
         void reset_nodes();
         vector<point2d> getPath(shared_ptr<Node> start, shared_ptr<Node> end);
+        vector<arcs> getPathPlus(shared_ptr<Node> start, shared_ptr<Node> end);
         quad points_quad;
         vector<shared_ptr<Node>> nodes;
         void print_nodes();
