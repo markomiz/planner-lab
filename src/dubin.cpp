@@ -20,7 +20,7 @@
 #include "PRMstar.h"
 #include "map.h"
 #include "dubinCurve.h"
-
+#include "config_server.h"
 using namespace std::chrono_literals;
 
 
@@ -64,11 +64,11 @@ void Dubin::timer_callback()
   RCLCPP_INFO(this->get_logger()," gmap made");
   shared_ptr<dubinCurve> d (new dubinCurve());
   d->map = map;
-  d->_K = 3;
+  d->_K = conf->getK();
   planner = new PRMstar(map);
   RCLCPP_INFO(this->get_logger()," planner made");
   planner->dCurve = d;
-  planner->genRoadmapPlus(10000, 8);
+  planner->genRoadmapPlus(conf->getNumPoints(), conf->getNumAngles());
   RCLCPP_INFO(this->get_logger()," gen roadmap!");
   std::vector<arcs> mids = planner->getPath(x0,x1);
   RCLCPP_INFO(this->get_logger()," got path!");
