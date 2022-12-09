@@ -233,3 +233,4 @@ point2d Map::halton_sample()
     
     return p;
 }
+

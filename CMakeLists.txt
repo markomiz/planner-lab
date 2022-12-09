@@ -13,9 +13,12 @@ include_directories(
 find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(nav_msgs REQUIRED)
+find_package(nav2_msgs REQUIRED)
 find_package(geometry_msgs REQUIRED)
 find_package(tf2 REQUIRED)
 find_package(tf2_ros REQUIRED)
+find_package(rclcpp_action REQUIRED)
+
 
 
 add_executable(dubin src/dubin.cpp
@@ -27,7 +30,7 @@ src/map.cpp
 src/PRMstar.cpp
 )
 
-ament_target_dependencies(dubin rclcpp nav_msgs tf2 tf2_ros geometry_msgs)
+ament_target_dependencies(dubin rclcpp nav_msgs tf2 tf2_ros geometry_msgs nav2_msgs rclcpp_action)
 
 install(TARGETS
   dubin
