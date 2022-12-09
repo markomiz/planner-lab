@@ -23,11 +23,11 @@ find_package(rclcpp_action REQUIRED)
 
 add_executable(dubin src/dubin.cpp
 src/collision_check.cpp
+src/config_server.cpp
 src/dubinCurve.cpp
 src/graph.cpp
 src/map.cpp
 src/PRMstar.cpp
-
 )
 
 ament_target_dependencies(dubin rclcpp nav_msgs tf2 tf2_ros geometry_msgs nav2_msgs rclcpp_action)

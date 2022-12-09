@@ -20,6 +20,7 @@
 #include "PRMstar.h"
 #include "graph.h"
 #include "PRMstar.h"
+#include "config_server.h"
 
 using namespace std::chrono_literals;
 
@@ -33,6 +34,7 @@ public:
   publisher_ = this->create_publisher<nav_msgs::msg::Path>("/plan", 10);
   // timer_ = this->create_wall_timer(
   //   500ms, std::bind(&Dubin::timer_callback, this));
+  conf = std::shared_ptr<ConfigParams>(new ConfigParams("src/dubin/config.txt"));
   this->timer_callback();
 
 };
@@ -44,6 +46,7 @@ private:
   void timer_callback();
   rclcpp::TimerBase::SharedPtr timer_;
   rclcpp::Publisher<nav_msgs::msg::Path>::SharedPtr publisher_;
+  std::shared_ptr<ConfigParams> conf;
   size_t count_;
   PRMstar* planner;
   void print_message()
