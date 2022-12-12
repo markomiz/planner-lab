@@ -266,7 +266,11 @@ vector<arcs> Graph::getPathPlus(shared_ptr<Node> start, shared_ptr<Node> end)
                 // Check if node is available at that time
                 float length = current->cost + current->connected[i].cost;
                 float time_stamp = length;
-                if (!current->connected[i].node->available.check_availability(time_stamp))
+                /* TODO 
+                * -> Time Threshold AKA arrival_length_threshold
+                */
+                float arrival_length_threshold = 0.5;
+                if (!current->connected[i].node->check_availability(time_stamp, arrival_length_threshold))
                 {
                     continue; //skip to the next node connected to current
                 }
@@ -294,24 +298,19 @@ vector<arcs> Graph::getPathPlus(shared_ptr<Node> start, shared_ptr<Node> end)
         // Calculate time of arrival to the node and add info to the node 
         
         /* TODO 
-         * -> Time Threshold AKA arrival_length_threshold
          * -> Length Threshold AKA nearby_nodes_occupied_threshold
         */
         float nearby_nodes_occupied_threshold = 1;
-        float arrival_length_threshold = 0.5;
         
         
         float node_time = current->cost;
-        current->available.arrival_time = node_time - arrival_length_threshold;
-        current->available.departure_time = node_time + arrival_length_threshold;
+        current->arrival_time.push_back(node_time);
 
-        for (auto i = 0; i < current->connected.size(); i++)
+        point2d current_point = current->pt.x;
+        vector<shared_ptr<Node>> nearby = points_quad.in_range(current_point, nearby_nodes_occupied_threshold); 
+        for (auto i = 0; i < nearby.size() ; i++)
         {
-            if (current->connected[i].cost < nearby_nodes_occupied_threshold)
-            {
-                current->connected[i].node->available.arrival_time = node_time - arrival_length_threshold;
-                current->connected[i].node->available.departure_time = node_time + arrival_length_threshold;
-            }
+            nearby[i]->arrival_time.push_back(node_time);     
         }
   
         current = current->parent;

@@ -5,28 +5,6 @@ using namespace std;
 
 struct connection;
 
-struct time_availability{
-    float arrival_time;
-    float departure_time;
-
-    time_availability(float node_time = -1, float threshold = 0){
-        arrival_time = node_time - threshold;
-        departure_time = node_time + threshold;
-    };
-    
-    bool check_availability(float current_time)
-    {
-        if (current_time < arrival_time  || current_time > departure_time)
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
-    }
-    private:
-};
 
 struct Node
 {
@@ -37,10 +15,23 @@ struct Node
     bool opened;
     shared_ptr<Node> parent;
     shared_ptr<connection> parent_connection;
-    time_availability available;
-    int node_visits = 0;
-    
+    vector<float> arrival_time;
+    bool check_availability(float current_time, float threshold)
+    {
+        for (int i = 0; i < arrival_time.size(); i++)
+        {
+            if (current_time < arrival_time[i] - threshold  || current_time > arrival_time[i] + threshold)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+    }    
 };
+
 struct connection
 {
     shared_ptr<Node> node;
