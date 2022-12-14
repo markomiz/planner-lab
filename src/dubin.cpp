@@ -77,7 +77,8 @@ void Dubin::timer_callback()
   planner->dCurve = d;
   planner->genRoadmapPlus(conf->getNumPoints(), conf->getNumAngles());
   RCLCPP_INFO(this->get_logger()," gen roadmap!");
-  std::vector<arcs> mids = planner->getPath(x0,x1);
+  std::vector<arcs> way = planner->getPath(x0,x1);
+  auto message = d->arcs_to_path(way, 0.05);
   RCLCPP_INFO(this->get_logger()," got path!");
   //nav_msgs::msg::Path message =  d->generatePathFromDubins(x0, d->calculateMultiPoint(x0, x1, mids, 12), delta);
   // message.header.stamp = this->get_clock()->now();

@@ -28,9 +28,7 @@ nav_msgs::msg::Path dubinCurve::generatePathFromDubins(pose2d start, std::vector
   final_path.header.frame_id = "map";
   pose2d currentPoint = start;
   final_path.poses.push_back(currentPoint.to_Pose());
-  // RCLCPP_INFO(this->get_logger(),"generate path from dubins start");
-  std::ofstream myfile;
-  myfile.open ("example.csv");
+
   for (auto i = 0; i < int(sub_paths.size()); i++)
   {
     for (auto j = 0; j < 3; j++)
@@ -45,10 +43,30 @@ nav_msgs::msg::Path dubinCurve::generatePathFromDubins(pose2d start, std::vector
       final_path.poses.push_back(currentPoint.to_Pose());
     }
   }
-  myfile.close();
   return final_path;
 };
-
+nav_msgs::msg::Path dubinCurve::arcs_to_path(vector<arcs> input_arcs, float delta)
+{
+  nav_msgs::msg::Path final_path;
+  final_path.header.frame_id = "map";
+  pose2d currentPoint = input_arcs[0].a[0].start;
+  final_path.poses.push_back(currentPoint.to_Pose());
+  for (auto i = 0; i < int(input_arcs.size()); i++)
+  {
+    for (auto j = 0; j < 3; j++)
+    {
+        arc &a = input_arcs[i].a[j];
+        for (float ds = 0; ds < a.s; ds += delta)
+        {
+          currentPoint = arc::next_pose(a.start, ds, a.K);
+          final_path.poses.push_back(currentPoint.to_Pose()); 
+        }
+        currentPoint = arc::next_pose(a.start, a.s, a.K);
+        final_path.poses.push_back(currentPoint.to_Pose()); 
+    }
+  }
+  return final_path;
+}
 std::vector<dubins_params> dubinCurve::calculateMultiPoint(pose2d start, pose2d end, std::vector<point2d> mid_points, int n_angles) // DONE
 {
   std::vector<dubins_params> best_path;
