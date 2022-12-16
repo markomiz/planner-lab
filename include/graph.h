@@ -20,15 +20,12 @@ struct Node
     {
         for (int i = 0; i < arrival_time.size(); i++)
         {
-            if (current_time < arrival_time[i] - threshold  || current_time > arrival_time[i] + threshold)
+            if (current_time > arrival_time[i] - threshold  && current_time < arrival_time[i] + threshold)
             {
-                return true;
-            }
-            else
-            {
-                return false;
+                return false; 
             }
         }
+        return true;
     }    
 };
 

@@ -1,5 +1,7 @@
 #pragma once
 #include "geometry.h"
+#include <memory>
+
 
 class Polygon
 {
@@ -19,7 +21,6 @@ class Polygon
         float area;
         std::vector<point2d> verteces;
         std::vector<line> edges;
-
 };
 
 class Map
@@ -29,14 +30,14 @@ class Map
         Map(float min_x ,float min_y ,float max_x ,float max_y)
         : min_x(min_x), min_y(min_y), max_x(max_x), max_y(max_y), halton_index(0){ processBounds();};
 
-        void addObstacle(Polygon shape);
-        bool colliding(point2d point);
-        bool colliding(arc a);
-        bool colliding(line l);
-        bool colliding(arcs A);
+        void addObstacle(Polygon shape); //NOT DONE
+        bool colliding(point2d point); //DONE: MAP.CPP
+        bool colliding(arc a); //DONE: MAP.CPP
+        bool colliding(line l); //DONE: MAP.CPP
+        bool colliding(arcs A); //DONE: MAP.CPP
+        void createMap(Polygon map);
 
         bool inBounds(point2d point);
-
         float min_x;
         float min_y;
         float max_x;
@@ -52,7 +53,7 @@ class Map
         int halton_index;
         float freeSpace;
         std::vector<Polygon> obstacles;
-        std::vector<line> bounds;
+        Polygon total_map_poly;
         
         
 

@@ -20,17 +20,17 @@ find_package(tf2_ros REQUIRED)
 find_package(rclcpp_action REQUIRED)
 
 
-
 add_executable(dubin src/dubin.cpp
 src/collision_check.cpp
 src/dubinCurve.cpp
 src/graph.cpp
 src/map.cpp
 src/PRMstar.cpp
+src/map_subscribers.cpp
 
 )
 
-ament_target_dependencies(dubin rclcpp nav_msgs tf2 tf2_ros geometry_msgs nav2_msgs rclcpp_action)
+ament_target_dependencies(dubin rclcpp nav_msgs tf2 tf2_ros geometry_msgs nav2_msgs rclcpp_action) 
 
 install(TARGETS
   dubin
