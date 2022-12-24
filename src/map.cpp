@@ -143,10 +143,10 @@ void Map::processBounds(){
         temp_vec_y.push_back(verteces[i].y);
     }
 
-    min_x = temp_vec_x[min_element(temp_vec_x.begin(), temp_vec_x.end())];
-    min_y = temp_vec_y[min_element(temp_vec_y.begin(), temp_vec_y.end())];
-    max_x = temp_vec_x[max_element(temp_vec_x.begin(), temp_vec_x.end())];
-    max_y = temp_vec_y[max_element(temp_vec_y.begin(), temp_vec_y.end())];
+    min_x = *min_element(temp_vec_x.begin(), temp_vec_x.end());
+    min_y = *min_element(temp_vec_y.begin(), temp_vec_y.end());
+    max_x = *max_element(temp_vec_x.begin(), temp_vec_x.end());
+    max_y = *max_element(temp_vec_y.begin(), temp_vec_y.end());
 
     // bounds.push_back(l);
     // bounds.push_back(r);
@@ -192,7 +192,7 @@ float Map::halton_min(int index, int base, float min, float max)
 point2d Map::halton_sample()
 {
     point2d p;
-    int base_x = 2, base_y = 3;
+    int base_x = 2, base_y = 3; //TODO - maybe move to config file
 
     p.x = halton_min(halton_index, base_x, min_x, max_x);
     p.y = halton_min(halton_index, base_y, min_y, max_y);
