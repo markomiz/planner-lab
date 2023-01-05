@@ -14,7 +14,6 @@
 #include "tf2_ros/buffer.h"
 #include "rclcpp/rclcpp.hpp"
 #include "nav_msgs/msg/path.hpp"
-#include "geometry_msgs/msg/pose_stamped.hpp"
 
 #include "nav2_msgs/action/follow_path.hpp"
 #include "rclcpp_action/rclcpp_action.hpp"
@@ -69,7 +68,7 @@ void Dubin::timer_callback()
   float delta = 0.01;
   pose2d x0 = this->subscribeToPos();
   //pose2d x0(0.1,0.1,4.0);
-  pose2d x1(0.0,0.0,0.0);
+  pose2d x1(3,2.0,.0);
 
   
   // Map* map = new Map(0.0, 0.0, 10.0, 10.0);
