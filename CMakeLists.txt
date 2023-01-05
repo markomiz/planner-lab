@@ -24,6 +24,7 @@ find_package(std_msgs REQUIRED)
 
 add_executable(dubin src/dubin.cpp
 src/collision_check.cpp
+src/config_server.cpp
 src/dubinCurve.cpp
 src/graph.cpp
 src/map.cpp
