@@ -4,6 +4,8 @@
 using namespace std;
 
 struct connection;
+
+
 struct Node
 {
     Node(pose2d pt): pt(pt), opened(false), cost(0), parent(nullptr) {};
@@ -13,7 +15,20 @@ struct Node
     bool opened;
     shared_ptr<Node> parent;
     shared_ptr<connection> parent_connection;
+    vector<float> arrival_time;
+    bool check_availability(float current_time, float threshold)
+    {
+        for (int i = 0; i < arrival_time.size(); i++)
+        {
+            if (current_time > arrival_time[i] - threshold  && current_time < arrival_time[i] + threshold)
+            {
+                return false; 
+            }
+        }
+        return true;
+    }    
 };
+
 struct connection
 {
     shared_ptr<Node> node;
@@ -61,6 +76,5 @@ class Graph
         void print_nodes();
 
     private:
-
-
 };
+

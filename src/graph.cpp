@@ -118,6 +118,13 @@ vector<shared_ptr<Node>> quad::in_range(point2d pt, float radius)
 
     return all;
 };
+
+/*
+* Adding node considering linear connection between nodes
+* Inputs: point - point that we are considering to add to the graph
+          existing - closest point in the nearest k members that we are connecting to
+* Outputs: point - new node added to the graph
+*/
 shared_ptr<Node> Graph::add(shared_ptr<Node> point, shared_ptr<Node> existing)
 {
     
@@ -133,18 +140,25 @@ shared_ptr<Node> Graph::add(shared_ptr<Node> point, shared_ptr<Node> existing)
     return point;
 
 };
+
+
+
 shared_ptr<Node> Graph::add(shared_ptr<Node> point, shared_ptr<Node> existing, arcs A)
 {
     connection c1;
     c1.node = existing;
     c1.cost = A.L;
     c1.A = A.get_inverse();
+
     point->connected.push_back(c1);
+
     connection c2;
     c2.node = point;
     c2.cost = A.L;
     c2.A = A;
+
     existing->connected.push_back(c2);
+
     return point;
 
 };
@@ -164,7 +178,6 @@ void Graph::reset_nodes()
 }
 vector<point2d> Graph::getPath(shared_ptr<Node> start, shared_ptr<Node> end)
 {
-    // add start and end points to graph - connecting them to nearest TODO
     vector<point2d> points;
     // init open list
     vector<shared_ptr<Node>> OPEN;
@@ -223,7 +236,7 @@ vector<point2d> Graph::getPath(shared_ptr<Node> start, shared_ptr<Node> end)
 vector<arcs> Graph::getPathPlus(shared_ptr<Node> start, shared_ptr<Node> end)
 {
     std::cout << "start get path \n";
-    // add start and end points to graph - connecting them to nearest TODO
+    // add start and end points to graph - connecting them to nearest
     vector<arcs> points;
     // init open list
     vector<shared_ptr<Node>> OPEN;
@@ -248,15 +261,30 @@ vector<arcs> Graph::getPathPlus(shared_ptr<Node> start, shared_ptr<Node> end)
         // for all nodes connected to current
         for (auto i = 0; i < current->connected.size(); i++)
         {
-            if ( ! current->connected[i].node->opened )
+            if ( ! current->connected[i].node->opened)
             {
-                // if not opened, add to open, store that current is parent
-                // update their cost to current + dist between nodes
-                current->connected[i].node->parent = current;
-                current->connected[i].node->parent_connection = make_shared<connection>(current->connected[i]);
-                OPEN.push_back(current->connected[i].node);
-                current->connected[i].node->opened = true;
-                current->connected[i].node->cost = current->cost + current->connected[i].cost;
+                // Check if node is available at that time
+                float length = current->cost + current->connected[i].cost;
+                float time_stamp = length;
+                /* TODO 
+                * -> Time Threshold AKA arrival_length_threshold
+                */
+                float arrival_length_threshold = 0.5;
+                if (!current->connected[i].node->check_availability(time_stamp, arrival_length_threshold))
+                {
+                    continue; //skip to the next node connected to current
+                }
+                else
+                {
+                    // if not opened, add to open, store that current is parent
+                    // update their cost to current + dist between nodes 
+                    current->connected[i].node->parent = current;
+                    current->connected[i].node->parent_connection = make_shared<connection>(current->connected[i]);
+                    OPEN.push_back(current->connected[i].node);
+                    current->connected[i].node->opened = true;
+                    current->connected[i].node->cost = length;
+                }
+                
             }
         }
     }
@@ -267,6 +295,24 @@ vector<arcs> Graph::getPathPlus(shared_ptr<Node> start, shared_ptr<Node> end)
     while (current->parent != start)
     {
         points.push_back(current->parent_connection->A);
+        // Calculate time of arrival to the node and add info to the node 
+        
+        /* TODO 
+         * -> Length Threshold AKA nearby_nodes_occupied_threshold
+        */
+        float nearby_nodes_occupied_threshold = 1;
+        
+        
+        float node_time = current->cost;
+        current->arrival_time.push_back(node_time);
+
+        point2d current_point = current->pt.x;
+        vector<shared_ptr<Node>> nearby = points_quad.in_range(current_point, nearby_nodes_occupied_threshold); 
+        for (auto i = 0; i < nearby.size() ; i++)
+        {
+            nearby[i]->arrival_time.push_back(node_time);     
+        }
+  
         current = current->parent;
     }
     std::cout << "we made it this far! \n";

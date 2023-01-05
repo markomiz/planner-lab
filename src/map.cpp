@@ -59,7 +59,7 @@ void Polygon::calculateArea()
 
     area = verteces.size() * a * a / (4 * sin(M_PI/ a));
 
-}
+};
 
 void Map::addObstacle(Polygon shape)
 {
@@ -78,7 +78,7 @@ bool Map::colliding(point2d point)
         // otherwise check for polygon collision
         if (CollisionCheck::point_in_polygon(point, obs)) return true;
     }
-    if ( ! inBounds(point)) return true;
+    if (!inBounds(point)) return true;
     return false;
 };
 bool Map::colliding(arcs A)
@@ -89,20 +89,12 @@ bool Map::colliding(arcs A)
 bool Map::colliding(arc a)
 {
     // obstacle check
-    for (auto i = 0; i < obstacles.size(); i++)
+    if (CollisionCheck::arc_with_polygon(a, total_map_poly)) return true;
+    for (int i = 0; i < obstacles.size(); i++)
     {
-        Polygon obs = obstacles[i];
-        // rough pass - if obstacle radius + arc radius  is more than distance than we're surely clear
-        if ((a.radius + obs.radius) > (a.center - obs.center).norm()) continue;
-
-        // otherwise check for polygon edge collision
-        if (CollisionCheck::arc_with_polygon(a, obs)) return true;
+        if (CollisionCheck::arc_with_polygon(a, obstacles[i])) return true;
     }
-    //  bounds check
-    for (auto i = 0; i < bounds.size(); i++)
-    {
-        if (CollisionCheck::line_arc_intersect(bounds[i], a).intersects) return true;
-    }
+    return false;
 };
 bool Map::colliding(line l)
 {
@@ -133,51 +125,34 @@ bool Map::colliding(line l)
 
 bool Map::inBounds(point2d p)
 {
-    if (p.x > max_x ) return false;
-    if (p.y > max_y ) return false;
-    if (p.x < min_x ) return false;
-    if (p.y < min_y ) return false;
-    return true;
+    return CollisionCheck::point_in_polygon(p, total_map_poly);
+};
+
+void Map::createMap(Polygon map)
+{
+    total_map_poly = map;
 };
 
 void Map::processBounds(){
+    vector<point2d> verteces = total_map_poly.verteces;
+    vector<float> temp_vec_x;
+    vector<float> temp_vec_y;
+    for (int i = 0; i < verteces.size(); i++)
+    {
+        temp_vec_x.push_back(verteces[i].x);
+        temp_vec_y.push_back(verteces[i].y);
+    }
 
-    point2d tl;
-    tl.x = min_x;
-    tl.y = max_y;
-    point2d tr;
-    tr.x = max_x;
-    tr.y = max_y;
-    point2d bl;
-    bl.x = min_x;
-    bl.y = min_y;
-    point2d br;
-    br.x = max_x;
-    br.y = min_y;
-    // left
-    line l;
-    l.p_initial = tl;
-    l.p_final = bl;
-    // right
-    line r;
-    r.p_initial = tr;
-    r.p_final = br;
-    // top
-    line t;
-    t.p_initial = tl;
-    t.p_final = tr;
-    // bottom
-    line b;
-    b.p_initial = br;
-    b.p_final = bl;
+    min_x = *min_element(temp_vec_x.begin(), temp_vec_x.end());
+    min_y = *min_element(temp_vec_y.begin(), temp_vec_y.end());
+    max_x = *max_element(temp_vec_x.begin(), temp_vec_x.end());
+    max_y = *max_element(temp_vec_y.begin(), temp_vec_y.end());
 
-    bounds.push_back(l);
-    bounds.push_back(r);
-    bounds.push_back(t);
-    bounds.push_back(b);
-
-    freeSpace = (max_x - min_x) * (max_y - min_y);
-
+    // bounds.push_back(l);
+    // bounds.push_back(r);
+    // bounds.push_back(t);
+    // bounds.push_back(b);
+    freeSpace = total_map_poly.area;
 };
 // RANDOM NUMBER STUFF ////
 std::random_device rd;
@@ -217,7 +192,7 @@ float Map::halton_min(int index, int base, float min, float max)
 point2d Map::halton_sample()
 {
     point2d p;
-    int base_x = 2, base_y = 3;
+    int base_x = 2, base_y = 3; //TODO - maybe move to config file
 
     p.x = halton_min(halton_index, base_x, min_x, max_x);
     p.y = halton_min(halton_index, base_y, min_y, max_y);

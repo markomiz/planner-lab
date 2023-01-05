@@ -38,11 +38,13 @@ void PRMstar::genRoadmap(int n)
 vector<point2d> PRMstar::getPath(point2d start, point2d end)
 {
     float TRSH = 1.0;
-    // fisrt connect start and end to graph
+    // first connect start and end to graph
     std::vector<shared_ptr<Node>> nearest_s = graph->in_range(start, TRSH); // find all nodes within a Rad
     pose2d start_pose;
     start_pose.x = start;
     shared_ptr<Node> start_node(new Node(start_pose));
+    
+    // Eval if new node connection dont collide linearly
     int num = nearest_s.size();
     for (auto x = 0; x < nearest_s.size(); x++)
     {
@@ -58,6 +60,8 @@ vector<point2d> PRMstar::getPath(point2d start, point2d end)
     pose2d end_pose;
     end_pose.x = end;
     shared_ptr<Node> end_node( new Node(end_pose));
+
+    // Eval if new node connection dont collide linearly
     int nume = nearest_e.size();
     for (auto x = 0; x < nearest_e.size(); x++)
     {
@@ -68,6 +72,8 @@ vector<point2d> PRMstar::getPath(point2d start, point2d end)
              graph->add(end_node, nearest_e[x]);
         };
     }
+
+    // Add start and end node to the graph 
     graph->nodes.push_back(start_node);
     graph->points_quad.insert(start_node);
     graph->nodes.push_back(end_node);
@@ -88,7 +94,7 @@ void PRMstar::genRoadmapPlus(int n, int angles)
         pose2d new_pose;
         new_pose.x = new_p;
         float rad = yprm*sqrt(log(i+1)/(i+1));
-        std::vector<shared_ptr<Node>> nearest = graph->in_range(new_p,rad); //find all nodes within a Rad
+        std::vector<shared_ptr<Node>> nearest = graph->in_range(new_p,rad); //find all nodes within a Radius
         for (int a = 0; a < angles; a ++)
         {
             shared_ptr<Node> new_node(new Node(new_pose));
