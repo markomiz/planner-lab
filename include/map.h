@@ -6,9 +6,12 @@
 class Polygon
 {
     public:
+        Polygon(){};
+
         Polygon(std::vector<point2d> v): verteces(v)
         {
             processEdges();
+            getMinMax();
             calculateCenter();
             calculateArea();
         }
@@ -16,20 +19,33 @@ class Polygon
         void calculateCenter();
         void processEdges();
         void expandShape(float size);
+        void getMinMax();
+        Map toMap();
         point2d center;
         float radius;
         float area;
+        float x_min;
+        float x_max;
+        float y_min;
+        float y_max;
         std::vector<point2d> verteces;
         std::vector<line> edges;
 };
 
 class Map
 {
-    public:
-        Map();
-        // Map(float min_x ,float min_y ,float max_x ,float max_y)
-        // : min_x(min_x), min_y(min_y), max_x(max_x), max_y(max_y), halton_index(0){ processBounds();};
+    private:
+        int halton_index = 0;
+        float freeSpace;
+        std::vector<Polygon> obstacles;
+        Polygon total_map_poly;
 
+    public:
+        Map(){};
+        Map(float min_x ,float min_y ,float max_x ,float max_y): min_x(min_x),
+        min_y(min_y), max_x(max_x), max_y(max_y), halton_index{0} 
+        {processBounds();};
+        
         void addObstacle(Polygon shape); //NOT DONE
         bool colliding(point2d point); //DONE: MAP.CPP
         bool colliding(arc a); //DONE: MAP.CPP
@@ -49,12 +65,5 @@ class Map
         float halton_min(int index, int base, float min, float max);
         point2d halton_sample();
 
-    private:
-        int halton_index;
-        float freeSpace;
-        std::vector<Polygon> obstacles;
-        Polygon total_map_poly;
         
-        
-
 };

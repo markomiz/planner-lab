@@ -61,6 +61,28 @@ void Polygon::calculateArea()
 
 };
 
+void Polygon::getMinMax()
+{
+    vector<float> temp_vec_x;
+    vector<float> temp_vec_y;
+    for (int i = 0; i < verteces.size(); i++)
+    {
+        temp_vec_x.push_back(verteces[i].x);
+        temp_vec_y.push_back(verteces[i].y);
+    }
+
+    x_min = *min_element(temp_vec_x.begin(), temp_vec_x.end());
+    y_min = *min_element(temp_vec_y.begin(), temp_vec_y.end());
+    x_max = *max_element(temp_vec_x.begin(), temp_vec_x.end());
+    y_max = *max_element(temp_vec_y.begin(), temp_vec_y.end());
+};
+
+Map Polygon::toMap()
+{
+    Map map(x_min,y_min,x_max,y_max);
+    return map;
+}
+
 void Map::addObstacle(Polygon shape)
 {
     obstacles.push_back(shape);

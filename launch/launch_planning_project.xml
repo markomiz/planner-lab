@@ -1,0 +1,15 @@
+<!-- launch_planning_project.launch.xml -->
+
+<launch>
+
+  <!-- include another launch file -->
+  <include file="$(find-pkg-share shelfino_gazebo)/launch/shelfino_empty.launch.py"/>
+  <include file="$(find-pkg-share shelfino_navigation)/launch/shelfino2_nav.launch.py"/>
+
+  <!-- start a turtlesim_node in the turtlesim1 namespace -->
+  <node pkg="dubin" exec="get_obstacles_and_map"/>
+
+  <arg name="node_start_delay" default="5.0" />  
+
+  <node pkg="dubin" exec="dubin" launch-prefix="bash -c 'sleep $(arg node_start_delay); $0 $@' "/>
+</launch>
