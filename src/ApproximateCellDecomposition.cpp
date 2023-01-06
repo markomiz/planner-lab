@@ -1,4 +1,5 @@
 # include "map.h"
+#include <vector>
 
 vector<Polygon> getAvailableSquares(Map map, int split = 4)
 {
@@ -34,32 +35,37 @@ vector<Polygon> getAvailableSquares(Map map, int split = 4)
       p4.y = min_y;
       square_pts.push_back(p4);
       
-      Polygon square(square_pts)
+      Polygon square(square_pts);
 
       totalSquares.push_back(square);
     }
   }
-
+  double area_threshold = 1.0;
   // Eval valid squares to get the path
-  for (int i = 0; i < total_Squares.size(); i++)
+  for (int i = 0; i < totalSquares.size(); i++)
   {
     
-    Polygon temp_square = total_Squares[i];
-    bool available;
+    Polygon temp_square = totalSquares[i];
+    int colliding_edges = 0;
     if (temp_square.area < area_threshold) continue; //TO BE DEFINED
     
     for (int j = 0; j < 4; j++)
     {
-      if(map.colliding(temp_square.center) && !map.colliding(temp_square.edges[j]))
-      {
-        continue;
-      }
-      else if (map.colliding(temp_square.edges[j]))
-      {
-        Map newSplit = temp_square.toMap();
-        availableSquares.push_back(getAvailableSquares(newSplit));
-      }
-      else availableSquares.push_back(temp_square);
+      colliding_edges += map.colliding(temp_square.edges[j]);
+    }
+    // FULL CELL
+    if(map.colliding(temp_square.center) && colliding_edges == 0)
+    {
+      continue;
+    }
+    else if (colliding_edges > 0)
+    {
+      Map newSplit = temp_square.toMap();
+      getAvailableSquares(newSplit);
+    }
+    else
+    {
+      availableSquares.push_back(temp_square);
     }
   }
   return availableSquares;

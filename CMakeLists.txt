@@ -29,6 +29,7 @@ src/dubinCurve.cpp
 src/graph.cpp
 src/map.cpp
 src/PRMstar.cpp
+src/ApproximateCellDecomposition.cpp
 )
 add_executable(get_obstacles_and_map src/map_subscribers.cpp 
 src/collision_check.cpp

@@ -2,6 +2,7 @@
 #include "geometry.h"
 #include <memory>
 
+class Map;
 
 class Polygon
 {
