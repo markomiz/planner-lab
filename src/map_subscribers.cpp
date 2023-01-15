@@ -18,12 +18,14 @@ class ObstacleSubscriber : public rclcpp::Node
     vector<Polygon> obstacle_list;
     void topic_callback(const obstacles_msgs::msg::ObstacleArrayMsg obstacle_message)
     {
-      RCLCPP_INFO(this->get_logger(), "further");
       vector<point2d> polygon_input;
       Polygon poly;
       // create polygon obstacle object
-      for (int i = 0; i < obstacle_message.obstacles.size(); i++)
+      int n_obs = obstacle_message.obstacles.size();
+      RCLCPP_INFO(this->get_logger(), "There are '%i' obstacles", n_obs);
+      for (int i = 0; i < n_obs; i++)
       {
+        RCLCPP_INFO(this->get_logger(), "Obstacle '%i' points:", i);
         geometry_msgs::msg::Polygon aux = obstacle_message.obstacles[i].polygon;
         int nr_points = aux.points.size();
         for (int j = 0; j < nr_points; j++)
@@ -32,7 +34,7 @@ class ObstacleSubscriber : public rclcpp::Node
             temp.x = float(aux.points[j].x);
             temp.y = float(aux.points[j].y);
             polygon_input.push_back(temp);
-            RCLCPP_INFO(this->get_logger(), "Getting obs info");
+            RCLCPP_INFO(this->get_logger(), "Getting obs info: x = '%0.2f', y = '%0.2f'", temp.x, temp.y);
         }
         poly.verteces = polygon_input;
         obstacle_list.push_back(poly);
@@ -57,7 +59,6 @@ class MapLimitSubscriber : public rclcpp::Node
     Polygon map;
     void topic_callback(const geometry_msgs::msg::Polygon::SharedPtr outline_message)
     {
-      RCLCPP_INFO(this->get_logger(), "further map");
       vector<point2d> outer_verteces;
       for (int i = 0; i < outline_message->points.size(); i++)
       {
