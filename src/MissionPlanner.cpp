@@ -83,9 +83,10 @@ void MissionPlanner::gate_topic_callback(const geometry_msgs::msg::Pose outline_
     gate.theta = yaw;
 };
 
-pose2d MissionPlanner::subscribeToPos(std::string robot_number){
+pose2d MissionPlanner::subscribeToPos(std::string robot_id){
     RCLCPP_INFO(this->get_logger(), "Getting initial pose");
-    std::string target_frame_ = this->declare_parameter<std::string>("target_frame", robot_number.c_str());
+    RCLCPP_INFO(this->get_logger(), "Frame: %s", robot_id.c_str());
+    std::string target_frame_ = this->declare_parameter<std::string>("target_frame", robot_id);
     std::shared_ptr<tf2_ros::TransformListener> tf_listener{nullptr};
     std::unique_ptr<tf2_ros::Buffer> tf_buffer;
 

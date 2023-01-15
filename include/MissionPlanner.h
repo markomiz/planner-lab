@@ -98,7 +98,7 @@ class MissionPlanner : public rclcpp::Node
 
             // Waits for all the info on the subscribers
 
-            //waiter();
+            waiter();
 
             // Do calculations
             while (true)
