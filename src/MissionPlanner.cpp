@@ -83,9 +83,9 @@ void MissionPlanner::gate_topic_callback(const geometry_msgs::msg::Pose outline_
     gate.theta = yaw;
 };
 
-pose2d MissionPlanner::subscribeToPos(){
+pose2d MissionPlanner::subscribeToPos(std::string robot_number){
     RCLCPP_INFO(this->get_logger(), "Getting initial pose");
-    std::string target_frame_ = this->declare_parameter<std::string>("target_frame", "gazebo/base_link");
+    std::string target_frame_ = this->declare_parameter<std::string>("target_frame", robot_number.c_str());
     std::shared_ptr<tf2_ros::TransformListener> tf_listener{nullptr};
     std::unique_ptr<tf2_ros::Buffer> tf_buffer;
 
@@ -94,15 +94,15 @@ pose2d MissionPlanner::subscribeToPos(){
 
     std::string fromFrameRel = target_frame_.c_str();
     std::string toFrameRel = std::string("map");
-
+    
     geometry_msgs::msg::TransformStamped t;
-    pose2d xyth(0,0,0);
-
+    pose2d xyth(__FLT_MAX__,__FLT_MAX__,__FLT_MAX__);
     try {
-    t = tf_buffer->lookupTransform(toFrameRel, fromFrameRel, tf2::TimePointZero, 5000ms);
-    } catch (const tf2::TransformException & ex) {
-    return xyth;
+        t = tf_buffer->lookupTransform(toFrameRel, fromFrameRel, tf2::TimePointZero, 5000ms);
+    } catch (/*const tf2::TransformException & ex*/...) {
+        return xyth;
     }
+
     tf2::Quaternion q(t.transform.rotation.x,t.transform.rotation.y,t.transform.rotation.z,t.transform.rotation.w);
     tf2::Matrix3x3 m(q);
     double roll, pitch, yaw;
@@ -115,15 +115,11 @@ pose2d MissionPlanner::subscribeToPos(){
     return xyth;
 };
 
-void MissionPlanner::do_calculations()
+void MissionPlanner::do_calculations(pose2d x0)
 {
-
-    pose2d x0 = subscribeToPos();
-    pose2d x1 = gate;
+    pose2d xf = gate;
     
-    
-    RCLCPP_INFO(this->get_logger(),"Prob here");
-    shared_ptr<Map> map (new Map(map_poly)); //THIS POINTER GIVES SEG FAULT
+    shared_ptr<Map> map (new Map(map_poly));
     
     
     for (int i = 0; i < obstacle_list.size(); i++)
@@ -142,7 +138,7 @@ void MissionPlanner::do_calculations()
     planner->genRoadmapPlus(conf->getNumPoints(), conf->getNumAngles());
     RCLCPP_INFO(this->get_logger(),"Roadmap Generated");
 
-    std::vector<arcs> way = planner->getPath(x0,x1);
+    std::vector<arcs> way = planner->getPath(x0,xf);
     path = d->arcs_to_path(way, 0.05);
     RCLCPP_INFO(this->get_logger(),"Path found");
 
@@ -216,7 +212,7 @@ void MissionPlanner::waiter()
         auto ret1_take = map_subscription_->take(message, info);
         if (ret1_take) {
 
-            RCLCPP_INFO(this->get_logger(), "heard obstacles");
+            RCLCPP_INFO(this->get_logger(), "heard map");
 
         } else {
             RCLCPP_ERROR(this->get_logger(), "no message recieved");
@@ -236,7 +232,7 @@ void MissionPlanner::waiter()
         auto ret2_take = gate_subscription_->take(message, info);
         if (ret2_take) {
 
-            RCLCPP_INFO(this->get_logger(), "heard obstacles");
+            RCLCPP_INFO(this->get_logger(), "heard gate pose");
 
         } else {
             RCLCPP_ERROR(this->get_logger(), "no message recieved");

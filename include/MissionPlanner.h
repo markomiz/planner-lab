@@ -50,6 +50,8 @@ class MissionPlanner : public rclcpp::Node
         rclcpp::TimerBase::SharedPtr timer_;
         std::shared_ptr<ConfigParams> conf;
         size_t count_;
+        int robot_numb = 1;
+        std::string name;
         
         
         //Subscribers
@@ -59,9 +61,9 @@ class MissionPlanner : public rclcpp::Node
         
         void gate_topic_callback(const geometry_msgs::msg::Pose outline_message);
         
-        pose2d subscribeToPos();
+        pose2d subscribeToPos(std::string robot_id);
 
-        void do_calculations();
+        void do_calculations(pose2d x0);
 
         void publish_results();
         
@@ -81,7 +83,7 @@ class MissionPlanner : public rclcpp::Node
 
             conf = std::shared_ptr<ConfigParams>(new ConfigParams("src/dubin/config.txt"));
 
-            // Create subscribers
+            // Create subscribers for gate, map and obstacles
             RCLCPP_INFO(this->get_logger(), "Getting obstacle info");
             obs_subscription_ = this->create_subscription<obstacles_msgs::msg::ObstacleArrayMsg>(
             "obstacles", 10, std::bind(&MissionPlanner::obstacle_topic_callback, this, _1));
@@ -96,18 +98,28 @@ class MissionPlanner : public rclcpp::Node
 
             // Waits for all the info on the subscribers
 
-            waiter();
+            //waiter();
 
             // Do calculations
-            RCLCPP_INFO(this->get_logger(), "Calculating");
-            do_calculations();
+            while (true)
+            {
+                // Define robot currently working
+                name = "shelfino" + std::to_string(robot_numb) + "/base_link"; 
+                RCLCPP_INFO(this->get_logger(), "Working on shelfino %i", robot_numb);
+                RCLCPP_INFO(this->get_logger(), "%s", name.c_str());
+                // get initial pose
+                pose2d temp = subscribeToPos(name);
+                if (temp.x.x == __FLT_MAX__ && temp.x.y == __FLT_MAX__ && temp.theta == __FLT_MAX__)
+                {
+                    break;
+                }
+                robot_numb++;
+                RCLCPP_INFO(this->get_logger(), "Calculating");
+                do_calculations(temp);
 
-            // Publish results
-            RCLCPP_INFO(this->get_logger(), "Publishing path");
-            publish_results();
-
-
-           
-
+                // Publish results
+                RCLCPP_INFO(this->get_logger(), "Publishing path");
+                publish_results();
+            }
         }       
 };
