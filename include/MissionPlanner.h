@@ -52,6 +52,9 @@ class MissionPlanner : public rclcpp::Node
         size_t count_;
         int robot_numb = 1;
         std::string name;
+        int is_receive_map = false;
+        int is_receive_gate = false;
+        int is_receive_obs = false;
         
         
         //Subscribers
@@ -72,7 +75,7 @@ class MissionPlanner : public rclcpp::Node
             std::cout << "\n__________                    .__                   __  .__                          \n\\______   \\__ __  ____   ____ |__| ____    ____   _/  |_|  |__   ____                \n |       _/  |  \\/    \\ /    \\|  |/    \\  / ___\\  \\   __\\  |  \\_/ __ \\               \n |    |   \\  |  /   |  \\   |  \\  |   |  \\/ /_/  >  |  | |   Y  \\  ___/               \n |____|_  /____/|___|  /___|  /__|___|  /\\___  /   |__| |___|  /\\___  >              \n        \\/           \\/     \\/        \\//_____/              \\/     \\/               \n__________                 __    __________.__                                    ._.\n\\______   \\ ____   _______/  |_  \\______   \\  | _____    ____   ____   ___________| |\n |    |  _// __ \\ /  ___/\\   __\\  |     ___/  | \\__  \\  /    \\ /    \\_/ __ \\_  __ \\ |\n |    |   \\  ___/ \\___ \\  |  |    |    |   |  |__/ __ \\|   |  \\   |  \\  ___/|  | \\/\\|\n |______  /\\___  >____  > |__|    |____|   |____(____  /___|  /___|  /\\___  >__|   __\n        \\/     \\/     \\/                             \\/     \\/     \\/     \\/       \\/\n";
         };
 
-        void waiter();
+        void calculations();
     
     public:
         MissionPlanner()
@@ -95,31 +98,5 @@ class MissionPlanner : public rclcpp::Node
             RCLCPP_INFO(this->get_logger(), "Getting gate info");
             gate_subscription_ = this->create_subscription<geometry_msgs::msg::Pose>(
             "gate_position", 10, std::bind(&MissionPlanner::gate_topic_callback, this, _1));
-
-            // Waits for all the info on the subscribers
-
-            waiter();
-
-            // Do calculations
-            while (true)
-            {
-                // Define robot currently working
-                name = "shelfino" + std::to_string(robot_numb) + "/base_link"; 
-                RCLCPP_INFO(this->get_logger(), "Working on shelfino %i", robot_numb);
-                RCLCPP_INFO(this->get_logger(), "%s", name.c_str());
-                // get initial pose
-                pose2d temp = subscribeToPos(name);
-                if (temp.x.x == __FLT_MAX__ && temp.x.y == __FLT_MAX__ && temp.theta == __FLT_MAX__)
-                {
-                    break;
-                }
-                robot_numb++;
-                RCLCPP_INFO(this->get_logger(), "Calculating");
-                do_calculations(temp);
-
-                // Publish results
-                RCLCPP_INFO(this->get_logger(), "Publishing path");
-                publish_results();
-            }
         }       
 };

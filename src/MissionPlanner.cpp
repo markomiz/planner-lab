@@ -42,7 +42,7 @@ void MissionPlanner::obstacle_topic_callback(const obstacles_msgs::msg::Obstacle
     {
         Polygon poly;
         vector<point2d> polygon_input;
-        //RCLCPP_INFO(this->get_logger(), "Obstacle '%i' points:", i);
+        RCLCPP_INFO(this->get_logger(), "Obstacle '%i' points:", i);
         geometry_msgs::msg::Polygon aux = obstacle_message.obstacles[i].polygon;
         int nr_points = aux.points.size();
         for (int j = 0; j < nr_points; j++)
@@ -51,11 +51,13 @@ void MissionPlanner::obstacle_topic_callback(const obstacles_msgs::msg::Obstacle
             temp.x = float(aux.points[j].x);
             temp.y = float(aux.points[j].y);
             polygon_input.push_back(temp);
-            //RCLCPP_INFO(this->get_logger(), "Getting obs info: x = '%0.2f', y = '%0.2f'", temp.x, temp.y);
+            RCLCPP_INFO(this->get_logger(), "Getting obs info: x = '%0.2f', y = '%0.2f'", temp.x, temp.y);
         }
         poly.verteces = polygon_input;
         obstacle_list.push_back(poly);
     }
+    is_receive_obs = true;
+    if (/*is_receive_map && is_receive_gate &&*/ is_receive_obs){calculations();}
 };
 
 void MissionPlanner::map_topic_callback(const geometry_msgs::msg::Polygon outline_message)
@@ -69,6 +71,8 @@ void MissionPlanner::map_topic_callback(const geometry_msgs::msg::Polygon outlin
         outer_verteces.push_back(temp);        
     }
     map_poly = Polygon(outer_verteces);
+    is_receive_map = true;
+    if (/*is_receive_map && is_receive_gate &&*/ is_receive_obs){calculations();}
 };
 
 void MissionPlanner::gate_topic_callback(const geometry_msgs::msg::Pose outline_message)
@@ -81,11 +85,13 @@ void MissionPlanner::gate_topic_callback(const geometry_msgs::msg::Pose outline_
     gate.x.x  = outline_message.position.x;
     gate.x.y  = outline_message.position.y;
     gate.theta = yaw;
+    is_receive_gate = true;
+    if (/*is_receive_map && is_receive_gate &&*/ is_receive_obs){calculations();}
 };
 
 pose2d MissionPlanner::subscribeToPos(std::string robot_id){
     RCLCPP_INFO(this->get_logger(), "Getting initial pose");
-    RCLCPP_INFO(this->get_logger(), "Frame: %s", robot_id.c_str());
+    // RCLCPP_INFO(this->get_logger(), "Frame: %s", robot_id.c_str());
     std::string target_frame_ = this->declare_parameter<std::string>("target_frame", robot_id);
     std::shared_ptr<tf2_ros::TransformListener> tf_listener{nullptr};
     std::unique_ptr<tf2_ros::Buffer> tf_buffer;
@@ -181,69 +187,32 @@ void MissionPlanner::publish_results()
     }
 };
 
-void MissionPlanner::waiter()
+void MissionPlanner::calculations()
 {
-    RCLCPP_INFO(this->get_logger(), "Waiting for messages");
-    rclcpp::WaitSet wait_set;
-    wait_set.add_subscription(obs_subscription_);
-    auto ret = wait_set.wait(std::chrono::seconds(100));
-    if (ret.kind() == rclcpp::WaitResultKind::Ready) {
-        obstacles_msgs::msg::ObstacleArrayMsg obstacle_message;
-        rclcpp::MessageInfo info;
-        auto ret_take = obs_subscription_->take(obstacle_message, info);
-        if (ret_take) {
-
-            RCLCPP_INFO(this->get_logger(), "heard obstacles");
-            
-        } else {
-            RCLCPP_ERROR(this->get_logger(), "no message recieved");
+    RCLCPP_INFO(this->get_logger(), "Im in the if");
+    while(true){
+        // Define robot currently working
+        name = "shelfino" + std::to_string(robot_numb) + "/base_link"; 
+        RCLCPP_INFO(this->get_logger(), "Working on shelfino %i", robot_numb);
+        RCLCPP_INFO(this->get_logger(), "%s", name.c_str());
+        // get initial pose
+        pose2d temp = subscribeToPos(name);
+        if (temp.x.x == __FLT_MAX__ && temp.x.y == __FLT_MAX__ && temp.theta == __FLT_MAX__)
+        {
+            break;
         }
-    } else {
-        RCLCPP_ERROR(this->get_logger(), "couldn't wait");
-        return;
+        robot_numb++;
+        RCLCPP_INFO(this->get_logger(), "Calculating");
+        do_calculations(temp);
+
+        // Publish results
+        RCLCPP_INFO(this->get_logger(), "Publishing path");
+        publish_results();
+        //do some computations and publish messages
     }
-    wait_set.remove_subscription(obs_subscription_);
-
-    rclcpp::WaitSet wait_set1;
-    wait_set1.add_subscription(map_subscription_);
-    auto ret1 = wait_set1.wait(std::chrono::seconds(100));
-    if (ret1.kind() == rclcpp::WaitResultKind::Ready) {
-        geometry_msgs::msg::Polygon message;
-        rclcpp::MessageInfo info;
-        auto ret1_take = map_subscription_->take(message, info);
-        if (ret1_take) {
-
-            RCLCPP_INFO(this->get_logger(), "heard map");
-
-        } else {
-            RCLCPP_ERROR(this->get_logger(), "no message recieved");
-        }
-    } else {
-        RCLCPP_ERROR(this->get_logger(), "couldn't wait");
-        return;
-    }
-    wait_set1.remove_subscription(map_subscription_);
-
-    rclcpp::WaitSet wait_set2;
-    wait_set2.add_subscription(gate_subscription_);
-    auto ret2 = wait_set2.wait(std::chrono::seconds(100));
-    if (ret2.kind() == rclcpp::WaitResultKind::Ready) {
-        geometry_msgs::msg::Pose message;
-        rclcpp::MessageInfo info;
-        auto ret2_take = gate_subscription_->take(message, info);
-        if (ret2_take) {
-
-            RCLCPP_INFO(this->get_logger(), "heard gate pose");
-
-        } else {
-            RCLCPP_ERROR(this->get_logger(), "no message recieved");
-        }
-    } else {
-        RCLCPP_ERROR(this->get_logger(), "couldn't wait");
-        return;
-    }
-    wait_set2.remove_subscription(gate_subscription_);
 };
+
+
 
 int main(int argc, char * argv[])
 {
