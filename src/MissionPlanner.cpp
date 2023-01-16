@@ -35,13 +35,13 @@ using namespace std::chrono_literals;
 
 void MissionPlanner::obstacle_topic_callback(const obstacles_msgs::msg::ObstacleArrayMsg obstacle_message)
 {
-    vector<point2d> polygon_input;
-    Polygon poly;
     // create polygon obstacle object
     int n_obs = obstacle_message.obstacles.size();
-    //RCLCPP_INFO(this->get_logger(), "There are '%i' obstacles", n_obs);
+    RCLCPP_INFO(this->get_logger(), "There are '%i' obstacles", n_obs);
     for (int i = 0; i < n_obs; i++)
     {
+        Polygon poly;
+        vector<point2d> polygon_input;
         //RCLCPP_INFO(this->get_logger(), "Obstacle '%i' points:", i);
         geometry_msgs::msg::Polygon aux = obstacle_message.obstacles[i].polygon;
         int nr_points = aux.points.size();
@@ -119,9 +119,9 @@ pose2d MissionPlanner::subscribeToPos(std::string robot_id){
 void MissionPlanner::do_calculations(pose2d x0)
 {
     pose2d xf = gate;
-    
+
     shared_ptr<Map> map (new Map(map_poly));
-    
+
     
     for (int i = 0; i < obstacle_list.size(); i++)
     {
@@ -194,7 +194,7 @@ void MissionPlanner::waiter()
         if (ret_take) {
 
             RCLCPP_INFO(this->get_logger(), "heard obstacles");
-
+            
         } else {
             RCLCPP_ERROR(this->get_logger(), "no message recieved");
         }
