@@ -87,6 +87,9 @@ void PRMstar::genRoadmapPlus(int n, int angles)
     float yprm  = sqrt(2*(1+ 1/2)) * sqrt(map->getFreeSpace()/M_PI) * 1.0;
     //  init empty graph
     int cons = 0;
+
+    ofstream node_file ("nodes.txt");
+    
     float d_ang = M_PI * 2/float(angles);
     for (auto i = 0; i < n; i ++)
     {
@@ -102,17 +105,22 @@ void PRMstar::genRoadmapPlus(int n, int angles)
             {
                 new_node->pt.theta = a * d_ang;
                 // gen dubins
+
                 bool col_arc = false;
                 dubins_params sol = dCurve->calculateSinglePath(new_pose, nearest[x]->pt);
                 arcs A(new_node->pt, sol);
-                if (map->colliding(A) || A.L > rad) continue;
+                if (map->colliding(A) || A.L > rad){
+                    continue;
+                }
                 graph->add(new_node, nearest[x], A);
                 cons ++;
             };
             graph->nodes.push_back(new_node);
             graph->points_quad.insert(new_node);
+            node_file << new_node->pt.x.x << "; " << new_node->pt.x.y << "\n";
         }
     }
+    node_file.close();
     cout << cons <<" connections  \n";
 };
 
@@ -129,10 +137,12 @@ vector<arcs> PRMstar::getPath(pose2d start, pose2d end)
         dubins_params sol = dCurve->calculateSinglePath(start, nearest_s[x]->pt);
         arcs A(start, sol);
         // if doesn't collide add connections to graph
-        if (map->colliding(A)) continue;
+        if (map->colliding(A))
+        {
+            continue;
+        }
         graph->add(start_node, nearest_s[x], A);
     };
-
     std::vector<shared_ptr<Node>> nearest_e = graph->in_range(end.x, TRSH); // find all nodes within a Rad
     shared_ptr<Node> end_node( new Node(end));
     for (auto x = 0; x < nearest_s.size(); x++)

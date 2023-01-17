@@ -10,6 +10,8 @@ float CollisionCheck::distance(point2d p1, point2d p2){
 intersection_result CollisionCheck::line_line_intersect(line l1, line l2)
 {
     intersection_result result;
+
+
     // Line AB represented as a1x + b1y = c1
     double a1 = l1.p_final.y - l1.p_initial.y;
     double b1 = l1.p_initial.x - l1.p_final.x;
@@ -45,10 +47,13 @@ intersection_result CollisionCheck::line_line_intersect(line l1, line l2)
     {
         result.intersection.x = (b2*c1 - b1*c2)/determinant;
         result.intersection.y = (a1*c2 - a2*c1)/determinant;
-        bool cond1 = l1.length() == distance(l1.p_initial,result.intersection) + distance(result.intersection, l1.p_final);
-        bool cond2 = l2.length() == distance(l2.p_initial,result.intersection) + distance(result.intersection, l2.p_final);
-        if (cond1 && cond2)
+        if ((result.intersection.x >= std::min(l1.p_initial.x, l1.p_final.x) && result.intersection.x <= std::max(l1.p_initial.x, l1.p_final.x)) 
+            && (result.intersection.y >= std::min(l1.p_initial.y, l1.p_final.y) && result.intersection.y <= std::max(l1.p_initial.y, l1.p_final.y))
+            && (result.intersection.x >= std::min(l2.p_initial.x, l2.p_final.x) && result.intersection.x <= std::max(l2.p_initial.x, l2.p_final.x))
+            && (result.intersection.y >= std::min(l2.p_initial.y, l2.p_final.y) && result.intersection.y <= std::max(l2.p_initial.y, l2.p_final.y))
+            )
         {
+            // cout << "here2" << endl;
             result.intersects = true;
             return result;
         }
@@ -103,19 +108,23 @@ bool CollisionCheck::point_in_polygon(point2d p, Polygon shape)
     line l;
     l.p_initial = p;
     point2d end;
-    end.x = p.x + 100000000000.0;
-    end.y = p.y;
+    end.x = p.x + 100;
+    end.y = p.y + 100;
     l.p_final = end;
 
     int num_intersections = 0;
     for (auto j = 0; j < shape.edges.size(); j++)
     {
         intersection_result i = line_line_intersect(shape.edges[j], l);
-
-        if (i.intersects) num_intersections +=1;
+        if (i.intersects) 
+        {
+            num_intersections += 1;
+        }
     }
-
-    if (num_intersections % 2 == 1) return true;
+    if (num_intersections == 1)
+    {
+        return true;
+    }
     return false;
 };
 

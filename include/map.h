@@ -36,16 +36,17 @@ class Polygon
 class Map
 {
     private:
-        int halton_index = 0;
+        int halton_index;
         float freeSpace;
         std::vector<Polygon> obstacles;
         Polygon total_map_poly;
 
     public:
-        Map(Polygon map){
-            createMap(map);
+        Map(Polygon map): total_map_poly(map.verteces), freeSpace(map.area), halton_index(0){
+            // createMap(map);
             processBounds();
         };
+
         Map(float min_x ,float min_y ,float max_x ,float max_y): min_x(min_x),
         min_y(min_y), max_x(max_x), max_y(max_y), halton_index(0) 
         {processBounds();};
@@ -55,7 +56,7 @@ class Map
         bool colliding(arc a); //DONE: MAP.CPP
         bool colliding(line l); //DONE: MAP.CPP
         bool colliding(arcs A); //DONE: MAP.CPP
-        void createMap(Polygon map);
+        // void createMap(Polygon map);
 
         bool inBounds(point2d point);
         float min_x;

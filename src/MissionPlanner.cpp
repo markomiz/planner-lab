@@ -40,7 +40,6 @@ void MissionPlanner::obstacle_topic_callback(const obstacles_msgs::msg::Obstacle
     RCLCPP_INFO(this->get_logger(), "There are '%i' obstacles", n_obs);
     for (int i = 0; i < n_obs; i++)
     {
-        Polygon poly;
         vector<point2d> polygon_input;
         RCLCPP_INFO(this->get_logger(), "Obstacle '%i' points:", i);
         geometry_msgs::msg::Polygon aux = obstacle_message.obstacles[i].polygon;
@@ -53,7 +52,7 @@ void MissionPlanner::obstacle_topic_callback(const obstacles_msgs::msg::Obstacle
             polygon_input.push_back(temp);
             RCLCPP_INFO(this->get_logger(), "Getting obs info: x = '%0.2f', y = '%0.2f'", temp.x, temp.y);
         }
-        poly.verteces = polygon_input;
+        Polygon poly(polygon_input);
         obstacle_list.push_back(poly);
     }
     is_receive_obs = true;
@@ -124,21 +123,38 @@ pose2d MissionPlanner::subscribeToPos(std::string robot_id){
 
 void MissionPlanner::do_calculations(pose2d x0)
 {
-    pose2d xf = gate;
+    pose2d xf(4,4,0.5);
 
-    shared_ptr<Map> map (new Map(map_poly));
-
+    // shared_ptr<Map> map (new Map(map_poly));
+    point2d t1(-10,-10);
+    point2d t2(-10,10);
+    point2d t3(10,10);
+    point2d t4(10,-10);
+    
+    vector<point2d> vec_vert;
+    vec_vert.push_back(t1);
+    vec_vert.push_back(t2);
+    vec_vert.push_back(t3);
+    vec_vert.push_back(t4);
+    
+    Polygon test_map(vec_vert); 
+    
+    shared_ptr<Map> map (new Map(test_map));
+    
+    RCLCPP_INFO(this->get_logger(),"Area %f", test_map.area);
     
     for (int i = 0; i < obstacle_list.size(); i++)
     {
         map->addObstacle(obstacle_list[i]);
     }
-    RCLCPP_INFO(this->get_logger(),"Map made and Obstacles included");
+    RCLCPP_INFO(this->get_logger(),"Map made and Obstacles included. Free space = %0.2f", map->getFreeSpace());
+    
 
     shared_ptr<dubinCurve> d (new dubinCurve());
     d->map = map;
     d->_K = conf->getK();
 
+    
     planner = new PRMstar(map);
     RCLCPP_INFO(this->get_logger(),"Planner made");
     planner->dCurve = d;
@@ -168,8 +184,8 @@ void MissionPlanner::publish_results()
     client_ptr_ = rclcpp_action::create_client<FollowPath>(this,"follow_path");
 
     if (!client_ptr_->wait_for_action_server()) {
-    RCLCPP_ERROR(this->get_logger(), "Action server not available after waiting");
-    rclcpp::shutdown();
+        RCLCPP_ERROR(this->get_logger(), "Action server not available after waiting");
+        rclcpp::shutdown();
     }
 
     auto goal_msg = FollowPath::Goal();
@@ -185,6 +201,7 @@ void MissionPlanner::publish_results()
         usleep(1000000);
         RCLCPP_INFO(this->get_logger(), "%s", path.header.frame_id.c_str());
     }
+    rclcpp::shutdown();
 };
 
 void MissionPlanner::calculations()
@@ -196,7 +213,8 @@ void MissionPlanner::calculations()
         RCLCPP_INFO(this->get_logger(), "Working on shelfino %i", robot_numb);
         RCLCPP_INFO(this->get_logger(), "%s", name.c_str());
         // get initial pose
-        pose2d temp = subscribeToPos(name);
+        // pose2d temp = subscribeToPos(name);
+        pose2d temp(0,0,0);
         if (temp.x.x == __FLT_MAX__ && temp.x.y == __FLT_MAX__ && temp.theta == __FLT_MAX__)
         {
             break;
@@ -210,6 +228,7 @@ void MissionPlanner::calculations()
         publish_results();
         //do some computations and publish messages
     }
+    rclcpp::shutdown();
 };
 
 

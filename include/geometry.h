@@ -23,9 +23,9 @@ struct point2d
   float x;
   float y;
   float norm()
-    {
-        return sqrt(x*x + y*y);
-    };
+  {
+      return sqrt(x*x + y*y);
+  };
   point2d operator+(point2d &b)
   {
     point2d c;

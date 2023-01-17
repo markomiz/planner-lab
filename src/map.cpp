@@ -31,6 +31,7 @@ void Polygon::processEdges()
     line edge;
     edge.p_initial = verteces[s-1];
     edge.p_final = verteces[0];
+    edges.push_back(edge);
 }
 
 void Polygon::expandShape(float size)
@@ -55,10 +56,22 @@ void Polygon::expandShape(float size)
 };
 void Polygon::calculateArea()
 {
-    float a = edges[0].length();
+    // float a = edges[0].length();
 
-    area = verteces.size() * a * a / (4 * sin(M_PI/ a));
+    // area = verteces.size() * a * a / (4 * sin(M_PI/ a));
+    
+    int n = verteces.size();
 
+    for(int i = 0; i < n; i++) {
+        area += verteces[i].x * verteces[i+1].y;
+    }
+    area += verteces[n-1].x * verteces[0].y;
+    for(int i = 0; i < n - 1; i++) {
+        area -= verteces[i].y * verteces[i+1].x;
+    }
+    area -= verteces[n-1].y * verteces[0].x;
+    
+    area = abs(area / 2);
 };
 
 void Polygon::getMinMax()
@@ -94,13 +107,31 @@ bool Map::colliding(point2d point)
     for (auto i = 0; i < obstacles.size(); i++)
     {
         Polygon obs = obstacles[i];
-        // rough pass - outside radius no chance of collision
-        if ((point - obs.center).norm() > obs.radius) continue;
 
+        float centre_dist = (point - obs.center).norm();
+
+        // cout << "radius: " << obs.radius << endl;
+        // cout << "point to center: " << centre_dist << endl;
+        // rough pass - outside radius no chance of collision
+        if (centre_dist > obs.radius)
+        {
+            continue;
+        }
         // otherwise check for polygon collision
-        if (CollisionCheck::point_in_polygon(point, obs)) return true;
+        bool proof = CollisionCheck::point_in_polygon(point, obs);
+        if (proof){
+            // std::cout << "P IN POLY!!!!" << endl;
+            // std::cout << "x:" << point.x << "\ty: " << point.y << endl;
+            // cout << "radius: " << obs.radius << endl;
+            // cout << "point to center: " << centre_dist << endl;
+            return true;
+        }
     }
-    if (!inBounds(point)) return true;
+    if (!inBounds(point)){
+        // std::cout << "Not in Bounds!!!!" << endl;
+        return true;
+    }
+    
     return false;
 };
 bool Map::colliding(arcs A)
@@ -150,10 +181,10 @@ bool Map::inBounds(point2d p)
     return CollisionCheck::point_in_polygon(p, total_map_poly);
 };
 
-void Map::createMap(Polygon map)
-{
-    total_map_poly = map;
-};
+// void Map::createMap(Polygon map)
+// {
+//     total_map_poly(map.verteces);
+// };
 
 void Map::processBounds(){
     vector<point2d> verteces = total_map_poly.verteces;
@@ -174,7 +205,7 @@ void Map::processBounds(){
     // bounds.push_back(r);
     // bounds.push_back(t);
     // bounds.push_back(b);
-    freeSpace = total_map_poly.area;
+    // freeSpace = total_map_poly.area;
 };
 // RANDOM NUMBER STUFF ////
 std::random_device rd;
@@ -191,10 +222,11 @@ point2d Map::uniform_sample()
     {
         p.x = dist(mt) * (max_x - min_x) + min_x;
         p.y = dist(mt)* (max_y - min_y) + min_y;
-        std::cout << "colliding\n";
-        std::cout << p.x;
+        // std::cout << "colliding\n";
+        // std::cout << p.x;
     }
-
+    // std::cout << "GOT A POINT!" << endl;
+    // std::cout << "x: "<< p.x << "\t y: " << p.y << endl;
     return p;
 };
 

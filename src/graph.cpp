@@ -292,8 +292,10 @@ vector<arcs> Graph::getPathPlus(shared_ptr<Node> start, shared_ptr<Node> end)
         std::cout << "oopsie no path \n";
         return points;
     }
+    int count = 0;
     while (current->parent != start)
     {
+        count++;
         points.push_back(current->parent_connection->A);
         // Calculate time of arrival to the node and add info to the node 
         
@@ -315,7 +317,7 @@ vector<arcs> Graph::getPathPlus(shared_ptr<Node> start, shared_ptr<Node> end)
   
         current = current->parent;
     }
-    std::cout << "we made it this far! \n";
+    std::cout << "we made it this far! Nodes in path: " << count << endl;
     reset_nodes(); 
     
     current = nullptr;

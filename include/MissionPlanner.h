@@ -41,6 +41,7 @@ class MissionPlanner : public rclcpp::Node
         pose2d gate;
         PRMstar* planner;
         nav_msgs::msg::Path path;
+        
 
         rclcpp::Subscription<obstacles_msgs::msg::ObstacleArrayMsg>::SharedPtr obs_subscription_;
         rclcpp::Subscription<geometry_msgs::msg::Polygon>::SharedPtr map_subscription_;
@@ -52,8 +53,8 @@ class MissionPlanner : public rclcpp::Node
         size_t count_;
         int robot_numb = 1;
         std::string name;
-        int is_receive_map = false;
-        int is_receive_gate = false;
+        int is_receive_map = true;
+        int is_receive_gate = true;
         int is_receive_obs = false;
         
         
