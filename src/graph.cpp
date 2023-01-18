@@ -243,8 +243,11 @@ vector<arcs> Graph::getPathPlus(shared_ptr<Node> start, shared_ptr<Node> end)
     // add start node on open list
     shared_ptr<Node> current = nullptr;
     OPEN.push_back(start);
+    int its = 0;
     while (OPEN.size() > 0)
-    {   
+    {
+        its++;
+        // cout << "While its: " << its << endl; 
         auto cur_it = OPEN.begin();
         current = *cur_it;
         // always work on minimal cost node in open set
@@ -261,7 +264,8 @@ vector<arcs> Graph::getPathPlus(shared_ptr<Node> start, shared_ptr<Node> end)
         // for all nodes connected to current
         for (auto i = 0; i < current->connected.size(); i++)
         {
-            if ( ! current->connected[i].node->opened)
+            // cout << "Current conncetions: " << current->connected.size() << endl;
+            if (!current->connected[i].node->opened)
             {
                 // Check if node is available at that time
                 float length = current->cost + current->connected[i].cost;
@@ -270,9 +274,13 @@ vector<arcs> Graph::getPathPlus(shared_ptr<Node> start, shared_ptr<Node> end)
                 * -> Time Threshold AKA arrival_length_threshold
                 */
                 float arrival_length_threshold = 0.5;
-                if (!current->connected[i].node->check_availability(time_stamp, arrival_length_threshold))
+                // if (!current->connected[i].node->check_availability(time_stamp, arrival_length_threshold))
+                // {
+                //     continue; //skip to the next node connected to current
+                // }
+                if(false)
                 {
-                    continue; //skip to the next node connected to current
+
                 }
                 else
                 {

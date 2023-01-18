@@ -130,8 +130,10 @@ vector<arcs> PRMstar::getPath(pose2d start, pose2d end)
     // fisrt connect start and end to graph
     std::vector<shared_ptr<Node>> nearest_s = graph->in_range(start.x, TRSH); // find all nodes within a Rad
     shared_ptr<Node> start_node(new Node(start));
+    cout << "Nearby nodes: " << nearest_s.size() << endl;
     for (auto x = 0; x < nearest_s.size(); x++)
     {
+
         // gen dubins
         bool col_arc = false;
         dubins_params sol = dCurve->calculateSinglePath(start, nearest_s[x]->pt);
@@ -145,15 +147,15 @@ vector<arcs> PRMstar::getPath(pose2d start, pose2d end)
     };
     std::vector<shared_ptr<Node>> nearest_e = graph->in_range(end.x, TRSH); // find all nodes within a Rad
     shared_ptr<Node> end_node( new Node(end));
-    for (auto x = 0; x < nearest_s.size(); x++)
+    for (auto x = 0; x < nearest_e.size(); x++)
     {
         // gen dubins
         bool col_arc = false;
-        dubins_params sol = dCurve->calculateSinglePath(end, nearest_s[x]->pt);
+        dubins_params sol = dCurve->calculateSinglePath(end, nearest_e[x]->pt);
         arcs A(end, sol);
         // if doesn't collide add connections to graph
         if (map->colliding(A)) continue;
-        graph->add(end_node, nearest_s[x], A);
+        graph->add(end_node, nearest_e[x], A);
     };
     graph->nodes.push_back(start_node);
     graph->points_quad.insert(start_node);

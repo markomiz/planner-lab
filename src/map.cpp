@@ -156,11 +156,14 @@ bool Map::colliding(line l)
     {
         Polygon obs = obstacles[i];
         // rough pass with radius of obstacles
-        if ((CollisionCheck::point_lineseg_dist(obs.center, l)) > obs.radius) continue;
-
+        if ((CollisionCheck::point_lineseg_dist(obs.center, l)) > obs.radius){
+            cout << "First pass" << endl;
+            continue;
+        }
         // second check more detailed check if rough pass not passing
         for (auto j = 0; j < obs.edges.size(); j++)
         {
+            cout << "Second pass" << endl;
             if (CollisionCheck::line_line_intersect(obs.edges[j], l).intersects)
             {
                 cout << "line intersects";
@@ -169,8 +172,8 @@ bool Map::colliding(line l)
         }
         
     }
-    if ( ! inBounds(l.p_final)) return true;
-    if ( ! inBounds(l.p_initial)) return true;
+    if (!inBounds(l.p_final)) return true;
+    if (!inBounds(l.p_initial)) return true;
 
     return false;
 };

@@ -71,33 +71,65 @@ intersection_result CollisionCheck::line_arc_intersect(line l1, arc arc1)
     point2d line_vector;
     line_vector.x = l1.p_final.x-l1.p_initial.x;
     line_vector.y = l1.p_final.y-l1.p_initial.y;
+    
     point2d center2initial;
+    
     center2initial.x = l1.p_initial.x - arc1.center.x;
     center2initial.y = l1.p_initial.y - arc1.center.y;
+    float angle_start = atan2(abs(arc1.start.x.y-arc1.center.y),abs(arc1.start.x.x-arc1.center.x));
+    float angle_end = atan2(abs(arc1.end.x.y-arc1.center.y),abs(arc1.end.x.x-arc1.center.x));
+
     float a = line_vector.x*line_vector.x + line_vector.y*line_vector.y;
     float b = 2*(center2initial.x*line_vector.x + center2initial.y*line_vector.y);
     float c = (center2initial.x*center2initial.x + center2initial.y*center2initial.y) - arc1.radius*arc1.radius;
+    
     float discriminant = b*b-4*a*c;
+    
     if( discriminant < 0 )
     {
         // no intersection
-        result.intersects = true;
+        result.intersects = false;
     }
     else
     {
+        float angle = atan((line_vector.y/line_vector.x));
+        
         discriminant = sqrt( discriminant);
         float t1 = (-b - discriminant)/(2*a);
         float t2 = (-b + discriminant)/(2*a);
-        if( t1 >= 0 && t1 <= 1 && t2 >= 0 && t2 <= 1)
+        
+
+        if((t1 > 0 && t1 < 1) && (t2 > 0 && t2 < 1))
         {
             result.intersection.x = a*t1*t1 + 2*b*t1 + c;
             result.intersection.y = a*t2*t2 + 2*b*t2 + c;
+
             float angle = atan2(result.intersection.y - arc1.center.y, result.intersection.x - arc1.center.x);
-            if (angle > arc1.start.theta && angle < arc1.end.theta)
-                result.intersects = false;
+
+            if (angle_start < angle_end)
+            {
+                if (angle > angle_start && angle < angle_end)
+                {
+                    result.intersects = true;
+                }
+                else
+                {
+                    result.intersects = false;
+                }
+            } else
+            {
+                if ((angle >= angle_start && angle <= 2*M_PI) || (angle >= 0 && angle <= angle_end))
+                {
+                    result.intersects = true;
+                }
+                else
+                {
+                    result.intersects = false;
+                }
+            }
         }
         else
-            result.intersects = true;
+            result.intersects = false;
     }
     return result;
 }
