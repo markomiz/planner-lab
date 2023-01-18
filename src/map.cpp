@@ -136,8 +136,24 @@ bool Map::colliding(point2d point)
 };
 bool Map::colliding(arcs A)
 {
-    for (int i; i < 3; i++){ if (colliding(A.a[i])) return true; }
+    for (int i; i < 3; i++)
+    {
+        if(A.a[i].radius == 0)
+        {
+            line temp;
+            point2d temp_pt1(A.a[i].start.x.x, A.a[i].start.x.y);
+            temp.p_initial = temp_pt1;
+            point2d temp_pt2(A.a[i].end.x.x, A.a[i].end.x.y);
+            temp.p_final = temp_pt2;
+            if(colliding(temp)) return true;
+        }
+        else
+        {
+            if (colliding(A.a[i])) return true;
+        }
+    }
     return false;
+
 }
 bool Map::colliding(arc a)
 {
