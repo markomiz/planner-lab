@@ -146,17 +146,19 @@ shared_ptr<Node> Graph::add(shared_ptr<Node> point, shared_ptr<Node> existing)
 shared_ptr<Node> Graph::add(shared_ptr<Node> point, shared_ptr<Node> existing, arcs A)
 {
     connection c1;
-    c1.node = existing;
+    c1.node = existing->opposite;
     c1.cost = A.L;
     c1.A = A.get_inverse();
+    c1.A = A;
 
-    point->connected.push_back(c1);
+    
 
     connection c2;
     c2.node = point;
     c2.cost = A.L;
     c2.A = A;
 
+    point->opposite->connected.push_back(c1);
     existing->connected.push_back(c2);
 
     return point;
@@ -301,7 +303,7 @@ vector<arcs> Graph::getPathPlus(shared_ptr<Node> start, shared_ptr<Node> end)
         return points;
     }
     int count = 0;
-    while (current->parent != start)
+    while (current->parent != start )
     {
         count++;
         points.push_back(current->parent_connection->A);

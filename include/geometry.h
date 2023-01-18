@@ -161,24 +161,28 @@ struct arcs
   arc a[3];
   float L;
   arcs get_inverse(){
-    arcs ARCS = *this;
+
+    arcs ARCS = arcs(*this);
     ARCS.a[0].start = this->a[2].end;
     ARCS.a[0].start.theta = arc::mod2pi(this->a[2].end.theta + M_PI);
     ARCS.a[0].K = - this->a[2].K;
     ARCS.a[0].end = this->a[2].start;
     ARCS.a[0].end.theta = arc::mod2pi(this->a[2].start.theta + M_PI);
+    ARCS.a[0].s = this->a[2].s;
 
     ARCS.a[1].start = this->a[1].end;
     ARCS.a[1].start.theta = arc::mod2pi(this->a[1].end.theta + M_PI);
     ARCS.a[1].K = - this->a[1].K;
     ARCS.a[1].end = this->a[1].start;
     ARCS.a[1].end.theta = arc::mod2pi(this->a[1].start.theta + M_PI);
+    ARCS.a[1].s = this->a[1].s;
 
     ARCS.a[2].start = this->a[0].end;
     ARCS.a[2].start.theta = arc::mod2pi(this->a[0].end.theta + M_PI);
     ARCS.a[2].K = - this->a[0].K;
     ARCS.a[2].end = this->a[0].start;
     ARCS.a[2].end.theta = arc::mod2pi(this->a[0].start.theta + M_PI);
+    ARCS.a[2].s = this->a[0].s;
     
     return ARCS;
 

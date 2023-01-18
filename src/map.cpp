@@ -136,7 +136,7 @@ bool Map::colliding(point2d point)
 };
 bool Map::colliding(arcs A)
 {
-    for (int i; i < 3; i++)
+    for (int i=0; i < 3; i++)
     {
         if(A.a[i].radius == 0)
         {
@@ -237,14 +237,15 @@ point2d Map::uniform_sample()
     p.x = dist(mt) * (max_x - min_x) + min_x;
     p.y = dist(mt)* (max_y - min_y) + min_y;
 
-    while (colliding(p))
-    {
-        p.x = dist(mt) * (max_x - min_x) + min_x;
-        p.y = dist(mt)* (max_y - min_y) + min_y;
-        // std::cout << "colliding\n";
-        // std::cout << p.x;
-    }
-    // std::cout << "GOT A POINT!" << endl;
+    // while (colliding(p)) // SOMETIMES GETS STUCK...? 
+    // {
+    //     p.x = dist(mt) * (max_x - min_x) + min_x;
+    //     p.y = dist(mt)* (max_y - min_y) + min_y;
+    //     // std::cout << "colliding\n";
+    //     // std::cout << p.x;
+        std::cout << ".";
+    // }
+    
     // std::cout << "x: "<< p.x << "\t y: " << p.y << endl;
     return p;
 };

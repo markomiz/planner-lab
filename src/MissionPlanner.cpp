@@ -123,7 +123,7 @@ pose2d MissionPlanner::subscribeToPos(std::string robot_id){
 
 void MissionPlanner::do_calculations(pose2d x0)
 {
-    pose2d xf(4,4,0.5);
+    pose2d xf(5,5,0.5);
 
     // shared_ptr<Map> map (new Map(map_poly));
     point2d t1(-10,-10);
@@ -153,6 +153,29 @@ void MissionPlanner::do_calculations(pose2d x0)
     shared_ptr<dubinCurve> d (new dubinCurve());
     d->map = map;
     d->_K = conf->getK();
+
+    // // test single path
+    // dubins_params dp = d->calculateSinglePath(x0, xf);
+    // arcs Ao = arcs(x0, dp);
+    // arcs A = Ao.get_inverse();
+    // ofstream myfile ("path_points.txt");
+    // pose2d currentPoint = A.a[0].start;
+    // myfile << currentPoint.x.x << "; " << currentPoint.x.y << "\n";
+    // int co = 0;
+    // for (auto j = 0; j < 3; j++)
+    // {
+    //     arc &a = A.a[j];
+    //     cout << co << endl;
+    //     for (float ds = 0; ds < a.s; ds += 0.01)
+    //     {
+    //       currentPoint = arc::next_pose(a.start, ds, a.K);
+    //       myfile << currentPoint.x.x << "; " << currentPoint.x.y << "\n"; 
+    //       co++;
+    //     }
+    //     currentPoint = arc::next_pose(a.start, a.s, a.K);
+    //     myfile << currentPoint.x.x << "; " << currentPoint.x.y << "\n";
+    // }
+    // return;
 
     
     planner = new PRMstar(map);
