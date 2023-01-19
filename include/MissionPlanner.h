@@ -38,14 +38,16 @@ class MissionPlanner : public rclcpp::Node
 
         vector<Polygon> obstacle_list;
         Polygon map_poly;
-        pose2d gate;
+        vector<pose2d> gate;
         PRMstar* planner;
         nav_msgs::msg::Path path;
+        vector<pose2d> initial_pose;
         
 
         rclcpp::Subscription<obstacles_msgs::msg::ObstacleArrayMsg>::SharedPtr obs_subscription_;
-        rclcpp::Subscription<geometry_msgs::msg::Polygon>::SharedPtr map_subscription_;
+        rclcpp::Subscription<geometry_msgs::msg::PolygonStamped>::SharedPtr map_subscription_;
         rclcpp::Subscription<geometry_msgs::msg::Pose>::SharedPtr gate_subscription_;
+        rclcpp::Subscription<geometry_msgs::msg::PoseArray>::SharedPtr pose_subscription_;
         rclcpp::Publisher<nav_msgs::msg::Path>::SharedPtr publisher_;
 
         rclcpp::TimerBase::SharedPtr timer_;
@@ -61,11 +63,11 @@ class MissionPlanner : public rclcpp::Node
         //Subscribers
         void obstacle_topic_callback(const obstacles_msgs::msg::ObstacleArrayMsg obstacle_message);
 
-        void map_topic_callback(const geometry_msgs::msg::Polygon outline_message);
+        void map_topic_callback(const geometry_msgs::msg::PolygonStamped outline_message);
         
         void gate_topic_callback(const geometry_msgs::msg::Pose outline_message);
-        
-        pose2d subscribeToPos(std::string robot_id);
+
+        void pose_topic_callback(const geometry_msgs::msg::TransformStamped outline_message);
 
         void do_calculations(pose2d x0);
 
@@ -93,11 +95,13 @@ class MissionPlanner : public rclcpp::Node
             "obstacles", 10, std::bind(&MissionPlanner::obstacle_topic_callback, this, _1));
 
             RCLCPP_INFO(this->get_logger(), "Getting map info");
-            map_subscription_ = this->create_subscription<geometry_msgs::msg::Polygon>(
+            map_subscription_ = this->create_subscription<geometry_msgs::msg::PolygonStamped>(
             "map_borders", 10, std::bind(&MissionPlanner::map_topic_callback, this, _1));
 
             RCLCPP_INFO(this->get_logger(), "Getting gate info");
             gate_subscription_ = this->create_subscription<geometry_msgs::msg::Pose>(
             "gate_position", 10, std::bind(&MissionPlanner::gate_topic_callback, this, _1));
+
+            
         }       
 };

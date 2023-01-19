@@ -37,11 +37,11 @@ void MissionPlanner::obstacle_topic_callback(const obstacles_msgs::msg::Obstacle
 {
     // create polygon obstacle object
     int n_obs = obstacle_message.obstacles.size();
-    RCLCPP_INFO(this->get_logger(), "There are '%i' obstacles", n_obs);
+    // RCLCPP_INFO(this->get_logger(), "There are '%i' obstacles", n_obs);
     for (int i = 0; i < n_obs; i++)
     {
         vector<point2d> polygon_input;
-        RCLCPP_INFO(this->get_logger(), "Obstacle '%i' points:", i);
+        // RCLCPP_INFO(this->get_logger(), "Obstacle '%i' points:", i);
         geometry_msgs::msg::Polygon aux = obstacle_message.obstacles[i].polygon;
         int nr_points = aux.points.size();
         for (int j = 0; j < nr_points; j++)
@@ -50,7 +50,7 @@ void MissionPlanner::obstacle_topic_callback(const obstacles_msgs::msg::Obstacle
             temp.x = float(aux.points[j].x);
             temp.y = float(aux.points[j].y);
             polygon_input.push_back(temp);
-            RCLCPP_INFO(this->get_logger(), "Getting obs info: x = '%0.2f', y = '%0.2f'", temp.x, temp.y);
+            // RCLCPP_INFO(this->get_logger(), "Getting obs info: x = '%0.2f', y = '%0.2f'", temp.x, temp.y);
         }
         Polygon poly(polygon_input);
         obstacle_list.push_back(poly);
@@ -59,10 +59,10 @@ void MissionPlanner::obstacle_topic_callback(const obstacles_msgs::msg::Obstacle
     if (/*is_receive_map && is_receive_gate &&*/ is_receive_obs){calculations();}
 };
 
-void MissionPlanner::map_topic_callback(const geometry_msgs::msg::Polygon outline_message)
+void MissionPlanner::map_topic_callback(const geometry_msgs::msg::PolygonStamped outline_message)
 {
     vector<point2d> outer_verteces;
-    for (int i = 0; i < outline_message.points.size(); i++)
+    for (int i = 0; i < outline_message.polygon.points.size(); i++)
     {
         point2d temp;
         temp.x = outline_message.points[i].x;
@@ -74,51 +74,38 @@ void MissionPlanner::map_topic_callback(const geometry_msgs::msg::Polygon outlin
     if (/*is_receive_map && is_receive_gate &&*/ is_receive_obs){calculations();}
 };
 
-void MissionPlanner::gate_topic_callback(const geometry_msgs::msg::Pose outline_message)
+void MissionPlanner::gate_topic_callback(const geometry_msgs::msg::PoseArray outline_message)
 {
-    tf2::Quaternion q(outline_message.orientation.x, outline_message.orientation.y, outline_message.orientation.z, outline_message.orientation.w);
-    tf2::Matrix3x3 m(q);
-    double roll, pitch, yaw;
-    m.getRPY(roll, pitch, yaw);
+    for (int i = 0; i < outline_message.poses.size(); i++)
+    {
+        pose2d temp_gate;
+        tf2::Quaternion q(outline_message.poses[i].orientation.x, outline_message.poses[i].orientation.y, outline_message.poses[i].orientation.z, outline_message.poses[i].orientation.w);
+        tf2::Matrix3x3 m(q);
+        double roll, pitch, yaw;
+        m.getRPY(roll, pitch, yaw);
 
-    gate.x.x  = outline_message.position.x;
-    gate.x.y  = outline_message.position.y;
-    gate.theta = yaw;
-    is_receive_gate = true;
+        temp_gate.x.x  = outline_message.poses[i].position.x;
+        temp_gate.x.y  = outline_message.poses[i].position.y;
+        temp_gate.theta = yaw;
+        gate.push_back(temp_gate);
+        is_receive_gate = true;   
+    }
+    
     if (/*is_receive_map && is_receive_gate &&*/ is_receive_obs){calculations();}
 };
 
-pose2d MissionPlanner::subscribeToPos(std::string robot_id){
+void pose_topic_callback(const geometry_msgs::msg::TransformStamped t)
+{
     RCLCPP_INFO(this->get_logger(), "Getting initial pose");
-    // RCLCPP_INFO(this->get_logger(), "Frame: %s", robot_id.c_str());
-    std::string target_frame_ = this->declare_parameter<std::string>("target_frame", robot_id);
-    std::shared_ptr<tf2_ros::TransformListener> tf_listener{nullptr};
-    std::unique_ptr<tf2_ros::Buffer> tf_buffer;
-
-    tf_buffer = std::make_unique<tf2_ros::Buffer>(this->get_clock());
-    tf_listener = std::make_shared<tf2_ros::TransformListener>(*tf_buffer);
-
-    std::string fromFrameRel = target_frame_.c_str();
-    std::string toFrameRel = std::string("map");
-    
-    geometry_msgs::msg::TransformStamped t;
-    pose2d xyth(__FLT_MAX__,__FLT_MAX__,__FLT_MAX__);
-    try {
-        t = tf_buffer->lookupTransform(toFrameRel, fromFrameRel, tf2::TimePointZero, 5000ms);
-    } catch (/*const tf2::TransformException & ex*/...) {
-        return xyth;
-    }
-
+    pose2d temp_init_pose(__FLT_MAX__,__FLT_MAX__,__FLT_MAX__);
     tf2::Quaternion q(t.transform.rotation.x,t.transform.rotation.y,t.transform.rotation.z,t.transform.rotation.w);
     tf2::Matrix3x3 m(q);
     double roll, pitch, yaw;
     m.getRPY(roll, pitch, yaw);
-
-
-    xyth.x.x  = t.transform.translation.x;
-    xyth.x.y  = t.transform.translation.y;
-    xyth.theta = yaw;
-    return xyth;
+    temp_init_pose.x.x  = t.transform.translation.x;
+    temp_init_pose.x.y  = t.transform.translation.y;
+    temp_init_pose.theta = yaw;
+    initial_pose.push_back(temp_init_pose);
 };
 
 void MissionPlanner::do_calculations(pose2d x0)
@@ -209,12 +196,14 @@ void MissionPlanner::calculations()
     RCLCPP_INFO(this->get_logger(), "Im in the if");
     while(true){
         // Define robot currently working
-        name = "shelfino" + std::to_string(robot_numb) + "/base_link"; 
-        RCLCPP_INFO(this->get_logger(), "Working on shelfino %i", robot_numb);
-        RCLCPP_INFO(this->get_logger(), "%s", name.c_str());
+        name = "shelfino" + std::to_string(robot_numb) + "/transform"; 
+        // RCLCPP_INFO(this->get_logger(), "%s", name.c_str());
+        RCLCPP_INFO(this->get_logger(), "Getting gate info");
+        pose_subcription_ = this->create_subscription<geometry_msgs::msg::PoseArray>(
+        name, 10, std::bind(&MissionPlanner::gate_topic_callback, this, _1));
         // get initial pose
-        // pose2d temp = subscribeToPos(name);
-        pose2d temp(0,0,0);
+
+        // pose2d temp(0,0,0);
         if (temp.x.x == __FLT_MAX__ && temp.x.y == __FLT_MAX__ && temp.theta == __FLT_MAX__)
         {
             break;
