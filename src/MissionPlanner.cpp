@@ -7,6 +7,7 @@
 #include <fstream>
 #include <unistd.h>
 #include <string>
+#include <deque>
 
 #include "geometry.h"
 #include "graph.h"
@@ -110,7 +111,7 @@ void pose_topic_callback(const geometry_msgs::msg::TransformStamped t)
 
 void MissionPlanner::do_calculations(pose2d x0)
 {
-    pose2d xf(4,4,0.5);
+    pose2d xf(5,5,0.5);
 
     // shared_ptr<Map> map (new Map(map_poly));
     point2d t1(-10,-10);
@@ -141,6 +142,29 @@ void MissionPlanner::do_calculations(pose2d x0)
     d->map = map;
     d->_K = conf->getK();
 
+    // // test single path
+    // dubins_params dp = d->calculateSinglePath(x0, xf);
+    // arcs Ao = arcs(x0, dp);
+    // arcs A = Ao.get_inverse();
+    // ofstream myfile ("path_points.txt");
+    // pose2d currentPoint = A.a[0].start;
+    // myfile << currentPoint.x.x << "; " << currentPoint.x.y << "\n";
+    // int co = 0;
+    // for (auto j = 0; j < 3; j++)
+    // {
+    //     arc &a = A.a[j];
+    //     cout << co << endl;
+    //     for (float ds = 0; ds < a.s; ds += 0.01)
+    //     {
+    //       currentPoint = arc::next_pose(a.start, ds, a.K);
+    //       myfile << currentPoint.x.x << "; " << currentPoint.x.y << "\n"; 
+    //       co++;
+    //     }
+    //     currentPoint = arc::next_pose(a.start, a.s, a.K);
+    //     myfile << currentPoint.x.x << "; " << currentPoint.x.y << "\n";
+    // }
+    // return;
+
     
     planner = new PRMstar(map);
     RCLCPP_INFO(this->get_logger(),"Planner made");
@@ -148,7 +172,7 @@ void MissionPlanner::do_calculations(pose2d x0)
     planner->genRoadmapPlus(conf->getNumPoints(), conf->getNumAngles());
     RCLCPP_INFO(this->get_logger(),"Roadmap Generated");
 
-    std::vector<arcs> way = planner->getPath(x0,xf);
+    deque<arcs> way = planner->getPath(x0,xf);
     path = d->arcs_to_path(way, 0.05);
     RCLCPP_INFO(this->get_logger(),"Path found");
 

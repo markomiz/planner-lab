@@ -85,9 +85,11 @@ class MissionPlanner : public rclcpp::Node
         : Node("mission_planner"), count_(0)
         {
             print_message();
-            float delta = 0.01;
 
             conf = std::shared_ptr<ConfigParams>(new ConfigParams("src/dubin/config.txt"));
+            
+            do_calculations(pose2d(0,0,0));
+            return;
 
             // Create subscribers for gate, map and obstacles
             RCLCPP_INFO(this->get_logger(), "Getting obstacle info");
