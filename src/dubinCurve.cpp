@@ -58,16 +58,24 @@ nav_msgs::msg::Path dubinCurve::arcs_to_path(vector<arcs> input_arcs, float delt
   cout << "final path arcs: "<< int(input_arcs.size())<<endl;
   for (auto i = 0; i < int(input_arcs.size()); i++)
   {
+    if ((currentPoint.x - input_arcs[i].a[0].start.x).norm() != 0)
+    {
+      cout << "\nMISS MATCH ";
+      cout << "\n" << currentPoint.x.x << " " << currentPoint.x.y << " " << currentPoint.theta << " p1";
+      cout << "\n" << input_arcs[i].a[0].start.x.x << " " << input_arcs[i].a[0].start.x.y << " " << input_arcs[i].a[0].start.theta << " p2";
+    }
+    currentPoint =  input_arcs[i].a[0].start;
     for (auto j = 0; j < 3; j++)
     {
         arc &a = input_arcs[i].a[j];
+        
         for (float ds = 0; ds < a.s; ds += delta)
         {
           currentPoint = arc::next_pose(a.start, ds, a.K);
           final_path.poses.push_back(currentPoint.to_Pose());
           myfile << currentPoint.x.x << "; " << currentPoint.x.y << "\n"; 
         }
-        currentPoint = arc::next_pose(a.start, a.s, a.K);
+        currentPoint = a.end;
         final_path.poses.push_back(currentPoint.to_Pose()); 
         myfile << currentPoint.x.x << "; " << currentPoint.x.y << "\n";
     }

@@ -102,9 +102,9 @@ void PRMstar::genRoadmapPlus(int n, int angles)
         pose2d c_pose = new_pose;
         float rad = yprm*sqrt(log(i+1)/(i+1));
         //cout << rad << " rad \n";
-        cout <<" preinrange\n";
+        cout <<" pre";
         std::vector<shared_ptr<Node>> nearest = graph->in_range(new_p,rad); //find all nodes within a Radius
-        cout <<" postinrange\n";
+        cout <<" post";
         //cout << nearest.size() << " near \n";
         for (int a = 0; a < angles; a ++)
         {
@@ -118,7 +118,9 @@ void PRMstar::genRoadmapPlus(int n, int angles)
                 new_node->pt.theta = a * d_ang;
                 cor->pt.theta = arc::mod2pi(a * d_ang+ M_PI);
                 bool col_arc = false;
+                cout<<"P";
                 dubins_params sol = dCurve->calculateSinglePath(new_pose, nearest[x]->pt);
+                cout <<"A";
                 arcs A = arcs(new_node->pt, sol);
 
                 if (map->colliding(A) || A.L > rad){
@@ -130,6 +132,7 @@ void PRMstar::genRoadmapPlus(int n, int angles)
             };
             graph->nodes.push_back(new_node);
             graph->points_quad.insert(new_node);
+            graph->nodes.push_back(cor);
             graph->points_quad.insert(cor);
             node_file << new_node->pt.x.x << "; " << new_node->pt.x.y << "\n";
         }
@@ -152,12 +155,10 @@ vector<arcs> PRMstar::getPath(pose2d start, pose2d end)
     cout << "Nearby nodes: " << nearest_s.size() << endl;
     for (auto x = 0; x < nearest_s.size(); x++)
     {
-         cout << "111\n";
         // gen dubins
         bool col_arc = false;
         dubins_params sol = dCurve->calculateSinglePath(start, nearest_s[x]->pt);
         arcs A(start, sol);
-        cout << "222\n";
         // if doesn't collide add connections to graph
         if (map->colliding(A))
         {
@@ -177,16 +178,18 @@ vector<arcs> PRMstar::getPath(pose2d start, pose2d end)
     {
         // gen dubins
         bool col_arc = false;
-        dubins_params sol = dCurve->calculateSinglePath(end, nearest_e[x]->pt);
+        dubins_params sol = dCurve->calculateSinglePath( nearest_e[x]->pt,end);
         arcs A(end, sol);
         // if doesn't collide add connections to graph
         if (map->colliding(A)) continue;
-        graph->add(end_node, nearest_e[x], A);
+        graph->add(nearest_e[x],end_node,  A);
     };
     cout << "Nok33: " << nearest_s.size() << endl;
     graph->nodes.push_back(start_node);
+    graph->nodes.push_back(cor);
     graph->points_quad.insert(start_node);
     graph->nodes.push_back(end_node);
+    graph->nodes.push_back(cor_e);
     graph->points_quad.insert(end_node);
     graph->points_quad.insert(cor);
     graph->points_quad.insert(cor_e);
