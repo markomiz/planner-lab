@@ -1,5 +1,5 @@
 planner_type: PRMstar
-num_points: 100
+num_points: 1000
 num_angles: 3
-K: 1.0
+K: 3.0
 sample_type: Uniform

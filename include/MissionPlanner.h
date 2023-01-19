@@ -77,6 +77,8 @@ class MissionPlanner : public rclcpp::Node
         };
 
         void calculations();
+
+        void testSinglePath(pose2d x0);
     
     public:
         MissionPlanner()
@@ -86,20 +88,20 @@ class MissionPlanner : public rclcpp::Node
 
             conf = std::shared_ptr<ConfigParams>(new ConfigParams("src/dubin/config.txt"));
             
-            do_calculations(pose2d(0,0,0));
+            testSinglePath(pose2d(0,0,0));
             return;
 
-            // Create subscribers for gate, map and obstacles
-            RCLCPP_INFO(this->get_logger(), "Getting obstacle info");
-            obs_subscription_ = this->create_subscription<obstacles_msgs::msg::ObstacleArrayMsg>(
-            "obstacles", 10, std::bind(&MissionPlanner::obstacle_topic_callback, this, _1));
+            // // Create subscribers for gate, map and obstacles
+            // RCLCPP_INFO(this->get_logger(), "Getting obstacle info");
+            // obs_subscription_ = this->create_subscription<obstacles_msgs::msg::ObstacleArrayMsg>(
+            // "obstacles", 10, std::bind(&MissionPlanner::obstacle_topic_callback, this, _1));
 
-            RCLCPP_INFO(this->get_logger(), "Getting map info");
-            map_subscription_ = this->create_subscription<geometry_msgs::msg::Polygon>(
-            "map_borders", 10, std::bind(&MissionPlanner::map_topic_callback, this, _1));
+            // RCLCPP_INFO(this->get_logger(), "Getting map info");
+            // map_subscription_ = this->create_subscription<geometry_msgs::msg::Polygon>(
+            // "map_borders", 10, std::bind(&MissionPlanner::map_topic_callback, this, _1));
 
-            RCLCPP_INFO(this->get_logger(), "Getting gate info");
-            gate_subscription_ = this->create_subscription<geometry_msgs::msg::Pose>(
-            "gate_position", 10, std::bind(&MissionPlanner::gate_topic_callback, this, _1));
+            // RCLCPP_INFO(this->get_logger(), "Getting gate info");
+            // gate_subscription_ = this->create_subscription<geometry_msgs::msg::Pose>(
+            // "gate_position", 10, std::bind(&MissionPlanner::gate_topic_callback, this, _1));
         }       
 };

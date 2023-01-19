@@ -162,27 +162,35 @@ struct arcs
   float L;
   arcs get_inverse(){
 
-    arcs ARCS = arcs(*this);
-    ARCS.a[0].start = this->a[2].end;
-    ARCS.a[0].start.theta = arc::mod2pi(this->a[2].end.theta + M_PI);
-    ARCS.a[0].K = - this->a[2].K;
-    ARCS.a[0].end = this->a[2].start;
-    ARCS.a[0].end.theta = arc::mod2pi(this->a[2].start.theta + M_PI);
-    ARCS.a[0].s = this->a[2].s;
+    arcs ARCS;
+    ARCS.L = L;
+    ARCS.a[0].start = a[2].end;
+    ARCS.a[0].start.theta = arc::mod2pi(a[2].end.theta + M_PI);
+    ARCS.a[0].K = - a[2].K;
+    ARCS.a[0].end = a[2].start;
+    ARCS.a[0].end.theta = arc::mod2pi(a[2].start.theta + M_PI);
+    ARCS.a[0].s = a[2].s;
+    ARCS.a[0].center = a[2].center;
+    ARCS.a[0].radius = a[2].radius;
 
-    ARCS.a[1].start = this->a[1].end;
-    ARCS.a[1].start.theta = arc::mod2pi(this->a[1].end.theta + M_PI);
-    ARCS.a[1].K = - this->a[1].K;
-    ARCS.a[1].end = this->a[1].start;
-    ARCS.a[1].end.theta = arc::mod2pi(this->a[1].start.theta + M_PI);
-    ARCS.a[1].s = this->a[1].s;
+    ARCS.a[1].start = a[1].end;
+    ARCS.a[1].start.theta = arc::mod2pi(a[1].end.theta + M_PI);
+    ARCS.a[1].K = - a[1].K;
+    ARCS.a[1].end = a[1].start;
+    ARCS.a[1].end.theta = arc::mod2pi(a[1].start.theta + M_PI);
+    ARCS.a[1].s = a[1].s;
+    ARCS.a[1].center = a[1].center;
+    ARCS.a[1].radius = a[1].radius;
 
-    ARCS.a[2].start = this->a[0].end;
-    ARCS.a[2].start.theta = arc::mod2pi(this->a[0].end.theta + M_PI);
-    ARCS.a[2].K = - this->a[0].K;
-    ARCS.a[2].end = this->a[0].start;
-    ARCS.a[2].end.theta = arc::mod2pi(this->a[0].start.theta + M_PI);
-    ARCS.a[2].s = this->a[0].s;
+    ARCS.a[2].start = a[0].end;
+    ARCS.a[2].start.theta = arc::mod2pi(a[0].end.theta + M_PI);
+    ARCS.a[2].K = - a[0].K;
+    ARCS.a[2].end = a[0].start;
+    ARCS.a[2].end.theta = arc::mod2pi(a[0].start.theta + M_PI);
+    ARCS.a[2].s = a[0].s;
+    ARCS.a[2].center = a[0].center;
+    ARCS.a[2].radius = a[0].radius;
+
     
     return ARCS;
 

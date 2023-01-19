@@ -85,26 +85,25 @@ vector<point2d> PRMstar::getPath(point2d start, point2d end)
 void PRMstar::genRoadmapPlus(int n, int angles)
 {
     cout <<" gen roadmap pluss\n";
-    float yprm  = sqrt(2*(1+ 1/2)) * sqrt(map->getFreeSpace()/M_PI) * 1.0;
+    float yprm  = sqrt(2*(1+ 1/2)) * sqrt(map->getFreeSpace()/M_PI) ;
     //  init empty graph
     int cons = 0;
-
+    cout <<" 2\n";
     ofstream node_file ("nodes.txt");
-    
+    cout <<" 3\n";
     float d_ang = M_PI * 2/float(angles);
+    cout <<" 4\n";
     for (auto i = 0; i < n; i ++)
     {
-
+        cout <<" s";
         point2d new_p = map->uniform_sample();
         pose2d new_pose;
         new_pose.x = new_p;
         pose2d c_pose = new_pose;
-        float rad = yprm*sqrt(log(i+1)/(i+1));
-        //cout << rad << " rad \n";
-        cout <<" pre";
+        float rad =  yprm*sqrt(log(i+1)/(i+1));
+
         std::vector<shared_ptr<Node>> nearest = graph->in_range(new_p,rad); //find all nodes within a Radius
-        cout <<" post";
-        //cout << nearest.size() << " near \n";
+
         for (int a = 0; a < angles; a ++)
         {
             pose2d new_pose;
@@ -125,12 +124,13 @@ void PRMstar::genRoadmapPlus(int n, int angles)
 
                 arcs A = arcs(new_node->pt, sol);
 
-                if (map->colliding(A) || A.L > rad){
-                    //if (map->colliding(A)) cout << "arc collides!" << i << "\n";
-                    continue;
+                // if (!map->colliding(A) &&  A.L < rad){
+                // if (map->colliding(A)) cout << "collision --- \n";
+                if (!map->colliding(A)){
+                    graph->add(new_node, nearest[x], A);
+                    cons ++;
                 }
-                graph->add(new_node, nearest[x], A);
-                cons ++;
+
             };
             graph->nodes.push_back(new_node);
             graph->points_quad.insert(new_node);
@@ -145,7 +145,7 @@ void PRMstar::genRoadmapPlus(int n, int angles)
 
 deque<arcs> PRMstar::getPath(pose2d start, pose2d end)
 {
-    float TRSH = 2.0;
+    float TRSH = 1.0;
     // fisrt connect start and end to graph
     std::vector<shared_ptr<Node>> nearest_s = graph->in_range(start.x, TRSH); // find all nodes within a Rad
     shared_ptr<Node> start_node(new Node(start));
@@ -154,7 +154,6 @@ deque<arcs> PRMstar::getPath(pose2d start, pose2d end)
     shared_ptr<Node> cor(new Node(start_c_pose));
     start_node->opposite = cor;
     cor->opposite = start_node;
-    cout << "Nearby nodes: " << nearest_s.size() << endl;
     for (auto x = 0; x < nearest_s.size(); x++)
     {
         // gen dubins
