@@ -105,6 +105,8 @@ intersection_result CollisionCheck::line_arc_intersect(line l1, arc arc1)
             result.intersection.y = a*t2*t2 + 2*b*t2 + c;
 
             float angle = atan2(result.intersection.y - arc1.center.y, result.intersection.x - arc1.center.x);
+            angle = arc::mod2pi(angle);
+            // cout << "\n " << angle << " angle \n"; 
 
             if (angle_start < angle_end)
             {
@@ -165,6 +167,7 @@ bool CollisionCheck::arc_with_polygon(arc a, Polygon shape)
     // for each line of polygon - see if arc crosses
     for (auto j = 0; j < shape.edges.size(); j++)
     {
+        // cout << "\n intersection result \n";
         intersection_result i = line_arc_intersect(shape.edges[j], a);
 
         if (i.intersects) return true;

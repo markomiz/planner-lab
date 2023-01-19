@@ -136,32 +136,49 @@ void MissionPlanner::pose_topic_callback(const geometry_msgs::msg::TransformStam
 void MissionPlanner::do_calculations(pose2d x0)
 {
     pose2d xf(5,5,0.5);
+
     // shared_ptr<Map> map (new Map(map_poly));
     point2d t1(-10,-10);
     point2d t2(-10,10);
     point2d t3(10,10);
     point2d t4(10,-10);
+
+    point2d p1(1,4);
+    point2d p2(2,5);
+    point2d p3(5,2);
+    point2d p4(4,1);
     
     vector<point2d> vec_vert;
     vec_vert.push_back(t1);
     vec_vert.push_back(t2);
     vec_vert.push_back(t3);
     vec_vert.push_back(t4);
+
+    vector<point2d> obs_vert;
+    obs_vert.push_back(p1);
+    obs_vert.push_back(p2);
+    obs_vert.push_back(p3);
+    obs_vert.push_back(p4);
+
     
     Polygon test_map(vec_vert); 
 
     shared_ptr<Map> map (new Map(test_map));
+
+    map->addObstacle(test_obstacle);
     
+
     for (int i = 0; i < obstacle_list.size(); i++)
     {
         map->addObstacle(obstacle_list[i]);
     }
+
     RCLCPP_INFO(this->get_logger(),"Map made and Obstacles included. Free space = %0.2f", map->getFreeSpace());
     
     shared_ptr<dubinCurve> d (new dubinCurve());
     d->map = map;
     d->_K = conf->getK();
-  
+
     planner = new PRMstar(map);
     RCLCPP_INFO(this->get_logger(),"Planner made");
     planner->dCurve = d;
@@ -175,6 +192,82 @@ void MissionPlanner::do_calculations(pose2d x0)
     // nav_msgs::msg::Path path =  d->generatePathFromDubins(x0, d->calculateMultiPoint(x0, x1, mids, 12), delta);
     // path.header.stamp = this->get_clock()->now();
 };
+
+void MissionPlanner::testSinglePath(pose2d x0)
+{
+    pose2d xf(-0.1,0,-0.1);
+
+    point2d t1(-10,-10);
+    point2d t2(-10,10);
+    point2d t3(10,10);
+    point2d t4(10,-10);
+
+    point2d p1(0.1,-5);
+    point2d p2(0.1,5);
+    point2d p3(0.2,5);
+    point2d p4(0.2,-5);
+    
+    vector<point2d> vec_vert;
+    vec_vert.push_back(t1);
+    vec_vert.push_back(t2);
+    vec_vert.push_back(t3);
+    vec_vert.push_back(t4);
+
+    vector<point2d> obs_vert;
+    obs_vert.push_back(p1);
+    obs_vert.push_back(p2);
+    obs_vert.push_back(p3);
+    obs_vert.push_back(p4);
+
+    
+    Polygon test_map(vec_vert); 
+    RCLCPP_INFO(this->get_logger(),"Area %f", test_map.area);
+    Polygon test_obstacle(obs_vert);
+    cout << "\n  " << test_obstacle.area << " - obstacle area";
+    
+    shared_ptr<Map> map (new Map(test_map));
+
+    map->addObstacle(test_obstacle);
+    RCLCPP_INFO(this->get_logger(),"Map made and Obstacles included. Free space = %0.2f", map->getFreeSpace());
+
+    shared_ptr<dubinCurve> d (new dubinCurve());
+    d->map = map;
+    d->_K = conf->getK();
+
+    // // test single path
+    dubins_params dp = d->calculateSinglePath(x0, xf);
+    arcs Ao = arcs(x0, dp);
+    if (map->colliding(Ao)){
+        cout << "\n the collision seems ligit";
+    }
+    arcs A = Ao.get_inverse();
+    if (map->colliding(A)){
+        cout << "\n the collision seems ligit for inverse too";
+    }
+    if (map->colliding(Ao)){
+        cout << "\n the collision seems ligit";
+    }
+    else cout << "\n not colliding anymore?";
+    cout << "\nwhat..";
+    ofstream myfile ("path_points.txt");
+    pose2d currentPoint = A.a[0].start;
+    myfile << currentPoint.x.x << "; " << currentPoint.x.y << "\n";
+    int co = 0;
+    for (auto j = 0; j < 3; j++)
+    {
+        arc &a = A.a[j];
+
+        for (float ds = 0; ds < a.s; ds += 0.01)
+        {
+          currentPoint = arc::next_pose(a.start, ds, a.K);
+          myfile << currentPoint.x.x << "; " << currentPoint.x.y << "\n"; 
+          co++;
+        }
+        currentPoint = arc::next_pose(a.start, a.s, a.K);
+        myfile << currentPoint.x.x << "; " << currentPoint.x.y << "\n";
+    }
+    return;
+}
 
 void MissionPlanner::publish_results()
 {

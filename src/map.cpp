@@ -57,19 +57,20 @@ void Polygon::expandShape(float size)
 void Polygon::calculateArea()
 {
     // float a = edges[0].length();
-
     // area = verteces.size() * a * a / (4 * sin(M_PI/ a));
-    double leftSum = 0.0;
-	double rightSum = 0.0;
-    
-    for (int i = 0; i < verteces.size(); ++i) 
-    {
-        int j = (i + 1) % verteces.size();
-        leftSum  += verteces[i].x * verteces[j].y;
-        rightSum += verteces[j].x * verteces[i].y;
-	}
 
-	area =  0.5 * abs(leftSum - rightSum);
+    int n = verteces.size();
+    for(int i = 0; i < n - 1; i++) {
+        area += verteces[i].x * verteces[i+1].y;
+
+    }
+    area += verteces[n-1].x * verteces[0].y;
+    for(int i = 0; i < n - 1; i++) {
+        area -= verteces[i].y * verteces[i+1].x;
+    }
+    area -= verteces[n-1].y * verteces[0].x;
+    area = abs(area / 2.0);
+
 };
 
 void Polygon::getMinMax()
@@ -88,11 +89,11 @@ void Polygon::getMinMax()
     y_max = *max_element(temp_vec_y.begin(), temp_vec_y.end());
 };
 
-Map Polygon::toMap()
-{
-    Map map(x_min,y_min,x_max,y_max);
-    return map;
-}
+// Map Polygon::toMap()
+// {
+//     Map map(x_min,y_min,x_max,y_max);
+//     return map;
+// }
 
 void Map::addObstacle(Polygon shape)
 {
@@ -119,6 +120,7 @@ bool Map::colliding(point2d point)
         }
     }
     if (!inBounds(point)){
+
         return true;
     }
     
@@ -130,18 +132,27 @@ bool Map::colliding(arcs A)
     {
         if(A.a[i].radius == 0)
         {
+            // cout<<"line\n";
             line temp;
             point2d temp_pt1(A.a[i].start.x.x, A.a[i].start.x.y);
             temp.p_initial = temp_pt1;
             point2d temp_pt2(A.a[i].end.x.x, A.a[i].end.x.y);
             temp.p_final = temp_pt2;
-            if(colliding(temp)) return true;
+            if(colliding(temp)){
+                // cout << "\n line collides\n";
+                return true;
+            } 
         }
         else
         {
-            if (colliding(A.a[i])) return true;
+            
+            if (colliding(A.a[i])){
+                //cout << " arc collides\n";
+                 return true;
+            }
         }
     }
+    // cout << "NOT COLLIDING!\n";
     return false;
 
 }
@@ -151,6 +162,7 @@ bool Map::colliding(arc a)
     if (CollisionCheck::arc_with_polygon(a, total_map_poly)) return true;
     for (int i = 0; i < obstacles.size(); i++)
     {
+        
         if (CollisionCheck::arc_with_polygon(a, obstacles[i])) return true;
     }
     return false;
@@ -163,13 +175,20 @@ bool Map::colliding(line l)
         Polygon obs = obstacles[i];
         // rough pass with radius of obstacles
         if ((CollisionCheck::point_lineseg_dist(obs.center, l)) > obs.radius){
+
             continue;
+
         }
         // second check more detailed check if rough pass not passing
         for (auto j = 0; j < obs.edges.size(); j++)
         {
+
+            // cout << "edges\n";
+
             if (CollisionCheck::line_line_intersect(obs.edges[j], l).intersects)
             {
+                // cout << "edge fails\n";
+
                 return true;
             } 
         }
@@ -213,11 +232,15 @@ point2d Map::uniform_sample()
     p.x = dist(mt) * (max_x - min_x) + min_x;
     p.y = dist(mt)* (max_y - min_y) + min_y;
 
-    // while (colliding(p)) // SOMETIMES GETS STUCK...? 
-    // {
-    //     p.x = dist(mt) * (max_x - min_x) + min_x;
-    //     p.y = dist(mt)* (max_y - min_y) + min_y;
-    // }
+
+    while (colliding(p)) 
+    {
+        p.x = dist(mt) * (max_x - min_x) + min_x;
+        p.y = dist(mt)* (max_y - min_y) + min_y;
+        // std::cout << "colliding\n";
+        // std::cout << p.x;
+    }
+    
     return p;
 };
 
