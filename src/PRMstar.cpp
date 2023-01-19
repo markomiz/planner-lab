@@ -97,7 +97,6 @@ void PRMstar::genRoadmapPlus(int n, int angles)
 
         point2d new_p = map->uniform_sample();
         pose2d new_pose;
-        
         new_pose.x = new_p;
         pose2d c_pose = new_pose;
         float rad = yprm*sqrt(log(i+1)/(i+1));
@@ -108,6 +107,9 @@ void PRMstar::genRoadmapPlus(int n, int angles)
         //cout << nearest.size() << " near \n";
         for (int a = 0; a < angles; a ++)
         {
+            pose2d new_pose;
+            new_pose.x = new_p;
+            pose2d c_pose = new_pose;
             shared_ptr<Node> new_node(new Node(new_pose));
             shared_ptr<Node> cor(new Node(c_pose));
             
@@ -118,9 +120,9 @@ void PRMstar::genRoadmapPlus(int n, int angles)
                 new_node->pt.theta = a * d_ang;
                 cor->pt.theta = arc::mod2pi(a * d_ang+ M_PI);
                 bool col_arc = false;
-                cout<<"P";
-                dubins_params sol = dCurve->calculateSinglePath(new_pose, nearest[x]->pt);
-                cout <<"A";
+
+                dubins_params sol = dCurve->calculateSinglePath(new_node->pt, nearest[x]->pt);
+
                 arcs A = arcs(new_node->pt, sol);
 
                 if (map->colliding(A) || A.L > rad){
@@ -141,7 +143,7 @@ void PRMstar::genRoadmapPlus(int n, int angles)
     cout << cons <<" connections test \n";
 };
 
-vector<arcs> PRMstar::getPath(pose2d start, pose2d end)
+deque<arcs> PRMstar::getPath(pose2d start, pose2d end)
 {
     float TRSH = 2.0;
     // fisrt connect start and end to graph
@@ -178,11 +180,11 @@ vector<arcs> PRMstar::getPath(pose2d start, pose2d end)
     {
         // gen dubins
         bool col_arc = false;
-        dubins_params sol = dCurve->calculateSinglePath( nearest_e[x]->pt,end);
-        arcs A(end, sol);
+        dubins_params sol = dCurve->calculateSinglePath( nearest_e[x]->pt, end);
+        arcs A(nearest_e[x]->pt, sol);
         // if doesn't collide add connections to graph
         if (map->colliding(A)) continue;
-        graph->add(nearest_e[x],end_node,  A);
+        graph->add(nearest_e[x], end_node,  A);
     };
     cout << "Nok33: " << nearest_s.size() << endl;
     graph->nodes.push_back(start_node);
@@ -194,6 +196,6 @@ vector<arcs> PRMstar::getPath(pose2d start, pose2d end)
     graph->points_quad.insert(cor);
     graph->points_quad.insert(cor_e);
     cout << "hiit the graph \n";
-    std::vector<arcs> points = graph->getPathPlus(start_node, end_node);
+    deque<arcs> points = graph->getPathPlus(start_node, end_node);
     return points;
 }

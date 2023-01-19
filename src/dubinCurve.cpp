@@ -45,7 +45,7 @@ nav_msgs::msg::Path dubinCurve::generatePathFromDubins(pose2d start, std::vector
   }
   return final_path;
 };
-nav_msgs::msg::Path dubinCurve::arcs_to_path(vector<arcs> input_arcs, float delta)
+nav_msgs::msg::Path dubinCurve::arcs_to_path(deque<arcs> input_arcs, float delta)
 {
   nav_msgs::msg::Path final_path;
   final_path.header.frame_id = "map";

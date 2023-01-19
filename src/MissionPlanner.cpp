@@ -7,6 +7,7 @@
 #include <fstream>
 #include <unistd.h>
 #include <string>
+#include <deque>
 
 #include "geometry.h"
 #include "graph.h"
@@ -184,7 +185,7 @@ void MissionPlanner::do_calculations(pose2d x0)
     planner->genRoadmapPlus(conf->getNumPoints(), conf->getNumAngles());
     RCLCPP_INFO(this->get_logger(),"Roadmap Generated");
 
-    std::vector<arcs> way = planner->getPath(x0,xf);
+    deque<arcs> way = planner->getPath(x0,xf);
     path = d->arcs_to_path(way, 0.05);
     RCLCPP_INFO(this->get_logger(),"Path found");
 

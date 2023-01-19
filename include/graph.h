@@ -1,5 +1,6 @@
 #pragma once
 #include "geometry.h"
+#include <deque>
 
 using namespace std;
 
@@ -71,7 +72,7 @@ class Graph
         vector<shared_ptr<Node>> in_range(point2d pt, float rad);
         void reset_nodes();
         vector<point2d> getPath(shared_ptr<Node> start, shared_ptr<Node> end);
-        vector<arcs> getPathPlus(shared_ptr<Node> start, shared_ptr<Node> end);
+        deque<arcs> getPathPlus(shared_ptr<Node> start, shared_ptr<Node> end);
         quad points_quad;
         vector<shared_ptr<Node>> nodes;
         void print_nodes();

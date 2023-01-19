@@ -2,6 +2,7 @@
 #include "geometry.h"
 #include "graph.h"
 #include <iostream>
+#include <deque>
 using namespace std;
 Graph::Graph(int max_depth, point2d tl, point2d br) : points_quad(max_depth, tl, br)
 {
@@ -156,7 +157,13 @@ shared_ptr<Node> Graph::add(shared_ptr<Node> point, shared_ptr<Node> existing, a
     c2.A = A.get_inverse();
 
     point->connected.push_back(c1);
-    // existing->opposite->connected.push_back(c2);
+
+    cout << "\n point " << point->pt.x.x << " "<< point->pt.x.y << " "<< point->pt.theta << " ";
+    cout << "\n existing " << existing->pt.x.x << " "<< existing->pt.x.y << " "<< existing->pt.theta << " ";
+    cout << "\n arc start " << A.a[0].start.x.x << " "<< A.a[0].start.x.y << " "<< A.a[0].start.theta << " ";
+    cout << "\n arc end " << A.a[2].end.x.x << " "<< A.a[2].end.x.y << " "<< A.a[2].end.theta << " ";
+
+    //existing->opposite->connected.push_back(c2);
 
     return point;
 
@@ -232,11 +239,11 @@ vector<point2d> Graph::getPath(shared_ptr<Node> start, shared_ptr<Node> end)
     std::cout << "further! \n";
     return points;
 };
-vector<arcs> Graph::getPathPlus(shared_ptr<Node> start_node, shared_ptr<Node> end_node)
+deque<arcs> Graph::getPathPlus(shared_ptr<Node> start_node, shared_ptr<Node> end_node)
 {
     std::cout << "start get path \n";
     // add start and end points to graph - connecting them to nearest
-    vector<arcs> points;
+    deque<arcs> points;
     // init open list
     vector<shared_ptr<Node>> OPEN;
     // add start node on open list
@@ -293,10 +300,10 @@ vector<arcs> Graph::getPathPlus(shared_ptr<Node> start_node, shared_ptr<Node> en
                     // update their cost to current + dist between nodes 
                     con.node->parent = current; // ok
                     con.node->parent_connection = make_shared<connection>(con); // something wrong here/
-                    cout << "\n\n" << current->pt.x.x << " " << current->pt.x.y << " " << current->pt.theta << " current pose";
-                    cout << "\n" << con.node->parent_connection->A.a[0].start.x.x << " " << con.node->parent_connection->A.a[0].start.x.y << " " << con.node->parent_connection->A.a[0].start.theta << " arc start connection";
-                    cout << "\n" << con.node->parent_connection->A.a[2].end.x.x << " " << con.node->parent_connection->A.a[2].end.x.y << " " << con.node->parent_connection->A.a[2].end.theta << " arc end connection";
-                    cout << "\n" << con.node->pt.x.x << " " << con.node->pt.x.y << " " << con.node->pt.theta << " pt connection\n";
+                    // cout << "\n\n" << current->pt.x.x << " " << current->pt.x.y << " " << current->pt.theta << " current pose";
+                    // cout << "\n" << con.node->parent_connection->A.a[0].start.x.x << " " << con.node->parent_connection->A.a[0].start.x.y << " " << con.node->parent_connection->A.a[0].start.theta << " arc start connection";
+                    // cout << "\n" << con.node->parent_connection->A.a[2].end.x.x << " " << con.node->parent_connection->A.a[2].end.x.y << " " << con.node->parent_connection->A.a[2].end.theta << " arc end connection";
+                    // cout << "\n" << con.node->pt.x.x << " " << con.node->pt.x.y << " " << con.node->pt.theta << " pt connection\n";
                     OPEN.push_back(con.node);
                     con.node->opened = true;
                     con.node->cost = length;
@@ -314,7 +321,7 @@ vector<arcs> Graph::getPathPlus(shared_ptr<Node> start_node, shared_ptr<Node> en
     while (current->parent )
     {
         count++;
-        points.push_back(current->parent_connection->A);
+        points.push_front(current->parent_connection->A);
 
         cout << "\n" << current->pt.x.x << " " << current->pt.x.y << " " << current->pt.theta << " pose in path";
         // Calculate time of arrival to the node and add info to the node 
