@@ -118,7 +118,7 @@ intersection_result CollisionCheck::line_arc_intersect(line l1, arc arc1)
                 }
             } else
             {
-                if ((angle >= angle_start && angle <= 2*M_PI) || (angle >= 0 && angle <= angle_end))
+                if ((angle >= angle_start && angle <= M_PI) || (angle >= - M_PI && angle <= angle_end))
                 {
                     result.intersects = true;
                 }

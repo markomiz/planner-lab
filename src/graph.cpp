@@ -158,10 +158,10 @@ shared_ptr<Node> Graph::add(shared_ptr<Node> point, shared_ptr<Node> existing, a
 
     point->connected.push_back(c1);
 
-    cout << "\n point " << point->pt.x.x << " "<< point->pt.x.y << " "<< point->pt.theta << " ";
-    cout << "\n existing " << existing->pt.x.x << " "<< existing->pt.x.y << " "<< existing->pt.theta << " ";
-    cout << "\n arc start " << A.a[0].start.x.x << " "<< A.a[0].start.x.y << " "<< A.a[0].start.theta << " ";
-    cout << "\n arc end " << A.a[2].end.x.x << " "<< A.a[2].end.x.y << " "<< A.a[2].end.theta << " ";
+    // cout << "\n point " << point->pt.x.x << " "<< point->pt.x.y << " "<< point->pt.theta << " ";
+    // cout << "\n existing " << existing->pt.x.x << " "<< existing->pt.x.y << " "<< existing->pt.theta << " ";
+    // cout << "\n arc start " << A.a[0].start.x.x << " "<< A.a[0].start.x.y << " "<< A.a[0].start.theta << " ";
+    // cout << "\n arc end " << A.a[2].end.x.x << " "<< A.a[2].end.x.y << " "<< A.a[2].end.theta << " ";
 
     //existing->opposite->connected.push_back(c2);
 
@@ -270,8 +270,8 @@ deque<arcs> Graph::getPathPlus(shared_ptr<Node> start_node, shared_ptr<Node> end
         if (current == end_node) // end reached
         {
             end_reached = true;
-            cout << "\n" << current->pt.x.x << " " << current->pt.x.y << " " << current->pt.theta << " searched pose";
-            cout << "\n" << end_node->pt.x.x << " " << end_node->pt.x.y << " " << end_node->pt.theta << " end pose in path";
+            // cout << "\n" << current->pt.x.x << " " << current->pt.x.y << " " << current->pt.theta << " searched pose";
+            // cout << "\n" << end_node->pt.x.x << " " << end_node->pt.x.y << " " << end_node->pt.theta << " end pose in path";
             break;
         } 
         // for all nodes connected to current
@@ -357,7 +357,7 @@ deque<arcs> Graph::getPathPlus(shared_ptr<Node> start_node, shared_ptr<Node> end
 void Graph::print_nodes(){
     for (auto i = 0; i < nodes.size(); i++)
     {
-        cout << (nodes[i]->pt).x.x << " x ins y " << (nodes[i]->pt).x.y << "\n";
+        // cout << (nodes[i]->pt).x.x << " x ins y " << (nodes[i]->pt).x.y << "\n";
     }
 }
 

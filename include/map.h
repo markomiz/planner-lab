@@ -24,7 +24,7 @@ class Polygon
         Map toMap();
         point2d center;
         float radius;
-        float area;
+        float area = 0;
         float x_min;
         float x_max;
         float y_min;
