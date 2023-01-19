@@ -111,7 +111,7 @@ std::vector<dubins_params> dubinCurve::calculateMultiPoint(pose2d start, pose2d 
       }
       if (best_solution.L == __FLT_MAX__)
       {
-        cout << "shitty bum - the points couldn't connect with dubins curves\n ";
+        // cout << "shitty bum - the points couldn't connect with dubins curves\n ";
         std::vector<dubins_params> empty;
         return empty;
       }

@@ -17,7 +17,6 @@ void PRMstar::genRoadmap(int n)
         float rad = yprm*sqrt(log(i+1)/(i+1));
         std::vector<shared_ptr<Node>> nearest = graph->in_range(new_point,rad); //find all nodes within a Rad 
         shared_ptr<Node> new_node(new Node(new_pose));
-        // cout << " rad - " << rad << "   " << nearest.size() << " num near  \n";
         for (auto x = 0; x < nearest.size(); x++)
         {
             line l;
@@ -100,7 +99,8 @@ void PRMstar::genRoadmapPlus(int n, int angles)
         pose2d new_pose;
         new_pose.x = new_p;
         pose2d c_pose = new_pose;
-        float rad =  yprm*sqrt(log(i+1)/(i+1));
+
+        float rad = yprm*sqrt(log(i+1)/(i+1));
 
         std::vector<shared_ptr<Node>> nearest = graph->in_range(new_p,rad); //find all nodes within a Radius
 
@@ -123,12 +123,12 @@ void PRMstar::genRoadmapPlus(int n, int angles)
                 dubins_params sol = dCurve->calculateSinglePath(new_node->pt, nearest[x]->pt);
 
                 arcs A = arcs(new_node->pt, sol);
-
                 // if (!map->colliding(A) &&  A.L < rad){
                 // if (map->colliding(A)) cout << "collision --- \n";
                 if (!map->colliding(A)){
                     graph->add(new_node, nearest[x], A);
                     cons ++;
+
                 }
 
             };
@@ -185,7 +185,6 @@ deque<arcs> PRMstar::getPath(pose2d start, pose2d end)
         if (map->colliding(A)) continue;
         graph->add(nearest_e[x], end_node,  A);
     };
-    cout << "Nok33: " << nearest_s.size() << endl;
     graph->nodes.push_back(start_node);
     graph->nodes.push_back(cor);
     graph->points_quad.insert(start_node);

@@ -160,6 +160,8 @@ shared_ptr<Node> Graph::add(shared_ptr<Node> point, shared_ptr<Node> existing, a
 
     existing->opposite->connected.push_back(c2);
 
+
+
     return point;
 
 };
@@ -265,6 +267,7 @@ deque<arcs> Graph::getPathPlus(shared_ptr<Node> start_node, shared_ptr<Node> end
         if (current == end_node) // end reached
         {
             end_reached = true;
+
             break;
         } 
         // for all nodes connected to current
@@ -351,7 +354,7 @@ deque<arcs> Graph::getPathPlus(shared_ptr<Node> start_node, shared_ptr<Node> end
 void Graph::print_nodes(){
     for (auto i = 0; i < nodes.size(); i++)
     {
-        cout << (nodes[i]->pt).x.x << " x ins y " << (nodes[i]->pt).x.y << "\n";
+        // cout << (nodes[i]->pt).x.x << " x ins y " << (nodes[i]->pt).x.y << "\n";
     }
 }
 
