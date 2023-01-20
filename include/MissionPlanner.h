@@ -55,7 +55,6 @@ class MissionPlanner : public rclcpp::Node
         rclcpp::TimerBase::SharedPtr timer_;
         std::shared_ptr<ConfigParams> conf;
         size_t count_;
-        int robot_numb = 0;
         std::string name;
         int is_receive_map = true;
         int is_receive_gate = false;
@@ -72,9 +71,9 @@ class MissionPlanner : public rclcpp::Node
 
         void pose_topic_callback(const geometry_msgs::msg::TransformStamped outline_message);
 
-        void do_calculations(pose2d x0);
+        void build_roadmap();
 
-        void publish_results();
+        void publish_results(int robot);
         
         void print_message()
         {
@@ -112,28 +111,28 @@ class MissionPlanner : public rclcpp::Node
             gate_subscription_ = this->create_subscription<geometry_msgs::msg::PoseArray>(
             "gate_position", qos_gate, std::bind(&MissionPlanner::gate_topic_callback, this, _1));
             
-            // for (int i = 0; i < 2; i++)
-            // {
-            //     // Define robot currently working
-            //     name = "shelfino" + std::to_string(robot_numb) + "/transform"; 
-            //     // RCLCPP_INFO(this->get_logger(), "%s", name.c_str());
+            for (int i = 0; i < 2; i++)
+            {
+                // Define robot currently working
+                name = "shelfino" + std::to_string(i + 1) + "/transform"; 
+                // RCLCPP_INFO(this->get_logger(), "%s", name.c_str());
                 
-            //     // get initial pose
-            //     RCLCPP_INFO(this->get_logger(), "Getting position info for shelfino %i", i);
-            //     rclcpp::QoS qos_pose = rclcpp::QoS(rclcpp::KeepLast(1), rmw_qos_profile_sensor_data);
+                // get initial pose
+                RCLCPP_INFO(this->get_logger(), "Getting position info for shelfino %i", i);
+                rclcpp::QoS qos_pose = rclcpp::QoS(rclcpp::KeepLast(1), rmw_qos_profile_sensor_data);
 
-            //     pose_subscription_[i] = this->create_subscription<geometry_msgs::msg::TransformStamped>(
-            //     name, qos_pose, std::bind(&MissionPlanner::pose_topic_callback, this, _1));
-            // }
+                pose_subscription_[i] = this->create_subscription<geometry_msgs::msg::TransformStamped>(
+                name, qos_pose, std::bind(&MissionPlanner::pose_topic_callback, this, _1));
+            }
             // Define robot currently working
-            name = "shelfino" + std::to_string(robot_numb+1) + "/transform"; 
-            // RCLCPP_INFO(this->get_logger(), "%s", name.c_str());
+            // name = "shelfino" + std::to_string(robot_numb+1) + "/transform"; 
+            // // RCLCPP_INFO(this->get_logger(), "%s", name.c_str());
             
-            // get initial pose
-            RCLCPP_INFO(this->get_logger(), "Getting position info for shelfino %i", 1);
-            rclcpp::QoS qos_pose = rclcpp::QoS(rclcpp::KeepLast(1), rmw_qos_profile_sensor_data);
+            // // get initial pose
+            // RCLCPP_INFO(this->get_logger(), "Getting position info for shelfino %i", 1);
+            // rclcpp::QoS qos_pose = rclcpp::QoS(rclcpp::KeepLast(1), rmw_qos_profile_sensor_data);
 
-            pose_subscription_[0] = this->create_subscription<geometry_msgs::msg::TransformStamped>(
-            name, qos_pose, std::bind(&MissionPlanner::pose_topic_callback, this, _1));
+            // pose_subscription_[0] = this->create_subscription<geometry_msgs::msg::TransformStamped>(
+            // name, qos_pose, std::bind(&MissionPlanner::pose_topic_callback, this, _1));
         }       
 };
