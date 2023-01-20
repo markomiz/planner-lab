@@ -11,6 +11,7 @@ void PRMstar::genRoadmap(int n)
     int cons = 0;
     for (auto i = 0; i < n; i ++)
     {
+        // point2d new_point = map->halton_sample(i);
         point2d new_point = map->uniform_sample();
         pose2d new_pose;
         new_pose.x = new_point;
@@ -95,6 +96,7 @@ void PRMstar::genRoadmapPlus(int n, int angles)
     for (auto i = 0; i < n; i ++)
     {
         cout <<" s";
+        // point2d new_p = map->halton_sample(i);
         point2d new_p = map->uniform_sample();
         pose2d new_pose;
         new_pose.x = new_p;

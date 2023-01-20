@@ -132,7 +132,6 @@ bool Map::colliding(arcs A)
     {
         if(A.a[i].radius == 0)
         {
-            // cout<<"line\n";
             line temp;
             point2d temp_pt1(A.a[i].start.x.x, A.a[i].start.x.y);
             temp.p_initial = temp_pt1;
@@ -174,11 +173,11 @@ bool Map::colliding(line l)
     {
         Polygon obs = obstacles[i];
         // rough pass with radius of obstacles
-        if ((CollisionCheck::point_lineseg_dist(obs.center, l)) > obs.radius){
+        // if ((CollisionCheck::point_lineseg_dist(obs.center, l)) > obs.radius){
 
-            continue;
+        //     continue;
 
-        }
+        // }
         // second check more detailed check if rough pass not passing
         for (auto j = 0; j < obs.edges.size(); j++)
         {
@@ -246,32 +245,31 @@ point2d Map::uniform_sample()
 
 float Map::halton_min(int index, int base, float min, float max)
 {
-    while (index > 0)
-        {
-            max = max / base;
-
-            min += max*(index % base);
-
-            index = index / base;
-        }
-        return min;
+    float res = 0;
+    double f = 1.0 / base;
+    int j = index;
+    while (j > 0) {
+        res += f * (j % base);
+        j /= base;
+        f /= base;
+    }
+    return res;
 };
 
-point2d Map::halton_sample()
+point2d Map::halton_sample(int i)
 {
     point2d p;
     int base_x = 2, base_y = 3; //TODO - maybe move to config file
 
-    p.x = halton_min(halton_index, base_x, min_x, max_x);
-    p.y = halton_min(halton_index, base_y, min_y, max_y);
+    p.x = (halton_min(i, base_x, min_x, max_x)*(max_x-min_x)) + min_x;
+    p.y = (halton_min(i, base_y, min_y, max_y)*(max_y-min_y)) + min_y;
 
-    while (colliding(p))
-    {
-        p.x = halton_min(halton_index, base_x, min_x, max_x);
-        p.y = halton_min(halton_index, base_y, min_y, max_y);
-        halton_index++;
-    }
-    
+    // while (colliding(p))
+    // {
+    //     p.x = halton_min(halton_index, base_x, min_x, max_x);
+    //     p.y = halton_min(halton_index, base_y, min_y, max_y);
+    // }
+
     return p;
 }
 
