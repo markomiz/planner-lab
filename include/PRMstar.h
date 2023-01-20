@@ -3,6 +3,7 @@
 #include "graph.h"
 #include "map.h"
 #include "dubinCurve.h"
+#include "config_server.h"
 
 using namespace std;
 
@@ -20,9 +21,10 @@ class PRMstar
         vector<point2d> getPath(point2d start, point2d end);
         deque<arcs> getPath(pose2d start, pose2d end);
         shared_ptr<dubinCurve> dCurve;
-
-    private:
+        shared_ptr<ConfigParams> config;
         shared_ptr<Graph> graph;
+    private:
+        
         shared_ptr<Map> map;
 
 

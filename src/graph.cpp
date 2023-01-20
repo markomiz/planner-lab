@@ -280,11 +280,8 @@ deque<arcs> Graph::getPathPlus(shared_ptr<Node> start_node, shared_ptr<Node> end
                 // Check if node is available at that time
                 float length = current->cost + con.cost;
                 float time_stamp = length;
-                /* TODO 
-                * -> Time Threshold AKA arrival_length_threshold
-                */
-                float arrival_length_threshold = 0.5;
-                if (!con.node->check_availability(time_stamp, arrival_length_threshold))
+                
+                if (!con.node->check_availability(time_stamp, config->getTPRM_T()))
                 {
                     continue; //skip to the next node connected to current
                 }
@@ -323,17 +320,11 @@ deque<arcs> Graph::getPathPlus(shared_ptr<Node> start_node, shared_ptr<Node> end
         // cout << "\n" << current->pt.x.x << " " << current->pt.x.y << " " << current->pt.theta << " pose in path";
         // Calculate time of arrival to the node and add info to the node 
         
-        /* TODO 
-         * -> Length Threshold AKA nearby_nodes_occupied_threshold
-        */
-        float nearby_nodes_occupied_threshold = 1;
-        
-        
         float node_time = current->cost;
         current->arrival_time.push_back(node_time);
 
         point2d current_point = current->pt.x;
-        vector<shared_ptr<Node>> nearby = points_quad.in_range(current_point, nearby_nodes_occupied_threshold); 
+        vector<shared_ptr<Node>> nearby = points_quad.in_range(current_point, config->getTPRM_D()); 
         for (auto i = 0; i < nearby.size() ; i++)
         {
             nearby[i]->arrival_time.push_back(node_time);     

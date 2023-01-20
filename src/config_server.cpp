@@ -51,6 +51,15 @@ void ConfigParams::addParam(string name, string value)
     else if (name ==  "sample_type:"){
         _planner_type = (value == "Uniform") ? 0 : 1;
     }
+    else if (name ==  "connect_distance:"){
+        _connect_dist = stof(value);
+    }
+    else if (name ==  "tprm_t:"){
+        _tprm_t = stof(value);
+    }
+    else if (name ==  "tprm_t:"){
+        _tprm_d = stof(value);
+    }
 
         
 };
@@ -73,4 +82,16 @@ float ConfigParams::getK()
 int ConfigParams::getSampleType()
 {
     return _sample_type;
+};
+float ConfigParams::getConnectDist()
+{
+    return _connect_dist;
+};
+float ConfigParams::getTPRM_T()
+{
+    return _tprm_t;
+};
+float ConfigParams::getTPRM_D()
+{
+    return _tprm_d;
 };

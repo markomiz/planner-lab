@@ -1,6 +1,7 @@
 #pragma once
 #include "geometry.h"
 #include <deque>
+#include "config_server.h"
 
 using namespace std;
 
@@ -76,6 +77,7 @@ class Graph
         quad points_quad;
         vector<shared_ptr<Node>> nodes;
         void print_nodes();
+        shared_ptr<ConfigParams> config;
 
     private:
 };
