@@ -2,6 +2,7 @@
 #include "geometry.h"
 #include "graph.h"
 #include <iostream>
+#include <deque>
 using namespace std;
 Graph::Graph(int max_depth, point2d tl, point2d br) : points_quad(max_depth, tl, br)
 {
@@ -148,16 +149,18 @@ shared_ptr<Node> Graph::add(shared_ptr<Node> point, shared_ptr<Node> existing, a
     connection c1;
     c1.node = existing;
     c1.cost = A.L;
-    c1.A = A.get_inverse();
+    c1.A = A;
+
+    connection c2;
+    c2.node = point->opposite;
+    c2.cost = A.L;
+    c2.A = A.get_inverse();
 
     point->connected.push_back(c1);
 
-    connection c2;
-    c2.node = point;
-    c2.cost = A.L;
-    c2.A = A;
+    existing->opposite->connected.push_back(c2);
 
-    existing->connected.push_back(c2);
+
 
     return point;
 
@@ -208,7 +211,7 @@ vector<point2d> Graph::getPath(shared_ptr<Node> start, shared_ptr<Node> end)
             {
                 // if not opened, add to open, store that current is parent
                 // update their cost to current + dist between nodes
-                current->connected[i].node->parent = current;
+                current->connected[i].node->parent = current; // 
                 OPEN.push_back(current->connected[i].node);
                 current->connected[i].node->opened = true;
                 current->connected[i].node->cost = current->cost + current->connected[i].cost;
@@ -233,18 +236,21 @@ vector<point2d> Graph::getPath(shared_ptr<Node> start, shared_ptr<Node> end)
     std::cout << "further! \n";
     return points;
 };
-vector<arcs> Graph::getPathPlus(shared_ptr<Node> start, shared_ptr<Node> end)
+deque<arcs> Graph::getPathPlus(shared_ptr<Node> start_node, shared_ptr<Node> end_node)
 {
     std::cout << "start get path \n";
     // add start and end points to graph - connecting them to nearest
-    vector<arcs> points;
+    deque<arcs> points;
     // init open list
     vector<shared_ptr<Node>> OPEN;
     // add start node on open list
     shared_ptr<Node> current = nullptr;
-    OPEN.push_back(start);
+    OPEN.push_back(start_node);
+    int its = 0;
+    bool end_reached = false;
     while (OPEN.size() > 0)
-    {   
+    {
+        its++; 
         auto cur_it = OPEN.begin();
         current = *cur_it;
         // always work on minimal cost node in open set
@@ -257,44 +263,64 @@ vector<arcs> Graph::getPathPlus(shared_ptr<Node> start, shared_ptr<Node> end)
             }
         }
         OPEN.erase(cur_it);
-        if (current == end) break;
+        
+        if (current == end_node) // end reached
+        {
+            end_reached = true;
+
+            break;
+        } 
         // for all nodes connected to current
         for (auto i = 0; i < current->connected.size(); i++)
         {
-            if ( ! current->connected[i].node->opened)
+            auto &con = current->connected[i];
+            // cout << "Current conncetions: " << current->connected.size() << endl;
+            if (!con.node->opened)
             {
                 // Check if node is available at that time
-                float length = current->cost + current->connected[i].cost;
+                float length = current->cost + con.cost;
                 float time_stamp = length;
                 /* TODO 
                 * -> Time Threshold AKA arrival_length_threshold
                 */
                 float arrival_length_threshold = 0.5;
-                if (!current->connected[i].node->check_availability(time_stamp, arrival_length_threshold))
+                if (!con.node->check_availability(time_stamp, arrival_length_threshold))
                 {
                     continue; //skip to the next node connected to current
                 }
+
                 else
                 {
+                    // cout<< "connected.";
                     // if not opened, add to open, store that current is parent
                     // update their cost to current + dist between nodes 
-                    current->connected[i].node->parent = current;
-                    current->connected[i].node->parent_connection = make_shared<connection>(current->connected[i]);
-                    OPEN.push_back(current->connected[i].node);
-                    current->connected[i].node->opened = true;
-                    current->connected[i].node->cost = length;
+                    con.node->parent = current; // ok
+                    con.node->parent_connection = make_shared<connection>(con); // something wrong here/
+                    // cout << "\n\n" << current->pt.x.x << " " << current->pt.x.y << " " << current->pt.theta << " current pose";
+                    // cout << "\n" << con.node->parent_connection->A.a[0].start.x.x << " " << con.node->parent_connection->A.a[0].start.x.y << " " << con.node->parent_connection->A.a[0].start.theta << " arc start connection";
+                    // cout << "\n" << con.node->parent_connection->A.a[2].end.x.x << " " << con.node->parent_connection->A.a[2].end.x.y << " " << con.node->parent_connection->A.a[2].end.theta << " arc end connection";
+                    // cout << "\n" << con.node->pt.x.x << " " << con.node->pt.x.y << " " << con.node->pt.theta << " pt connection\n";
+                    OPEN.push_back(con.node);
+                    con.node->opened = true;
+                    con.node->cost = length;
                 }
                 
             }
         }
     }
-    if (!current->parent) {
+    cout << " searched: " << its << " \n";
+    if (!end_reached) cout << "\n END NOT REACHED :( ";
+    if (!current->parent || !end_reached) {
         std::cout << "oopsie no path \n";
         return points;
     }
-    while (current->parent != start)
+    int count = 0;
+    while (current->parent )
     {
-        points.push_back(current->parent_connection->A);
+        count++;
+        points.push_front(current->parent_connection->A);
+
+        // cout << "\n" << current->pt.x.x << " " << current->pt.x.y << " " << current->pt.theta << " pose in path";
         // Calculate time of arrival to the node and add info to the node 
         
         /* TODO 
@@ -315,7 +341,9 @@ vector<arcs> Graph::getPathPlus(shared_ptr<Node> start, shared_ptr<Node> end)
   
         current = current->parent;
     }
-    std::cout << "we made it this far! \n";
+    // cout << "\n" << current->pt.x.x << " " << current->pt.x.y << " " << current->pt.theta << " should be start";
+
+    // std::cout << "we made it this far! Nodes in path: " << count << endl;
     reset_nodes(); 
     
     current = nullptr;
@@ -326,7 +354,7 @@ vector<arcs> Graph::getPathPlus(shared_ptr<Node> start, shared_ptr<Node> end)
 void Graph::print_nodes(){
     for (auto i = 0; i < nodes.size(); i++)
     {
-        cout << (nodes[i]->pt).x.x << " x ins y " << (nodes[i]->pt).x.y << "\n";
+        // cout << (nodes[i]->pt).x.x << " x ins y " << (nodes[i]->pt).x.y << "\n";
     }
 }
 

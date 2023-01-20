@@ -22,27 +22,20 @@ find_package(obstacles_msgs REQUIRED)
 find_package(std_msgs REQUIRED)
 
 
-add_executable(dubin src/dubin.cpp
+add_executable(mission_planner src/MissionPlanner.cpp
 src/collision_check.cpp
 src/config_server.cpp
 src/dubinCurve.cpp
 src/graph.cpp
 src/map.cpp
 src/PRMstar.cpp
+#src/ApproximateCellDecomposition.cpp
 )
-add_executable(get_obstacles_and_map src/map_subscribers.cpp 
-src/collision_check.cpp
-src/dubinCurve.cpp
-src/graph.cpp
-src/map.cpp
-src/PRMstar.cpp)
 
-ament_target_dependencies(dubin rclcpp nav_msgs tf2 tf2_ros geometry_msgs nav2_msgs rclcpp_action obstacles_msgs std_msgs) 
-ament_target_dependencies(get_obstacles_and_map rclcpp nav_msgs tf2 tf2_ros geometry_msgs nav2_msgs obstacles_msgs std_msgs)
+ament_target_dependencies(mission_planner rclcpp nav_msgs tf2 tf2_ros geometry_msgs nav2_msgs rclcpp_action obstacles_msgs std_msgs) 
 
 install(TARGETS
-  dubin
-  get_obstacles_and_map
+  mission_planner
   DESTINATION lib/${PROJECT_NAME}/)
 # uncomment the following section in order to fill in
 # further dependencies manually.

@@ -1,5 +1,6 @@
 #pragma once
 #include "geometry.h"
+#include <deque>
 
 using namespace std;
 
@@ -16,6 +17,7 @@ struct Node
     shared_ptr<Node> parent;
     shared_ptr<connection> parent_connection;
     vector<float> arrival_time;
+    shared_ptr<Node> opposite;
     bool check_availability(float current_time, float threshold)
     {
         for (int i = 0; i < arrival_time.size(); i++)
@@ -70,7 +72,7 @@ class Graph
         vector<shared_ptr<Node>> in_range(point2d pt, float rad);
         void reset_nodes();
         vector<point2d> getPath(shared_ptr<Node> start, shared_ptr<Node> end);
-        vector<arcs> getPathPlus(shared_ptr<Node> start, shared_ptr<Node> end);
+        deque<arcs> getPathPlus(shared_ptr<Node> start, shared_ptr<Node> end);
         quad points_quad;
         vector<shared_ptr<Node>> nodes;
         void print_nodes();
