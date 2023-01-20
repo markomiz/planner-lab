@@ -179,6 +179,8 @@ void MissionPlanner::do_calculations(pose2d x0)
     d->_K = conf->getK();
 
     planner = new PRMstar(map);
+    planner->config = conf;
+    planner->graph->config = conf;
     RCLCPP_INFO(this->get_logger(),"Planner made");
     planner->dCurve = d;
     planner->genRoadmapPlus(conf->getNumPoints(), conf->getNumAngles());

@@ -85,7 +85,7 @@ vector<point2d> PRMstar::getPath(point2d start, point2d end)
 void PRMstar::genRoadmapPlus(int n, int angles)
 {
     cout <<" gen roadmap pluss\n";
-    float yprm  = sqrt(2*(1+ 1/2)) * sqrt(map->getFreeSpace()/M_PI) ;
+    float yprm  = sqrt(2*(1+ 1/2)) * sqrt(map->getFreeSpace()/M_PI) * config->getConnectDist();
     //  init empty graph
     int cons = 0;
     cout <<" 2\n";
@@ -96,13 +96,14 @@ void PRMstar::genRoadmapPlus(int n, int angles)
     for (auto i = 0; i < n; i ++)
     {
         cout <<" s";
-        // point2d new_p = map->halton_sample(i);
-        point2d new_p = map->uniform_sample();
+        point2d new_p;
+        if (config->getSampleType() == 1) new_p = map->halton_sample(i);
+        else new_p = map->uniform_sample();
         pose2d new_pose;
         new_pose.x = new_p;
         pose2d c_pose = new_pose;
 
-        float rad = yprm*sqrt(log(i+1)/(i+1));
+        float rad = yprm*sqrt(log(i+1)/(i+1)) ;
 
         std::vector<shared_ptr<Node>> nearest = graph->in_range(new_p,rad); //find all nodes within a Radius
 
