@@ -23,6 +23,9 @@ class ConfigParams
         int getNumAngles();
         float getK();
         int getSampleType();
+        float getConnectDist();
+        float getTPRM_T();
+        float getTPRM_D();
 
     private:
         std::string _file;
@@ -30,5 +33,9 @@ class ConfigParams
         int _num_points;
         int _num_angles;
         float _K;
+        
         int _sample_type;
+        float _connect_dist;
+        float _tprm_t;
+        float _tprm_d;
 };

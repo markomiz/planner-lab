@@ -177,6 +177,8 @@ void MissionPlanner::build_roadmap()
     d->_K = conf->getK();
 
     planner = new PRMstar(map);
+    planner->config = conf;
+    planner->graph->config = conf;
     RCLCPP_INFO(this->get_logger(),"Planner made");
     planner->dCurve = d;
     planner->genRoadmapPlus(conf->getNumPoints(), conf->getNumAngles());
