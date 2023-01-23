@@ -8,6 +8,7 @@
 #include <unistd.h>
 #include <string>
 #include <deque>
+#include <ctime>
 
 #include "geometry.h"
 #include "graph.h"
@@ -63,7 +64,7 @@ void MissionPlanner::obstacle_topic_callback(const obstacles_msgs::msg::Obstacle
     }
     RCLCPP_INFO(this->get_logger(), "Got obstacles information");
     is_receive_obs = true;
-    getPaths_and_Publish();
+    // getPaths_and_Publish();
 
 };
 
@@ -84,7 +85,7 @@ void MissionPlanner::map_topic_callback(const geometry_msgs::msg::PolygonStamped
     map_poly = Polygon(outer_verteces);
     is_receive_map = true;
     RCLCPP_INFO(this->get_logger(), "Got map information.");
-    getPaths_and_Publish();
+    // getPaths_and_Publish();
 };
 
 void MissionPlanner::gate_topic_callback(const geometry_msgs::msg::PoseArray outline_message)
@@ -109,13 +110,13 @@ void MissionPlanner::gate_topic_callback(const geometry_msgs::msg::PoseArray out
     }
     is_receive_gate = true;
     RCLCPP_INFO(this->get_logger(), "Got gates information");
-    getPaths_and_Publish();
+    // getPaths_and_Publish();
     
 };
 
-void MissionPlanner::pose_topic_callback(const geometry_msgs::msg::TransformStamped t)
+void MissionPlanner::pose1_topic_callback(const geometry_msgs::msg::TransformStamped t)
 {
-    if(poses_received == 1)
+    if(is_receive_pose1)
     {
         return;
     }
@@ -128,9 +129,31 @@ void MissionPlanner::pose_topic_callback(const geometry_msgs::msg::TransformStam
     temp_init_pose.x.y  = t.transform.translation.y;
     temp_init_pose.theta = yaw;
     initial_pose.push_back(temp_init_pose);
-    poses_received++;
-    RCLCPP_INFO(this->get_logger(), "Got initial poses");
-    getPaths_and_Publish();
+    is_receive_pose1 = true;
+    RCLCPP_INFO(this->get_logger(), "Got initial pose 1");
+    // getPaths_and_Publish();
+};
+
+void MissionPlanner::pose2_topic_callback(const geometry_msgs::msg::TransformStamped t)
+{
+    if(is_receive_pose2 && is_receive_pose1)
+    {
+        getPaths_and_Publish();
+        return;
+    } else if (is_receive_pose1)
+    {
+        pose2d temp_init_pose(__FLT_MAX__,__FLT_MAX__,__FLT_MAX__);
+        tf2::Quaternion q(t.transform.rotation.x,t.transform.rotation.y,t.transform.rotation.z,t.transform.rotation.w);
+        tf2::Matrix3x3 m(q);
+        double roll, pitch, yaw;
+        m.getRPY(roll, pitch, yaw);
+        temp_init_pose.x.x  = t.transform.translation.x;
+        temp_init_pose.x.y  = t.transform.translation.y;
+        temp_init_pose.theta = yaw;
+        initial_pose.push_back(temp_init_pose);
+        is_receive_pose2 = true;
+        RCLCPP_INFO(this->get_logger(), "Got initial pose 2");
+    } else return;
 };
 
 void MissionPlanner::build_roadmap()
@@ -140,11 +163,6 @@ void MissionPlanner::build_roadmap()
     point2d t2(-8,8);
     point2d t3(8,8);
     point2d t4(8,-8);
-
-    point2d p1(1,4);
-    point2d p2(2,5);
-    point2d p3(5,2);
-    point2d p4(4,1);
     
     vector<point2d> vec_vert;
     vec_vert.push_back(t1);
@@ -152,19 +170,9 @@ void MissionPlanner::build_roadmap()
     vec_vert.push_back(t3);
     vec_vert.push_back(t4);
 
-    // vector<point2d> obs_vert;
-    // obs_vert.push_back(p1);
-    // obs_vert.push_back(p2);
-    // obs_vert.push_back(p3);
-    // obs_vert.push_back(p4);
-
-    
     Polygon test_map(vec_vert); 
 
     shared_ptr<Map> map (new Map(test_map));
-
-    
-
     for (int i = 0; i < obstacle_list.size(); i++)
     {
         map->addObstacle(obstacle_list[i]);
@@ -172,7 +180,7 @@ void MissionPlanner::build_roadmap()
 
     RCLCPP_INFO(this->get_logger(),"Map made and Obstacles included. Free space = %0.2f", map->getFreeSpace());
     
-    shared_ptr<dubinCurve> d (new dubinCurve())
+    d = std::shared_ptr<dubinCurve> (new dubinCurve());
     d->map = map;
     d->_K = conf->getK();
 
@@ -186,64 +194,171 @@ void MissionPlanner::build_roadmap()
 
 };
 
-void MissionPlanner::publish_results(int robot)
+// void MissionPlanner::publish_results(int robot)
+// {
+//     /*
+//         ACTION CLIENT AND SERVER PART
+//     */
+//     string robot_str = "shelfino" + std::to_string(robot) + "/follow_path";
+//     publisher_ = this->create_publisher<nav_msgs::msg::Path>(robot_str, 10);
+//     rclcpp_action::Client<FollowPath>::SharedPtr client_ptr_;
+//     client_ptr_ = rclcpp_action::create_client<FollowPath>(this,robot_str);
+//     if (!client_ptr_->wait_for_action_server()) {
+//         cout << "here!!!" << endl;
+//         RCLCPP_ERROR(this->get_logger(), "Action server not available after waiting");
+//         rclcpp::shutdown();
+//     }    
+//     auto goal_msg = FollowPath::Goal();
+//     goal_msg.path = path;
+//     goal_msg.controller_id = "FollowPath";   
+//     RCLCPP_INFO(this->get_logger(), "Sending goal position");
+//     client_ptr_->async_send_goal(goal_msg);
+//     for(int i = 0; i<2; i++)
+//     {
+//         publisher_->publish(path);
+//         usleep(1000000);
+//         RCLCPP_INFO(this->get_logger(), "%s", path.header.frame_id.c_str());
+//     }
+// };
+
+void MissionPlanner::getPaths_and_Publish()
 {
+    if(is_receive_map && is_receive_gate && is_receive_obs && is_receive_pose1 && is_receive_pose2)
+    {
+        RCLCPP_INFO(this->get_logger(), "Got all information from simulation");
+        RCLCPP_INFO(this->get_logger(), "Calculating Roadmap");
+        clock_t beforeTime = clock();
+        build_roadmap();
+        clock_t afterTime = clock() - beforeTime;
+        
+        cout << "Building the roadmap took " <<(float)afterTime/CLOCKS_PER_SEC << " seconds." << endl;
+        
+        pathFinder1();
+        pathFinder2();
+
+        rclcpp::shutdown();
+    }
+};
+
+void MissionPlanner::map_subscriber()
+{
+    RCLCPP_INFO(this->get_logger(), "Getting map info");
+    rclcpp::QoS qos_map = rclcpp::QoS(rclcpp::KeepLast(1), rmw_qos_profile_sensor_data);
+    map_subscription_ = this->create_subscription<geometry_msgs::msg::PolygonStamped>(
+    "map_borders", qos_map, std::bind(&MissionPlanner::map_topic_callback, this, _1));
+};
+
+void MissionPlanner::obs_subscriber()
+{
+    RCLCPP_INFO(this->get_logger(), "Getting obstacle info");
+    rclcpp::QoS qos_obs = rclcpp::QoS(rclcpp::KeepLast(1), rmw_qos_profile_sensor_data);
+    obs_subscription_ = this->create_subscription<obstacles_msgs::msg::ObstacleArrayMsg>(
+    "obstacles", qos_obs, std::bind(&MissionPlanner::obstacle_topic_callback, this, _1));
+};
+
+void MissionPlanner::gate_subscriber()
+{
+    RCLCPP_INFO(this->get_logger(), "Getting gate info");
+    rclcpp::QoS qos_gate = rclcpp::QoS(rclcpp::KeepLast(1), rmw_qos_profile_sensor_data);
+    gate_subscription_ = this->create_subscription<geometry_msgs::msg::PoseArray>(
+    "gate_position", qos_gate, std::bind(&MissionPlanner::gate_topic_callback, this, _1));
+};
+
+void MissionPlanner::pose1_subscriber()
+{
+    string name1 = "shelfino1/transform"; 
+    RCLCPP_INFO(this->get_logger(), "Getting position info for shelfino 1");
+    rclcpp::QoS qos_pose = rclcpp::QoS(rclcpp::KeepLast(1), rmw_qos_profile_sensor_data);
+
+    pose1_subscription_ = this->create_subscription<geometry_msgs::msg::TransformStamped>(
+    name1, qos_pose, std::bind(&MissionPlanner::pose1_topic_callback, this, _1));
+};
+
+void MissionPlanner::pose2_subscriber()
+{
+    string name2 = "shelfino2/transform"; 
+    RCLCPP_INFO(this->get_logger(), "Getting position info for shelfino 2");
+    rclcpp::QoS qos_pose = rclcpp::QoS(rclcpp::KeepLast(1), rmw_qos_profile_sensor_data);
+    pose2_subscription_ = this->create_subscription<geometry_msgs::msg::TransformStamped>(
+    name2, qos_pose, std::bind(&MissionPlanner::pose2_topic_callback, this, _1));
+};
+
+void MissionPlanner::pathFinder1()
+{
+    pose2d x0(5,5,0.5);
+    deque<arcs> way = planner->getPath(initial_pose[0], x0);
+    path1 = d->arcs_to_path(way, 0.05);
+    RCLCPP_INFO(this->get_logger(),"Path1 found");
+
+    // Publish results
+    RCLCPP_INFO(this->get_logger(), "Publishing path");
+    
     /*
         ACTION CLIENT AND SERVER PART
     */
-    string robot_str = "shelfino" + std::to_string(robot) + "/follow_path";
+    string robot_str = "shelfino1/follow_path";
     publisher_ = this->create_publisher<nav_msgs::msg::Path>(robot_str, 10);
+    
+    client_ptr_1 = rclcpp_action::create_client<FollowPath>(this,robot_str);
 
-    using FollowPath = nav2_msgs::action::FollowPath;
-
-    rclcpp_action::Client<FollowPath>::SharedPtr client_ptr_;
-    client_ptr_ = rclcpp_action::create_client<FollowPath>(this,robot_str);
-
-    if (!client_ptr_->wait_for_action_server()) {
+    if (!client_ptr_1->wait_for_action_server()) {
         cout << "here!!!" << endl;
         RCLCPP_ERROR(this->get_logger(), "Action server not available after waiting");
         rclcpp::shutdown();
     }
     
-    auto goal_msg = FollowPath::Goal();
-    goal_msg.path = path;
-    goal_msg.controller_id = "FollowPath";
+    auto goal_msg1 = FollowPath::Goal();
+    goal_msg1.path = path1;
+    goal_msg1.controller_id = "FollowPath";
     
-    RCLCPP_INFO(this->get_logger(), "Sending goal position");
-    client_ptr_->async_send_goal(goal_msg);
+    RCLCPP_INFO(this->get_logger(), "Sending goal1 position");
+    client_ptr_1->async_send_goal(goal_msg1);
 
     for(int i = 0; i<2; i++)
     {
-        publisher_->publish(path);
+        publisher_->publish(path1);
         usleep(1000000);
-        RCLCPP_INFO(this->get_logger(), "%s", path.header.frame_id.c_str());
+        RCLCPP_INFO(this->get_logger(), "%s", path1.header.frame_id.c_str());
     }
 };
 
-void MissionPlanner::getPaths_and_Publish()
+void MissionPlanner::pathFinder2()
 {
-    if (is_receive_map && is_receive_gate && is_receive_obs && poses_received == 2)
-    {
-        RCLCPP_INFO(this->get_logger(), "Calculating Roadmap");
-        build_roadmap();
-        cout << "I got " <<initial_pose.size() << " initial poses" << endl;
-        for (int i = 0; i < initial_pose.size(); i++)
-        {
-            pose2d xf(5,5,0.5);
-            deque<arcs> way = planner->getPath(initial_pose[i],xf);
-            path = d->arcs_to_path(way, 0.05);
-            RCLCPP_INFO(this->get_logger(),"Path found");
+    pose2d x0(5,5,0.5);
+    deque<arcs> way = planner->getPath(initial_pose[1],x0);
+    path2 = d->arcs_to_path(way, 0.05);
+    RCLCPP_INFO(this->get_logger(),"Path2 found");
 
-            // Publish results
-            RCLCPP_INFO(this->get_logger(), "Publishing path");
-            publish_results(i+1);
-            //do some computations and publish messages
-        }
+    // Publish results
+    RCLCPP_INFO(this->get_logger(), "Publishing path");
+    /*
+        ACTION CLIENT AND SERVER PART
+    */
+    string robot_str = "shelfino2/follow_path";
+    publisher_ = this->create_publisher<nav_msgs::msg::Path>(robot_str, 10);
+    
+    client_ptr_2 = rclcpp_action::create_client<FollowPath>(this,robot_str);
+
+    if (!client_ptr_2->wait_for_action_server()) {
+        cout << "here!!!" << endl;
+        RCLCPP_ERROR(this->get_logger(), "Action server not available after waiting");
         rclcpp::shutdown();
     }
+    
+    auto goal_msg2 = FollowPath::Goal();
+    goal_msg2.path = path2;
+    goal_msg2.controller_id = "FollowPath";
+    
+    RCLCPP_INFO(this->get_logger(), "Sending goal2 position");
+    client_ptr_2->async_send_goal(goal_msg2);
+
+    for(int i = 0; i<2; i++)
+    {
+        publisher_->publish(path2);
+        usleep(1000000);
+        RCLCPP_INFO(this->get_logger(), "%s", path2.header.frame_id.c_str());
+    }
 };
-
-
 
 int main(int argc, char * argv[])
 {
