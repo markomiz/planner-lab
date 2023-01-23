@@ -171,8 +171,7 @@ void MissionPlanner::build_roadmap()
     }
 
     RCLCPP_INFO(this->get_logger(),"Map made and Obstacles included. Free space = %0.2f", map->getFreeSpace());
-    
-    shared_ptr<dubinCurve> d (new dubinCurve())
+
     d->map = map;
     d->_K = conf->getK();
 
