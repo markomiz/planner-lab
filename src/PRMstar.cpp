@@ -93,7 +93,7 @@ void PRMstar::genRoadmapPlus(int n, int angles)
     cout <<" 3\n";
     float d_ang = M_PI * 2/float(angles);
     cout <<" 4\n";
-    for (auto i = 0; i < n; i ++)
+    for (auto i = 0; i < config->getNumPoints(); i ++)
     {
         cout <<" s";
         point2d new_p;

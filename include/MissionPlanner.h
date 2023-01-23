@@ -36,6 +36,14 @@
 using std::placeholders::_1;
 using FollowPath = nav2_msgs::action::FollowPath;
 
+struct combo
+{
+    vector<arcs> shelfino1Path;
+    vector<arcs> shelfino2Path;
+    vector<arcs> shelfino3Path;
+    float costs[3];
+};
+
 class MissionPlanner : public rclcpp::Node
 {
     private:
@@ -48,6 +56,7 @@ class MissionPlanner : public rclcpp::Node
         nav_msgs::msg::Path path1;
         nav_msgs::msg::Path path2;
         vector<pose2d> initial_pose;
+        shared_ptr<dubinCurve> d;
         
 
         rclcpp::Subscription<obstacles_msgs::msg::ObstacleArrayMsg>::SharedPtr obs_subscription_;
@@ -102,15 +111,33 @@ class MissionPlanner : public rclcpp::Node
 
 
         void getPaths_and_Publish();
+        void subscribe_to_map_info();
+        void subscribe_to_obstacle_info();
+        void subscribe_to_gate_info();
+        void subscribe_to_shelfino1();
+        void subscribe_to_shelfino2();
+        void subscribe_to_shelfino3();
+
+        void find_best_paths_combo();
    
     public:
         MissionPlanner()
         : Node("mission_planner"), count_(0)
         {
-            
             print_message();
-
             conf = std::shared_ptr<ConfigParams>(new ConfigParams("src/dubin/config.txt"));
+
+            d = std::shared_ptr<dubinCurve>(new dubinCurve());
+            void subscribe_to_map_info();
+            void subscribe_to_obstacle_info();
+            void subscribe_to_gate_info();
+            void subscribe_to_shelfino1();
+            void subscribe_to_shelfino2();
+            void subscribe_to_shelfino3();
+            // // get initial pose
+            // RCLCPP_INFO(this->get_logger(), "Getting position info for shelfino %i", 1);
+            // rclcpp::QoS qos_pose = rclcpp::QoS(rclcpp::KeepLast(1), rmw_qos_profile_sensor_data);
+
 
             map_subscriber();
             obs_subscriber();

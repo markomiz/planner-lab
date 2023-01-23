@@ -41,12 +41,17 @@ void ConfigParams::addParam(string name, string value)
         _planner_type = (value == "PRMstar") ? 0 : 1;
     }
     else if (name ==  "num_points:"){
+        
         _num_points = stoi(value);
+        cout << "got num points! " << _num_points << " \n";
     }
     else if (name ==  "num_angles:"){
+        
         _num_angles = stoi(value);
+        cout << "got num angles! " << _num_angles<< " \n";
     }
     else if (name ==  "K:"){
+        
         _K = stof(value);
     }
     else if (name ==  "sample_type:"){
@@ -54,6 +59,7 @@ void ConfigParams::addParam(string name, string value)
     }
     else if (name ==  "connect_distance:"){
         _connect_dist = stof(value);
+        cout << "got connect_dist! " << _connect_dist << " \n";
     }
     else if (name ==  "tprm_t:"){
         _tprm_t = stof(value);
