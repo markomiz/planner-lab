@@ -33,6 +33,14 @@
 
 using std::placeholders::_1;
 
+struct combo
+{
+    vector<arcs> shelfino1Path;
+    vector<arcs> shelfino2Path;
+    vector<arcs> shelfino3Path;
+    float costs[3];
+};
+
 class MissionPlanner : public rclcpp::Node
 {
     private:
@@ -89,6 +97,8 @@ class MissionPlanner : public rclcpp::Node
         void subscribe_to_shelfino1();
         void subscribe_to_shelfino2();
         void subscribe_to_shelfino3();
+
+        void find_best_paths_combo();
    
     public:
         MissionPlanner()

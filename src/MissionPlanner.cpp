@@ -305,6 +305,19 @@ void MissionPlanner::subscribe_to_shelfino3()
     name, qos_pose, std::bind(&MissionPlanner::pose_topic_callback, this, _1));
 };
 
+void MissionPlanner::find_best_paths_combo(){
+
+    for (int i = 0; i < 9; i++)
+    {
+        // first bit is shelfino1 exit
+
+        // second bit is shelfino2 exit
+
+        // third bit is shelfino3 exit
+    }
+
+};
+
 int main(int argc, char * argv[])
 {
   rclcpp::init(argc, argv);
