@@ -89,13 +89,13 @@ void PRMstar::genRoadmapPlus(int n, int angles)
     //  init empty graph
     int cons = 0;
     cout <<" 2\n";
-    ofstream node_file ("nodes.txt");
+    // ofstream node_file ("nodes.txt");
     cout <<" 3\n";
     float d_ang = M_PI * 2/float(angles);
-    cout <<" 4\n";
-    for (auto i = 0; i < n; i ++)
+
+    for (int i = 0; i < config->getNumPoints() ; i ++)
     {
-        cout <<" s";
+
         point2d new_p;
         if (config->getSampleType() == 1) new_p = map->halton_sample(i);
         else new_p = map->uniform_sample();
@@ -139,10 +139,10 @@ void PRMstar::genRoadmapPlus(int n, int angles)
             graph->points_quad.insert(new_node);
             graph->nodes.push_back(cor);
             graph->points_quad.insert(cor);
-            node_file << new_node->pt.x.x << "; " << new_node->pt.x.y << "\n";
+            // node_file << new_node->pt.x.x << "; " << new_node->pt.x.y << "\n";
         }
     }
-    node_file.close();
+    // node_file.close();
     cout << cons <<" connections test \n";
 };
 

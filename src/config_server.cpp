@@ -32,6 +32,7 @@ void ConfigParams::loadParams()
         string value = results[1];
         addParam(name, value);
     }
+    file.close();
 };
 void ConfigParams::addParam(string name, string value)
 {

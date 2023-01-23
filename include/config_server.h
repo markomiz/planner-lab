@@ -30,12 +30,12 @@ class ConfigParams
     private:
         std::string _file;
         int _planner_type;
-        int _num_points;
-        int _num_angles;
-        float _K;
+        int _num_points = 1000;
+        int _num_angles = 3;
+        float _K = 3.0;
         
-        int _sample_type;
-        float _connect_dist;
-        float _tprm_t;
-        float _tprm_d;
+        int _sample_type = 0;
+        float _connect_dist = 1.2;
+        float _tprm_t = 0.5;
+        float _tprm_d = 0.5;
 };
