@@ -79,8 +79,6 @@ class MissionPlanner : public rclcpp::Node
         bool is_receive_pose1 = false;
         bool is_receive_pose2 = false;
 
-        std::shared_ptr<dubinCurve> d;
-        bool hasThisRun = false;
         
         //Subscribers
         void obstacle_topic_callback(const obstacles_msgs::msg::ObstacleArrayMsg obstacle_message);
@@ -111,14 +109,6 @@ class MissionPlanner : public rclcpp::Node
 
 
         void getPaths_and_Publish();
-        void subscribe_to_map_info();
-        void subscribe_to_obstacle_info();
-        void subscribe_to_gate_info();
-        void subscribe_to_shelfino1();
-        void subscribe_to_shelfino2();
-        void subscribe_to_shelfino3();
-
-        void find_best_paths_combo();
    
     public:
         MissionPlanner()
@@ -128,12 +118,6 @@ class MissionPlanner : public rclcpp::Node
             conf = std::shared_ptr<ConfigParams>(new ConfigParams("src/dubin/config.txt"));
 
             d = std::shared_ptr<dubinCurve>(new dubinCurve());
-            void subscribe_to_map_info();
-            void subscribe_to_obstacle_info();
-            void subscribe_to_gate_info();
-            void subscribe_to_shelfino1();
-            void subscribe_to_shelfino2();
-            void subscribe_to_shelfino3();
             // // get initial pose
             // RCLCPP_INFO(this->get_logger(), "Getting position info for shelfino %i", 1);
             // rclcpp::QoS qos_pose = rclcpp::QoS(rclcpp::KeepLast(1), rmw_qos_profile_sensor_data);
