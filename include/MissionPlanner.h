@@ -30,8 +30,19 @@
 #include "obstacles_msgs/msg/obstacle_array_msg.hpp"
 #include "obstacles_msgs/msg/obstacle_msg.hpp"
 #include "std_msgs/msg/header.hpp"
+#include "nav2_msgs/action/follow_path.hpp"
+#include "rclcpp_action/rclcpp_action.hpp"
 
 using std::placeholders::_1;
+using FollowPath = nav2_msgs::action::FollowPath;
+
+struct combo
+{
+    vector<arcs> shelfino1Path;
+    vector<arcs> shelfino2Path;
+    vector<arcs> shelfino3Path;
+    float costs[3];
+};
 
 class MissionPlanner : public rclcpp::Node
 {
@@ -42,26 +53,32 @@ class MissionPlanner : public rclcpp::Node
         Polygon map_poly;
         vector<pose2d> gate;
         PRMstar* planner;
-        nav_msgs::msg::Path path;
+        nav_msgs::msg::Path path1;
+        nav_msgs::msg::Path path2;
         vector<pose2d> initial_pose;
+        shared_ptr<dubinCurve> d;
         
 
         rclcpp::Subscription<obstacles_msgs::msg::ObstacleArrayMsg>::SharedPtr obs_subscription_;
         rclcpp::Subscription<geometry_msgs::msg::PolygonStamped>::SharedPtr map_subscription_;
         rclcpp::Subscription<geometry_msgs::msg::PoseArray>::SharedPtr gate_subscription_;
-        rclcpp::Subscription<geometry_msgs::msg::TransformStamped>::SharedPtr pose_subscription_[3];
+        rclcpp::Subscription<geometry_msgs::msg::TransformStamped>::SharedPtr pose1_subscription_;
+        rclcpp::Subscription<geometry_msgs::msg::TransformStamped>::SharedPtr pose2_subscription_;
+        rclcpp_action::Client<FollowPath>::SharedPtr client_ptr_1;
+        rclcpp_action::Client<FollowPath>::SharedPtr client_ptr_2;
+
         rclcpp::Publisher<nav_msgs::msg::Path>::SharedPtr publisher_;
 
         rclcpp::TimerBase::SharedPtr timer_;
         std::shared_ptr<ConfigParams> conf;
         size_t count_;
-        int robot_numb = 0;
-        std::string name;
-        int is_receive_map = true;
-        int is_receive_gate = false;
-        int is_receive_obs = false;
-        int poses_received = 0;
-        
+
+        bool is_receive_map = true;
+        bool is_receive_gate = false;
+        bool is_receive_obs = false;
+        bool is_receive_pose1 = false;
+        bool is_receive_pose2 = false;
+
         
         //Subscribers
         void obstacle_topic_callback(const obstacles_msgs::msg::ObstacleArrayMsg obstacle_message);
@@ -70,12 +87,21 @@ class MissionPlanner : public rclcpp::Node
         
         void gate_topic_callback(const geometry_msgs::msg::PoseArray outline_message);
 
-        void pose_topic_callback(const geometry_msgs::msg::TransformStamped outline_message);
+        void pose1_topic_callback(const geometry_msgs::msg::TransformStamped outline_message);
+        void pose2_topic_callback(const geometry_msgs::msg::TransformStamped outline_message);
 
-        void do_calculations(pose2d x0);
+        void build_roadmap();
 
-        void publish_results();
+        // void publish_results(int robot);
         
+        void map_subscriber();
+        void obs_subscriber();
+        void gate_subscriber();
+        void pose1_subscriber();
+        void pose2_subscriber();
+        void pathFinder1();
+        void pathFinder2();
+
         void print_message()
         {
             std::cout << "\n__________                    .__                   __  .__                          \n\\______   \\__ __  ____   ____ |__| ____    ____   _/  |_|  |__   ____                \n |       _/  |  \\/    \\ /    \\|  |/    \\  / ___\\  \\   __\\  |  \\_/ __ \\               \n |    |   \\  |  /   |  \\   |  \\  |   |  \\/ /_/  >  |  | |   Y  \\  ___/               \n |____|_  /____/|___|  /___|  /__|___|  /\\___  /   |__| |___|  /\\___  >              \n        \\/           \\/     \\/        \\//_____/              \\/     \\/               \n__________                 __    __________.__                                    ._.\n\\______   \\ ____   _______/  |_  \\______   \\  | _____    ____   ____   ___________| |\n |    |  _// __ \\ /  ___/\\   __\\  |     ___/  | \\__  \\  /    \\ /    \\_/ __ \\_  __ \\ |\n |    |   \\  ___/ \\___ \\  |  |    |    |   |  |__/ __ \\|   |  \\   |  \\  ___/|  | \\/\\|\n |______  /\\___  >____  > |__|    |____|   |____(____  /___|  /___|  /\\___  >__|   __\n        \\/     \\/     \\/                             \\/     \\/     \\/     \\/       \\/\n";
@@ -88,52 +114,21 @@ class MissionPlanner : public rclcpp::Node
         MissionPlanner()
         : Node("mission_planner"), count_(0)
         {
-            
             print_message();
-
             conf = std::shared_ptr<ConfigParams>(new ConfigParams("src/dubin/config.txt"));
-            
-            // do_calculations(pose2d(0,0,0));
-            // return;
 
-            // Create subscribers for gate, map and obstacles
-            RCLCPP_INFO(this->get_logger(), "Getting obstacle info");
-            rclcpp::QoS qos_obs = rclcpp::QoS(rclcpp::KeepLast(1), rmw_qos_profile_sensor_data);
-            obs_subscription_ = this->create_subscription<obstacles_msgs::msg::ObstacleArrayMsg>(
-            "obstacles", qos_obs, std::bind(&MissionPlanner::obstacle_topic_callback, this, _1));
+            d = std::shared_ptr<dubinCurve>(new dubinCurve());
+            // // get initial pose
+            // RCLCPP_INFO(this->get_logger(), "Getting position info for shelfino %i", 1);
+            // rclcpp::QoS qos_pose = rclcpp::QoS(rclcpp::KeepLast(1), rmw_qos_profile_sensor_data);
 
-            RCLCPP_INFO(this->get_logger(), "Getting map info");
-            rclcpp::QoS qos_map = rclcpp::QoS(rclcpp::KeepLast(1), rmw_qos_profile_sensor_data);
-            map_subscription_ = this->create_subscription<geometry_msgs::msg::PolygonStamped>(
-            "map_borders", qos_map, std::bind(&MissionPlanner::map_topic_callback, this, _1));
 
-            RCLCPP_INFO(this->get_logger(), "Getting gate info");
-            rclcpp::QoS qos_gate = rclcpp::QoS(rclcpp::KeepLast(1), rmw_qos_profile_sensor_data);
-            gate_subscription_ = this->create_subscription<geometry_msgs::msg::PoseArray>(
-            "gate_position", qos_gate, std::bind(&MissionPlanner::gate_topic_callback, this, _1));
-            
-            // for (int i = 0; i < 2; i++)
-            // {
-            //     // Define robot currently working
-            //     name = "shelfino" + std::to_string(robot_numb) + "/transform"; 
-            //     // RCLCPP_INFO(this->get_logger(), "%s", name.c_str());
-                
-            //     // get initial pose
-            //     RCLCPP_INFO(this->get_logger(), "Getting position info for shelfino %i", i);
-            //     rclcpp::QoS qos_pose = rclcpp::QoS(rclcpp::KeepLast(1), rmw_qos_profile_sensor_data);
+            map_subscriber();
+            obs_subscriber();
+            gate_subscriber();
 
-            //     pose_subscription_[i] = this->create_subscription<geometry_msgs::msg::TransformStamped>(
-            //     name, qos_pose, std::bind(&MissionPlanner::pose_topic_callback, this, _1));
-            // }
-            // Define robot currently working
-            name = "shelfino" + std::to_string(robot_numb+1) + "/transform"; 
-            // RCLCPP_INFO(this->get_logger(), "%s", name.c_str());
-            
-            // get initial pose
-            RCLCPP_INFO(this->get_logger(), "Getting position info for shelfino %i", 1);
-            rclcpp::QoS qos_pose = rclcpp::QoS(rclcpp::KeepLast(1), rmw_qos_profile_sensor_data);
+            pose1_subscriber();
+            pose2_subscriber();
 
-            pose_subscription_[0] = this->create_subscription<geometry_msgs::msg::TransformStamped>(
-            name, qos_pose, std::bind(&MissionPlanner::pose_topic_callback, this, _1));
         }       
 };
