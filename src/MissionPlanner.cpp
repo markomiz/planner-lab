@@ -160,10 +160,10 @@ void MissionPlanner::pose2_topic_callback(const geometry_msgs::msg::TransformSta
 void MissionPlanner::build_roadmap()
 {
     // shared_ptr<Map> map (new Map(map_poly));
-    point2d t1(-8.0,-8.0);
-    point2d t2(-8.0,8.0);
-    point2d t3(8.0,8.0);
-    point2d t4(8.0,-8.0);
+    point2d t1(-12.0,-12.0);
+    point2d t2(-12.0,12.0);
+    point2d t3(12.0,12.0);
+    point2d t4(12.0,-12.0);
     
     vector<point2d> vec_vert;
     vec_vert.push_back(t1);
@@ -171,13 +171,26 @@ void MissionPlanner::build_roadmap()
     vec_vert.push_back(t3);
     vec_vert.push_back(t4);
 
+    point2d p1(-3.0,-3.0);
+    point2d p2(-3.0,3.0);
+    point2d p3(3.0,3.0);
+    point2d p4(3.0,-3.0);
+    
+    vector<point2d> obs_vert;
+    obs_vert.push_back(p1);
+    obs_vert.push_back(p2);
+    obs_vert.push_back(p3);
+    obs_vert.push_back(p4);
+
     Polygon test_map(vec_vert); 
+    Polygon test_obs(obs_vert);
 
     shared_ptr<Map> map (new Map(test_map));
     for (int i = 0; i < obstacle_list.size(); i++)
     {
         map->addObstacle(obstacle_list[i]);
     }
+    map->addObstacle(test_obs);
 
     RCLCPP_INFO(this->get_logger(),"Map made and Obstacles included. Free space = %0.2f", map->getFreeSpace());
 
@@ -276,7 +289,6 @@ void MissionPlanner::publish_path(string topic, deque<arcs> way)
     rclcpp_action::Client<FollowPath>::SharedPtr client_ptr = rclcpp_action::create_client<FollowPath>(this,topic);
 
     if (!client_ptr->wait_for_action_server()) {
-        cout << "here!!!" << endl;
         RCLCPP_ERROR(this->get_logger(), "Action server not available after waiting");
         rclcpp::shutdown();
     }
@@ -298,12 +310,29 @@ void MissionPlanner::publish_path(string topic, deque<arcs> way)
 
 void MissionPlanner::test()
 {
-
     clock_t beforeTime = clock();
     build_roadmap();
     clock_t afterTime = clock() - beforeTime;
     cout << "Building the roadmap took " <<(float)afterTime/CLOCKS_PER_SEC << " seconds." << endl;
-    planner->getPath(pose2d(0.0,0.0,0.0), pose2d(2.0,2.0,2.0));
+    vector<pose2d> exits;
+    pose2d e(-5.0,-5.0,0.0);
+    auto all = planner->graph->points_quad.get_nearest(e.x,1.0);
+    cout << all.size() << "  e size " << endl;
+    pose2d e2(5.0,5.0,0.0);
+    auto all2 = planner->graph->points_quad.get_nearest(e.x,1.0);
+    cout << all2.size() << "  e2 size " << endl;
+
+    auto path = planner->getPath(e, e2);
+    auto traj = d->arcs_to_path(path, 0.1);
+    ofstream myfile;
+    myfile.open ("path.csv");
+    for (int i = 0; i < traj.poses.size(); i++)
+    {
+    
+        myfile << traj.poses[i].pose.position.x << "," << traj.poses[i].pose.position.y << endl;
+    }
+    myfile.close();
+
 }
 
 int main(int argc, char * argv[])

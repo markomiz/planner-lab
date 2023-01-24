@@ -138,7 +138,6 @@ bool Map::colliding(arcs A)
             point2d temp_pt2(A.a[i].end.x.x, A.a[i].end.x.y);
             temp.p_final = temp_pt2;
             if(colliding(temp)){
-                // cout << "\n line collides\n";
                 return true;
             } 
         }
@@ -146,7 +145,6 @@ bool Map::colliding(arcs A)
         {
             
             if (colliding(A.a[i])){
-                //cout << " arc collides\n";
                  return true;
             }
         }
@@ -181,8 +179,6 @@ bool Map::colliding(line l)
         // second check more detailed check if rough pass not passing
         for (auto j = 0; j < obs.edges.size(); j++)
         {
-
-            // cout << "edges\n";
 
             if (CollisionCheck::line_line_intersect(obs.edges[j], l).intersects)
             {
@@ -236,8 +232,6 @@ point2d Map::uniform_sample()
     {
         p.x = dist(mt) * (max_x - min_x) + min_x;
         p.y = dist(mt)* (max_y - min_y) + min_y;
-        // std::cout << "colliding\n";
-        // std::cout << p.x;
     }
     
     return p;

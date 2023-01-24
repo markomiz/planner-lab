@@ -53,7 +53,6 @@ intersection_result CollisionCheck::line_line_intersect(line l1, line l2)
             && (result.intersection.y >= std::min(l2.p_initial.y, l2.p_final.y) && result.intersection.y <= std::max(l2.p_initial.y, l2.p_final.y))
             )
         {
-            // cout << "here2" << endl;
             result.intersects = true;
             return result;
         }
