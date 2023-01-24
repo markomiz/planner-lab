@@ -167,7 +167,7 @@ shared_ptr<Node> Graph::add(shared_ptr<Node> point, shared_ptr<Node> existing, a
 };
 vector<shared_ptr<Node>> Graph::in_range(point2d pt, float rad)
 {
-    vector<shared_ptr<Node>> points = points_quad.in_range( pt, rad);
+    vector<shared_ptr<Node>> points = points_quad.in_range(pt, rad);
     return points;
 };
 void Graph::reset_nodes()

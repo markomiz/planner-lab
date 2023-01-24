@@ -3,8 +3,8 @@ num_points: 10000
 num_angles: 3
 K: 10.0
 sample_type: Uniform
-connect_distance: 1.5
+connect_distance: 1.2
 tprm_t: 0.2
 tprm_d: 0.4
-expand_distance: 0.4
-start_end_thrsh: 0.5
+expand_distance: 5.0
+start_end_thrsh: 1.0

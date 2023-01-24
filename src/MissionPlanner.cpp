@@ -110,7 +110,7 @@ void MissionPlanner::gate_topic_callback(const geometry_msgs::msg::PoseArray out
 
         temp_gate.x.x  = outline_message.poses[i].position.x;
         temp_gate.x.y  = outline_message.poses[i].position.y;
-        temp_gate.theta = yaw;
+        temp_gate.theta = 0;
         gates.push_back(temp_gate);   
     }
     has_received_gate = true;
@@ -180,7 +180,7 @@ void MissionPlanner::build_roadmap()
     // vec_vert.push_back(t4);
 
     // Polygon test_map(vec_vert); 
-
+    map_poly.expandShape(conf->getExpandSize());
     shared_ptr<Map> map (new Map(map_poly));
     for (int i = 0; i < obstacle_list.size(); i++)
     {
@@ -217,6 +217,7 @@ void MissionPlanner::getPaths_and_Publish()
         
         for (int rob = 1; rob <= initial_poses.size(); rob++)
         {
+            cout << "Pose is: " << initial_poses[rob-1].x.x << ", " << initial_poses[rob-1].x.y << ", " << initial_poses[rob-1].theta << endl;
             deque<arcs> path = planner->getPathManyExits(initial_poses[rob-1], gates);
 
             publish_path("shelfino" + to_string(rob) + "/follow_path", path);
