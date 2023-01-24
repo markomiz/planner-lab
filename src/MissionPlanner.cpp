@@ -196,6 +196,7 @@ void MissionPlanner::build_roadmap()
 
 void MissionPlanner::getPaths_and_Publish()
 {
+    if (path_done) return;
     if(has_received_map && has_received_gate && has_received_obs && has_received_pose1 && has_received_pose2)
     {
         RCLCPP_INFO(this->get_logger(), "Got all information from simulation");
@@ -211,8 +212,9 @@ void MissionPlanner::getPaths_and_Publish()
             deque<arcs> path = planner->getPathManyExits(initial_poses[rob], gates);
 
             publish_path("shelfino" + to_string(rob) + "/follow_path", path);
-        }
 
+        }
+        path_done = true;
         rclcpp::shutdown();
     }
 };
