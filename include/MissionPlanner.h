@@ -36,14 +36,6 @@
 using std::placeholders::_1;
 using FollowPath = nav2_msgs::action::FollowPath;
 
-struct combo
-{
-    vector<arcs> shelfino1Path;
-    vector<arcs> shelfino2Path;
-    vector<arcs> shelfino3Path;
-    float costs[3];
-};
-
 class MissionPlanner : public rclcpp::Node
 {
     private:
@@ -54,6 +46,7 @@ class MissionPlanner : public rclcpp::Node
         vector<pose2d> gates;
         PRMstar* planner;
 
+        bool path_done;
         vector<pose2d> initial_poses;
         shared_ptr<dubinCurve> d;
 
@@ -103,6 +96,7 @@ class MissionPlanner : public rclcpp::Node
         : Node("mission_planner"), count_(0)
         {
             print_message();
+            path_done = false;
             conf = std::shared_ptr<ConfigParams>(new ConfigParams("src/dubin/config.txt"));
             d = std::shared_ptr<dubinCurve>(new dubinCurve());
             subscribe_to_map();
