@@ -1,9 +1,9 @@
 planner_type: PRMstar
-num_points: 100000
-num_angles: 3
+num_points: 10000
+num_angles: 5
 K: 3.0
-sample_type: Uniform
-connect_distance: 1.0
+sample_type: Halton
+connect_distance: 0.8
 tprm_t: 0.2
 tprm_d: 0.4
 expand_distance: 0.5

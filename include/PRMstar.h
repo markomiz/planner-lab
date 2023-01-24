@@ -11,7 +11,7 @@ class PRMstar
 {
     public:
         PRMstar(shared_ptr<Map> m) : map(m){
-            graph = shared_ptr<Graph> (new Graph(7, point2d(m->min_x, m->max_y), point2d(m->max_x, m->min_y)));
+            graph = shared_ptr<Graph> (new Graph(15, point2d(m->min_x, m->max_y), point2d(m->max_x, m->min_y)));
         }; 
         ~PRMstar(){
         };

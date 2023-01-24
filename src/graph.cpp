@@ -263,8 +263,9 @@ deque<arcs> Graph::getPathPlus(shared_ptr<Node> start_node, shared_ptr<Node> end
             }
         }
         OPEN.erase(cur_it);
-        
-        if (current == end_node) // end reached
+        // float dist = (current->pt.x - end_node->pt.x).norm();
+        // if (dist < 0.2) // end reached
+        if (current == end_node)
         {
             end_reached = true;
 

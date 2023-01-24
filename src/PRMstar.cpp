@@ -89,13 +89,12 @@ void PRMstar::genRoadmapPlus(int n, int angles)
     //  init empty graph
     int cons = 0;
     cout <<" 2\n";
-    ofstream node_file ("nodes.txt");
+    
     cout <<" 3\n";
     float d_ang = M_PI * 2/float(angles);
     cout <<" 4\n";
     for (auto i = 0; i < config->getNumPoints(); i ++)
     {
-        cout <<" s";
         point2d new_p;
         if (config->getSampleType() == 1) new_p = map->halton_sample(i);
         else new_p = map->uniform_sample();
@@ -121,14 +120,13 @@ void PRMstar::genRoadmapPlus(int n, int angles)
             {
                 new_node->pt.theta = a * d_ang;
                 cor->pt.theta = arc::mod2pi(a * d_ang+ M_PI);
-                bool col_arc = false;
 
                 dubins_params sol = dCurve->calculateSinglePath(new_node->pt, nearest[x]->pt);
 
                 arcs A = arcs(new_node->pt, sol);
-                // if (!map->colliding(A) &&  A.L < rad){
+                if (!map->colliding(A) &&  A.L < rad){
                 // if (map->colliding(A)) cout << "collision --- \n";
-                if (!map->colliding(A)){
+                //if (!map->colliding(A)){
                     graph->add(new_node, nearest[x], A);
                     cons ++;
 
@@ -139,10 +137,9 @@ void PRMstar::genRoadmapPlus(int n, int angles)
             graph->points_quad.insert(new_node);
             graph->nodes.push_back(cor);
             graph->points_quad.insert(cor);
-            node_file << new_node->pt.x.x << "; " << new_node->pt.x.y << "\n";
         }
     }
-    node_file.close();
+
     cout << cons <<" connections test \n";
 };
 
@@ -188,6 +185,7 @@ deque<arcs> PRMstar::getPath(pose2d start, pose2d end)
         if (map->colliding(A)) continue;
         graph->add(nearest_e[x], end_node,  A);
     };
+    cout << "Still fine some more " << nearest_e.size() << endl;
     graph->nodes.push_back(start_node);
     graph->nodes.push_back(cor);
     graph->points_quad.insert(start_node);
