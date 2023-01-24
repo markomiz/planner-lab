@@ -19,6 +19,7 @@ struct Node
     shared_ptr<connection> parent_connection;
     vector<float> arrival_time;
     shared_ptr<Node> opposite;
+    // vector<shared_ptr<Node>> siblings;
     bool check_availability(float current_time, float threshold)
     {
         for (int i = 0; i < arrival_time.size(); i++)

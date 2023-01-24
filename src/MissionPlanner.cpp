@@ -160,10 +160,10 @@ void MissionPlanner::pose2_topic_callback(const geometry_msgs::msg::TransformSta
 void MissionPlanner::build_roadmap()
 {
     // shared_ptr<Map> map (new Map(map_poly));
-    point2d t1(-8,-8);
-    point2d t2(-8,8);
-    point2d t3(8,8);
-    point2d t4(8,-8);
+    point2d t1(-8.0,-8.0);
+    point2d t2(-8.0,8.0);
+    point2d t3(8.0,8.0);
+    point2d t4(8.0,-8.0);
     
     vector<point2d> vec_vert;
     vec_vert.push_back(t1);
@@ -215,7 +215,6 @@ void MissionPlanner::getPaths_and_Publish()
 
         }
         path_done = true;
-        rclcpp::shutdown();
     }
 };
 
@@ -295,6 +294,16 @@ void MissionPlanner::publish_path(string topic, deque<arcs> way)
         usleep(1000000);
         RCLCPP_INFO(this->get_logger(), "%s", path.header.frame_id.c_str());
     }
+}
+
+void MissionPlanner::test()
+{
+
+    clock_t beforeTime = clock();
+    build_roadmap();
+    clock_t afterTime = clock() - beforeTime;
+    cout << "Building the roadmap took " <<(float)afterTime/CLOCKS_PER_SEC << " seconds." << endl;
+    planner->getPath(pose2d(0.0,0.0,0.0), pose2d(2.0,2.0,2.0));
 }
 
 int main(int argc, char * argv[])
