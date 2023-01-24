@@ -26,6 +26,7 @@ class ConfigParams
         float getConnectDist();
         float getTPRM_T();
         float getTPRM_D();
+        float getExpandSize();
 
     private:
         std::string _file;
@@ -37,4 +38,5 @@ class ConfigParams
         float _connect_dist = 1.2;
         float _tprm_t = 0.5;
         float _tprm_d = 0.5;
+        float _expand_size = 0.5;
 };
