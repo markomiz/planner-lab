@@ -4,128 +4,82 @@
 #include <iostream>
 #include <deque>
 using namespace std;
-Graph::Graph(int max_depth, point2d tl, point2d br) : points_quad(max_depth, tl, br)
+Graph::Graph(int max_depth, point2d tl, point2d br) : points_quad(-15.0, 25.0, -15.0, 25.0, 0)
 {
 
 };
-quad::quad(int max_depth, point2d tl, point2d br) : tl(tl), br(br), max_depth(max_depth)
-{
-    bl.x = tl.x;
-    bl.y = br.y;
-    tr.x = br.x;
-    tr.y = tl.y;
-    tl_tree = NULL;
-    bl_tree = NULL;
-    tr_tree = NULL;
-    br_tree = NULL;
-    
-    center.x = (tr.x + bl.x) / 2;
-    center.y = (tr.x + bl.x) / 2;
-    radius = (tr - bl).norm() / 2;
 
-}
-bool quad::insert(shared_ptr<Node> node)
-{
-    if (max_depth == 0) { nodes.push_back(node);
-        return true;
-    }
-    if ((tl.x + br.x) / 2 >= node->pt.x.x) {
-        // Indicates tl_tree
-        if ((tl.y + br.y) / 2 >= node->pt.x.y) {
-            if (tl_tree == NULL)
-                tl_tree = new quad( max_depth - 1,
-                    point2d(tl.x, tl.y),
-                    point2d((tl.x + br.x) / 2,
-                          (tl.y + br.y) / 2));
-            tl_tree->insert(node);
-        }
-        else {
-            if (bl_tree == NULL)
-                bl_tree = new quad( max_depth - 1,
-                    point2d(tl.x,
-                          (tl.y + br.y) / 2),
-                    point2d((tl.x + br.x) / 2,
-                          br.y));
-            bl_tree->insert(node);
+void quad::add_node(shared_ptr<Node> point){
+    //cout << " add node" << endl;
+    if (children.size() == 0)
+    {
+        points.push_back(point);
+        if (points.size() > 1 && depth < max_depth) {
+            subdivide();
         }
     }
     else {
-        if ((tl.y + br.y) / 2 >= node->pt.x.y) {
-            if (tr_tree == NULL)
-                tr_tree = new quad( max_depth - 1,
-                    point2d((tl.x + br.x) / 2,
-                          tl.y),
-                    point2d(br.x,
-                          (tl.y + br.y) / 2));
-            tr_tree->insert(node);
-        }
-        else {
-            if (br_tree == NULL)
-                br_tree = new quad( max_depth - 1,
-                    point2d((tl.x + br.x) / 2,
-                          (tl.y + br.y) / 2),
-                    point2d(br.x, br.y));
-            br_tree->insert(node);
+        add_node_to_children(point);
+    }
+};
+void quad::subdivide(){
+    float xmid =  (xmin + xmax) / 2;
+    float ymid = (ymin + ymax) / 2;
+    children.push_back(quad(xmin, xmid, ymin, ymid, depth + 1));
+    children.push_back(quad(xmid, xmax, ymin, ymid, depth + 1));
+    children.push_back(quad(xmin, xmid, ymid, ymax, depth + 1));
+    children.push_back(quad(xmid, xmax, ymid, ymax, depth + 1));
+
+    for (int i = 0; i < points.size(); i++)
+    {
+        add_node_to_children(points[i]);
+    }            
+    points.clear();
+};
+void quad::add_node_to_children(shared_ptr<Node> point) {
+    float x = point->pt.x.x;
+    float y = point->pt.x.y;
+    
+    for (int i = 0; i < children.size(); i++)
+    {    
+        if (children[i].xmin <= x && x <= children[i].xmax && children[i].ymin <= y && y <= children[i].ymax)
+        {
+            // cout << " x " << x << " y " << y << endl;
+            children[i].add_node(point);
+            break;
         }
     }
 };
-bool quad::overlaps(point2d pt, float r)
+vector<shared_ptr<Node>> quad::get_nearest(point2d pt, float r)
 {
-    if ((pt - center).norm() < r + radius) return true; // circular approx
-    return false;
-}
-vector<shared_ptr<Node>> quad::in_range(point2d pt, float radius)
-{
-    vector<shared_ptr<Node>> all;
-    for (auto i = 0; i < nodes.size(); i++)
-    {
-        if (((nodes[i]->pt.x) - pt).norm() < radius) {
-            all.push_back(nodes[i]);
-        }
-    }
-    // otherwise, choose which subtrees within range,
-    if (tl_tree)
-    {
-        if (tl_tree->overlaps(pt,radius))
-        {
-            vector<shared_ptr<Node>> tl_all = tl_tree->in_range(pt, radius);
-            all.insert(all.end(), tl_all.begin(), tl_all.end());
-        }
-    }
-    if (bl_tree)
-    {
-        if (bl_tree->overlaps(pt,radius))
-        {
-            vector<shared_ptr<Node>> bl_all = bl_tree->in_range(pt, radius);
-            all.insert(all.end(), bl_all.begin(), bl_all.end());
-        }
-    }
-    if (tr_tree)
-    {
-        if (tr_tree->overlaps(pt,radius))
-        {
-            vector<shared_ptr<Node>> tr_all = tr_tree->in_range(pt, radius);
-            all.insert(all.end(), tr_all.begin(), tr_all.end());
-        }
-    }
-    if (br_tree)
-    {
-        if (br_tree->overlaps(pt,radius))
-        {
-            vector<shared_ptr<Node>> br_all = br_tree->in_range(pt, radius);
-            all.insert(all.end(), br_all.begin(), br_all.end());
-        }
-    }
-
-    return all;
+    vector<shared_ptr<Node>> neighbors;
+    find_neighbors_r(pt, r, neighbors);
+    return neighbors;
 };
-
-/*
-* Adding node considering linear connection between nodes
-* Inputs: point - point that we are considering to add to the graph
-          existing - closest point in the nearest k members that we are connecting to
-* Outputs: point - new node added to the graph
-*/
+void quad::find_neighbors_r(point2d point, float r, vector<shared_ptr<Node>> &neighbors)
+{
+    float x = point.x;
+    float y = point.y;
+    
+    if (children.size() == 0){
+        for (int i = 0; i < points.size(); i++ )
+        {
+            if ((point - points[i]->pt.x).norm() <= r)
+            {
+                neighbors.push_back(points[i]);
+            }   
+        }
+    }
+    else{
+        for (int i = 0; i < children.size(); i++ )
+        {
+            if (children[i].xmin <= x + r && x - r <= children[i].xmax && children[i].ymin <= y + r && y - r <= children[i].ymax)
+            {
+                children[i].find_neighbors_r(point, r, neighbors);
+            }
+        }
+    }        
+};
 shared_ptr<Node> Graph::add(shared_ptr<Node> point, shared_ptr<Node> existing)
 {
     
@@ -141,9 +95,6 @@ shared_ptr<Node> Graph::add(shared_ptr<Node> point, shared_ptr<Node> existing)
     return point;
 
 };
-
-
-
 shared_ptr<Node> Graph::add(shared_ptr<Node> point, shared_ptr<Node> existing, arcs A)
 {
     connection c1;
@@ -155,19 +106,15 @@ shared_ptr<Node> Graph::add(shared_ptr<Node> point, shared_ptr<Node> existing, a
     c2.node = point->opposite;
     c2.cost = A.L;
     c2.A = A.get_inverse();
-
+    
     point->connected.push_back(c1);
-
     existing->opposite->connected.push_back(c2);
-
-
-
     return point;
 
 };
 vector<shared_ptr<Node>> Graph::in_range(point2d pt, float rad)
 {
-    vector<shared_ptr<Node>> points = points_quad.in_range( pt, rad);
+    vector<shared_ptr<Node>> points = points_quad.get_nearest( pt, rad);
     return points;
 };
 void Graph::reset_nodes()
@@ -187,6 +134,7 @@ vector<point2d> Graph::getPath(shared_ptr<Node> start, shared_ptr<Node> end)
     // add start node on open list
     shared_ptr<Node> current = nullptr;
     OPEN.push_back(start);
+    start->cost = 0.0;
     while (OPEN.size() > 0)
     {   
         auto cur_it = OPEN.begin();
@@ -228,7 +176,6 @@ vector<point2d> Graph::getPath(shared_ptr<Node> start, shared_ptr<Node> end)
         points.push_back(current->pt.x);
         current = current->parent;
     }
-    std::cout << "we made it this far! \n";
     reset_nodes(); 
     
     current = nullptr;
@@ -263,19 +210,17 @@ deque<arcs> Graph::getPathPlus(shared_ptr<Node> start_node, shared_ptr<Node> end
             }
         }
         OPEN.erase(cur_it);
-        // float dist = (current->pt.x - end_node->pt.x).norm();
-        // if (dist < 0.2) // end reached
-        if (current == end_node)
+        float dist = (current->pt.x - end_node->pt.x).norm();
+        if (dist < 0.2) // end reached
+        // if (current == end_node)
         {
             end_reached = true;
-
             break;
         } 
         // for all nodes connected to current
         for (auto i = 0; i < current->connected.size(); i++)
         {
             auto &con = current->connected[i];
-            // cout << "Current conncetions: " << current->connected.size() << endl;
             if (!con.node->opened)
             {
                 // Check if node is available at that time
@@ -286,23 +231,14 @@ deque<arcs> Graph::getPathPlus(shared_ptr<Node> start_node, shared_ptr<Node> end
                 {
                     continue; //skip to the next node connected to current
                 }
-
                 else
                 {
-                    // cout<< "connected.";
-                    // if not opened, add to open, store that current is parent
-                    // update their cost to current + dist between nodes 
-                    con.node->parent = current; // ok
+                   con.node->parent = current; // ok
                     con.node->parent_connection = make_shared<connection>(con); // something wrong here/
-                    // cout << "\n\n" << current->pt.x.x << " " << current->pt.x.y << " " << current->pt.theta << " current pose";
-                    // cout << "\n" << con.node->parent_connection->A.a[0].start.x.x << " " << con.node->parent_connection->A.a[0].start.x.y << " " << con.node->parent_connection->A.a[0].start.theta << " arc start connection";
-                    // cout << "\n" << con.node->parent_connection->A.a[2].end.x.x << " " << con.node->parent_connection->A.a[2].end.x.y << " " << con.node->parent_connection->A.a[2].end.theta << " arc end connection";
-                    // cout << "\n" << con.node->pt.x.x << " " << con.node->pt.x.y << " " << con.node->pt.theta << " pt connection\n";
                     OPEN.push_back(con.node);
                     con.node->opened = true;
                     con.node->cost = length;
                 }
-                
             }
         }
     }
@@ -317,25 +253,17 @@ deque<arcs> Graph::getPathPlus(shared_ptr<Node> start_node, shared_ptr<Node> end
     {
         count++;
         points.push_front(current->parent_connection->A);
-
-        // cout << "\n" << current->pt.x.x << " " << current->pt.x.y << " " << current->pt.theta << " pose in path";
-        // Calculate time of arrival to the node and add info to the node 
-        
         float node_time = current->cost;
         current->arrival_time.push_back(node_time);
-
         point2d current_point = current->pt.x;
-        vector<shared_ptr<Node>> nearby = points_quad.in_range(current_point, config->getTPRM_D()); 
+        vector<shared_ptr<Node>> nearby = points_quad.get_nearest(current_point, config->getTPRM_D()); 
         for (auto i = 0; i < nearby.size() ; i++)
         {
             nearby[i]->arrival_time.push_back(node_time);     
         }
-  
         current = current->parent;
     }
-    // cout << "\n" << current->pt.x.x << " " << current->pt.x.y << " " << current->pt.theta << " should be start";
 
-    // std::cout << "we made it this far! Nodes in path: " << count << endl;
     reset_nodes(); 
     
     current = nullptr;
@@ -370,6 +298,7 @@ deque<arcs> Graph::getPathPlusManyExits(shared_ptr<Node> start_node, vector<shar
             }
         }
         OPEN.erase(cur_it);
+        
         for (int nn = 0; nn < end_nodes.size(); nn++)
         {
             if (current == end_nodes[nn]) // end reached
@@ -394,23 +323,14 @@ deque<arcs> Graph::getPathPlusManyExits(shared_ptr<Node> start_node, vector<shar
                 {
                     continue; //skip to the next node connected to current
                 }
-
                 else
                 {
-                    // cout<< "connected.";
-                    // if not opened, add to open, store that current is parent
-                    // update their cost to current + dist between nodes 
                     con.node->parent = current; // ok
                     con.node->parent_connection = make_shared<connection>(con); // something wrong here/
-                    // cout << "\n\n" << current->pt.x.x << " " << current->pt.x.y << " " << current->pt.theta << " current pose";
-                    // cout << "\n" << con.node->parent_connection->A.a[0].start.x.x << " " << con.node->parent_connection->A.a[0].start.x.y << " " << con.node->parent_connection->A.a[0].start.theta << " arc start connection";
-                    // cout << "\n" << con.node->parent_connection->A.a[2].end.x.x << " " << con.node->parent_connection->A.a[2].end.x.y << " " << con.node->parent_connection->A.a[2].end.theta << " arc end connection";
-                    // cout << "\n" << con.node->pt.x.x << " " << con.node->pt.x.y << " " << con.node->pt.theta << " pt connection\n";
-                    OPEN.push_back(con.node);
+                     OPEN.push_back(con.node);
                     con.node->opened = true;
                     con.node->cost = length;
                 }
-                
             }
         }
     }
@@ -425,15 +345,11 @@ deque<arcs> Graph::getPathPlusManyExits(shared_ptr<Node> start_node, vector<shar
     {
         count++;
         points.push_front(current->parent_connection->A);
-
-        // cout << "\n" << current->pt.x.x << " " << current->pt.x.y << " " << current->pt.theta << " pose in path";
-        // Calculate time of arrival to the node and add info to the node 
-        
         float node_time = current->cost;
         current->arrival_time.push_back(node_time);
 
         point2d current_point = current->pt.x;
-        vector<shared_ptr<Node>> nearby = points_quad.in_range(current_point, config->getTPRM_D()); 
+        vector<shared_ptr<Node>> nearby = points_quad.get_nearest(current_point, config->getTPRM_D()); 
         for (auto i = 0; i < nearby.size() ; i++)
         {
             nearby[i]->arrival_time.push_back(node_time);     
@@ -441,9 +357,7 @@ deque<arcs> Graph::getPathPlusManyExits(shared_ptr<Node> start_node, vector<shar
   
         current = current->parent;
     }
-    // cout << "\n" << current->pt.x.x << " " << current->pt.x.y << " " << current->pt.theta << " should be start";
 
-    // std::cout << "we made it this far! Nodes in path: " << count << endl;
     reset_nodes(); 
     
     current = nullptr;
@@ -454,7 +368,22 @@ deque<arcs> Graph::getPathPlusManyExits(shared_ptr<Node> start_node, vector<shar
 void Graph::print_nodes(){
     for (auto i = 0; i < nodes.size(); i++)
     {
-        // cout << (nodes[i]->pt).x.x << " x ins y " << (nodes[i]->pt).x.y << "\n";
+        cout << (nodes[i]->pt).x.x << " x ins y " << (nodes[i]->pt).x.y << "\n";
     }
-}
-
+};
+void quad::print_nodes(){
+    if (children.size() == 0 )
+    {
+        for (auto i = 0; i < points.size(); i++)
+        {
+            cout << (points[i]->pt).x.x << " x ins y " << (points[i]->pt).x.y << "\n";
+        }
+    }
+    else
+    {
+        for (auto i = 0; i < children.size(); i++)
+        {
+            children[i].print_nodes();
+        }
+    }
+};

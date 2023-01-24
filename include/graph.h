@@ -10,7 +10,10 @@ struct connection;
 
 struct Node
 {
-    Node(pose2d pt): pt(pt), opened(false), cost(0), parent(nullptr) {};
+    Node(pose2d point): opened(false), cost(0), parent(nullptr) {
+        pose2d x = point;
+        pt = x;
+    };
     pose2d pt;
     vector<connection> connected;
     float cost;
@@ -43,26 +46,24 @@ struct connection
 class quad
 {
     public:
-        quad(int max_depth, point2d tl, point2d br);
-        bool insert(shared_ptr<Node> node);
-        vector<shared_ptr<Node>> in_range(point2d pt, float radius);
-        bool overlaps(point2d pt, float radius);
-        int max_depth;
-
-    private:
-        point2d tl;
-        point2d br;
-        point2d tr;
-        point2d bl;
-        vector<shared_ptr<Node>> nodes;
-        quad* tl_tree;
-        quad* tr_tree;
-        quad* bl_tree;
-        quad* br_tree;
-        point2d center;
-        float radius;
-
+    quad(float xmin, float xmax, float ymin, float ymax, int depth): xmin(xmin), ymin(ymin), xmax(xmax), ymax(ymax), depth(depth)
+    {};
+    void add_node(shared_ptr<Node> point);
+    void subdivide();
+    void add_node_to_children(shared_ptr<Node> point);
+    vector<shared_ptr<Node>> get_nearest(point2d point, float r);
+    void find_neighbors_r(point2d point, float r, vector<shared_ptr<Node>> &neighbors);
+    float xmin;
+    float ymin;
+    float xmax;
+    float ymax;
+    int depth;
+    const int max_depth = 10;
+    vector<shared_ptr<Node>> points;
+    vector<quad> children;
+    void print_nodes();
 };
+
 
 class Graph
 {
