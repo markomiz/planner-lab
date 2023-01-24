@@ -88,14 +88,14 @@ void PRMstar::genRoadmapPlus(int n, int angles)
     float yprm  = sqrt(2*(1+ 1/2)) * sqrt(map->getFreeSpace()/M_PI) * config->getConnectDist();
     //  init empty graph
     int cons = 0;
-    cout <<" 2\n";
+    // cout <<" 2\n";
     ofstream node_file ("nodes.txt");
-    cout <<" 3\n";
+    // cout <<" 3\n";
     float d_ang = M_PI * 2/float(angles);
-    cout <<" 4\n";
+    // cout <<" 4\n";
     for (auto i = 0; i < config->getNumPoints(); i ++)
     {
-        cout <<" s";
+        // cout <<" s";
         point2d new_p;
         if (config->getSampleType() == 1) new_p = map->halton_sample(i);
         else new_p = map->uniform_sample();
