@@ -1,0 +1,4 @@
+Invoking command in '/home/marko/ros_ws/src/dubin/build/dubin': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake /home/marko/ros_ws/src/dubin -DCMAKE_INSTALL_PREFIX=/home/marko/ros_ws/src/dubin/install/dubin
+Invoked command in '/home/marko/ros_ws/src/dubin/build/dubin' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake /home/marko/ros_ws/src/dubin -DCMAKE_INSTALL_PREFIX=/home/marko/ros_ws/src/dubin/install/dubin
+Invoking command in '/home/marko/ros_ws/src/dubin/build/dubin': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --build /home/marko/ros_ws/src/dubin/build/dubin -- -j8 -l8
+Invoked command in '/home/marko/ros_ws/src/dubin/build/dubin' returned '2': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --build /home/marko/ros_ws/src/dubin/build/dubin -- -j8 -l8

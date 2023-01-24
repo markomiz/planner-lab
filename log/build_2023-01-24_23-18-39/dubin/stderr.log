@@ -1,0 +1,638 @@
+[01m[K/home/marko/ros_ws/src/dubin/src/collision_check.cpp:1:9:[m[K [01;35m[Kwarning: [m[K#pragma once in main file
+    1 | #pragma [01;35m[Konce[m[K
+      |         [01;35m[K^~~~[m[K
+[01m[K/home/marko/ros_ws/src/dubin/src/graph.cpp:1:9:[m[K [01;35m[Kwarning: [m[K#pragma once in main file
+    1 | #pragma [01;35m[Konce[m[K
+      |         [01;35m[K^~~~[m[K
+[01m[K/home/marko/ros_ws/src/dubin/src/MissionPlanner.cpp:1:9:[m[K [01;35m[Kwarning: [m[K#pragma once in main file
+    1 | #pragma [01;35m[Konce[m[K
+      |         [01;35m[K^~~~[m[K
+In file included from [01m[K/home/marko/ros_ws/src/dubin/src/graph.cpp:2[m[K:
+[01m[K/home/marko/ros_ws/src/dubin/include/geometry.h:[m[K In constructor ‘[01m[Karc::arc(pose2d, float, float)[m[K’:
+[01m[K/home/marko/ros_ws/src/dubin/include/geometry.h:128:9:[m[K [01;35m[Kwarning: [m[K‘[01m[Karc::s[m[K’ will be initialized after [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wreorder-Wreorder]8;;[m[K]
+  128 |   float [01;35m[Ks[m[K;
+      |         [01;35m[K^[m[K
+[01m[K/home/marko/ros_ws/src/dubin/include/geometry.h:127:9:[m[K [01;35m[Kwarning: [m[K  ‘[01m[Kfloat arc::K[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wreorder-Wreorder]8;;[m[K]
+  127 |   float [01;35m[KK[m[K;
+      |         [01;35m[K^[m[K
+[01m[K/home/marko/ros_ws/src/dubin/include/geometry.h:114:3:[m[K [01;35m[Kwarning: [m[K  when initialized here [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wreorder-Wreorder]8;;[m[K]
+  114 |   [01;35m[Karc[m[K(pose2d start, float K, float s) : start(start), s(s), K(K)
+      |   [01;35m[K^~~[m[K
+In file included from [01m[K/home/marko/ros_ws/src/dubin/src/graph.cpp:3[m[K:
+[01m[K/home/marko/ros_ws/src/dubin/include/graph.h:[m[K At global scope:
+[01m[K/home/marko/ros_ws/src/dubin/include/graph.h:12:24:[m[K [01;31m[Kerror: [m[K‘[01m[KNode[m[K’ was not declared in this scope; did you mean ‘[01m[Krclcpp::Node[m[K’?
+   12 |     vector<shared_ptr< [01;31m[KNode[m[K>> nodes;
+      |                        [01;31m[K^~~~[m[K
+      |                        [32m[Krclcpp::Node[m[K
+In file included from [01m[K/opt/ros/humble/include/rclcpp/rclcpp/executors/single_threaded_executor.hpp:28[m[K,
+                 from [01m[K/opt/ros/humble/include/rclcpp/rclcpp/executors.hpp:22[m[K,
+                 from [01m[K/opt/ros/humble/include/rclcpp/rclcpp/rclcpp.hpp:155[m[K,
+                 from [01m[K/opt/ros/humble/include/tf2_ros/tf2_ros/transform_listener.h:45[m[K,
+                 from [01m[K/home/marko/ros_ws/src/dubin/include/geometry.h:9[m[K,
+                 from [01m[K/home/marko/ros_ws/src/dubin/src/graph.cpp:2[m[K:
+[01m[K/opt/ros/humble/include/rclcpp/rclcpp/node.hpp:77:7:[m[K [01;36m[Knote: [m[K‘[01m[Krclcpp::Node[m[K’ declared here
+   77 | class [01;36m[KNode[m[K : public std::enable_shared_from_this<Node>
+      |       [01;36m[K^~~~[m[K
+In file included from [01m[K/home/marko/ros_ws/src/dubin/src/graph.cpp:3[m[K:
+[01m[K/home/marko/ros_ws/src/dubin/include/graph.h:12:24:[m[K [01;31m[Kerror: [m[Ktemplate argument 1 is invalid
+   12 |     vector<shared_ptr< [01;31m[KNode[m[K>> nodes;
+      |                        [01;31m[K^~~~[m[K
+[01m[K/home/marko/ros_ws/src/dubin/include/graph.h:12:28:[m[K [01;31m[Kerror: [m[Ktemplate argument 1 is invalid
+   12 |     vector<shared_ptr< Node[01;31m[K>>[m[K nodes;
+      |                            [01;31m[K^~[m[K
+[01m[K/home/marko/ros_ws/src/dubin/include/graph.h:12:28:[m[K [01;31m[Kerror: [m[Ktemplate argument 2 is invalid
+[01m[K/home/marko/ros_ws/src/dubin/include/graph.h:[m[K In constructor ‘[01m[KNode::Node(pose2d)[m[K’:
+[01m[K/home/marko/ros_ws/src/dubin/include/graph.h:25:10:[m[K [01;35m[Kwarning: [m[K‘[01m[KNode::opened[m[K’ will be initialized after [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wreorder-Wreorder]8;;[m[K]
+   25 |     bool [01;35m[Kopened[m[K;
+      |          [01;35m[K^~~~~~[m[K
+[01m[K/home/marko/ros_ws/src/dubin/include/graph.h:24:11:[m[K [01;35m[Kwarning: [m[K  ‘[01m[Kfloat Node::cost[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wreorder-Wreorder]8;;[m[K]
+   24 |     float [01;35m[Kcost[m[K;
+      |           [01;35m[K^~~~[m[K
+[01m[K/home/marko/ros_ws/src/dubin/include/graph.h:18:5:[m[K [01;35m[Kwarning: [m[K  when initialized here [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wreorder-Wreorder]8;;[m[K]
+   18 |     [01;35m[KNode[m[K(pose2d point): opened(false), cost(0), parent(nullptr) {
+      |     [01;35m[K^~~~[m[K
+[01m[K/home/marko/ros_ws/src/dubin/include/graph.h:[m[K In member function ‘[01m[Kbool Node::check_availability(float, float)[m[K’:
+[01m[K/home/marko/ros_ws/src/dubin/include/graph.h:33:27:[m[K [01;35m[Kwarning: [m[Kcomparison of integer expressions of different signedness: ‘[01m[Kint[m[K’ and ‘[01m[Kstd::vector<float>::size_type[m[K’ {aka ‘[01m[Klong unsigned int[m[K’} [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wsign-compare-Wsign-compare]8;;[m[K]
+   33 |         for (int i = 0; [01;35m[Ki < arrival_time.size()[m[K; i++)
+      |                         [01;35m[K~~^~~~~~~~~~~~~~~~~~~~~[m[K
+[01m[K/home/marko/ros_ws/src/dubin/src/graph.cpp:[m[K In constructor ‘[01m[KGraph::Graph(int, point2d, point2d)[m[K’:
+[01m[K/home/marko/ros_ws/src/dubin/src/graph.cpp:7:18:[m[K [01;35m[Kwarning: [m[Kunused parameter ‘[01m[Kmax_depth[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wunused-parameter-Wunused-parameter]8;;[m[K]
+    7 | Graph::Graph([01;35m[Kint max_depth[m[K, point2d tl, point2d br) : points_quad(-15.0, 25.0, -15.0, 25.0, 0)
+      |              [01;35m[K~~~~^~~~~~~~~[m[K
+[01m[K/home/marko/ros_ws/src/dubin/src/graph.cpp:7:37:[m[K [01;35m[Kwarning: [m[Kunused parameter ‘[01m[Ktl[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wunused-parameter-Wunused-parameter]8;;[m[K]
+    7 | Graph::Graph(int max_depth, [01;35m[Kpoint2d tl[m[K, point2d br) : points_quad(-15.0, 25.0, -15.0, 25.0, 0)
+      |                             [01;35m[K~~~~~~~~^~[m[K
+[01m[K/home/marko/ros_ws/src/dubin/src/graph.cpp:7:49:[m[K [01;35m[Kwarning: [m[Kunused parameter ‘[01m[Kbr[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wunused-parameter-Wunused-parameter]8;;[m[K]
+    7 | Graph::Graph(int max_depth, point2d tl, [01;35m[Kpoint2d br[m[K) : points_quad(-15.0, 25.0, -15.0, 25.0, 0)
+      |                                         [01;35m[K~~~~~~~~^~[m[K
+[01m[K/home/marko/ros_ws/src/dubin/src/graph.cpp:[m[K In member function ‘[01m[Kvoid quad::subdivide()[m[K’:
+[01m[K/home/marko/ros_ws/src/dubin/src/graph.cpp:33:23:[m[K [01;35m[Kwarning: [m[Kcomparison of integer expressions of different signedness: ‘[01m[Kint[m[K’ and ‘[01m[Kstd::vector<std::shared_ptr<Bundle> >::size_type[m[K’ {aka ‘[01m[Klong unsigned int[m[K’} [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wsign-compare-Wsign-compare]8;;[m[K]
+   33 |     for (int i = 0; [01;35m[Ki < points.size()[m[K; i++)
+      |                     [01;35m[K~~^~~~~~~~~~~~~~~[m[K
+[01m[K/home/marko/ros_ws/src/dubin/src/graph.cpp:[m[K In member function ‘[01m[Kvoid quad::add_bundle_to_children(std::shared_ptr<Bundle>)[m[K’:
+[01m[K/home/marko/ros_ws/src/dubin/src/graph.cpp:43:23:[m[K [01;35m[Kwarning: [m[Kcomparison of integer expressions of different signedness: ‘[01m[Kint[m[K’ and ‘[01m[Kstd::vector<quad>::size_type[m[K’ {aka ‘[01m[Klong unsigned int[m[K’} [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wsign-compare-Wsign-compare]8;;[m[K]
+   43 |     for (int i = 0; [01;35m[Ki < children.size()[m[K; i++)
+      |                     [01;35m[K~~^~~~~~~~~~~~~~~~~[m[K
+[01m[K/home/marko/ros_ws/src/dubin/src/graph.cpp:[m[K In member function ‘[01m[Kvoid quad::find_neighbors_r(point2d, float, std::vector<std::shared_ptr<Bundle> >&)[m[K’:
+[01m[K/home/marko/ros_ws/src/dubin/src/graph.cpp:65:27:[m[K [01;35m[Kwarning: [m[Kcomparison of integer expressions of different signedness: ‘[01m[Kint[m[K’ and ‘[01m[Kstd::vector<std::shared_ptr<Bundle> >::size_type[m[K’ {aka ‘[01m[Klong unsigned int[m[K’} [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wsign-compare-Wsign-compare]8;;[m[K]
+   65 |         for (int i = 0; [01;35m[Ki < points.size()[m[K; i++ )
+      |                         [01;35m[K~~^~~~~~~~~~~~~~~[m[K
+[01m[K/home/marko/ros_ws/src/dubin/src/graph.cpp:74:27:[m[K [01;35m[Kwarning: [m[Kcomparison of integer expressions of different signedness: ‘[01m[Kint[m[K’ and ‘[01m[Kstd::vector<quad>::size_type[m[K’ {aka ‘[01m[Klong unsigned int[m[K’} [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wsign-compare-Wsign-compare]8;;[m[K]
+   74 |         for (int i = 0; [01;35m[Ki < children.size()[m[K; i++ )
+      |                         [01;35m[K~~^~~~~~~~~~~~~~~~~[m[K
+[01m[K/home/marko/ros_ws/src/dubin/src/graph.cpp:[m[K In member function ‘[01m[Kvoid Graph::reset_nodes()[m[K’:
+[01m[K/home/marko/ros_ws/src/dubin/src/graph.cpp:122:24:[m[K [01;35m[Kwarning: [m[Kcomparison of integer expressions of different signedness: ‘[01m[Kint[m[K’ and ‘[01m[Kstd::vector<std::shared_ptr<Node> >::size_type[m[K’ {aka ‘[01m[Klong unsigned int[m[K’} [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wsign-compare-Wsign-compare]8;;[m[K]
+  122 |     for (auto i = 0; [01;35m[Ki < nodes.size()[m[K; i++)
+      |                      [01;35m[K~~^~~~~~~~~~~~~~[m[K
+[01m[K/home/marko/ros_ws/src/dubin/src/graph.cpp:[m[K In member function ‘[01m[Kstd::vector<point2d> Graph::getPath(std::shared_ptr<Node>, std::shared_ptr<Node>)[m[K’:
+[01m[K/home/marko/ros_ws/src/dubin/src/graph.cpp:156:28:[m[K [01;35m[Kwarning: [m[Kcomparison of integer expressions of different signedness: ‘[01m[Kint[m[K’ and ‘[01m[Kstd::vector<connection>::size_type[m[K’ {aka ‘[01m[Klong unsigned int[m[K’} [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wsign-compare-Wsign-compare]8;;[m[K]
+  156 |         for (auto i = 0; [01;35m[Ki < current->connected.size()[m[K; i++)
+      |                          [01;35m[K~~^~~~~~~~~~~~~~~~~~~~~~~~~~~[m[K
+[01m[K/home/marko/ros_ws/src/dubin/src/graph.cpp:[m[K In member function ‘[01m[Kstd::deque<arcs> Graph::getPathPlus(std::shared_ptr<Node>, std::shared_ptr<Node>)[m[K’:
+[01m[K/home/marko/ros_ws/src/dubin/src/graph.cpp:221:28:[m[K [01;35m[Kwarning: [m[Kcomparison of integer expressions of different signedness: ‘[01m[Kint[m[K’ and ‘[01m[Kstd::vector<connection>::size_type[m[K’ {aka ‘[01m[Klong unsigned int[m[K’} [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wsign-compare-Wsign-compare]8;;[m[K]
+  221 |         for (auto i = 0; [01;35m[Ki < current->connected.size()[m[K; i++)
+      |                          [01;35m[K~~^~~~~~~~~~~~~~~~~~~~~~~~~~~[m[K
+[01m[K/home/marko/ros_ws/src/dubin/src/graph.cpp:260:28:[m[K [01;35m[Kwarning: [m[Kcomparison of integer expressions of different signedness: ‘[01m[Kint[m[K’ and ‘[01m[Kstd::vector<std::shared_ptr<Bundle> >::size_type[m[K’ {aka ‘[01m[Klong unsigned int[m[K’} [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wsign-compare-Wsign-compare]8;;[m[K]
+  260 |         for (auto i = 0; [01;35m[Ki < nearby.size()[m[K ; i++)
+      |                          [01;35m[K~~^~~~~~~~~~~~~~~[m[K
+[01m[K/home/marko/ros_ws/src/dubin/src/graph.cpp:262:50:[m[K [01;31m[Kerror: [m[Krequest for member ‘[01m[Ksize[m[K’ in ‘[01m[K((std::__shared_ptr_access<Bundle, __gnu_cxx::_S_atomic, false, false>*)(& nearby.std::vector<std::shared_ptr<Bundle> >::operator[](((std::vector<std::shared_ptr<Bundle> >::size_type)i))))->std::__shared_ptr_access<Bundle, __gnu_cxx::_S_atomic, false, false>::operator->()->Bundle::nodes[m[K’, which is of non-class type ‘[01m[Kint[m[K’
+  262 |             for (int a = 0; a < nearby[i]->nodes.[01;31m[Ksize[m[K(); a++)
+      |                                                  [01;31m[K^~~~[m[K
+[01m[K/home/marko/ros_ws/src/dubin/src/graph.cpp:264:32:[m[K [01;31m[Kerror: [m[Kinvalid types ‘[01m[Kint[int][m[K’ for array subscript
+  264 |                nearby[i]->nodes[01;31m[K[[m[Ka]->arrival_time.push_back(node_time);
+      |                                [01;31m[K^[m[K
+[01m[K/home/marko/ros_ws/src/dubin/src/graph.cpp:[m[K In member function ‘[01m[Kstd::deque<arcs> Graph::getPathPlusManyExits(std::shared_ptr<Node>, std::vector<std::shared_ptr<Node> >)[m[K’:
+[01m[K/home/marko/ros_ws/src/dubin/src/graph.cpp:306:29:[m[K [01;35m[Kwarning: [m[Kcomparison of integer expressions of different signedness: ‘[01m[Kint[m[K’ and ‘[01m[Kstd::vector<std::shared_ptr<Node> >::size_type[m[K’ {aka ‘[01m[Klong unsigned int[m[K’} [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wsign-compare-Wsign-compare]8;;[m[K]
+  306 |         for (int nn = 0; [01;35m[Knn < end_nodes.size()[m[K; nn++)
+      |                          [01;35m[K~~~^~~~~~~~~~~~~~~~~~[m[K
+[01m[K/home/marko/ros_ws/src/dubin/src/graph.cpp:316:28:[m[K [01;35m[Kwarning: [m[Kcomparison of integer expressions of different signedness: ‘[01m[Kint[m[K’ and ‘[01m[Kstd::vector<connection>::size_type[m[K’ {aka ‘[01m[Klong unsigned int[m[K’} [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wsign-compare-Wsign-compare]8;;[m[K]
+  316 |         for (auto i = 0; [01;35m[Ki < current->connected.size()[m[K; i++)
+      |                          [01;35m[K~~^~~~~~~~~~~~~~~~~~~~~~~~~~~[m[K
+[01m[K/home/marko/ros_ws/src/dubin/src/graph.cpp:357:28:[m[K [01;35m[Kwarning: [m[Kcomparison of integer expressions of different signedness: ‘[01m[Kint[m[K’ and ‘[01m[Kstd::vector<std::shared_ptr<Bundle> >::size_type[m[K’ {aka ‘[01m[Klong unsigned int[m[K’} [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wsign-compare-Wsign-compare]8;;[m[K]
+  357 |         for (auto i = 0; [01;35m[Ki < nearby.size()[m[K ; i++)
+      |                          [01;35m[K~~^~~~~~~~~~~~~~~[m[K
+[01m[K/home/marko/ros_ws/src/dubin/src/graph.cpp:359:50:[m[K [01;31m[Kerror: [m[Krequest for member ‘[01m[Ksize[m[K’ in ‘[01m[K((std::__shared_ptr_access<Bundle, __gnu_cxx::_S_atomic, false, false>*)(& nearby.std::vector<std::shared_ptr<Bundle> >::operator[](((std::vector<std::shared_ptr<Bundle> >::size_type)i))))->std::__shared_ptr_access<Bundle, __gnu_cxx::_S_atomic, false, false>::operator->()->Bundle::nodes[m[K’, which is of non-class type ‘[01m[Kint[m[K’
+  359 |             for (int a = 0; a < nearby[i]->nodes.[01;31m[Ksize[m[K(); a++)
+      |                                                  [01;31m[K^~~~[m[K
+[01m[K/home/marko/ros_ws/src/dubin/src/graph.cpp:361:32:[m[K [01;31m[Kerror: [m[Kinvalid types ‘[01m[Kint[int][m[K’ for array subscript
+  361 |                nearby[i]->nodes[01;31m[K[[m[Ka]->arrival_time.push_back(node_time);
+      |                                [01;31m[K^[m[K
+[01m[K/home/marko/ros_ws/src/dubin/src/graph.cpp:[m[K In member function ‘[01m[Kvoid Graph::print_nodes()[m[K’:
+[01m[K/home/marko/ros_ws/src/dubin/src/graph.cpp:377:24:[m[K [01;35m[Kwarning: [m[Kcomparison of integer expressions of different signedness: ‘[01m[Kint[m[K’ and ‘[01m[Kstd::vector<std::shared_ptr<Node> >::size_type[m[K’ {aka ‘[01m[Klong unsigned int[m[K’} [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wsign-compare-Wsign-compare]8;;[m[K]
+  377 |     for (auto i = 0; [01;35m[Ki < nodes.size()[m[K; i++)
+      |                      [01;35m[K~~^~~~~~~~~~~~~~[m[K
+In file included from [01m[K/home/marko/ros_ws/src/dubin/include/MissionPlanner.h:20[m[K,
+                 from [01m[K/home/marko/ros_ws/src/dubin/src/dubinCurve.cpp:19[m[K:
+[01m[K/home/marko/ros_ws/src/dubin/include/geometry.h:[m[K In constructor ‘[01m[Karc::arc(pose2d, float, float)[m[K’:
+[01m[K/home/marko/ros_ws/src/dubin/include/geometry.h:128:9:[m[K [01;35m[Kwarning: [m[K‘[01m[Karc::s[m[K’ will be initialized after [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wreorder-Wreorder]8;;[m[K]
+  128 |   float [01;35m[Ks[m[K;
+      |         [01;35m[K^[m[K
+[01m[K/home/marko/ros_ws/src/dubin/include/geometry.h:127:9:[m[K [01;35m[Kwarning: [m[K  ‘[01m[Kfloat arc::K[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wreorder-Wreorder]8;;[m[K]
+  127 |   float [01;35m[KK[m[K;
+      |         [01;35m[K^[m[K
+[01m[K/home/marko/ros_ws/src/dubin/include/geometry.h:114:3:[m[K [01;35m[Kwarning: [m[K  when initialized here [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wreorder-Wreorder]8;;[m[K]
+  114 |   [01;35m[Karc[m[K(pose2d start, float K, float s) : start(start), s(s), K(K)
+      |   [01;35m[K^~~[m[K
+In file included from [01m[K/home/marko/ros_ws/src/dubin/include/PRMstar.h:3[m[K,
+                 from [01m[K/home/marko/ros_ws/src/dubin/include/MissionPlanner.h:21[m[K,
+                 from [01m[K/home/marko/ros_ws/src/dubin/src/dubinCurve.cpp:19[m[K:
+[01m[K/home/marko/ros_ws/src/dubin/include/graph.h:[m[K At global scope:
+[01m[K/home/marko/ros_ws/src/dubin/include/graph.h:12:24:[m[K [01;31m[Kerror: [m[K‘[01m[KNode[m[K’ was not declared in this scope; did you mean ‘[01m[Krclcpp::Node[m[K’?
+   12 |     vector<shared_ptr< [01;31m[KNode[m[K>> nodes;
+      |                        [01;31m[K^~~~[m[K
+      |                        [32m[Krclcpp::Node[m[K
+In file included from [01m[K/opt/ros/humble/include/rclcpp/rclcpp/executors/single_threaded_executor.hpp:28[m[K,
+                 from [01m[K/opt/ros/humble/include/rclcpp/rclcpp/executors.hpp:22[m[K,
+                 from [01m[K/opt/ros/humble/include/rclcpp/rclcpp/rclcpp.hpp:155[m[K,
+                 from [01m[K/opt/ros/humble/include/tf2_ros/tf2_ros/transform_listener.h:45[m[K,
+                 from [01m[K/home/marko/ros_ws/src/dubin/src/dubinCurve.cpp:13[m[K:
+[01m[K/opt/ros/humble/include/rclcpp/rclcpp/node.hpp:77:7:[m[K [01;36m[Knote: [m[K‘[01m[Krclcpp::Node[m[K’ declared here
+   77 | class [01;36m[KNode[m[K : public std::enable_shared_from_this<Node>
+      |       [01;36m[K^~~~[m[K
+In file included from [01m[K/home/marko/ros_ws/src/dubin/include/PRMstar.h:3[m[K,
+                 from [01m[K/home/marko/ros_ws/src/dubin/include/MissionPlanner.h:21[m[K,
+                 from [01m[K/home/marko/ros_ws/src/dubin/src/dubinCurve.cpp:19[m[K:
+[01m[K/home/marko/ros_ws/src/dubin/include/graph.h:12:24:[m[K [01;31m[Kerror: [m[Ktemplate argument 1 is invalid
+   12 |     vector<shared_ptr< [01;31m[KNode[m[K>> nodes;
+      |                        [01;31m[K^~~~[m[K
+[01m[K/home/marko/ros_ws/src/dubin/include/graph.h:12:28:[m[K [01;31m[Kerror: [m[Ktemplate argument 1 is invalid
+   12 |     vector<shared_ptr< Node[01;31m[K>>[m[K nodes;
+      |                            [01;31m[K^~[m[K
+[01m[K/home/marko/ros_ws/src/dubin/include/graph.h:12:28:[m[K [01;31m[Kerror: [m[Ktemplate argument 2 is invalid
+[01m[K/home/marko/ros_ws/src/dubin/include/graph.h:[m[K In constructor ‘[01m[KNode::Node(pose2d)[m[K’:
+[01m[K/home/marko/ros_ws/src/dubin/include/graph.h:25:10:[m[K [01;35m[Kwarning: [m[K‘[01m[KNode::opened[m[K’ will be initialized after [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wreorder-Wreorder]8;;[m[K]
+   25 |     bool [01;35m[Kopened[m[K;
+      |          [01;35m[K^~~~~~[m[K
+[01m[K/home/marko/ros_ws/src/dubin/include/graph.h:24:11:[m[K [01;35m[Kwarning: [m[K  ‘[01m[Kfloat Node::cost[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wreorder-Wreorder]8;;[m[K]
+   24 |     float [01;35m[Kcost[m[K;
+      |           [01;35m[K^~~~[m[K
+[01m[K/home/marko/ros_ws/src/dubin/include/graph.h:18:5:[m[K [01;35m[Kwarning: [m[K  when initialized here [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wreorder-Wreorder]8;;[m[K]
+   18 |     [01;35m[KNode[m[K(pose2d point): opened(false), cost(0), parent(nullptr) {
+      |     [01;35m[K^~~~[m[K
+[01m[K/home/marko/ros_ws/src/dubin/include/graph.h:[m[K In member function ‘[01m[Kbool Node::check_availability(float, float)[m[K’:
+[01m[K/home/marko/ros_ws/src/dubin/include/graph.h:33:27:[m[K [01;35m[Kwarning: [m[Kcomparison of integer expressions of different signedness: ‘[01m[Kint[m[K’ and ‘[01m[Kstd::vector<float>::size_type[m[K’ {aka ‘[01m[Klong unsigned int[m[K’} [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wsign-compare-Wsign-compare]8;;[m[K]
+   33 |         for (int i = 0; [01;35m[Ki < arrival_time.size()[m[K; i++)
+      |                         [01;35m[K~~^~~~~~~~~~~~~~~~~~~~~[m[K
+In file included from [01m[K/home/marko/ros_ws/src/dubin/include/PRMstar.h:4[m[K,
+                 from [01m[K/home/marko/ros_ws/src/dubin/include/MissionPlanner.h:21[m[K,
+                 from [01m[K/home/marko/ros_ws/src/dubin/src/dubinCurve.cpp:19[m[K:
+[01m[K/home/marko/ros_ws/src/dubin/include/map.h:[m[K In constructor ‘[01m[KMap::Map(Polygon)[m[K’:
+[01m[K/home/marko/ros_ws/src/dubin/include/map.h:42:17:[m[K [01;35m[Kwarning: [m[K‘[01m[KMap::total_map_poly[m[K’ will be initialized after [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wreorder-Wreorder]8;;[m[K]
+   42 |         Polygon [01;35m[Ktotal_map_poly[m[K;
+      |                 [01;35m[K^~~~~~~~~~~~~~[m[K
+[01m[K/home/marko/ros_ws/src/dubin/include/map.h:40:15:[m[K [01;35m[Kwarning: [m[K  ‘[01m[Kfloat Map::freeSpace[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wreorder-Wreorder]8;;[m[K]
+   40 |         float [01;35m[KfreeSpace[m[K;
+      |               [01;35m[K^~~~~~~~~[m[K
+[01m[K/home/marko/ros_ws/src/dubin/include/map.h:45:9:[m[K [01;35m[Kwarning: [m[K  when initialized here [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wreorder-Wreorder]8;;[m[K]
+   45 |         [01;35m[KMap[m[K(Polygon map): total_map_poly(map.verteces), freeSpace(map.area), halton_index(0){
+      |         [01;35m[K^~~[m[K
+[01m[K/home/marko/ros_ws/src/dubin/include/map.h:40:15:[m[K [01;35m[Kwarning: [m[K‘[01m[KMap::freeSpace[m[K’ will be initialized after [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wreorder-Wreorder]8;;[m[K]
+   40 |         float [01;35m[KfreeSpace[m[K;
+      |               [01;35m[K^~~~~~~~~[m[K
+[01m[K/home/marko/ros_ws/src/dubin/include/map.h:39:13:[m[K [01;35m[Kwarning: [m[K  ‘[01m[Kint Map::halton_index[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wreorder-Wreorder]8;;[m[K]
+   39 |         int [01;35m[Khalton_index[m[K;
+      |             [01;35m[K^~~~~~~~~~~~[m[K
+[01m[K/home/marko/ros_ws/src/dubin/include/map.h:45:9:[m[K [01;35m[Kwarning: [m[K  when initialized here [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wreorder-Wreorder]8;;[m[K]
+   45 |         [01;35m[KMap[m[K(Polygon map): total_map_poly(map.verteces), freeSpace(map.area), halton_index(0){
+      |         [01;35m[K^~~[m[K
+In file included from [01m[K/home/marko/ros_ws/src/dubin/src/MissionPlanner.cpp:13[m[K:
+[01m[K/home/marko/ros_ws/src/dubin/include/geometry.h:[m[K In constructor ‘[01m[Karc::arc(pose2d, float, float)[m[K’:
+[01m[K/home/marko/ros_ws/src/dubin/include/geometry.h:128:9:[m[K [01;35m[Kwarning: [m[K‘[01m[Karc::s[m[K’ will be initialized after [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wreorder-Wreorder]8;;[m[K]
+  128 |   float [01;35m[Ks[m[K;
+      |         [01;35m[K^[m[K
+[01m[K/home/marko/ros_ws/src/dubin/include/geometry.h:127:9:[m[K [01;35m[Kwarning: [m[K  ‘[01m[Kfloat arc::K[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wreorder-Wreorder]8;;[m[K]
+  127 |   float [01;35m[KK[m[K;
+      |         [01;35m[K^[m[K
+[01m[K/home/marko/ros_ws/src/dubin/include/geometry.h:114:3:[m[K [01;35m[Kwarning: [m[K  when initialized here [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wreorder-Wreorder]8;;[m[K]
+  114 |   [01;35m[Karc[m[K(pose2d start, float K, float s) : start(start), s(s), K(K)
+      |   [01;35m[K^~~[m[K
+In file included from [01m[K/home/marko/ros_ws/src/dubin/src/MissionPlanner.cpp:14[m[K:
+[01m[K/home/marko/ros_ws/src/dubin/include/graph.h:[m[K At global scope:
+[01m[K/home/marko/ros_ws/src/dubin/include/graph.h:12:24:[m[K [01;31m[Kerror: [m[K‘[01m[KNode[m[K’ was not declared in this scope; did you mean ‘[01m[Krclcpp::Node[m[K’?
+   12 |     vector<shared_ptr< [01;31m[KNode[m[K>> nodes;
+      |                        [01;31m[K^~~~[m[K
+      |                        [32m[Krclcpp::Node[m[K
+In file included from [01m[K/opt/ros/humble/include/rclcpp/rclcpp/executors/single_threaded_executor.hpp:28[m[K,
+                 from [01m[K/opt/ros/humble/include/rclcpp/rclcpp/executors.hpp:22[m[K,
+                 from [01m[K/opt/ros/humble/include/rclcpp/rclcpp/rclcpp.hpp:155[m[K,
+                 from [01m[K/opt/ros/humble/include/tf2_ros/tf2_ros/transform_listener.h:45[m[K,
+                 from [01m[K/home/marko/ros_ws/src/dubin/include/geometry.h:9[m[K,
+                 from [01m[K/home/marko/ros_ws/src/dubin/src/MissionPlanner.cpp:13[m[K:
+[01m[K/opt/ros/humble/include/rclcpp/rclcpp/node.hpp:77:7:[m[K [01;36m[Knote: [m[K‘[01m[Krclcpp::Node[m[K’ declared here
+   77 | class [01;36m[KNode[m[K : public std::enable_shared_from_this<Node>
+      |       [01;36m[K^~~~[m[K
+In file included from [01m[K/home/marko/ros_ws/src/dubin/src/MissionPlanner.cpp:14[m[K:
+[01m[K/home/marko/ros_ws/src/dubin/include/graph.h:12:24:[m[K [01;31m[Kerror: [m[Ktemplate argument 1 is invalid
+   12 |     vector<shared_ptr< [01;31m[KNode[m[K>> nodes;
+      |                        [01;31m[K^~~~[m[K
+[01m[K/home/marko/ros_ws/src/dubin/include/graph.h:12:28:[m[K [01;31m[Kerror: [m[Ktemplate argument 1 is invalid
+   12 |     vector<shared_ptr< Node[01;31m[K>>[m[K nodes;
+      |                            [01;31m[K^~[m[K
+[01m[K/home/marko/ros_ws/src/dubin/include/graph.h:12:28:[m[K [01;31m[Kerror: [m[Ktemplate argument 2 is invalid
+[01m[K/home/marko/ros_ws/src/dubin/include/graph.h:[m[K In constructor ‘[01m[KNode::Node(pose2d)[m[K’:
+[01m[K/home/marko/ros_ws/src/dubin/include/graph.h:25:10:[m[K [01;35m[Kwarning: [m[K‘[01m[KNode::opened[m[K’ will be initialized after [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wreorder-Wreorder]8;;[m[K]
+   25 |     bool [01;35m[Kopened[m[K;
+      |          [01;35m[K^~~~~~[m[K
+[01m[K/home/marko/ros_ws/src/dubin/include/graph.h:24:11:[m[K [01;35m[Kwarning: [m[K  ‘[01m[Kfloat Node::cost[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wreorder-Wreorder]8;;[m[K]
+   24 |     float [01;35m[Kcost[m[K;
+      |           [01;35m[K^~~~[m[K
+[01m[K/home/marko/ros_ws/src/dubin/include/graph.h:18:5:[m[K [01;35m[Kwarning: [m[K  when initialized here [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wreorder-Wreorder]8;;[m[K]
+   18 |     [01;35m[KNode[m[K(pose2d point): opened(false), cost(0), parent(nullptr) {
+      |     [01;35m[K^~~~[m[K
+In file included from [01m[K/home/marko/ros_ws/src/dubin/src/collision_check.cpp:2[m[K:
+[01m[K/home/marko/ros_ws/src/dubin/include/geometry.h:[m[K In constructor ‘[01m[Karc::arc(pose2d, float, float)[m[K’:
+[01m[K/home/marko/ros_ws/src/dubin/include/geometry.h:128:9:[m[K [01;35m[Kwarning: [m[K‘[01m[Karc::s[m[K’ will be initialized after [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wreorder-Wreorder]8;;[m[K]
+  128 |   float [01;35m[Ks[m[K;
+      |         [01;35m[K^[m[K
+[01m[K/home/marko/ros_ws/src/dubin/include/geometry.h:127:9:[m[K [01;35m[Kwarning: [m[K  ‘[01m[Kfloat arc::K[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wreorder-Wreorder]8;;[m[K]
+  127 |   float [01;35m[KK[m[K;
+      |         [01;35m[K^[m[K
+[01m[K/home/marko/ros_ws/src/dubin/include/geometry.h:114:3:[m[K [01;35m[Kwarning: [m[K  when initialized here [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wreorder-Wreorder]8;;[m[K]
+  114 |   [01;35m[Karc[m[K(pose2d start, float K, float s) : start(start), s(s), K(K)
+      |   [01;35m[K^~~[m[K
+[01m[K/home/marko/ros_ws/src/dubin/include/graph.h:[m[K In member function ‘[01m[Kbool Node::check_availability(float, float)[m[K’:
+[01m[K/home/marko/ros_ws/src/dubin/include/graph.h:33:27:[m[K [01;35m[Kwarning: [m[Kcomparison of integer expressions of different signedness: ‘[01m[Kint[m[K’ and ‘[01m[Kstd::vector<float>::size_type[m[K’ {aka ‘[01m[Klong unsigned int[m[K’} [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wsign-compare-Wsign-compare]8;;[m[K]
+   33 |         for (int i = 0; [01;35m[Ki < arrival_time.size()[m[K; i++)
+      |                         [01;35m[K~~^~~~~~~~~~~~~~~~~~~~~[m[K
+In file included from [01m[K/home/marko/ros_ws/src/dubin/src/MissionPlanner.cpp:15[m[K:
+[01m[K/home/marko/ros_ws/src/dubin/include/map.h:[m[K In constructor ‘[01m[KMap::Map(Polygon)[m[K’:
+[01m[K/home/marko/ros_ws/src/dubin/include/map.h:42:17:[m[K [01;35m[Kwarning: [m[K‘[01m[KMap::total_map_poly[m[K’ will be initialized after [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wreorder-Wreorder]8;;[m[K]
+   42 |         Polygon [01;35m[Ktotal_map_poly[m[K;
+      |                 [01;35m[K^~~~~~~~~~~~~~[m[K
+[01m[K/home/marko/ros_ws/src/dubin/include/map.h:40:15:[m[K [01;35m[Kwarning: [m[K  ‘[01m[Kfloat Map::freeSpace[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wreorder-Wreorder]8;;[m[K]
+   40 |         float [01;35m[KfreeSpace[m[K;
+      |               [01;35m[K^~~~~~~~~[m[K
+[01m[K/home/marko/ros_ws/src/dubin/include/map.h:45:9:[m[K [01;35m[Kwarning: [m[K  when initialized here [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wreorder-Wreorder]8;;[m[K]
+   45 |         [01;35m[KMap[m[K(Polygon map): total_map_poly(map.verteces), freeSpace(map.area), halton_index(0){
+      |         [01;35m[K^~~[m[K
+[01m[K/home/marko/ros_ws/src/dubin/include/map.h:40:15:[m[K [01;35m[Kwarning: [m[K‘[01m[KMap::freeSpace[m[K’ will be initialized after [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wreorder-Wreorder]8;;[m[K]
+   40 |         float [01;35m[KfreeSpace[m[K;
+      |               [01;35m[K^~~~~~~~~[m[K
+[01m[K/home/marko/ros_ws/src/dubin/include/map.h:39:13:[m[K [01;35m[Kwarning: [m[K  ‘[01m[Kint Map::halton_index[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wreorder-Wreorder]8;;[m[K]
+   39 |         int [01;35m[Khalton_index[m[K;
+      |             [01;35m[K^~~~~~~~~~~~[m[K
+[01m[K/home/marko/ros_ws/src/dubin/include/map.h:45:9:[m[K [01;35m[Kwarning: [m[K  when initialized here [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wreorder-Wreorder]8;;[m[K]
+   45 |         [01;35m[KMap[m[K(Polygon map): total_map_poly(map.verteces), freeSpace(map.area), halton_index(0){
+      |         [01;35m[K^~~[m[K
+In file included from [01m[K/home/marko/ros_ws/src/dubin/src/map.cpp:1[m[K:
+[01m[K/home/marko/ros_ws/src/dubin/include/geometry.h:[m[K In constructor ‘[01m[Karc::arc(pose2d, float, float)[m[K’:
+[01m[K/home/marko/ros_ws/src/dubin/include/geometry.h:128:9:[m[K [01;35m[Kwarning: [m[K‘[01m[Karc::s[m[K’ will be initialized after [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wreorder-Wreorder]8;;[m[K]
+  128 |   float [01;35m[Ks[m[K;
+      |         [01;35m[K^[m[K
+[01m[K/home/marko/ros_ws/src/dubin/include/geometry.h:127:9:[m[K [01;35m[Kwarning: [m[K  ‘[01m[Kfloat arc::K[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wreorder-Wreorder]8;;[m[K]
+  127 |   float [01;35m[KK[m[K;
+      |         [01;35m[K^[m[K
+[01m[K/home/marko/ros_ws/src/dubin/include/geometry.h:114:3:[m[K [01;35m[Kwarning: [m[K  when initialized here [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wreorder-Wreorder]8;;[m[K]
+  114 |   [01;35m[Karc[m[K(pose2d start, float K, float s) : start(start), s(s), K(K)
+      |   [01;35m[K^~~[m[K
+In file included from [01m[K/home/marko/ros_ws/src/dubin/include/PRMstar.h:2[m[K,
+                 from [01m[K/home/marko/ros_ws/src/dubin/src/PRMstar.cpp:1[m[K:
+[01m[K/home/marko/ros_ws/src/dubin/include/geometry.h:[m[K In constructor ‘[01m[Karc::arc(pose2d, float, float)[m[K’:
+[01m[K/home/marko/ros_ws/src/dubin/include/geometry.h:128:9:[m[K [01;35m[Kwarning: [m[K‘[01m[Karc::s[m[K’ will be initialized after [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wreorder-Wreorder]8;;[m[K]
+  128 |   float [01;35m[Ks[m[K;
+      |         [01;35m[K^[m[K
+[01m[K/home/marko/ros_ws/src/dubin/include/geometry.h:127:9:[m[K [01;35m[Kwarning: [m[K  ‘[01m[Kfloat arc::K[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wreorder-Wreorder]8;;[m[K]
+  127 |   float [01;35m[KK[m[K;
+      |         [01;35m[K^[m[K
+[01m[K/home/marko/ros_ws/src/dubin/include/geometry.h:114:3:[m[K [01;35m[Kwarning: [m[K  when initialized here [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wreorder-Wreorder]8;;[m[K]
+  114 |   [01;35m[Karc[m[K(pose2d start, float K, float s) : start(start), s(s), K(K)
+      |   [01;35m[K^~~[m[K
+In file included from [01m[K/home/marko/ros_ws/src/dubin/src/map.cpp:2[m[K:
+[01m[K/home/marko/ros_ws/src/dubin/include/map.h:[m[K In constructor ‘[01m[KMap::Map(Polygon)[m[K’:
+[01m[K/home/marko/ros_ws/src/dubin/include/map.h:42:17:[m[K [01;35m[Kwarning: [m[K‘[01m[KMap::total_map_poly[m[K’ will be initialized after [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wreorder-Wreorder]8;;[m[K]
+   42 |         Polygon [01;35m[Ktotal_map_poly[m[K;
+      |                 [01;35m[K^~~~~~~~~~~~~~[m[K
+[01m[K/home/marko/ros_ws/src/dubin/include/map.h:40:15:[m[K [01;35m[Kwarning: [m[K  ‘[01m[Kfloat Map::freeSpace[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wreorder-Wreorder]8;;[m[K]
+   40 |         float [01;35m[KfreeSpace[m[K;
+      |               [01;35m[K^~~~~~~~~[m[K
+[01m[K/home/marko/ros_ws/src/dubin/include/map.h:45:9:[m[K [01;35m[Kwarning: [m[K  when initialized here [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wreorder-Wreorder]8;;[m[K]
+   45 |         [01;35m[KMap[m[K(Polygon map): total_map_poly(map.verteces), freeSpace(map.area), halton_index(0){
+      |         [01;35m[K^~~[m[K
+[01m[K/home/marko/ros_ws/src/dubin/include/map.h:40:15:[m[K [01;35m[Kwarning: [m[K‘[01m[KMap::freeSpace[m[K’ will be initialized after [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wreorder-Wreorder]8;;[m[K]
+   40 |         float [01;35m[KfreeSpace[m[K;
+      |               [01;35m[K^~~~~~~~~[m[K
+[01m[K/home/marko/ros_ws/src/dubin/include/map.h:39:13:[m[K [01;35m[Kwarning: [m[K  ‘[01m[Kint Map::halton_index[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wreorder-Wreorder]8;;[m[K]
+   39 |         int [01;35m[Khalton_index[m[K;
+      |             [01;35m[K^~~~~~~~~~~~[m[K
+[01m[K/home/marko/ros_ws/src/dubin/include/map.h:45:9:[m[K [01;35m[Kwarning: [m[K  when initialized here [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wreorder-Wreorder]8;;[m[K]
+   45 |         [01;35m[KMap[m[K(Polygon map): total_map_poly(map.verteces), freeSpace(map.area), halton_index(0){
+      |         [01;35m[K^~~[m[K
+In file included from [01m[K/home/marko/ros_ws/src/dubin/include/PRMstar.h:3[m[K,
+                 from [01m[K/home/marko/ros_ws/src/dubin/src/PRMstar.cpp:1[m[K:
+[01m[K/home/marko/ros_ws/src/dubin/include/graph.h:[m[K At global scope:
+[01m[K/home/marko/ros_ws/src/dubin/include/graph.h:12:24:[m[K [01;31m[Kerror: [m[K‘[01m[KNode[m[K’ was not declared in this scope; did you mean ‘[01m[Krclcpp::Node[m[K’?
+   12 |     vector<shared_ptr< [01;31m[KNode[m[K>> nodes;
+      |                        [01;31m[K^~~~[m[K
+      |                        [32m[Krclcpp::Node[m[K
+In file included from [01m[K/opt/ros/humble/include/rclcpp/rclcpp/executors/single_threaded_executor.hpp:28[m[K,
+                 from [01m[K/opt/ros/humble/include/rclcpp/rclcpp/executors.hpp:22[m[K,
+                 from [01m[K/opt/ros/humble/include/rclcpp/rclcpp/rclcpp.hpp:155[m[K,
+                 from [01m[K/opt/ros/humble/include/tf2_ros/tf2_ros/transform_listener.h:45[m[K,
+                 from [01m[K/home/marko/ros_ws/src/dubin/include/geometry.h:9[m[K,
+                 from [01m[K/home/marko/ros_ws/src/dubin/include/PRMstar.h:2[m[K,
+                 from [01m[K/home/marko/ros_ws/src/dubin/src/PRMstar.cpp:1[m[K:
+[01m[K/opt/ros/humble/include/rclcpp/rclcpp/node.hpp:77:7:[m[K [01;36m[Knote: [m[K‘[01m[Krclcpp::Node[m[K’ declared here
+   77 | class [01;36m[KNode[m[K : public std::enable_shared_from_this<Node>
+      |       [01;36m[K^~~~[m[K
+In file included from [01m[K/home/marko/ros_ws/src/dubin/include/PRMstar.h:3[m[K,
+                 from [01m[K/home/marko/ros_ws/src/dubin/src/PRMstar.cpp:1[m[K:
+[01m[K/home/marko/ros_ws/src/dubin/include/graph.h:12:24:[m[K [01;31m[Kerror: [m[Ktemplate argument 1 is invalid
+   12 |     vector<shared_ptr< [01;31m[KNode[m[K>> nodes;
+      |                        [01;31m[K^~~~[m[K
+[01m[K/home/marko/ros_ws/src/dubin/include/graph.h:12:28:[m[K [01;31m[Kerror: [m[Ktemplate argument 1 is invalid
+   12 |     vector<shared_ptr< Node[01;31m[K>>[m[K nodes;
+      |                            [01;31m[K^~[m[K
+[01m[K/home/marko/ros_ws/src/dubin/include/graph.h:12:28:[m[K [01;31m[Kerror: [m[Ktemplate argument 2 is invalid
+[01m[K/home/marko/ros_ws/src/dubin/include/graph.h:[m[K In constructor ‘[01m[KNode::Node(pose2d)[m[K’:
+[01m[K/home/marko/ros_ws/src/dubin/include/graph.h:25:10:[m[K [01;35m[Kwarning: [m[K‘[01m[KNode::opened[m[K’ will be initialized after [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wreorder-Wreorder]8;;[m[K]
+   25 |     bool [01;35m[Kopened[m[K;
+      |          [01;35m[K^~~~~~[m[K
+[01m[K/home/marko/ros_ws/src/dubin/include/graph.h:24:11:[m[K [01;35m[Kwarning: [m[K  ‘[01m[Kfloat Node::cost[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wreorder-Wreorder]8;;[m[K]
+   24 |     float [01;35m[Kcost[m[K;
+      |           [01;35m[K^~~~[m[K
+[01m[K/home/marko/ros_ws/src/dubin/include/graph.h:18:5:[m[K [01;35m[Kwarning: [m[K  when initialized here [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wreorder-Wreorder]8;;[m[K]
+   18 |     [01;35m[KNode[m[K(pose2d point): opened(false), cost(0), parent(nullptr) {
+      |     [01;35m[K^~~~[m[K
+[01m[K/home/marko/ros_ws/src/dubin/include/graph.h:[m[K In member function ‘[01m[Kbool Node::check_availability(float, float)[m[K’:
+[01m[K/home/marko/ros_ws/src/dubin/include/graph.h:33:27:[m[K [01;35m[Kwarning: [m[Kcomparison of integer expressions of different signedness: ‘[01m[Kint[m[K’ and ‘[01m[Kstd::vector<float>::size_type[m[K’ {aka ‘[01m[Klong unsigned int[m[K’} [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wsign-compare-Wsign-compare]8;;[m[K]
+   33 |         for (int i = 0; [01;35m[Ki < arrival_time.size()[m[K; i++)
+      |                         [01;35m[K~~^~~~~~~~~~~~~~~~~~~~~[m[K
+In file included from [01m[K/home/marko/ros_ws/src/dubin/include/PRMstar.h:4[m[K,
+                 from [01m[K/home/marko/ros_ws/src/dubin/src/PRMstar.cpp:1[m[K:
+[01m[K/home/marko/ros_ws/src/dubin/include/map.h:[m[K In constructor ‘[01m[KMap::Map(Polygon)[m[K’:
+[01m[K/home/marko/ros_ws/src/dubin/include/map.h:42:17:[m[K [01;35m[Kwarning: [m[K‘[01m[KMap::total_map_poly[m[K’ will be initialized after [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wreorder-Wreorder]8;;[m[K]
+   42 |         Polygon [01;35m[Ktotal_map_poly[m[K;
+      |                 [01;35m[K^~~~~~~~~~~~~~[m[K
+[01m[K/home/marko/ros_ws/src/dubin/include/map.h:40:15:[m[K [01;35m[Kwarning: [m[K  ‘[01m[Kfloat Map::freeSpace[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wreorder-Wreorder]8;;[m[K]
+   40 |         float [01;35m[KfreeSpace[m[K;
+      |               [01;35m[K^~~~~~~~~[m[K
+[01m[K/home/marko/ros_ws/src/dubin/include/map.h:45:9:[m[K [01;35m[Kwarning: [m[K  when initialized here [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wreorder-Wreorder]8;;[m[K]
+   45 |         [01;35m[KMap[m[K(Polygon map): total_map_poly(map.verteces), freeSpace(map.area), halton_index(0){
+      |         [01;35m[K^~~[m[K
+[01m[K/home/marko/ros_ws/src/dubin/include/map.h:40:15:[m[K [01;35m[Kwarning: [m[K‘[01m[KMap::freeSpace[m[K’ will be initialized after [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wreorder-Wreorder]8;;[m[K]
+   40 |         float [01;35m[KfreeSpace[m[K;
+      |               [01;35m[K^~~~~~~~~[m[K
+[01m[K/home/marko/ros_ws/src/dubin/include/map.h:39:13:[m[K [01;35m[Kwarning: [m[K  ‘[01m[Kint Map::halton_index[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wreorder-Wreorder]8;;[m[K]
+   39 |         int [01;35m[Khalton_index[m[K;
+      |             [01;35m[K^~~~~~~~~~~~[m[K
+[01m[K/home/marko/ros_ws/src/dubin/include/map.h:45:9:[m[K [01;35m[Kwarning: [m[K  when initialized here [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wreorder-Wreorder]8;;[m[K]
+   45 |         [01;35m[KMap[m[K(Polygon map): total_map_poly(map.verteces), freeSpace(map.area), halton_index(0){
+      |         [01;35m[K^~~[m[K
+gmake[2]: *** [CMakeFiles/mission_planner.dir/build.make:132: CMakeFiles/mission_planner.dir/src/graph.cpp.o] Error 1
+gmake[2]: *** Waiting for unfinished jobs....
+In file included from [01m[K/home/marko/ros_ws/src/dubin/include/collision_check.h:6[m[K,
+                 from [01m[K/home/marko/ros_ws/src/dubin/src/collision_check.cpp:3[m[K:
+[01m[K/home/marko/ros_ws/src/dubin/include/map.h:[m[K In constructor ‘[01m[KMap::Map(Polygon)[m[K’:
+[01m[K/home/marko/ros_ws/src/dubin/include/map.h:42:17:[m[K [01;35m[Kwarning: [m[K‘[01m[KMap::total_map_poly[m[K’ will be initialized after [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wreorder-Wreorder]8;;[m[K]
+   42 |         Polygon [01;35m[Ktotal_map_poly[m[K;
+      |                 [01;35m[K^~~~~~~~~~~~~~[m[K
+[01m[K/home/marko/ros_ws/src/dubin/include/map.h:40:15:[m[K [01;35m[Kwarning: [m[K  ‘[01m[Kfloat Map::freeSpace[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wreorder-Wreorder]8;;[m[K]
+   40 |         float [01;35m[KfreeSpace[m[K;
+      |               [01;35m[K^~~~~~~~~[m[K
+[01m[K/home/marko/ros_ws/src/dubin/include/map.h:45:9:[m[K [01;35m[Kwarning: [m[K  when initialized here [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wreorder-Wreorder]8;;[m[K]
+   45 |         [01;35m[KMap[m[K(Polygon map): total_map_poly(map.verteces), freeSpace(map.area), halton_index(0){
+      |         [01;35m[K^~~[m[K
+[01m[K/home/marko/ros_ws/src/dubin/include/map.h:40:15:[m[K [01;35m[Kwarning: [m[K‘[01m[KMap::freeSpace[m[K’ will be initialized after [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wreorder-Wreorder]8;;[m[K]
+   40 |         float [01;35m[KfreeSpace[m[K;
+      |               [01;35m[K^~~~~~~~~[m[K
+[01m[K/home/marko/ros_ws/src/dubin/include/map.h:39:13:[m[K [01;35m[Kwarning: [m[K  ‘[01m[Kint Map::halton_index[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wreorder-Wreorder]8;;[m[K]
+   39 |         int [01;35m[Khalton_index[m[K;
+      |             [01;35m[K^~~~~~~~~~~~[m[K
+[01m[K/home/marko/ros_ws/src/dubin/include/map.h:45:9:[m[K [01;35m[Kwarning: [m[K  when initialized here [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wreorder-Wreorder]8;;[m[K]
+   45 |         [01;35m[KMap[m[K(Polygon map): total_map_poly(map.verteces), freeSpace(map.area), halton_index(0){
+      |         [01;35m[K^~~[m[K
+[01m[K/home/marko/ros_ws/src/dubin/src/collision_check.cpp:[m[K In static member function ‘[01m[Kstatic bool CollisionCheck::point_in_polygon(point2d, Polygon)[m[K’:
+[01m[K/home/marko/ros_ws/src/dubin/src/collision_check.cpp:234:24:[m[K [01;35m[Kwarning: [m[Kcomparison of integer expressions of different signedness: ‘[01m[Kint[m[K’ and ‘[01m[Kstd::vector<line>::size_type[m[K’ {aka ‘[01m[Klong unsigned int[m[K’} [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wsign-compare-Wsign-compare]8;;[m[K]
+  234 |     for (auto j = 0; [01;35m[Kj < shape.edges.size()[m[K; j++)
+      |                      [01;35m[K~~^~~~~~~~~~~~~~~~~~~~[m[K
+[01m[K/home/marko/ros_ws/src/dubin/src/collision_check.cpp:[m[K In static member function ‘[01m[Kstatic bool CollisionCheck::arc_with_polygon(arc, Polygon)[m[K’:
+[01m[K/home/marko/ros_ws/src/dubin/src/collision_check.cpp:252:24:[m[K [01;35m[Kwarning: [m[Kcomparison of integer expressions of different signedness: ‘[01m[Kint[m[K’ and ‘[01m[Kstd::vector<line>::size_type[m[K’ {aka ‘[01m[Klong unsigned int[m[K’} [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wsign-compare-Wsign-compare]8;;[m[K]
+  252 |     for (auto j = 0; [01;35m[Kj < shape.edges.size()[m[K; j++)
+      |                      [01;35m[K~~^~~~~~~~~~~~~~~~~~~~[m[K
+[01m[K/home/marko/ros_ws/src/dubin/src/collision_check.cpp:[m[K In static member function ‘[01m[Kstatic float CollisionCheck::point_lineseg_dist(point2d, line)[m[K’:
+[01m[K/home/marko/ros_ws/src/dubin/src/collision_check.cpp:270:12:[m[K [01;35m[Kwarning: [m[Kvariable ‘[01m[Kab_be[m[K’ set but not used [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wunused-but-set-variable-Wunused-but-set-variable]8;;[m[K]
+  270 |     double [01;35m[Kab_be[m[K, ab_ae;
+      |            [01;35m[K^~~~~[m[K
+[01m[K/home/marko/ros_ws/src/dubin/src/MissionPlanner.cpp:[m[K In member function ‘[01m[Kvoid MissionPlanner::map_topic_callback(geometry_msgs::msg::PolygonStamped)[m[K’:
+[01m[K/home/marko/ros_ws/src/dubin/src/MissionPlanner.cpp:79:23:[m[K [01;35m[Kwarning: [m[Kcomparison of integer expressions of different signedness: ‘[01m[Kint[m[K’ and ‘[01m[Kstd::vector<geometry_msgs::msg::Point32_<std::allocator<void> >, std::allocator<geometry_msgs::msg::Point32_<std::allocator<void> > > >::size_type[m[K’ {aka ‘[01m[Klong unsigned int[m[K’} [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wsign-compare-Wsign-compare]8;;[m[K]
+   79 |     for (int i = 0; [01;35m[Ki < outline_message.polygon.points.size()[m[K; i++)
+      |                     [01;35m[K~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[m[K
+[01m[K/home/marko/ros_ws/src/dubin/src/MissionPlanner.cpp:[m[K In member function ‘[01m[Kvoid MissionPlanner::gate_topic_callback(geometry_msgs::msg::PoseArray)[m[K’:
+[01m[K/home/marko/ros_ws/src/dubin/src/MissionPlanner.cpp:99:23:[m[K [01;35m[Kwarning: [m[Kcomparison of integer expressions of different signedness: ‘[01m[Kint[m[K’ and ‘[01m[Kstd::vector<geometry_msgs::msg::Pose_<std::allocator<void> >, std::allocator<geometry_msgs::msg::Pose_<std::allocator<void> > > >::size_type[m[K’ {aka ‘[01m[Klong unsigned int[m[K’} [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wsign-compare-Wsign-compare]8;;[m[K]
+   99 |     for (int i = 0; [01;35m[Ki < outline_message.poses.size()[m[K; i++)
+      |                     [01;35m[K~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[m[K
+[01m[K/home/marko/ros_ws/src/dubin/src/MissionPlanner.cpp:[m[K In member function ‘[01m[Kvoid MissionPlanner::build_roadmap()[m[K’:
+[01m[K/home/marko/ros_ws/src/dubin/src/MissionPlanner.cpp:189:23:[m[K [01;35m[Kwarning: [m[Kcomparison of integer expressions of different signedness: ‘[01m[Kint[m[K’ and ‘[01m[Kstd::vector<Polygon>::size_type[m[K’ {aka ‘[01m[Klong unsigned int[m[K’} [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wsign-compare-Wsign-compare]8;;[m[K]
+  189 |     for (int i = 0; [01;35m[Ki < obstacle_list.size()[m[K; i++)
+      |                     [01;35m[K~~^~~~~~~~~~~~~~~~~~~~~~[m[K
+[01m[K/home/marko/ros_ws/src/dubin/src/MissionPlanner.cpp:[m[K In member function ‘[01m[Kvoid MissionPlanner::getPaths_and_Publish()[m[K’:
+[01m[K/home/marko/ros_ws/src/dubin/src/MissionPlanner.cpp:223:31:[m[K [01;35m[Kwarning: [m[Kcomparison of integer expressions of different signedness: ‘[01m[Kint[m[K’ and ‘[01m[Kstd::vector<pose2d>::size_type[m[K’ {aka ‘[01m[Klong unsigned int[m[K’} [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wsign-compare-Wsign-compare]8;;[m[K]
+  223 |         for (int rob = 0; [01;35m[Krob < initial_poses.size()[m[K; rob++)
+      |                           [01;35m[K~~~~^~~~~~~~~~~~~~~~~~~~~~[m[K
+[01m[K/home/marko/ros_ws/src/dubin/src/map.cpp:[m[K In member function ‘[01m[Kvoid Polygon::getMinMax()[m[K’:
+[01m[K/home/marko/ros_ws/src/dubin/src/map.cpp:80:23:[m[K [01;35m[Kwarning: [m[Kcomparison of integer expressions of different signedness: ‘[01m[Kint[m[K’ and ‘[01m[Kstd::vector<point2d>::size_type[m[K’ {aka ‘[01m[Klong unsigned int[m[K’} [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wsign-compare-Wsign-compare]8;;[m[K]
+   80 |     for (int i = 0; [01;35m[Ki < verteces.size()[m[K; i++)
+      |                     [01;35m[K~~^~~~~~~~~~~~~~~~~[m[K
+[01m[K/home/marko/ros_ws/src/dubin/src/map.cpp:[m[K In member function ‘[01m[Kbool Map::colliding(point2d)[m[K’:
+[01m[K/home/marko/ros_ws/src/dubin/src/map.cpp:106:24:[m[K [01;35m[Kwarning: [m[Kcomparison of integer expressions of different signedness: ‘[01m[Kint[m[K’ and ‘[01m[Kstd::vector<Polygon>::size_type[m[K’ {aka ‘[01m[Klong unsigned int[m[K’} [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wsign-compare-Wsign-compare]8;;[m[K]
+  106 |     for (auto i = 0; [01;35m[Ki < obstacles.size()[m[K; i++)
+      |                      [01;35m[K~~^~~~~~~~~~~~~~~~~~[m[K
+[01m[K/home/marko/ros_ws/src/dubin/src/map.cpp:[m[K In member function ‘[01m[Kbool Map::colliding(arc)[m[K’:
+[01m[K/home/marko/ros_ws/src/dubin/src/map.cpp:160:23:[m[K [01;35m[Kwarning: [m[Kcomparison of integer expressions of different signedness: ‘[01m[Kint[m[K’ and ‘[01m[Kstd::vector<Polygon>::size_type[m[K’ {aka ‘[01m[Klong unsigned int[m[K’} [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wsign-compare-Wsign-compare]8;;[m[K]
+  160 |     for (int i = 0; [01;35m[Ki < obstacles.size()[m[K; i++)
+      |                     [01;35m[K~~^~~~~~~~~~~~~~~~~~[m[K
+[01m[K/home/marko/ros_ws/src/dubin/src/map.cpp:[m[K In member function ‘[01m[Kbool Map::colliding(line)[m[K’:
+[01m[K/home/marko/ros_ws/src/dubin/src/map.cpp:170:24:[m[K [01;35m[Kwarning: [m[Kcomparison of integer expressions of different signedness: ‘[01m[Kint[m[K’ and ‘[01m[Kstd::vector<Polygon>::size_type[m[K’ {aka ‘[01m[Klong unsigned int[m[K’} [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wsign-compare-Wsign-compare]8;;[m[K]
+  170 |     for (auto i = 0; [01;35m[Ki < obstacles.size()[m[K; i++)
+      |                      [01;35m[K~~^~~~~~~~~~~~~~~~~~[m[K
+[01m[K/home/marko/ros_ws/src/dubin/src/map.cpp:180:28:[m[K [01;35m[Kwarning: [m[Kcomparison of integer expressions of different signedness: ‘[01m[Kint[m[K’ and ‘[01m[Kstd::vector<line>::size_type[m[K’ {aka ‘[01m[Klong unsigned int[m[K’} [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wsign-compare-Wsign-compare]8;;[m[K]
+  180 |         for (auto j = 0; [01;35m[Kj < obs.edges.size()[m[K; j++)
+      |                          [01;35m[K~~^~~~~~~~~~~~~~~~~~[m[K
+[01m[K/home/marko/ros_ws/src/dubin/src/map.cpp:[m[K In member function ‘[01m[Kvoid Map::processBounds()[m[K’:
+[01m[K/home/marko/ros_ws/src/dubin/src/map.cpp:208:23:[m[K [01;35m[Kwarning: [m[Kcomparison of integer expressions of different signedness: ‘[01m[Kint[m[K’ and ‘[01m[Kstd::vector<point2d>::size_type[m[K’ {aka ‘[01m[Klong unsigned int[m[K’} [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wsign-compare-Wsign-compare]8;;[m[K]
+  208 |     for (int i = 0; [01;35m[Ki < verteces.size()[m[K; i++)
+      |                     [01;35m[K~~^~~~~~~~~~~~~~~~~[m[K
+[01m[K/home/marko/ros_ws/src/dubin/src/map.cpp:[m[K In member function ‘[01m[Kfloat Map::halton_min(int, int, float, float)[m[K’:
+[01m[K/home/marko/ros_ws/src/dubin/src/map.cpp:240:50:[m[K [01;35m[Kwarning: [m[Kunused parameter ‘[01m[Kmin[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wunused-parameter-Wunused-parameter]8;;[m[K]
+  240 | float Map::halton_min(int index, int base, [01;35m[Kfloat min[m[K, float max)
+      |                                            [01;35m[K~~~~~~^~~[m[K
+[01m[K/home/marko/ros_ws/src/dubin/src/map.cpp:240:61:[m[K [01;35m[Kwarning: [m[Kunused parameter ‘[01m[Kmax[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wunused-parameter-Wunused-parameter]8;;[m[K]
+  240 | float Map::halton_min(int index, int base, float min, [01;35m[Kfloat max[m[K)
+      |                                                       [01;35m[K~~~~~~^~~[m[K
+[01m[K/home/marko/ros_ws/src/dubin/src/PRMstar.cpp:[m[K In member function ‘[01m[Kvoid PRMstar::genRoadmap(int)[m[K’:
+[01m[K/home/marko/ros_ws/src/dubin/src/PRMstar.cpp:21:28:[m[K [01;35m[Kwarning: [m[Kcomparison of integer expressions of different signedness: ‘[01m[Kint[m[K’ and ‘[01m[Kstd::vector<std::shared_ptr<Bundle> >::size_type[m[K’ {aka ‘[01m[Klong unsigned int[m[K’} [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wsign-compare-Wsign-compare]8;;[m[K]
+   21 |         for (auto x = 0; [01;35m[Kx < nearest.size()[m[K; x++)
+      |                          [01;35m[K~~^~~~~~~~~~~~~~~~[m[K
+[01m[K/home/marko/ros_ws/src/dubin/src/PRMstar.cpp:23:44:[m[K [01;31m[Kerror: [m[K‘[01m[K__gnu_cxx::__alloc_traits<std::allocator<std::shared_ptr<Bundle> >, std::shared_ptr<Bundle> >::value_type[m[K’ {aka ‘[01m[Kclass std::shared_ptr<Bundle>[m[K’} has no member named ‘[01m[Knodes[m[K’
+   23 |             for (int a = 0; a < nearest[x].[01;31m[Knodes[m[K[a].size(); a++)
+      |                                            [01;31m[K^~~~~[m[K
+[01m[K/home/marko/ros_ws/src/dubin/src/PRMstar.cpp:27:42:[m[K [01;31m[Kerror: [m[K‘[01m[K__gnu_cxx::__alloc_traits<std::allocator<std::shared_ptr<Bundle> >, std::shared_ptr<Bundle> >::value_type[m[K’ {aka ‘[01m[Kclass std::shared_ptr<Bundle>[m[K’} has no member named ‘[01m[Knodes[m[K’
+   27 |                 l.p_initial = nearest[x].[01;31m[Knodes[m[K[a]->pt.x;
+      |                                          [01;31m[K^~~~~[m[K
+[01m[K/home/marko/ros_ws/src/dubin/src/PRMstar.cpp:29:53:[m[K [01;31m[Kerror: [m[K‘[01m[K__gnu_cxx::__alloc_traits<std::allocator<std::shared_ptr<Bundle> >, std::shared_ptr<Bundle> >::value_type[m[K’ {aka ‘[01m[Kclass std::shared_ptr<Bundle>[m[K’} has no member named ‘[01m[Knodes[m[K’
+   29 |                     graph->add(new_node, nearest[x].[01;31m[Knodes[m[K[a]);
+      |                                                     [01;31m[K^~~~~[m[K
+[01m[K/home/marko/ros_ws/src/dubin/src/PRMstar.cpp:36:28:[m[K [01;31m[Kerror: [m[K‘[01m[Kclass quad[m[K’ has no member named ‘[01m[Kadd_node[m[K’; did you mean ‘[01m[Kadd_bundle[m[K’?
+   36 |         graph->points_quad.[01;31m[Kadd_node[m[K(new_node);
+      |                            [01;31m[K^~~~~~~~[m[K
+      |                            [32m[Kadd_bundle[m[K
+[01m[K/home/marko/ros_ws/src/dubin/src/PRMstar.cpp:[m[K In member function ‘[01m[Kstd::vector<point2d> PRMstar::getPath(point2d, point2d)[m[K’:
+[01m[K/home/marko/ros_ws/src/dubin/src/PRMstar.cpp:50:24:[m[K [01;35m[Kwarning: [m[Kcomparison of integer expressions of different signedness: ‘[01m[Kint[m[K’ and ‘[01m[Kstd::vector<std::shared_ptr<Bundle> >::size_type[m[K’ {aka ‘[01m[Klong unsigned int[m[K’} [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wsign-compare-Wsign-compare]8;;[m[K]
+   50 |     for (auto x = 0; [01;35m[Kx < nearest_s.size()[m[K; x++)
+      |                      [01;35m[K~~^~~~~~~~~~~~~~~~~~[m[K
+[01m[K/home/marko/ros_ws/src/dubin/src/PRMstar.cpp:52:42:[m[K [01;31m[Kerror: [m[K‘[01m[K__gnu_cxx::__alloc_traits<std::allocator<std::shared_ptr<Bundle> >, std::shared_ptr<Bundle> >::value_type[m[K’ {aka ‘[01m[Kclass std::shared_ptr<Bundle>[m[K’} has no member named ‘[01m[Knodes[m[K’
+   52 |         for (int a = 0; a < nearest_s[x].[01;31m[Knodes[m[K.size(); a++)
+      |                                          [01;31m[K^~~~~[m[K
+[01m[K/home/marko/ros_ws/src/dubin/src/PRMstar.cpp:56:40:[m[K [01;31m[Kerror: [m[K‘[01m[K__gnu_cxx::__alloc_traits<std::allocator<std::shared_ptr<Bundle> >, std::shared_ptr<Bundle> >::value_type[m[K’ {aka ‘[01m[Kclass std::shared_ptr<Bundle>[m[K’} has no member named ‘[01m[Knodes[m[K’
+   56 |             l.p_initial = nearest_s[x].[01;31m[Knodes[m[K[a]->pt.x;
+      |                                        [01;31m[K^~~~~[m[K
+[01m[K/home/marko/ros_ws/src/dubin/src/PRMstar.cpp:58:53:[m[K [01;31m[Kerror: [m[K‘[01m[K__gnu_cxx::__alloc_traits<std::allocator<std::shared_ptr<Bundle> >, std::shared_ptr<Bundle> >::value_type[m[K’ {aka ‘[01m[Kclass std::shared_ptr<Bundle>[m[K’} has no member named ‘[01m[Knodes[m[K’
+   58 |                 graph->add(start_node, nearest_s[x].[01;31m[Knodes[m[K[a]);
+      |                                                     [01;31m[K^~~~~[m[K
+[01m[K/home/marko/ros_ws/src/dubin/src/PRMstar.cpp:69:24:[m[K [01;35m[Kwarning: [m[Kcomparison of integer expressions of different signedness: ‘[01m[Kint[m[K’ and ‘[01m[Kstd::vector<std::shared_ptr<Bundle> >::size_type[m[K’ {aka ‘[01m[Klong unsigned int[m[K’} [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wsign-compare-Wsign-compare]8;;[m[K]
+   69 |     for (auto x = 0; [01;35m[Kx < nearest_e.size()[m[K; x++)
+      |                      [01;35m[K~~^~~~~~~~~~~~~~~~~~[m[K
+[01m[K/home/marko/ros_ws/src/dubin/src/PRMstar.cpp:71:42:[m[K [01;31m[Kerror: [m[K‘[01m[K__gnu_cxx::__alloc_traits<std::allocator<std::shared_ptr<Bundle> >, std::shared_ptr<Bundle> >::value_type[m[K’ {aka ‘[01m[Kclass std::shared_ptr<Bundle>[m[K’} has no member named ‘[01m[Knodes[m[K’
+   71 |         for (int a = 0; a < nearest_e[x].[01;31m[Knodes[m[K.size(); a++)
+      |                                          [01;31m[K^~~~~[m[K
+[01m[K/home/marko/ros_ws/src/dubin/src/PRMstar.cpp:75:40:[m[K [01;31m[Kerror: [m[K‘[01m[K__gnu_cxx::__alloc_traits<std::allocator<std::shared_ptr<Bundle> >, std::shared_ptr<Bundle> >::value_type[m[K’ {aka ‘[01m[Kclass std::shared_ptr<Bundle>[m[K’} has no member named ‘[01m[Knodes[m[K’
+   75 |             l.p_initial = nearest_e[x].[01;31m[Knodes[m[K[a]->pt.x;
+      |                                        [01;31m[K^~~~~[m[K
+[01m[K/home/marko/ros_ws/src/dubin/src/PRMstar.cpp:77:51:[m[K [01;31m[Kerror: [m[K‘[01m[K__gnu_cxx::__alloc_traits<std::allocator<std::shared_ptr<Bundle> >, std::shared_ptr<Bundle> >::value_type[m[K’ {aka ‘[01m[Kclass std::shared_ptr<Bundle>[m[K’} has no member named ‘[01m[Knodes[m[K’
+   77 |                 graph->add(end_node, nearest_e[x].[01;31m[Knodes[m[K[a]);
+      |                                                   [01;31m[K^~~~~[m[K
+[01m[K/home/marko/ros_ws/src/dubin/src/PRMstar.cpp:85:24:[m[K [01;31m[Kerror: [m[K‘[01m[Kclass quad[m[K’ has no member named ‘[01m[Kadd_node[m[K’; did you mean ‘[01m[Kadd_bundle[m[K’?
+   85 |     graph->points_quad.[01;31m[Kadd_node[m[K(start_node);
+      |                        [01;31m[K^~~~~~~~[m[K
+      |                        [32m[Kadd_bundle[m[K
+[01m[K/home/marko/ros_ws/src/dubin/src/PRMstar.cpp:87:24:[m[K [01;31m[Kerror: [m[K‘[01m[Kclass quad[m[K’ has no member named ‘[01m[Kadd_node[m[K’; did you mean ‘[01m[Kadd_bundle[m[K’?
+   87 |     graph->points_quad.[01;31m[Kadd_node[m[K(end_node);
+      |                        [01;31m[K^~~~~~~~[m[K
+      |                        [32m[Kadd_bundle[m[K
+[01m[K/home/marko/ros_ws/src/dubin/src/PRMstar.cpp:[m[K In member function ‘[01m[Kvoid PRMstar::genRoadmapPlus(int, int)[m[K’:
+[01m[K/home/marko/ros_ws/src/dubin/src/PRMstar.cpp:119:32:[m[K [01;35m[Kwarning: [m[Kcomparison of integer expressions of different signedness: ‘[01m[Kint[m[K’ and ‘[01m[Kstd::vector<std::shared_ptr<Bundle> >::size_type[m[K’ {aka ‘[01m[Klong unsigned int[m[K’} [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wsign-compare-Wsign-compare]8;;[m[K]
+  119 |             for (auto x = 0; [01;35m[Kx < nearest.size()[m[K; x++)
+      |                              [01;35m[K~~^~~~~~~~~~~~~~~~[m[K
+[01m[K/home/marko/ros_ws/src/dubin/src/PRMstar.cpp:121:48:[m[K [01;31m[Kerror: [m[K‘[01m[K__gnu_cxx::__alloc_traits<std::allocator<std::shared_ptr<Bundle> >, std::shared_ptr<Bundle> >::value_type[m[K’ {aka ‘[01m[Kclass std::shared_ptr<Bundle>[m[K’} has no member named ‘[01m[Knodes[m[K’
+  121 |                 for (int b = 0; b < nearest[x].[01;31m[Knodes[m[K.size(); b++)
+      |                                                [01;31m[K^~~~~[m[K
+[01m[K/home/marko/ros_ws/src/dubin/src/PRMstar.cpp:123:94:[m[K [01;31m[Kerror: [m[K‘[01m[K__gnu_cxx::__alloc_traits<std::allocator<std::shared_ptr<Bundle> >, std::shared_ptr<Bundle> >::value_type[m[K’ {aka ‘[01m[Kclass std::shared_ptr<Bundle>[m[K’} has no member named ‘[01m[Knodes[m[K’
+  123 |                     dubins_params sol = dCurve->calculateSinglePath(new_node->pt, nearest[x].[01;31m[Knodes[m[K[b]->pt);
+      |                                                                                              [01;31m[K^~~~~[m[K
+[01m[K/home/marko/ros_ws/src/dubin/src/PRMstar.cpp:128:57:[m[K [01;31m[Kerror: [m[K‘[01m[K__gnu_cxx::__alloc_traits<std::allocator<std::shared_ptr<Bundle> >, std::shared_ptr<Bundle> >::value_type[m[K’ {aka ‘[01m[Kclass std::shared_ptr<Bundle>[m[K’} has no member named ‘[01m[Knodes[m[K’
+  128 |                         graph->add(new_node, nearest[x].[01;31m[Knodes[m[K[b], A);
+      |                                                         [01;31m[K^~~~~[m[K
+[01m[K/home/marko/ros_ws/src/dubin/src/PRMstar.cpp:134:32:[m[K [01;31m[Kerror: [m[K‘[01m[Kclass quad[m[K’ has no member named ‘[01m[Kadd_node[m[K’; did you mean ‘[01m[Kadd_bundle[m[K’?
+  134 |             graph->points_quad.[01;31m[Kadd_node[m[K(new_node);
+      |                                [01;31m[K^~~~~~~~[m[K
+      |                                [32m[Kadd_bundle[m[K
+[01m[K/home/marko/ros_ws/src/dubin/src/PRMstar.cpp:136:32:[m[K [01;31m[Kerror: [m[K‘[01m[Kclass quad[m[K’ has no member named ‘[01m[Kadd_node[m[K’; did you mean ‘[01m[Kadd_bundle[m[K’?
+  136 |             graph->points_quad.[01;31m[Kadd_node[m[K(cor);
+      |                                [01;31m[K^~~~~~~~[m[K
+      |                                [32m[Kadd_bundle[m[K
+[01m[K/home/marko/ros_ws/src/dubin/src/PRMstar.cpp:92:34:[m[K [01;35m[Kwarning: [m[Kunused parameter ‘[01m[Kn[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wunused-parameter-Wunused-parameter]8;;[m[K]
+   92 | void PRMstar::genRoadmapPlus([01;35m[Kint n[m[K, int angles)
+      |                              [01;35m[K~~~~^[m[K
+[01m[K/home/marko/ros_ws/src/dubin/src/PRMstar.cpp:[m[K In member function ‘[01m[Kstd::deque<arcs> PRMstar::getPath(pose2d, pose2d)[m[K’:
+[01m[K/home/marko/ros_ws/src/dubin/src/PRMstar.cpp:152:24:[m[K [01;35m[Kwarning: [m[Kcomparison of integer expressions of different signedness: ‘[01m[Kint[m[K’ and ‘[01m[Kstd::vector<std::shared_ptr<Bundle> >::size_type[m[K’ {aka ‘[01m[Klong unsigned int[m[K’} [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wsign-compare-Wsign-compare]8;;[m[K]
+  152 |     for (auto x = 0; [01;35m[Kx < nearest_s.size()[m[K; x++)
+      |                      [01;35m[K~~^~~~~~~~~~~~~~~~~~[m[K
+[01m[K/home/marko/ros_ws/src/dubin/src/PRMstar.cpp:154:42:[m[K [01;31m[Kerror: [m[K‘[01m[K__gnu_cxx::__alloc_traits<std::allocator<std::shared_ptr<Bundle> >, std::shared_ptr<Bundle> >::value_type[m[K’ {aka ‘[01m[Kclass std::shared_ptr<Bundle>[m[K’} has no member named ‘[01m[Knodes[m[K’
+  154 |         for (int a = 0; a < nearest_s[x].[01;31m[Knodes[m[K.size(); a++)
+      |                                          [01;31m[K^~~~~[m[K
+[01m[K/home/marko/ros_ws/src/dubin/src/PRMstar.cpp:157:81:[m[K [01;31m[Kerror: [m[K‘[01m[K__gnu_cxx::__alloc_traits<std::allocator<std::shared_ptr<Bundle> >, std::shared_ptr<Bundle> >::value_type[m[K’ {aka ‘[01m[Kclass std::shared_ptr<Bundle>[m[K’} has no member named ‘[01m[Knodes[m[K’
+  157 |             dubins_params sol = dCurve->calculateSinglePath(start, nearest_s[x].[01;31m[Knodes[m[K[a]->pt);
+      |                                                                                 [01;31m[K^~~~~[m[K
+[01m[K/home/marko/ros_ws/src/dubin/src/PRMstar.cpp:161:49:[m[K [01;31m[Kerror: [m[K‘[01m[K__gnu_cxx::__alloc_traits<std::allocator<std::shared_ptr<Bundle> >, std::shared_ptr<Bundle> >::value_type[m[K’ {aka ‘[01m[Kclass std::shared_ptr<Bundle>[m[K’} has no member named ‘[01m[Knodes[m[K’
+  161 |             graph->add(start_node, nearest_s[x].[01;31m[Knodes[m[K[a], A);
+      |                                                 [01;31m[K^~~~~[m[K
+[01m[K/home/marko/ros_ws/src/dubin/src/PRMstar.cpp:173:23:[m[K [01;35m[Kwarning: [m[Kcomparison of integer expressions of different signedness: ‘[01m[Kint[m[K’ and ‘[01m[Kstd::vector<std::shared_ptr<Bundle> >::size_type[m[K’ {aka ‘[01m[Klong unsigned int[m[K’} [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wsign-compare-Wsign-compare]8;;[m[K]
+  173 |     for (int y = 0; [01;35m[Ky < nearest_e.size()[m[K; y++)
+      |                     [01;35m[K~~^~~~~~~~~~~~~~~~~~[m[K
+[01m[K/home/marko/ros_ws/src/dubin/src/PRMstar.cpp:175:42:[m[K [01;31m[Kerror: [m[K‘[01m[K__gnu_cxx::__alloc_traits<std::allocator<std::shared_ptr<Bundle> >, std::shared_ptr<Bundle> >::value_type[m[K’ {aka ‘[01m[Kclass std::shared_ptr<Bundle>[m[K’} has no member named ‘[01m[Knodes[m[K’
+  175 |         for (int a = 0; a < nearest_e[y].[01;31m[Knodes[m[K.size(); a++)
+      |                                          [01;31m[K^~~~~[m[K
+[01m[K/home/marko/ros_ws/src/dubin/src/PRMstar.cpp:177:75:[m[K [01;31m[Kerror: [m[K‘[01m[K__gnu_cxx::__alloc_traits<std::allocator<std::shared_ptr<Bundle> >, std::shared_ptr<Bundle> >::value_type[m[K’ {aka ‘[01m[Kclass std::shared_ptr<Bundle>[m[K’} has no member named ‘[01m[Knodes[m[K’
+  177 |             dubins_params sol = dCurve->calculateSinglePath( nearest_e[y].[01;31m[Knodes[m[K[a]->pt, end);
+      |                                                                           [01;31m[K^~~~~[m[K
+[01m[K/home/marko/ros_ws/src/dubin/src/PRMstar.cpp:178:33:[m[K [01;31m[Kerror: [m[K‘[01m[K__gnu_cxx::__alloc_traits<std::allocator<std::shared_ptr<Bundle> >, std::shared_ptr<Bundle> >::value_type[m[K’ {aka ‘[01m[Kclass std::shared_ptr<Bundle>[m[K’} has no member named ‘[01m[Knodes[m[K’
+  178 |             arcs A(nearest_e[y].[01;31m[Knodes[m[K[a]->pt, sol);
+      |                                 [01;31m[K^~~~~[m[K
+[01m[K/home/marko/ros_ws/src/dubin/src/PRMstar.cpp:181:37:[m[K [01;31m[Kerror: [m[K‘[01m[K__gnu_cxx::__alloc_traits<std::allocator<std::shared_ptr<Bundle> >, std::shared_ptr<Bundle> >::value_type[m[K’ {aka ‘[01m[Kclass std::shared_ptr<Bundle>[m[K’} has no member named ‘[01m[Knodes[m[K’
+  181 |             graph->add(nearest_e[y].[01;31m[Knodes[m[K[a], end_node,  A);
+      |                                     [01;31m[K^~~~~[m[K
+[01m[K/home/marko/ros_ws/src/dubin/src/PRMstar.cpp:188:24:[m[K [01;31m[Kerror: [m[K‘[01m[Kclass quad[m[K’ has no member named ‘[01m[Kadd_node[m[K’; did you mean ‘[01m[Kadd_bundle[m[K’?
+  188 |     graph->points_quad.[01;31m[Kadd_node[m[K(start_node);
+      |                        [01;31m[K^~~~~~~~[m[K
+      |                        [32m[Kadd_bundle[m[K
+[01m[K/home/marko/ros_ws/src/dubin/src/PRMstar.cpp:191:24:[m[K [01;31m[Kerror: [m[K‘[01m[Kclass quad[m[K’ has no member named ‘[01m[Kadd_node[m[K’; did you mean ‘[01m[Kadd_bundle[m[K’?
+  191 |     graph->points_quad.[01;31m[Kadd_node[m[K(end_node);
+      |                        [01;31m[K^~~~~~~~[m[K
+      |                        [32m[Kadd_bundle[m[K
+[01m[K/home/marko/ros_ws/src/dubin/src/PRMstar.cpp:194:24:[m[K [01;31m[Kerror: [m[K‘[01m[Kclass quad[m[K’ has no member named ‘[01m[Kadd_node[m[K’; did you mean ‘[01m[Kadd_bundle[m[K’?
+  194 |     graph->points_quad.[01;31m[Kadd_node[m[K(cor);
+      |                        [01;31m[K^~~~~~~~[m[K
+      |                        [32m[Kadd_bundle[m[K
+[01m[K/home/marko/ros_ws/src/dubin/src/PRMstar.cpp:197:24:[m[K [01;31m[Kerror: [m[K‘[01m[Kclass quad[m[K’ has no member named ‘[01m[Kadd_node[m[K’; did you mean ‘[01m[Kadd_bundle[m[K’?
+  197 |     graph->points_quad.[01;31m[Kadd_node[m[K(cor_e);
+      |                        [01;31m[K^~~~~~~~[m[K
+      |                        [32m[Kadd_bundle[m[K
+[01m[K/home/marko/ros_ws/src/dubin/src/PRMstar.cpp:[m[K In member function ‘[01m[Kstd::deque<arcs> PRMstar::getPathManyExits(pose2d, std::vector<pose2d>)[m[K’:
+[01m[K/home/marko/ros_ws/src/dubin/src/PRMstar.cpp:214:24:[m[K [01;35m[Kwarning: [m[Kcomparison of integer expressions of different signedness: ‘[01m[Kint[m[K’ and ‘[01m[Kstd::vector<std::shared_ptr<Bundle> >::size_type[m[K’ {aka ‘[01m[Klong unsigned int[m[K’} [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wsign-compare-Wsign-compare]8;;[m[K]
+  214 |     for (auto x = 0; [01;35m[Kx < nearest_s.size()[m[K; x++)
+      |                      [01;35m[K~~^~~~~~~~~~~~~~~~~~[m[K
+[01m[K/home/marko/ros_ws/src/dubin/src/PRMstar.cpp:216:42:[m[K [01;31m[Kerror: [m[K‘[01m[K__gnu_cxx::__alloc_traits<std::allocator<std::shared_ptr<Bundle> >, std::shared_ptr<Bundle> >::value_type[m[K’ {aka ‘[01m[Kclass std::shared_ptr<Bundle>[m[K’} has no member named ‘[01m[Knodes[m[K’
+  216 |         for (int a = 0; a < nearest_s[x].[01;31m[Knodes[m[K.size(); a++)
+      |                                          [01;31m[K^~~~~[m[K
+[01m[K/home/marko/ros_ws/src/dubin/src/PRMstar.cpp:219:81:[m[K [01;31m[Kerror: [m[K‘[01m[K__gnu_cxx::__alloc_traits<std::allocator<std::shared_ptr<Bundle> >, std::shared_ptr<Bundle> >::value_type[m[K’ {aka ‘[01m[Kclass std::shared_ptr<Bundle>[m[K’} has no member named ‘[01m[Knodes[m[K’
+  219 |             dubins_params sol = dCurve->calculateSinglePath(start, nearest_s[x].[01;31m[Knodes[m[K[a]->pt);
+      |                                                                                 [01;31m[K^~~~~[m[K
+[01m[K/home/marko/ros_ws/src/dubin/src/PRMstar.cpp:223:49:[m[K [01;31m[Kerror: [m[K‘[01m[K__gnu_cxx::__alloc_traits<std::allocator<std::shared_ptr<Bundle> >, std::shared_ptr<Bundle> >::value_type[m[K’ {aka ‘[01m[Kclass std::shared_ptr<Bundle>[m[K’} has no member named ‘[01m[Knodes[m[K’
+  223 |             graph->add(start_node, nearest_s[x].[01;31m[Knodes[m[K[a], A);
+      |                                                 [01;31m[K^~~~~[m[K
+[01m[K/home/marko/ros_ws/src/dubin/src/PRMstar.cpp:228:24:[m[K [01;35m[Kwarning: [m[Kcomparison of integer expressions of different signedness: ‘[01m[Kint[m[K’ and ‘[01m[Kstd::vector<pose2d>::size_type[m[K’ {aka ‘[01m[Klong unsigned int[m[K’} [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wsign-compare-Wsign-compare]8;;[m[K]
+  228 |     for (int i = 0 ; [01;35m[Ki < end.size()[m[K; i++)
+      |                      [01;35m[K~~^~~~~~~~~~~~[m[K
+[01m[K/home/marko/ros_ws/src/dubin/src/PRMstar.cpp:230:66:[m[K [01;31m[Kerror: [m[Kconversion from ‘[01m[Kvector<shared_ptr<[01;32m[KBundle[m[K>>[m[K’ to non-scalar type ‘[01m[Kvector<shared_ptr<[01;32m[KNode[m[K>>[m[K’ requested
+  230 |         std::vector<shared_ptr<Node>> nearest_e = [01;31m[Kgraph->in_range(end[i].x, TRSH)[m[K; // find all nodes within a Rad
+      |                                                   [01;31m[K~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~[m[K
+[01m[K/home/marko/ros_ws/src/dubin/src/PRMstar.cpp:237:27:[m[K [01;35m[Kwarning: [m[Kcomparison of integer expressions of different signedness: ‘[01m[Kint[m[K’ and ‘[01m[Kstd::vector<std::shared_ptr<Node> >::size_type[m[K’ {aka ‘[01m[Klong unsigned int[m[K’} [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wsign-compare-Wsign-compare]8;;[m[K]
+  237 |         for (int y = 0; [01;35m[Ky < nearest_e.size()[m[K; y++)
+      |                         [01;35m[K~~^~~~~~~~~~~~~~~~~~[m[K
+[01m[K/home/marko/ros_ws/src/dubin/src/PRMstar.cpp:239:46:[m[K [01;31m[Kerror: [m[K‘[01m[K__gnu_cxx::__alloc_traits<std::allocator<std::shared_ptr<Node> >, std::shared_ptr<Node> >::value_type[m[K’ {aka ‘[01m[Kclass std::shared_ptr<Node>[m[K’} has no member named ‘[01m[Knodes[m[K’
+  239 |             for (int a = 0; a < nearest_e[y].[01;31m[Knodes[m[K.size(); a++)
+      |                                              [01;31m[K^~~~~[m[K
+[01m[K/home/marko/ros_ws/src/dubin/src/PRMstar.cpp:241:79:[m[K [01;31m[Kerror: [m[K‘[01m[K__gnu_cxx::__alloc_traits<std::allocator<std::shared_ptr<Node> >, std::shared_ptr<Node> >::value_type[m[K’ {aka ‘[01m[Kclass std::shared_ptr<Node>[m[K’} has no member named ‘[01m[Knodes[m[K’
+  241 |                 dubins_params sol = dCurve->calculateSinglePath( nearest_e[y].[01;31m[Knodes[m[K[a]->pt, end);
+      |                                                                               [01;31m[K^~~~~[m[K
+[01m[K/home/marko/ros_ws/src/dubin/src/PRMstar.cpp:242:37:[m[K [01;31m[Kerror: [m[K‘[01m[K__gnu_cxx::__alloc_traits<std::allocator<std::shared_ptr<Node> >, std::shared_ptr<Node> >::value_type[m[K’ {aka ‘[01m[Kclass std::shared_ptr<Node>[m[K’} has no member named ‘[01m[Knodes[m[K’
+  242 |                 arcs A(nearest_e[y].[01;31m[Knodes[m[K[a]->pt, sol);
+      |                                     [01;31m[K^~~~~[m[K
+[01m[K/home/marko/ros_ws/src/dubin/src/PRMstar.cpp:245:41:[m[K [01;31m[Kerror: [m[K‘[01m[K__gnu_cxx::__alloc_traits<std::allocator<std::shared_ptr<Node> >, std::shared_ptr<Node> >::value_type[m[K’ {aka ‘[01m[Kclass std::shared_ptr<Node>[m[K’} has no member named ‘[01m[Knodes[m[K’
+  245 |                 graph->add(nearest_e[y].[01;31m[Knodes[m[K[a], end_node,  A);
+      |                                         [01;31m[K^~~~~[m[K
+[01m[K/home/marko/ros_ws/src/dubin/src/PRMstar.cpp:251:28:[m[K [01;31m[Kerror: [m[K‘[01m[Kclass quad[m[K’ has no member named ‘[01m[Kadd_node[m[K’; did you mean ‘[01m[Kadd_bundle[m[K’?
+  251 |         graph->points_quad.[01;31m[Kadd_node[m[K(end_node);
+      |                            [01;31m[K^~~~~~~~[m[K
+      |                            [32m[Kadd_bundle[m[K
+[01m[K/home/marko/ros_ws/src/dubin/src/PRMstar.cpp:252:28:[m[K [01;31m[Kerror: [m[K‘[01m[Kclass quad[m[K’ has no member named ‘[01m[Kadd_node[m[K’; did you mean ‘[01m[Kadd_bundle[m[K’?
+  252 |         graph->points_quad.[01;31m[Kadd_node[m[K(cor_e);
+      |                            [01;31m[K^~~~~~~~[m[K
+      |                            [32m[Kadd_bundle[m[K
+[01m[K/home/marko/ros_ws/src/dubin/src/PRMstar.cpp:258:24:[m[K [01;31m[Kerror: [m[K‘[01m[Kclass quad[m[K’ has no member named ‘[01m[Kadd_node[m[K’; did you mean ‘[01m[Kadd_bundle[m[K’?
+  258 |     graph->points_quad.[01;31m[Kadd_node[m[K(start_node);
+      |                        [01;31m[K^~~~~~~~[m[K
+      |                        [32m[Kadd_bundle[m[K
+[01m[K/home/marko/ros_ws/src/dubin/src/PRMstar.cpp:259:24:[m[K [01;31m[Kerror: [m[K‘[01m[Kclass quad[m[K’ has no member named ‘[01m[Kadd_node[m[K’; did you mean ‘[01m[Kadd_bundle[m[K’?
+  259 |     graph->points_quad.[01;31m[Kadd_node[m[K(cor);
+      |                        [01;31m[K^~~~~~~~[m[K
+      |                        [32m[Kadd_bundle[m[K
+[01m[K/home/marko/ros_ws/src/dubin/src/MissionPlanner.cpp:[m[K In member function ‘[01m[Kvoid MissionPlanner::test()[m[K’:
+[01m[K/home/marko/ros_ws/src/dubin/src/MissionPlanner.cpp:329:23:[m[K [01;35m[Kwarning: [m[Kcomparison of integer expressions of different signedness: ‘[01m[Kint[m[K’ and ‘[01m[Kstd::vector<geometry_msgs::msg::PoseStamped_<std::allocator<void> >, std::allocator<geometry_msgs::msg::PoseStamped_<std::allocator<void> > > >::size_type[m[K’ {aka ‘[01m[Klong unsigned int[m[K’} [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wsign-compare-Wsign-compare]8;;[m[K]
+  329 |     for (int i = 0; [01;35m[Ki < traj.poses.size()[m[K; i++)
+      |                     [01;35m[K~~^~~~~~~~~~~~~~~~~~~[m[K
+gmake[2]: *** [CMakeFiles/mission_planner.dir/build.make:160: CMakeFiles/mission_planner.dir/src/PRMstar.cpp.o] Error 1
+gmake[2]: *** [CMakeFiles/mission_planner.dir/build.make:118: CMakeFiles/mission_planner.dir/src/dubinCurve.cpp.o] Error 1
+gmake[2]: *** [CMakeFiles/mission_planner.dir/build.make:76: CMakeFiles/mission_planner.dir/src/MissionPlanner.cpp.o] Error 1
+gmake[1]: *** [CMakeFiles/Makefile2:137: CMakeFiles/mission_planner.dir/all] Error 2
+gmake: *** [Makefile:146: all] Error 2

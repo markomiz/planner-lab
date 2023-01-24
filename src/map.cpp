@@ -253,7 +253,7 @@ float Map::halton_min(int index, int base, float min, float max)
 point2d Map::halton_sample(int i)
 {
     point2d p;
-    int base_x = 2, base_y = 3; //TODO - maybe move to config file
+    int base_x = 13, base_y = 7; //TODO - maybe move to config file
 
     p.x = (halton_min(i, base_x, min_x, max_x)*(max_x-min_x)) + min_x;
     p.y = (halton_min(i, base_y, min_y, max_y)*(max_y-min_y)) + min_y;
