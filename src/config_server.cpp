@@ -70,6 +70,9 @@ void ConfigParams::addParam(string name, string value)
     else if (name ==  "expand_distance:"){
         _expand_size = stof(value);
     }
+        else if (name ==  "start_end_thrsh:"){
+        _start_end_thrsh = stof(value);
+    }
 
         
 };
@@ -108,4 +111,8 @@ float ConfigParams::getTPRM_D()
 float ConfigParams::getExpandSize()
 {
     return _expand_size;
+}
+float ConfigParams::getStartEndThrsh()
+{
+    return _start_end_thrsh;
 }

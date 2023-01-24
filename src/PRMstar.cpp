@@ -37,7 +37,7 @@ void PRMstar::genRoadmap(int n)
 
 vector<point2d> PRMstar::getPath(point2d start, point2d end)
 {
-    float TRSH = 1.0;
+    float TRSH = config->getStartEndThrsh();
     // first connect start and end to graph
     std::vector<shared_ptr<Node>> nearest_s = graph->in_range(start, TRSH); // find all nodes within a Rad
     pose2d start_pose;
@@ -148,7 +148,7 @@ void PRMstar::genRoadmapPlus(int n, int angles)
 
 deque<arcs> PRMstar::getPath(pose2d start, pose2d end)
 {
-    float TRSH = 1.0;
+    float TRSH = config->getStartEndThrsh();
     // fisrt connect start and end to graph
     std::vector<shared_ptr<Node>> nearest_s = graph->in_range(start.x, TRSH); // find all nodes within a Rad
     shared_ptr<Node> start_node(new Node(start));
@@ -203,7 +203,7 @@ deque<arcs> PRMstar::getPath(pose2d start, pose2d end)
 
 deque<arcs> PRMstar::getPathManyExits(pose2d start, vector<pose2d> end)
 {
-    float TRSH = 1.0;
+    float TRSH = config->getStartEndThrsh();
     // fisrt connect start and end to graph
     std::vector<shared_ptr<Node>> nearest_s = graph->in_range(start.x, TRSH); // find all nodes within a Rad
     shared_ptr<Node> start_node(new Node(start));
