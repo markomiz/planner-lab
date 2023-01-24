@@ -342,6 +342,114 @@ deque<arcs> Graph::getPathPlus(shared_ptr<Node> start_node, shared_ptr<Node> end
     std::cout << "further! \n";
     return points;
 };
+deque<arcs> Graph::getPathPlusManyExits(shared_ptr<Node> start_node, vector<shared_ptr<Node>> end_nodes)
+{
+    std::cout << "start get path \n";
+    // add start and end points to graph - connecting them to nearest
+    deque<arcs> points;
+    // init open list
+    vector<shared_ptr<Node>> OPEN;
+    // add start node on open list
+    shared_ptr<Node> current = nullptr;
+    OPEN.push_back(start_node);
+    int its = 0;
+    bool end_reached = false;
+    while (OPEN.size() > 0)
+    {
+        its++; 
+        auto cur_it = OPEN.begin();
+        current = *cur_it;
+        // always work on minimal cost node in open set
+        for (auto it = OPEN.begin(); it != OPEN.end(); it++)
+        {
+            if ((*it)->cost < current->cost)
+            { 
+                cur_it = it;
+                current = *cur_it;
+            }
+        }
+        OPEN.erase(cur_it);
+        for (int nn = 0; nn < end_nodes.size(); nn++)
+        {
+            if (current == end_nodes[nn]) // end reached
+            {
+                end_reached = true;
+                break;
+            } 
+        }
+
+        // for all nodes connected to current
+        for (auto i = 0; i < current->connected.size(); i++)
+        {
+            auto &con = current->connected[i];
+            // cout << "Current conncetions: " << current->connected.size() << endl;
+            if (!con.node->opened)
+            {
+                // Check if node is available at that time
+                float length = current->cost + con.cost;
+                float time_stamp = length;
+                
+                if (!con.node->check_availability(time_stamp, config->getTPRM_T()))
+                {
+                    continue; //skip to the next node connected to current
+                }
+
+                else
+                {
+                    // cout<< "connected.";
+                    // if not opened, add to open, store that current is parent
+                    // update their cost to current + dist between nodes 
+                    con.node->parent = current; // ok
+                    con.node->parent_connection = make_shared<connection>(con); // something wrong here/
+                    // cout << "\n\n" << current->pt.x.x << " " << current->pt.x.y << " " << current->pt.theta << " current pose";
+                    // cout << "\n" << con.node->parent_connection->A.a[0].start.x.x << " " << con.node->parent_connection->A.a[0].start.x.y << " " << con.node->parent_connection->A.a[0].start.theta << " arc start connection";
+                    // cout << "\n" << con.node->parent_connection->A.a[2].end.x.x << " " << con.node->parent_connection->A.a[2].end.x.y << " " << con.node->parent_connection->A.a[2].end.theta << " arc end connection";
+                    // cout << "\n" << con.node->pt.x.x << " " << con.node->pt.x.y << " " << con.node->pt.theta << " pt connection\n";
+                    OPEN.push_back(con.node);
+                    con.node->opened = true;
+                    con.node->cost = length;
+                }
+                
+            }
+        }
+    }
+    cout << " searched: " << its << " \n";
+    if (!end_reached) cout << "\n END NOT REACHED :( ";
+    if (!current->parent || !end_reached) {
+        std::cout << "oopsie no path \n";
+        return points;
+    }
+    int count = 0;
+    while (current->parent )
+    {
+        count++;
+        points.push_front(current->parent_connection->A);
+
+        // cout << "\n" << current->pt.x.x << " " << current->pt.x.y << " " << current->pt.theta << " pose in path";
+        // Calculate time of arrival to the node and add info to the node 
+        
+        float node_time = current->cost;
+        current->arrival_time.push_back(node_time);
+
+        point2d current_point = current->pt.x;
+        vector<shared_ptr<Node>> nearby = points_quad.in_range(current_point, config->getTPRM_D()); 
+        for (auto i = 0; i < nearby.size() ; i++)
+        {
+            nearby[i]->arrival_time.push_back(node_time);     
+        }
+  
+        current = current->parent;
+    }
+    // cout << "\n" << current->pt.x.x << " " << current->pt.x.y << " " << current->pt.theta << " should be start";
+
+    // std::cout << "we made it this far! Nodes in path: " << count << endl;
+    reset_nodes(); 
+    
+    current = nullptr;
+    OPEN.clear();
+    std::cout << "further! \n";
+    return points;
+};
 void Graph::print_nodes(){
     for (auto i = 0; i < nodes.size(); i++)
     {
