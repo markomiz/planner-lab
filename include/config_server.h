@@ -27,6 +27,7 @@ class ConfigParams
         float getTPRM_T();
         float getTPRM_D();
         float getExpandSize();
+        float getStartEndThrsh();
 
     private:
         std::string _file;
@@ -39,4 +40,5 @@ class ConfigParams
         float _tprm_t = 0.5;
         float _tprm_d = 0.5;
         float _expand_size = 0.5;
+        float _start_end_thrsh = 1.0;
 };
