@@ -67,6 +67,9 @@ void ConfigParams::addParam(string name, string value)
     else if (name ==  "tprm_t:"){
         _tprm_d = stof(value);
     }
+    else if (name ==  "expand_distance:"){
+        _expand_size = stof(value);
+    }
 
         
 };
@@ -102,3 +105,7 @@ float ConfigParams::getTPRM_D()
 {
     return _tprm_d;
 };
+float ConfigParams::getExpandSize()
+{
+    return _expand_size;
+}

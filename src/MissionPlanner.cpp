@@ -60,6 +60,7 @@ void MissionPlanner::obstacle_topic_callback(const obstacles_msgs::msg::Obstacle
             // RCLCPP_INFO(this->get_logger(), "Getting obs info: x = '%0.2f', y = '%0.2f'", temp.x, temp.y);
         }
         Polygon poly(polygon_input);
+        poly.expandShape(conf->getExpandSize());
         obstacle_list.push_back(poly);
     }
     RCLCPP_INFO(this->get_logger(), "Got obstacles information");
@@ -192,33 +193,6 @@ void MissionPlanner::build_roadmap()
     RCLCPP_INFO(this->get_logger(),"Roadmap Generated");
 
 };
-
-// void MissionPlanner::publish_results(int robot)
-// {
-//     /*
-//         ACTION CLIENT AND SERVER PART
-//     */
-//     string robot_str = "shelfino" + std::to_string(robot) + "/follow_path";
-//     publisher_ = this->create_publisher<nav_msgs::msg::Path>(robot_str, 10);
-//     rclcpp_action::Client<FollowPath>::SharedPtr client_ptr_;
-//     client_ptr_ = rclcpp_action::create_client<FollowPath>(this,robot_str);
-//     if (!client_ptr_->wait_for_action_server()) {
-//         cout << "here!!!" << endl;
-//         RCLCPP_ERROR(this->get_logger(), "Action server not available after waiting");
-//         rclcpp::shutdown();
-//     }    
-//     auto goal_msg = FollowPath::Goal();
-//     goal_msg.path = path;
-//     goal_msg.controller_id = "FollowPath";   
-//     RCLCPP_INFO(this->get_logger(), "Sending goal position");
-//     client_ptr_->async_send_goal(goal_msg);
-//     for(int i = 0; i<2; i++)
-//     {
-//         publisher_->publish(path);
-//         usleep(1000000);
-//         RCLCPP_INFO(this->get_logger(), "%s", path.header.frame_id.c_str());
-//     }
-// };
 
 void MissionPlanner::getPaths_and_Publish()
 {
