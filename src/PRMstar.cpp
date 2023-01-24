@@ -200,3 +200,65 @@ deque<arcs> PRMstar::getPath(pose2d start, pose2d end)
     deque<arcs> points = graph->getPathPlus(start_node, end_node);
     return points;
 }
+
+deque<arcs> PRMstar::getPathManyExits(pose2d start, vector<pose2d> end)
+{
+    float TRSH = 1.0;
+    // fisrt connect start and end to graph
+    std::vector<shared_ptr<Node>> nearest_s = graph->in_range(start.x, TRSH); // find all nodes within a Rad
+    shared_ptr<Node> start_node(new Node(start));
+    pose2d start_c_pose = start;
+    start_c_pose.theta = arc::mod2pi(start.theta + M_PI);
+    shared_ptr<Node> cor(new Node(start_c_pose));
+    start_node->opposite = cor;
+    cor->opposite = start_node;
+    for (auto x = 0; x < nearest_s.size(); x++)
+    {
+        // gen dubins
+        bool col_arc = false;
+        dubins_params sol = dCurve->calculateSinglePath(start, nearest_s[x]->pt);
+        arcs A(start, sol);
+        // if doesn't collide add connections to graph
+        if (map->colliding(A))
+        {
+            continue;
+        }
+        graph->add(start_node, nearest_s[x], A);
+    };
+    cout << "Still fine " << nearest_s.size() << endl;
+    vector<shared_ptr<Node>> end_nodes;
+    for (int i = 0 ; i < end.size(); i++)
+    {
+        std::vector<shared_ptr<Node>> nearest_e = graph->in_range(end[i].x, TRSH); // find all nodes within a Rad
+        shared_ptr<Node> end_node( new Node(end[i]));
+        pose2d end_c_pose = start;
+        end_c_pose.theta = arc::mod2pi(start.theta + M_PI);
+        shared_ptr<Node> cor_e(new Node(end_c_pose));
+        end_node->opposite = cor_e;
+        cor_e->opposite = end_node;
+        for (auto x = 0; x < nearest_e.size(); x++)
+        {
+            // gen dubins
+            bool col_arc = false;
+            dubins_params sol = dCurve->calculateSinglePath( nearest_e[x]->pt, end[i]);
+            arcs A(nearest_e[x]->pt, sol);
+            // if doesn't collide add connections to graph
+            if (map->colliding(A)) continue;
+            graph->add(nearest_e[x], end_node,  A);
+        };
+        graph->nodes.push_back(end_node);
+        graph->nodes.push_back(cor_e);
+        graph->points_quad.insert(end_node);
+        graph->points_quad.insert(cor_e);
+        end_nodes.push_back(end_node);
+    }
+
+    graph->nodes.push_back(start_node);
+    graph->nodes.push_back(cor);
+    graph->points_quad.insert(start_node);
+    graph->points_quad.insert(cor);
+    
+    cout << "hiit the graph \n";
+    deque<arcs> points = graph->getPathPlusManyExits(start_node, end_nodes);
+    return points;
+}

@@ -74,6 +74,7 @@ class Graph
         void reset_nodes();
         vector<point2d> getPath(shared_ptr<Node> start, shared_ptr<Node> end);
         deque<arcs> getPathPlus(shared_ptr<Node> start, shared_ptr<Node> end);
+        deque<arcs> getPathPlusManyExits(shared_ptr<Node> start_node, vector<shared_ptr<Node>> end_nodes);
         quad points_quad;
         vector<shared_ptr<Node>> nodes;
         void print_nodes();
