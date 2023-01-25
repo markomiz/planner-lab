@@ -4,7 +4,7 @@
 #include <iostream>
 #include <deque>
 using namespace std;
-Graph::Graph(int max_depth, point2d tl, point2d br) : points_quad(-15.0, 25.0, -15.0, 25.0, 0)
+Graph::Graph(int max_depth, point2d tl, point2d br) : points_quad(-6.0, 6.0, -6.0, 6.0, 0)
 {
 
 };
@@ -62,19 +62,27 @@ void quad::find_neighbors_r(point2d point, float r, vector<shared_ptr<Bundle>> &
     float y = point.y;
     
     if (children.size() == 0){
-        for (int i = 0; i < points.size(); i++ )
-        {
-            point2d p = (point - points[i]->pos);
-            if (p.x*p.x + p.y*p.y <= r*r)
+        if (xmin <= x - r && x + r <= xmax && ymin <= y - r && y + r <= ymax) // whole quad is inside
             {
-                neighbors.push_back(points[i]);
-            }   
+                neighbors.insert(neighbors.end(), points.begin(), points.end());
+            }
+        else
+        {
+            for (int i = 0; i < points.size(); i++ )
+            {
+                point2d p = (point - points[i]->pos);
+                if (p.x*p.x + p.y*p.y <= r*r)
+                {
+                    neighbors.push_back(points[i]);
+                }   
+            }
         }
+
     }
     else{
         for (int i = 0; i < children.size(); i++ )
         {
-            if (children[i].xmin <= x + r && x - r <= children[i].xmax && children[i].ymin <= y + r && y - r <= children[i].ymax)
+            if (children[i].xmin <= x + r && x - r <= children[i].xmax && children[i].ymin <= y + r && y - r <= children[i].ymax) // quad partially inside 
             {
                 children[i].find_neighbors_r(point, r, neighbors);
             }

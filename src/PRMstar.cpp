@@ -110,7 +110,7 @@ void PRMstar::genRoadmapPlus(int n, int angles)
     {
         point2d new_p;
         new_p = map->halton_sample(i);
-        if (map->colliding(new_p)) continue;
+        //if (map->colliding(new_p)) continue;
         float rad = yprm*sqrt(log(i+1)/(i+1));
         pose2d new_pose;
         new_pose.x = new_p;
@@ -287,5 +287,6 @@ deque<arcs> PRMstar::getPathManyExits(pose2d start, vector<pose2d> end)
     
     cout << "hiit the graph \n";
     deque<arcs> points = graph->getPathPlusManyExits(start_node, end_nodes);
+    // TRY DO A MULTIPOINT ONCE IT'S DONE?
     return points;
 }

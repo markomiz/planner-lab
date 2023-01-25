@@ -159,7 +159,7 @@ bool Map::colliding(arc a)
     if (CollisionCheck::arc_with_polygon(a, total_map_poly)) return true;
     for (int i = 0; i < obstacles.size(); i++)
     {
-        
+        if ((a.center - obstacles[i].center).norm() > a.radius + obstacles[i].radius ) continue;
         if (CollisionCheck::arc_with_polygon(a, obstacles[i])) return true;
     }
     return false;
@@ -171,11 +171,11 @@ bool Map::colliding(line l)
     {
         Polygon obs = obstacles[i];
         // rough pass with radius of obstacles
-        // if ((CollisionCheck::point_lineseg_dist(obs.center, l)) > obs.radius){
+        if ((CollisionCheck::point_lineseg_dist(obs.center, l)) > obs.radius){
 
-        //     continue;
+            continue;
 
-        // }
+        }
         // second check more detailed check if rough pass not passing
         for (auto j = 0; j < obs.edges.size(); j++)
         {
@@ -250,7 +250,7 @@ float Map::halton_min(int index, int base, float min, float max)
     return res;
 };
 
-point2d Map::halton_sample(int i)
+point2d Map::halton_sample(int &i)
 {
     point2d p;
     int base_x = 13, base_y = 7; //TODO - maybe move to config file
@@ -258,11 +258,12 @@ point2d Map::halton_sample(int i)
     p.x = (halton_min(i, base_x, min_x, max_x)*(max_x-min_x)) + min_x;
     p.y = (halton_min(i, base_y, min_y, max_y)*(max_y-min_y)) + min_y;
 
-    // while (colliding(p))
-    // {
-    //     p.x = halton_min(halton_index, base_x, min_x, max_x);
-    //     p.y = halton_min(halton_index, base_y, min_y, max_y);
-    // }
+    while (colliding(p))
+    {
+        i++;
+        p.x = (halton_min(i, base_x, min_x, max_x)*(max_x-min_x)) + min_x;
+        p.y = (halton_min(i, base_y, min_y, max_y)*(max_y-min_y)) + min_y;
+    }
 
     return p;
 }

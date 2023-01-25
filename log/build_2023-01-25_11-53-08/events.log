@@ -1,0 +1,1215 @@
+[0.000000] (-) TimerEvent: {}
+[0.001170] (dubin) JobQueued: {'identifier': 'dubin', 'dependencies': OrderedDict()}
+[0.001258] (dubin) JobStarted: {'identifier': 'dubin'}
+[0.044435] (dubin) JobProgress: {'identifier': 'dubin', 'progress': 'cmake'}
+[0.047190] (dubin) Command: {'cmd': ['/usr/bin/cmake', '/home/marko/ros_ws/src/dubin', '-DCMAKE_INSTALL_PREFIX=/home/marko/ros_ws/src/dubin/install/dubin'], 'cwd': '/home/marko/ros_ws/src/dubin/build/dubin', 'env': OrderedDict([('GJS_DEBUG_TOPICS', 'JS ERROR;JS LOG'), ('LESSOPEN', '| /usr/bin/lesspipe %s'), ('LANGUAGE', 'en_US:'), ('USER', 'marko'), ('LC_TIME', 'it_IT.UTF-8'), ('ROS_PACKAGE_PATH', '/opt/openrobots/share'), ('XDG_SESSION_TYPE', 'wayland'), ('SHLVL', '1'), ('LD_LIBRARY_PATH', '/home/marko/ros_ws/install/obstacles_msgs/lib:/opt/openrobots/lib:/usr/lib/x86_64-linux-gnu/gazebo-11/plugins:/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/x86_64-linux-gnu:/opt/ros/humble/lib'), ('HOME', '/home/marko'), ('OLDPWD', '/home/marko/ros_ws'), ('DESKTOP_SESSION', 'ubuntu'), ('GIO_LAUNCHED_DESKTOP_FILE', '/usr/share/applications/terminator.desktop'), ('ROS_PYTHON_VERSION', '3'), ('GNOME_SHELL_SESSION_MODE', 'ubuntu'), ('GTK_MODULES', 'gail:atk-bridge'), ('LC_MONETARY', 'it_IT.UTF-8'), ('MANAGERPID', '1184'), ('SYSTEMD_EXEC_PID', '1343'), ('DBUS_SESSION_BUS_ADDRESS', 'unix:path=/run/user/1000/bus'), ('COLORTERM', 'truecolor'), ('TERMINATOR_DBUS_NAME', 'net.tenshu.Terminator25ef4b219e3b005583550f2b0f9f990c3'), ('GIO_LAUNCHED_DESKTOP_FILE_PID', '35693'), ('PYTHON_PATH', '/opt/ros/humble/lib/python3.10/site-packages:/opt/ros/humble/local/lib/python3.10/dist-packages:/opt/openrobots/lib/python3.10/site-packages:/home/marko/orc:/home/marko'), ('_colcon_cd_root', '/opt/ros/humble/'), ('IM_CONFIG_PHASE', '1'), ('WAYLAND_DISPLAY', 'wayland-0'), ('COLCON_PREFIX_PATH', '/home/marko/ros_ws/install'), ('ROS_DISTRO', 'humble'), ('LOGNAME', 'marko'), ('JOURNAL_STREAM', '8:41330'), ('_', '/usr/bin/colcon'), ('ROS_VERSION', '2'), ('PKG_CONFIG_PATH', '/opt/openrobots/lib/pkgconfig:'), ('XDG_SESSION_CLASS', 'user'), ('USERNAME', 'marko'), ('TERM', 'xterm-256color'), ('GNOME_DESKTOP_SESSION_ID', 'this-is-deprecated'), ('ROS_LOCALHOST_ONLY', '0'), ('PATH', '/opt/openrobots/bin:/opt/ros/humble/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin:/var/test'), ('SESSION_MANAGER', 'local/marko-virtual-machine:@/tmp/.ICE-unix/1322,unix/marko-virtual-machine:/tmp/.ICE-unix/1322'), ('INVOCATION_ID', '8451e7c746ec4bda819b0a70ddd70fe5'), ('XDG_MENU_PREFIX', 'gnome-'), ('LC_ADDRESS', 'it_IT.UTF-8'), ('GNOME_SETUP_DISPLAY', ':1'), ('XDG_RUNTIME_DIR', '/run/user/1000'), ('DISPLAY', ':0'), ('TERMINATOR_DBUS_PATH', '/net/tenshu/Terminator2'), ('LANG', 'en_US.UTF-8'), ('XDG_CURRENT_DESKTOP', 'ubuntu:GNOME'), ('IBUS_DISABLE_SNOOPER', '1'), ('LC_TELEPHONE', 'it_IT.UTF-8'), ('XMODIFIERS', '@im=ibus'), ('XDG_SESSION_DESKTOP', 'ubuntu'), ('XAUTHORITY', '/run/user/1000/.mutter-Xwaylandauth.1FA8Y1'), ('LS_COLORS', 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:'), ('SSH_AGENT_LAUNCHER', 'gnome-keyring'), ('SSH_AUTH_SOCK', '/run/user/1000/keyring/ssh'), ('AMENT_PREFIX_PATH', '/home/marko/ros_ws/install/shelfino_node:/home/marko/ros_ws/install/shelfino_navigation:/home/marko/ros_ws/install/shelfino_gazebo:/home/marko/ros_ws/install/shelfino_description:/home/marko/ros_ws/install/send_obstacles:/home/marko/ros_ws/install/send_gates:/home/marko/ros_ws/install/send_borders:/home/marko/ros_ws/install/remote_control:/home/marko/ros_ws/install/dubin:/home/marko/ros_ws/install/obstacles_msgs:/home/marko/ros_ws/install/get_positions:/opt/ros/humble'), ('SHELL', '/bin/bash'), ('LC_NAME', 'it_IT.UTF-8'), ('TERMINATOR_UUID', 'urn:uuid:a6ffd9fe-e55b-4109-b38b-e192b0941abb'), ('QT_ACCESSIBILITY', '1'), ('GDMSESSION', 'ubuntu'), ('LESSCLOSE', '/usr/bin/lesspipe %s %s'), ('LC_MEASUREMENT', 'it_IT.UTF-8'), ('GJS_DEBUG_OUTPUT', 'stderr'), ('LC_IDENTIFICATION', 'it_IT.UTF-8'), ('QT_IM_MODULE', 'ibus'), ('PWD', '/home/marko/ros_ws/src/dubin/build/dubin'), ('XDG_CONFIG_DIRS', '/etc/xdg/xdg-ubuntu:/etc/xdg'), ('XDG_DATA_DIRS', '/usr/share/ubuntu:/usr/local/share/:/usr/share/:/var/lib/snapd/desktop'), ('PYTHONPATH', '/home/marko/ros_ws/install/obstacles_msgs/local/lib/python3.10/dist-packages:/opt/ros/humble/lib/python3.10/site-packages:/opt/ros/humble/local/lib/python3.10/dist-packages:/opt/openrobots/lib/python3.10/site-packages:/home/marko/orc:/home/marko'), ('LC_NUMERIC', 'it_IT.UTF-8'), ('LC_PAPER', 'it_IT.UTF-8'), ('COLCON', '1'), ('VTE_VERSION', '6800'), ('CMAKE_PREFIX_PATH', '/home/marko/ros_ws/install/shelfino_node:/home/marko/ros_ws/install/shelfino_navigation:/home/marko/ros_ws/install/shelfino_gazebo:/home/marko/ros_ws/install/shelfino_description:/home/marko/ros_ws/install/send_obstacles:/home/marko/ros_ws/install/send_gates:/home/marko/ros_ws/install/send_borders:/home/marko/ros_ws/install/remote_control:/home/marko/ros_ws/install/dubin:/home/marko/ros_ws/install/obstacles_msgs:/home/marko/ros_ws/install/get_positions:/opt/ros/humble')]), 'shell': False}
+[0.100474] (-) TimerEvent: {}
+[0.201642] (-) TimerEvent: {}
+[0.302932] (-) TimerEvent: {}
+[0.404162] (-) TimerEvent: {}
+[0.506449] (-) TimerEvent: {}
+[0.608055] (-) TimerEvent: {}
+[0.626023] (dubin) StdoutLine: {'line': b'-- The C compiler identification is GNU 11.3.0\n'}
+[0.708894] (-) TimerEvent: {}
+[0.809868] (-) TimerEvent: {}
+[0.901958] (dubin) StdoutLine: {'line': b'-- The CXX compiler identification is GNU 11.3.0\n'}
+[0.910796] (-) TimerEvent: {}
+[0.952308] (dubin) StdoutLine: {'line': b'-- Detecting C compiler ABI info\n'}
+[1.011521] (-) TimerEvent: {}
+[1.112454] (-) TimerEvent: {}
+[1.213420] (-) TimerEvent: {}
+[1.315263] (-) TimerEvent: {}
+[1.367205] (dubin) StdoutLine: {'line': b'-- Detecting C compiler ABI info - done\n'}
+[1.381173] (dubin) StdoutLine: {'line': b'-- Check for working C compiler: /usr/bin/cc - skipped\n'}
+[1.382957] (dubin) StdoutLine: {'line': b'-- Detecting C compile features\n'}
+[1.384598] (dubin) StdoutLine: {'line': b'-- Detecting C compile features - done\n'}
+[1.395533] (dubin) StdoutLine: {'line': b'-- Detecting CXX compiler ABI info\n'}
+[1.416565] (-) TimerEvent: {}
+[1.518193] (-) TimerEvent: {}
+[1.619238] (-) TimerEvent: {}
+[1.720386] (-) TimerEvent: {}
+[1.781149] (dubin) StdoutLine: {'line': b'-- Detecting CXX compiler ABI info - done\n'}
+[1.801575] (dubin) StdoutLine: {'line': b'-- Check for working CXX compiler: /usr/bin/c++ - skipped\n'}
+[1.804713] (dubin) StdoutLine: {'line': b'-- Detecting CXX compile features\n'}
+[1.806584] (dubin) StdoutLine: {'line': b'-- Detecting CXX compile features - done\n'}
+[1.821132] (-) TimerEvent: {}
+[1.860195] (dubin) StdoutLine: {'line': b'-- Found ament_cmake: 1.3.2 (/opt/ros/humble/share/ament_cmake/cmake)\n'}
+[1.921743] (-) TimerEvent: {}
+[2.023015] (-) TimerEvent: {}
+[2.124181] (-) TimerEvent: {}
+[2.225856] (-) TimerEvent: {}
+[2.326943] (-) TimerEvent: {}
+[2.427888] (-) TimerEvent: {}
+[2.474804] (dubin) StdoutLine: {'line': b'-- Found Python3: /usr/bin/python3.10 (found version "3.10.6") found components: Interpreter \n'}
+[2.528744] (-) TimerEvent: {}
+[2.629842] (-) TimerEvent: {}
+[2.731897] (-) TimerEvent: {}
+[2.833578] (-) TimerEvent: {}
+[2.934590] (-) TimerEvent: {}
+[3.019251] (dubin) StdoutLine: {'line': b'-- Found rclcpp: 16.0.1 (/opt/ros/humble/share/rclcpp/cmake)\n'}
+[3.035649] (-) TimerEvent: {}
+[3.136740] (-) TimerEvent: {}
+[3.238656] (-) TimerEvent: {}
+[3.339823] (-) TimerEvent: {}
+[3.424076] (dubin) StdoutLine: {'line': b'-- Found rosidl_generator_c: 3.1.3 (/opt/ros/humble/share/rosidl_generator_c/cmake)\n'}
+[3.440733] (-) TimerEvent: {}
+[3.472104] (dubin) StdoutLine: {'line': b'-- Found rosidl_adapter: 3.1.3 (/opt/ros/humble/share/rosidl_adapter/cmake)\n'}
+[3.541989] (dubin) StdoutLine: {'line': b'-- Found rosidl_generator_cpp: 3.1.3 (/opt/ros/humble/share/rosidl_generator_cpp/cmake)\n'}
+[3.542513] (-) TimerEvent: {}
+[3.639287] (dubin) StdoutLine: {'line': b'-- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c\n'}
+[3.643615] (-) TimerEvent: {}
+[3.744615] (-) TimerEvent: {}
+[3.751118] (dubin) StdoutLine: {'line': b'-- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp\n'}
+[3.845571] (-) TimerEvent: {}
+[3.946464] (-) TimerEvent: {}
+[4.048581] (-) TimerEvent: {}
+[4.136041] (dubin) StdoutLine: {'line': b'-- Found rmw_implementation_cmake: 6.1.0 (/opt/ros/humble/share/rmw_implementation_cmake/cmake)\n'}
+[4.149501] (-) TimerEvent: {}
+[4.160047] (dubin) StdoutLine: {'line': b'-- Found rmw_fastrtps_cpp: 6.2.1 (/opt/ros/humble/share/rmw_fastrtps_cpp/cmake)\n'}
+[4.250308] (-) TimerEvent: {}
+[4.351295] (-) TimerEvent: {}
+[4.452238] (-) TimerEvent: {}
+[4.554302] (-) TimerEvent: {}
+[4.655386] (-) TimerEvent: {}
+[4.669991] (dubin) StdoutLine: {'line': b'-- Found OpenSSL: /usr/lib/x86_64-linux-gnu/libcrypto.so (found version "3.0.2")  \n'}
+[4.756447] (-) TimerEvent: {}
+[4.760144] (dubin) StdoutLine: {'line': b'-- Found FastRTPS: /opt/ros/humble/include  \n'}
+[4.857414] (-) TimerEvent: {}
+[4.917955] (dubin) StdoutLine: {'line': b"-- Using RMW implementation 'rmw_fastrtps_cpp' as default\n"}
+[4.958091] (-) TimerEvent: {}
+[5.059744] (-) TimerEvent: {}
+[5.161535] (-) TimerEvent: {}
+[5.262985] (-) TimerEvent: {}
+[5.366060] (-) TimerEvent: {}
+[5.421403] (dubin) StdoutLine: {'line': b'-- Found nav_msgs: 4.2.2 (/opt/ros/humble/share/nav_msgs/cmake)\n'}
+[5.468277] (-) TimerEvent: {}
+[5.571405] (-) TimerEvent: {}
+[5.674309] (-) TimerEvent: {}
+[5.775064] (dubin) StdoutLine: {'line': b'-- Found nav2_msgs: 1.1.2 (/opt/ros/humble/share/nav2_msgs/cmake)\n'}
+[5.775700] (-) TimerEvent: {}
+[5.877405] (-) TimerEvent: {}
+[5.978566] (-) TimerEvent: {}
+[6.080722] (-) TimerEvent: {}
+[6.183706] (-) TimerEvent: {}
+[6.284648] (-) TimerEvent: {}
+[6.369165] (dubin) StdoutLine: {'line': b'-- Found tf2: 0.25.1 (/opt/ros/humble/share/tf2/cmake)\n'}
+[6.385536] (-) TimerEvent: {}
+[6.470745] (dubin) StdoutLine: {'line': b'-- Found tf2_ros: 0.25.1 (/opt/ros/humble/share/tf2_ros/cmake)\n'}
+[6.486087] (-) TimerEvent: {}
+[6.588463] (-) TimerEvent: {}
+[6.691566] (-) TimerEvent: {}
+[6.792525] (-) TimerEvent: {}
+[6.893568] (-) TimerEvent: {}
+[6.995616] (-) TimerEvent: {}
+[7.096785] (-) TimerEvent: {}
+[7.199358] (-) TimerEvent: {}
+[7.302856] (-) TimerEvent: {}
+[7.406965] (-) TimerEvent: {}
+[7.509669] (-) TimerEvent: {}
+[7.611239] (-) TimerEvent: {}
+[7.714231] (-) TimerEvent: {}
+[7.816408] (-) TimerEvent: {}
+[7.922164] (-) TimerEvent: {}
+[8.018514] (dubin) StdoutLine: {'line': b'-- Found obstacles_msgs: 0.1.2 (/home/marko/ros_ws/install/obstacles_msgs/share/obstacles_msgs/cmake)\n'}
+[8.024686] (-) TimerEvent: {}
+[8.128979] (-) TimerEvent: {}
+[8.231490] (-) TimerEvent: {}
+[8.333266] (dubin) StdoutLine: {'line': b'-- Found ament_lint_auto: 0.12.4 (/opt/ros/humble/share/ament_lint_auto/cmake)\n'}
+[8.333703] (-) TimerEvent: {}
+[8.436077] (-) TimerEvent: {}
+[8.537897] (-) TimerEvent: {}
+[8.639834] (-) TimerEvent: {}
+[8.741949] (-) TimerEvent: {}
+[8.844063] (-) TimerEvent: {}
+[8.945306] (-) TimerEvent: {}
+[9.047118] (-) TimerEvent: {}
+[9.148365] (-) TimerEvent: {}
+[9.250614] (-) TimerEvent: {}
+[9.352405] (-) TimerEvent: {}
+[9.454204] (-) TimerEvent: {}
+[9.499662] (dubin) StdoutLine: {'line': b"-- Added test 'cppcheck' to perform static code analysis on C / C++ code\n"}
+[9.501162] (dubin) StdoutLine: {'line': b'-- Configured cppcheck include dirs: /home/marko/ros_ws/src/dubin/include\n'}
+[9.501650] (dubin) StdoutLine: {'line': b'-- Configured cppcheck exclude dirs and/or files: \n'}
+[9.556363] (-) TimerEvent: {}
+[9.664856] (-) TimerEvent: {}
+[9.766803] (-) TimerEvent: {}
+[9.868770] (-) TimerEvent: {}
+[9.917073] (dubin) StdoutLine: {'line': b"-- Added test 'lint_cmake' to check CMake code style\n"}
+[9.969337] (-) TimerEvent: {}
+[10.071154] (-) TimerEvent: {}
+[10.172175] (-) TimerEvent: {}
+[10.274110] (-) TimerEvent: {}
+[10.375633] (-) TimerEvent: {}
+[10.476412] (-) TimerEvent: {}
+[10.577700] (-) TimerEvent: {}
+[10.602488] (dubin) StdoutLine: {'line': b"-- Added test 'uncrustify' to check C / C++ code style\n"}
+[10.603190] (dubin) StdoutLine: {'line': b'-- Configured uncrustify additional arguments: \n'}
+[10.678294] (dubin) StdoutLine: {'line': b"-- Added test 'xmllint' to check XML markup files\n"}
+[10.678608] (-) TimerEvent: {}
+[10.688895] (dubin) StdoutLine: {'line': b'-- Configuring done\n'}
+[10.774533] (dubin) StdoutLine: {'line': b'-- Generating done\n'}
+[10.779375] (-) TimerEvent: {}
+[10.780229] (dubin) StdoutLine: {'line': b'-- Build files have been written to: /home/marko/ros_ws/src/dubin/build/dubin\n'}
+[10.818679] (dubin) CommandEnded: {'returncode': 0}
+[10.829350] (dubin) JobProgress: {'identifier': 'dubin', 'progress': 'build'}
+[10.830449] (dubin) Command: {'cmd': ['/usr/bin/cmake', '--build', '/home/marko/ros_ws/src/dubin/build/dubin', '--', '-j8', '-l8'], 'cwd': '/home/marko/ros_ws/src/dubin/build/dubin', 'env': OrderedDict([('GJS_DEBUG_TOPICS', 'JS ERROR;JS LOG'), ('LESSOPEN', '| /usr/bin/lesspipe %s'), ('LANGUAGE', 'en_US:'), ('USER', 'marko'), ('LC_TIME', 'it_IT.UTF-8'), ('ROS_PACKAGE_PATH', '/opt/openrobots/share'), ('XDG_SESSION_TYPE', 'wayland'), ('SHLVL', '1'), ('LD_LIBRARY_PATH', '/home/marko/ros_ws/install/obstacles_msgs/lib:/opt/openrobots/lib:/usr/lib/x86_64-linux-gnu/gazebo-11/plugins:/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/x86_64-linux-gnu:/opt/ros/humble/lib'), ('HOME', '/home/marko'), ('OLDPWD', '/home/marko/ros_ws'), ('DESKTOP_SESSION', 'ubuntu'), ('GIO_LAUNCHED_DESKTOP_FILE', '/usr/share/applications/terminator.desktop'), ('ROS_PYTHON_VERSION', '3'), ('GNOME_SHELL_SESSION_MODE', 'ubuntu'), ('GTK_MODULES', 'gail:atk-bridge'), ('LC_MONETARY', 'it_IT.UTF-8'), ('MANAGERPID', '1184'), ('SYSTEMD_EXEC_PID', '1343'), ('DBUS_SESSION_BUS_ADDRESS', 'unix:path=/run/user/1000/bus'), ('COLORTERM', 'truecolor'), ('TERMINATOR_DBUS_NAME', 'net.tenshu.Terminator25ef4b219e3b005583550f2b0f9f990c3'), ('GIO_LAUNCHED_DESKTOP_FILE_PID', '35693'), ('PYTHON_PATH', '/opt/ros/humble/lib/python3.10/site-packages:/opt/ros/humble/local/lib/python3.10/dist-packages:/opt/openrobots/lib/python3.10/site-packages:/home/marko/orc:/home/marko'), ('_colcon_cd_root', '/opt/ros/humble/'), ('IM_CONFIG_PHASE', '1'), ('WAYLAND_DISPLAY', 'wayland-0'), ('COLCON_PREFIX_PATH', '/home/marko/ros_ws/install'), ('ROS_DISTRO', 'humble'), ('LOGNAME', 'marko'), ('JOURNAL_STREAM', '8:41330'), ('_', '/usr/bin/colcon'), ('ROS_VERSION', '2'), ('PKG_CONFIG_PATH', '/opt/openrobots/lib/pkgconfig:'), ('XDG_SESSION_CLASS', 'user'), ('USERNAME', 'marko'), ('TERM', 'xterm-256color'), ('GNOME_DESKTOP_SESSION_ID', 'this-is-deprecated'), ('ROS_LOCALHOST_ONLY', '0'), ('PATH', '/opt/openrobots/bin:/opt/ros/humble/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin:/var/test'), ('SESSION_MANAGER', 'local/marko-virtual-machine:@/tmp/.ICE-unix/1322,unix/marko-virtual-machine:/tmp/.ICE-unix/1322'), ('INVOCATION_ID', '8451e7c746ec4bda819b0a70ddd70fe5'), ('XDG_MENU_PREFIX', 'gnome-'), ('LC_ADDRESS', 'it_IT.UTF-8'), ('GNOME_SETUP_DISPLAY', ':1'), ('XDG_RUNTIME_DIR', '/run/user/1000'), ('DISPLAY', ':0'), ('TERMINATOR_DBUS_PATH', '/net/tenshu/Terminator2'), ('LANG', 'en_US.UTF-8'), ('XDG_CURRENT_DESKTOP', 'ubuntu:GNOME'), ('IBUS_DISABLE_SNOOPER', '1'), ('LC_TELEPHONE', 'it_IT.UTF-8'), ('XMODIFIERS', '@im=ibus'), ('XDG_SESSION_DESKTOP', 'ubuntu'), ('XAUTHORITY', '/run/user/1000/.mutter-Xwaylandauth.1FA8Y1'), ('LS_COLORS', 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:'), ('SSH_AGENT_LAUNCHER', 'gnome-keyring'), ('SSH_AUTH_SOCK', '/run/user/1000/keyring/ssh'), ('AMENT_PREFIX_PATH', '/home/marko/ros_ws/install/shelfino_node:/home/marko/ros_ws/install/shelfino_navigation:/home/marko/ros_ws/install/shelfino_gazebo:/home/marko/ros_ws/install/shelfino_description:/home/marko/ros_ws/install/send_obstacles:/home/marko/ros_ws/install/send_gates:/home/marko/ros_ws/install/send_borders:/home/marko/ros_ws/install/remote_control:/home/marko/ros_ws/install/dubin:/home/marko/ros_ws/install/obstacles_msgs:/home/marko/ros_ws/install/get_positions:/opt/ros/humble'), ('SHELL', '/bin/bash'), ('LC_NAME', 'it_IT.UTF-8'), ('TERMINATOR_UUID', 'urn:uuid:a6ffd9fe-e55b-4109-b38b-e192b0941abb'), ('QT_ACCESSIBILITY', '1'), ('GDMSESSION', 'ubuntu'), ('LESSCLOSE', '/usr/bin/lesspipe %s %s'), ('LC_MEASUREMENT', 'it_IT.UTF-8'), ('GJS_DEBUG_OUTPUT', 'stderr'), ('LC_IDENTIFICATION', 'it_IT.UTF-8'), ('QT_IM_MODULE', 'ibus'), ('PWD', '/home/marko/ros_ws/src/dubin/build/dubin'), ('XDG_CONFIG_DIRS', '/etc/xdg/xdg-ubuntu:/etc/xdg'), ('XDG_DATA_DIRS', '/usr/share/ubuntu:/usr/local/share/:/usr/share/:/var/lib/snapd/desktop'), ('PYTHONPATH', '/home/marko/ros_ws/install/obstacles_msgs/local/lib/python3.10/dist-packages:/opt/ros/humble/lib/python3.10/site-packages:/opt/ros/humble/local/lib/python3.10/dist-packages:/opt/openrobots/lib/python3.10/site-packages:/home/marko/orc:/home/marko'), ('LC_NUMERIC', 'it_IT.UTF-8'), ('LC_PAPER', 'it_IT.UTF-8'), ('COLCON', '1'), ('VTE_VERSION', '6800'), ('CMAKE_PREFIX_PATH', '/home/marko/ros_ws/install/shelfino_node:/home/marko/ros_ws/install/shelfino_navigation:/home/marko/ros_ws/install/shelfino_gazebo:/home/marko/ros_ws/install/shelfino_description:/home/marko/ros_ws/install/send_obstacles:/home/marko/ros_ws/install/send_gates:/home/marko/ros_ws/install/send_borders:/home/marko/ros_ws/install/remote_control:/home/marko/ros_ws/install/dubin:/home/marko/ros_ws/install/obstacles_msgs:/home/marko/ros_ws/install/get_positions:/opt/ros/humble')]), 'shell': False}
+[10.880056] (-) TimerEvent: {}
+[10.981114] (-) TimerEvent: {}
+[11.082504] (-) TimerEvent: {}
+[11.157694] (dubin) StdoutLine: {'line': b'[ 12%] \x1b[32mBuilding CXX object CMakeFiles/mission_planner.dir/src/MissionPlanner.cpp.o\x1b[0m\n'}
+[11.167548] (dubin) StdoutLine: {'line': b'[ 25%] \x1b[32mBuilding CXX object CMakeFiles/mission_planner.dir/src/dubinCurve.cpp.o\x1b[0m\n'}
+[11.169215] (dubin) StdoutLine: {'line': b'[ 37%] \x1b[32mBuilding CXX object CMakeFiles/mission_planner.dir/src/collision_check.cpp.o\x1b[0m\n'}
+[11.171892] (dubin) StdoutLine: {'line': b'[ 50%] \x1b[32mBuilding CXX object CMakeFiles/mission_planner.dir/src/graph.cpp.o\x1b[0m\n'}
+[11.180378] (dubin) StdoutLine: {'line': b'[ 62%] \x1b[32mBuilding CXX object CMakeFiles/mission_planner.dir/src/config_server.cpp.o\x1b[0m\n'}
+[11.181992] (dubin) StdoutLine: {'line': b'[ 75%] \x1b[32mBuilding CXX object CMakeFiles/mission_planner.dir/src/map.cpp.o\x1b[0m\n'}
+[11.182539] (-) TimerEvent: {}
+[11.195379] (dubin) StdoutLine: {'line': b'[ 87%] \x1b[32mBuilding CXX object CMakeFiles/mission_planner.dir/src/PRMstar.cpp.o\x1b[0m\n'}
+[11.240189] (dubin) StderrLine: {'line': b'\x1b[01m\x1b[K/home/marko/ros_ws/src/dubin/src/MissionPlanner.cpp:1:9:\x1b[m\x1b[K \x1b[01;35m\x1b[Kwarning: \x1b[m\x1b[K#pragma once in main file\n'}
+[11.241200] (dubin) StderrLine: {'line': b'    1 | #pragma \x1b[01;35m\x1b[Konce\x1b[m\x1b[K\n'}
+[11.242011] (dubin) StderrLine: {'line': b'      |         \x1b[01;35m\x1b[K^~~~\x1b[m\x1b[K\n'}
+[11.242443] (dubin) StderrLine: {'line': b'\x1b[01m\x1b[K/home/marko/ros_ws/src/dubin/src/collision_check.cpp:1:9:\x1b[m\x1b[K \x1b[01;35m\x1b[Kwarning: \x1b[m\x1b[K#pragma once in main file\n'}
+[11.242876] (dubin) StderrLine: {'line': b'    1 | #pragma \x1b[01;35m\x1b[Konce\x1b[m\x1b[K\n'}
+[11.243322] (dubin) StderrLine: {'line': b'      |         \x1b[01;35m\x1b[K^~~~\x1b[m\x1b[K\n'}
+[11.283311] (-) TimerEvent: {}
+[11.285850] (dubin) StderrLine: {'line': b'\x1b[01m\x1b[K/home/marko/ros_ws/src/dubin/src/graph.cpp:1:9:\x1b[m\x1b[K \x1b[01;35m\x1b[Kwarning: \x1b[m\x1b[K#pragma once in main file\n'}
+[11.286403] (dubin) StderrLine: {'line': b'    1 | #pragma \x1b[01;35m\x1b[Konce\x1b[m\x1b[K\n'}
+[11.287169] (dubin) StderrLine: {'line': b'      |         \x1b[01;35m\x1b[K^~~~\x1b[m\x1b[K\n'}
+[11.384751] (-) TimerEvent: {}
+[11.486120] (-) TimerEvent: {}
+[11.587696] (-) TimerEvent: {}
+[11.690008] (-) TimerEvent: {}
+[11.791462] (-) TimerEvent: {}
+[11.894003] (-) TimerEvent: {}
+[11.995425] (-) TimerEvent: {}
+[12.100933] (-) TimerEvent: {}
+[12.209113] (-) TimerEvent: {}
+[12.310653] (-) TimerEvent: {}
+[12.412062] (-) TimerEvent: {}
+[12.514130] (-) TimerEvent: {}
+[12.616452] (-) TimerEvent: {}
+[12.721402] (-) TimerEvent: {}
+[12.825555] (-) TimerEvent: {}
+[12.940499] (-) TimerEvent: {}
+[13.041675] (-) TimerEvent: {}
+[13.143259] (-) TimerEvent: {}
+[13.245154] (-) TimerEvent: {}
+[13.347312] (-) TimerEvent: {}
+[13.449402] (-) TimerEvent: {}
+[13.551539] (-) TimerEvent: {}
+[13.653627] (-) TimerEvent: {}
+[13.755854] (-) TimerEvent: {}
+[13.857869] (-) TimerEvent: {}
+[13.960252] (-) TimerEvent: {}
+[14.062161] (-) TimerEvent: {}
+[14.164190] (-) TimerEvent: {}
+[14.266355] (-) TimerEvent: {}
+[14.368405] (-) TimerEvent: {}
+[14.470204] (-) TimerEvent: {}
+[14.572380] (-) TimerEvent: {}
+[14.674793] (-) TimerEvent: {}
+[14.775965] (-) TimerEvent: {}
+[14.878172] (-) TimerEvent: {}
+[14.980338] (-) TimerEvent: {}
+[15.082186] (-) TimerEvent: {}
+[15.184249] (-) TimerEvent: {}
+[15.286047] (-) TimerEvent: {}
+[15.387995] (-) TimerEvent: {}
+[15.489791] (-) TimerEvent: {}
+[15.591847] (-) TimerEvent: {}
+[15.693783] (-) TimerEvent: {}
+[15.795375] (-) TimerEvent: {}
+[15.897201] (-) TimerEvent: {}
+[15.999156] (-) TimerEvent: {}
+[16.104088] (-) TimerEvent: {}
+[16.205911] (-) TimerEvent: {}
+[16.307729] (-) TimerEvent: {}
+[16.409393] (-) TimerEvent: {}
+[16.511288] (-) TimerEvent: {}
+[16.612901] (-) TimerEvent: {}
+[16.715138] (-) TimerEvent: {}
+[16.816703] (-) TimerEvent: {}
+[16.918237] (-) TimerEvent: {}
+[17.020101] (-) TimerEvent: {}
+[17.122001] (-) TimerEvent: {}
+[17.223526] (-) TimerEvent: {}
+[17.325159] (-) TimerEvent: {}
+[17.426876] (-) TimerEvent: {}
+[17.528769] (-) TimerEvent: {}
+[17.640564] (-) TimerEvent: {}
+[17.745971] (-) TimerEvent: {}
+[17.847782] (-) TimerEvent: {}
+[17.964000] (-) TimerEvent: {}
+[18.068779] (-) TimerEvent: {}
+[18.172276] (-) TimerEvent: {}
+[18.283688] (-) TimerEvent: {}
+[18.385040] (-) TimerEvent: {}
+[18.487879] (-) TimerEvent: {}
+[18.594449] (-) TimerEvent: {}
+[18.696200] (-) TimerEvent: {}
+[18.797409] (-) TimerEvent: {}
+[18.899129] (-) TimerEvent: {}
+[19.000750] (-) TimerEvent: {}
+[19.102340] (-) TimerEvent: {}
+[19.204004] (-) TimerEvent: {}
+[19.305426] (-) TimerEvent: {}
+[19.408548] (-) TimerEvent: {}
+[19.510550] (-) TimerEvent: {}
+[19.612107] (-) TimerEvent: {}
+[19.713563] (-) TimerEvent: {}
+[19.815537] (-) TimerEvent: {}
+[19.916796] (-) TimerEvent: {}
+[20.018089] (-) TimerEvent: {}
+[20.119705] (-) TimerEvent: {}
+[20.221156] (-) TimerEvent: {}
+[20.322678] (-) TimerEvent: {}
+[20.424144] (-) TimerEvent: {}
+[20.525624] (-) TimerEvent: {}
+[20.627197] (-) TimerEvent: {}
+[20.730552] (-) TimerEvent: {}
+[20.832221] (-) TimerEvent: {}
+[20.933921] (-) TimerEvent: {}
+[21.036007] (-) TimerEvent: {}
+[21.137734] (-) TimerEvent: {}
+[21.240022] (-) TimerEvent: {}
+[21.343851] (-) TimerEvent: {}
+[21.445769] (-) TimerEvent: {}
+[21.548242] (-) TimerEvent: {}
+[21.651540] (-) TimerEvent: {}
+[21.753005] (-) TimerEvent: {}
+[21.856715] (-) TimerEvent: {}
+[21.972712] (-) TimerEvent: {}
+[22.074385] (-) TimerEvent: {}
+[22.175858] (-) TimerEvent: {}
+[22.278161] (-) TimerEvent: {}
+[22.383214] (-) TimerEvent: {}
+[22.484914] (-) TimerEvent: {}
+[22.586220] (-) TimerEvent: {}
+[22.687578] (-) TimerEvent: {}
+[22.788936] (-) TimerEvent: {}
+[22.890308] (-) TimerEvent: {}
+[22.991970] (-) TimerEvent: {}
+[23.094537] (-) TimerEvent: {}
+[23.195552] (-) TimerEvent: {}
+[23.297847] (-) TimerEvent: {}
+[23.399522] (-) TimerEvent: {}
+[23.501515] (-) TimerEvent: {}
+[23.612703] (-) TimerEvent: {}
+[23.714509] (-) TimerEvent: {}
+[23.828394] (-) TimerEvent: {}
+[23.932112] (-) TimerEvent: {}
+[24.033369] (-) TimerEvent: {}
+[24.135177] (-) TimerEvent: {}
+[24.237744] (-) TimerEvent: {}
+[24.339878] (-) TimerEvent: {}
+[24.484152] (-) TimerEvent: {}
+[25.101490] (-) TimerEvent: {}
+[25.204389] (-) TimerEvent: {}
+[25.329816] (-) TimerEvent: {}
+[25.437950] (-) TimerEvent: {}
+[25.539019] (-) TimerEvent: {}
+[25.649354] (-) TimerEvent: {}
+[25.757302] (-) TimerEvent: {}
+[25.862754] (-) TimerEvent: {}
+[25.967280] (-) TimerEvent: {}
+[26.072196] (-) TimerEvent: {}
+[26.177261] (-) TimerEvent: {}
+[26.278878] (-) TimerEvent: {}
+[26.379982] (-) TimerEvent: {}
+[26.480788] (-) TimerEvent: {}
+[26.582290] (-) TimerEvent: {}
+[26.688816] (-) TimerEvent: {}
+[26.789708] (-) TimerEvent: {}
+[26.891998] (-) TimerEvent: {}
+[27.013780] (-) TimerEvent: {}
+[27.116109] (-) TimerEvent: {}
+[27.219128] (-) TimerEvent: {}
+[27.327893] (-) TimerEvent: {}
+[27.454609] (-) TimerEvent: {}
+[27.470630] (dubin) StderrLine: {'line': b'In file included from \x1b[01m\x1b[K/home/marko/ros_ws/src/dubin/src/graph.cpp:2\x1b[m\x1b[K:\n'}
+[27.477936] (dubin) StderrLine: {'line': b'\x1b[01m\x1b[K/home/marko/ros_ws/src/dubin/include/geometry.h:\x1b[m\x1b[K In constructor \xe2\x80\x98\x1b[01m\x1b[Karc::arc(pose2d, float, float)\x1b[m\x1b[K\xe2\x80\x99:\n'}
+[27.478419] (dubin) StderrLine: {'line': b'\x1b[01m\x1b[K/home/marko/ros_ws/src/dubin/include/geometry.h:128:9:\x1b[m\x1b[K \x1b[01;35m\x1b[Kwarning: \x1b[m\x1b[K\xe2\x80\x98\x1b[01m\x1b[Karc::s\x1b[m\x1b[K\xe2\x80\x99 will be initialized after [\x1b[01;35m\x1b[K\x1b]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wreorder\x07-Wreorder\x1b]8;;\x07\x1b[m\x1b[K]\n'}
+[27.478827] (dubin) StderrLine: {'line': b'  128 |   float \x1b[01;35m\x1b[Ks\x1b[m\x1b[K;\n'}
+[27.479216] (dubin) StderrLine: {'line': b'      |         \x1b[01;35m\x1b[K^\x1b[m\x1b[K\n'}
+[27.479560] (dubin) StderrLine: {'line': b'\x1b[01m\x1b[K/home/marko/ros_ws/src/dubin/include/geometry.h:127:9:\x1b[m\x1b[K \x1b[01;35m\x1b[Kwarning: \x1b[m\x1b[K  \xe2\x80\x98\x1b[01m\x1b[Kfloat arc::K\x1b[m\x1b[K\xe2\x80\x99 [\x1b[01;35m\x1b[K\x1b]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wreorder\x07-Wreorder\x1b]8;;\x07\x1b[m\x1b[K]\n'}
+[27.479949] (dubin) StderrLine: {'line': b'  127 |   float \x1b[01;35m\x1b[KK\x1b[m\x1b[K;\n'}
+[27.481696] (dubin) StderrLine: {'line': b'      |         \x1b[01;35m\x1b[K^\x1b[m\x1b[K\n'}
+[27.482113] (dubin) StderrLine: {'line': b'\x1b[01m\x1b[K/home/marko/ros_ws/src/dubin/include/geometry.h:114:3:\x1b[m\x1b[K \x1b[01;35m\x1b[Kwarning: \x1b[m\x1b[K  when initialized here [\x1b[01;35m\x1b[K\x1b]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wreorder\x07-Wreorder\x1b]8;;\x07\x1b[m\x1b[K]\n'}
+[27.482487] (dubin) StderrLine: {'line': b'  114 |   \x1b[01;35m\x1b[Karc\x1b[m\x1b[K(pose2d start, float K, float s) : start(start), s(s), K(K)\n'}
+[27.482847] (dubin) StderrLine: {'line': b'      |   \x1b[01;35m\x1b[K^~~\x1b[m\x1b[K\n'}
+[27.555704] (-) TimerEvent: {}
+[27.660230] (-) TimerEvent: {}
+[27.697067] (dubin) StderrLine: {'line': b'In file included from \x1b[01m\x1b[K/home/marko/ros_ws/src/dubin/src/graph.cpp:3\x1b[m\x1b[K:\n'}
+[27.701337] (dubin) StderrLine: {'line': b'\x1b[01m\x1b[K/home/marko/ros_ws/src/dubin/include/graph.h:\x1b[m\x1b[K In constructor \xe2\x80\x98\x1b[01m\x1b[KNode::Node(pose2d)\x1b[m\x1b[K\xe2\x80\x99:\n'}
+[27.702143] (dubin) StderrLine: {'line': b'\x1b[01m\x1b[K/home/marko/ros_ws/src/dubin/include/graph.h:21:10:\x1b[m\x1b[K \x1b[01;35m\x1b[Kwarning: \x1b[m\x1b[K\xe2\x80\x98\x1b[01m\x1b[KNode::opened\x1b[m\x1b[K\xe2\x80\x99 will be initialized after [\x1b[01;35m\x1b[K\x1b]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wreorder\x07-Wreorder\x1b]8;;\x07\x1b[m\x1b[K]\n'}
+[27.703712] (dubin) StderrLine: {'line': b'   21 |     bool \x1b[01;35m\x1b[Kopened\x1b[m\x1b[K;\n'}
+[27.705437] (dubin) StderrLine: {'line': b'      |          \x1b[01;35m\x1b[K^~~~~~\x1b[m\x1b[K\n'}
+[27.705846] (dubin) StderrLine: {'line': b'\x1b[01m\x1b[K/home/marko/ros_ws/src/dubin/include/graph.h:20:11:\x1b[m\x1b[K \x1b[01;35m\x1b[Kwarning: \x1b[m\x1b[K  \xe2\x80\x98\x1b[01m\x1b[Kfloat Node::cost\x1b[m\x1b[K\xe2\x80\x99 [\x1b[01;35m\x1b[K\x1b]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wreorder\x07-Wreorder\x1b]8;;\x07\x1b[m\x1b[K]\n'}
+[27.706201] (dubin) StderrLine: {'line': b'   20 |     float \x1b[01;35m\x1b[Kcost\x1b[m\x1b[K;\n'}
+[27.707166] (dubin) StderrLine: {'line': b'      |           \x1b[01;35m\x1b[K^~~~\x1b[m\x1b[K\n'}
+[27.707858] (dubin) StderrLine: {'line': b'\x1b[01m\x1b[K/home/marko/ros_ws/src/dubin/include/graph.h:14:5:\x1b[m\x1b[K \x1b[01;35m\x1b[Kwarning: \x1b[m\x1b[K  when initialized here [\x1b[01;35m\x1b[K\x1b]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wreorder\x07-Wreorder\x1b]8;;\x07\x1b[m\x1b[K]\n'}
+[27.708256] (dubin) StderrLine: {'line': b'   14 |     \x1b[01;35m\x1b[KNode\x1b[m\x1b[K(pose2d point): opened(false), cost(0), parent(nullptr) {\n'}
+[27.708635] (dubin) StderrLine: {'line': b'      |     \x1b[01;35m\x1b[K^~~~\x1b[m\x1b[K\n'}
+[27.708995] (dubin) StderrLine: {'line': b'\x1b[01m\x1b[K/home/marko/ros_ws/src/dubin/include/graph.h:\x1b[m\x1b[K In member function \xe2\x80\x98\x1b[01m\x1b[Kbool Node::check_availability(float, float)\x1b[m\x1b[K\xe2\x80\x99:\n'}
+[27.709355] (dubin) StderrLine: {'line': b'\x1b[01m\x1b[K/home/marko/ros_ws/src/dubin/include/graph.h:29:27:\x1b[m\x1b[K \x1b[01;35m\x1b[Kwarning: \x1b[m\x1b[Kcomparison of integer expressions of different signedness: \xe2\x80\x98\x1b[01m\x1b[Kint\x1b[m\x1b[K\xe2\x80\x99 and \xe2\x80\x98\x1b[01m\x1b[Kstd::vector<float>::size_type\x1b[m\x1b[K\xe2\x80\x99 {aka \xe2\x80\x98\x1b[01m\x1b[Klong unsigned int\x1b[m\x1b[K\xe2\x80\x99} [\x1b[01;35m\x1b[K\x1b]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wsign-compare\x07-Wsign-compare\x1b]8;;\x07\x1b[m\x1b[K]\n'}
+[27.709748] (dubin) StderrLine: {'line': b'   29 |         for (int i = 0; \x1b[01;35m\x1b[Ki < arrival_time.size()\x1b[m\x1b[K; i++)\n'}
+[27.710182] (dubin) StderrLine: {'line': b'      |                         \x1b[01;35m\x1b[K~~^~~~~~~~~~~~~~~~~~~~~\x1b[m\x1b[K\n'}
+[27.761001] (-) TimerEvent: {}
+[27.772661] (dubin) StderrLine: {'line': b'\x1b[01m\x1b[K/home/marko/ros_ws/src/dubin/src/graph.cpp:\x1b[m\x1b[K In constructor \xe2\x80\x98\x1b[01m\x1b[KGraph::Graph(int, point2d, point2d)\x1b[m\x1b[K\xe2\x80\x99:\n'}
+[27.773516] (dubin) StderrLine: {'line': b'\x1b[01m\x1b[K/home/marko/ros_ws/src/dubin/src/graph.cpp:7:18:\x1b[m\x1b[K \x1b[01;35m\x1b[Kwarning: \x1b[m\x1b[Kunused parameter \xe2\x80\x98\x1b[01m\x1b[Kmax_depth\x1b[m\x1b[K\xe2\x80\x99 [\x1b[01;35m\x1b[K\x1b]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wunused-parameter\x07-Wunused-parameter\x1b]8;;\x07\x1b[m\x1b[K]\n'}
+[27.773865] (dubin) StderrLine: {'line': b'    7 | Graph::Graph(\x1b[01;35m\x1b[Kint max_depth\x1b[m\x1b[K, point2d tl, point2d br) : points_quad(-15.0, 25.0, -15.0, 25.0, 0)\n'}
+[27.774193] (dubin) StderrLine: {'line': b'      |              \x1b[01;35m\x1b[K~~~~^~~~~~~~~\x1b[m\x1b[K\n'}
+[27.774460] (dubin) StderrLine: {'line': b'\x1b[01m\x1b[K/home/marko/ros_ws/src/dubin/src/graph.cpp:7:37:\x1b[m\x1b[K \x1b[01;35m\x1b[Kwarning: \x1b[m\x1b[Kunused parameter \xe2\x80\x98\x1b[01m\x1b[Ktl\x1b[m\x1b[K\xe2\x80\x99 [\x1b[01;35m\x1b[K\x1b]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wunused-parameter\x07-Wunused-parameter\x1b]8;;\x07\x1b[m\x1b[K]\n'}
+[27.775360] (dubin) StderrLine: {'line': b'    7 | Graph::Graph(int max_depth, \x1b[01;35m\x1b[Kpoint2d tl\x1b[m\x1b[K, point2d br) : points_quad(-15.0, 25.0, -15.0, 25.0, 0)\n'}
+[27.776009] (dubin) StderrLine: {'line': b'      |                             \x1b[01;35m\x1b[K~~~~~~~~^~\x1b[m\x1b[K\n'}
+[27.776393] (dubin) StderrLine: {'line': b'\x1b[01m\x1b[K/home/marko/ros_ws/src/dubin/src/graph.cpp:7:49:\x1b[m\x1b[K \x1b[01;35m\x1b[Kwarning: \x1b[m\x1b[Kunused parameter \xe2\x80\x98\x1b[01m\x1b[Kbr\x1b[m\x1b[K\xe2\x80\x99 [\x1b[01;35m\x1b[K\x1b]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wunused-parameter\x07-Wunused-parameter\x1b]8;;\x07\x1b[m\x1b[K]\n'}
+[27.776802] (dubin) StderrLine: {'line': b'    7 | Graph::Graph(int max_depth, point2d tl, \x1b[01;35m\x1b[Kpoint2d br\x1b[m\x1b[K) : points_quad(-15.0, 25.0, -15.0, 25.0, 0)\n'}
+[27.777199] (dubin) StderrLine: {'line': b'      |                                         \x1b[01;35m\x1b[K~~~~~~~~^~\x1b[m\x1b[K\n'}
+[27.795480] (dubin) StderrLine: {'line': b'\x1b[01m\x1b[K/home/marko/ros_ws/src/dubin/src/graph.cpp:\x1b[m\x1b[K In member function \xe2\x80\x98\x1b[01m\x1b[Kvoid quad::subdivide()\x1b[m\x1b[K\xe2\x80\x99:\n'}
+[27.796642] (dubin) StderrLine: {'line': b'\x1b[01m\x1b[K/home/marko/ros_ws/src/dubin/src/graph.cpp:33:23:\x1b[m\x1b[K \x1b[01;35m\x1b[Kwarning: \x1b[m\x1b[Kcomparison of integer expressions of different signedness: \xe2\x80\x98\x1b[01m\x1b[Kint\x1b[m\x1b[K\xe2\x80\x99 and \xe2\x80\x98\x1b[01m\x1b[Kstd::vector<std::shared_ptr<Bundle> >::size_type\x1b[m\x1b[K\xe2\x80\x99 {aka \xe2\x80\x98\x1b[01m\x1b[Klong unsigned int\x1b[m\x1b[K\xe2\x80\x99} [\x1b[01;35m\x1b[K\x1b]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wsign-compare\x07-Wsign-compare\x1b]8;;\x07\x1b[m\x1b[K]\n'}
+[27.797288] (dubin) StderrLine: {'line': b'   33 |     for (int i = 0; \x1b[01;35m\x1b[Ki < points.size()\x1b[m\x1b[K; i++)\n'}
+[27.797819] (dubin) StderrLine: {'line': b'      |                     \x1b[01;35m\x1b[K~~^~~~~~~~~~~~~~~\x1b[m\x1b[K\n'}
+[27.800139] (dubin) StderrLine: {'line': b'\x1b[01m\x1b[K/home/marko/ros_ws/src/dubin/src/graph.cpp:\x1b[m\x1b[K In member function \xe2\x80\x98\x1b[01m\x1b[Kvoid quad::add_bundle_to_children(std::shared_ptr<Bundle>)\x1b[m\x1b[K\xe2\x80\x99:\n'}
+[27.800649] (dubin) StderrLine: {'line': b'\x1b[01m\x1b[K/home/marko/ros_ws/src/dubin/src/graph.cpp:43:23:\x1b[m\x1b[K \x1b[01;35m\x1b[Kwarning: \x1b[m\x1b[Kcomparison of integer expressions of different signedness: \xe2\x80\x98\x1b[01m\x1b[Kint\x1b[m\x1b[K\xe2\x80\x99 and \xe2\x80\x98\x1b[01m\x1b[Kstd::vector<quad>::size_type\x1b[m\x1b[K\xe2\x80\x99 {aka \xe2\x80\x98\x1b[01m\x1b[Klong unsigned int\x1b[m\x1b[K\xe2\x80\x99} [\x1b[01;35m\x1b[K\x1b]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wsign-compare\x07-Wsign-compare\x1b]8;;\x07\x1b[m\x1b[K]\n'}
+[27.801082] (dubin) StderrLine: {'line': b'   43 |     for (int i = 0; \x1b[01;35m\x1b[Ki < children.size()\x1b[m\x1b[K; i++)\n'}
+[27.801461] (dubin) StderrLine: {'line': b'      |                     \x1b[01;35m\x1b[K~~^~~~~~~~~~~~~~~~~\x1b[m\x1b[K\n'}
+[27.806555] (dubin) StderrLine: {'line': b'\x1b[01m\x1b[K/home/marko/ros_ws/src/dubin/src/graph.cpp:\x1b[m\x1b[K In member function \xe2\x80\x98\x1b[01m\x1b[Kvoid quad::find_neighbors_r(point2d, float, std::vector<std::shared_ptr<Bundle> >&)\x1b[m\x1b[K\xe2\x80\x99:\n'}
+[27.808315] (dubin) StderrLine: {'line': b'\x1b[01m\x1b[K/home/marko/ros_ws/src/dubin/src/graph.cpp:71:31:\x1b[m\x1b[K \x1b[01;35m\x1b[Kwarning: \x1b[m\x1b[Kcomparison of integer expressions of different signedness: \xe2\x80\x98\x1b[01m\x1b[Kint\x1b[m\x1b[K\xe2\x80\x99 and \xe2\x80\x98\x1b[01m\x1b[Kstd::vector<std::shared_ptr<Bundle> >::size_type\x1b[m\x1b[K\xe2\x80\x99 {aka \xe2\x80\x98\x1b[01m\x1b[Klong unsigned int\x1b[m\x1b[K\xe2\x80\x99} [\x1b[01;35m\x1b[K\x1b]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wsign-compare\x07-Wsign-compare\x1b]8;;\x07\x1b[m\x1b[K]\n'}
+[27.808723] (dubin) StderrLine: {'line': b'   71 |             for (int i = 0; \x1b[01;35m\x1b[Ki < points.size()\x1b[m\x1b[K; i++ )\n'}
+[27.809104] (dubin) StderrLine: {'line': b'      |                             \x1b[01;35m\x1b[K~~^~~~~~~~~~~~~~~\x1b[m\x1b[K\n'}
+[27.809469] (dubin) StderrLine: {'line': b'\x1b[01m\x1b[K/home/marko/ros_ws/src/dubin/src/graph.cpp:83:27:\x1b[m\x1b[K \x1b[01;35m\x1b[Kwarning: \x1b[m\x1b[Kcomparison of integer expressions of different signedness: \xe2\x80\x98\x1b[01m\x1b[Kint\x1b[m\x1b[K\xe2\x80\x99 and \xe2\x80\x98\x1b[01m\x1b[Kstd::vector<quad>::size_type\x1b[m\x1b[K\xe2\x80\x99 {aka \xe2\x80\x98\x1b[01m\x1b[Klong unsigned int\x1b[m\x1b[K\xe2\x80\x99} [\x1b[01;35m\x1b[K\x1b]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wsign-compare\x07-Wsign-compare\x1b]8;;\x07\x1b[m\x1b[K]\n'}
+[27.809947] (dubin) StderrLine: {'line': b'   83 |         for (int i = 0; \x1b[01;35m\x1b[Ki < children.size()\x1b[m\x1b[K; i++ )\n'}
+[27.810307] (dubin) StderrLine: {'line': b'      |                         \x1b[01;35m\x1b[K~~^~~~~~~~~~~~~~~~~\x1b[m\x1b[K\n'}
+[27.849943] (dubin) StderrLine: {'line': b'\x1b[01m\x1b[K/home/marko/ros_ws/src/dubin/src/graph.cpp:\x1b[m\x1b[K In member function \xe2\x80\x98\x1b[01m\x1b[Kvoid Graph::reset_nodes()\x1b[m\x1b[K\xe2\x80\x99:\n'}
+[27.850377] (dubin) StderrLine: {'line': b'\x1b[01m\x1b[K/home/marko/ros_ws/src/dubin/src/graph.cpp:132:24:\x1b[m\x1b[K \x1b[01;35m\x1b[Kwarning: \x1b[m\x1b[Kcomparison of integer expressions of different signedness: \xe2\x80\x98\x1b[01m\x1b[Kint\x1b[m\x1b[K\xe2\x80\x99 and \xe2\x80\x98\x1b[01m\x1b[Kstd::vector<std::shared_ptr<Node> >::size_type\x1b[m\x1b[K\xe2\x80\x99 {aka \xe2\x80\x98\x1b[01m\x1b[Klong unsigned int\x1b[m\x1b[K\xe2\x80\x99} [\x1b[01;35m\x1b[K\x1b]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wsign-compare\x07-Wsign-compare\x1b]8;;\x07\x1b[m\x1b[K]\n'}
+[27.920516] (-) TimerEvent: {}
+[27.921578] (dubin) StderrLine: {'line': b'  132 |     for (auto i = 0; \x1b[01;35m\x1b[Ki < nodes.size()\x1b[m\x1b[K; i++)\n'}
+[27.922348] (dubin) StderrLine: {'line': b'      |                      \x1b[01;35m\x1b[K~~^~~~~~~~~~~~~~\x1b[m\x1b[K\n'}
+[27.922699] (dubin) StderrLine: {'line': b'\x1b[01m\x1b[K/home/marko/ros_ws/src/dubin/src/graph.cpp:\x1b[m\x1b[K In member function \xe2\x80\x98\x1b[01m\x1b[Kstd::vector<point2d> Graph::getPath(std::shared_ptr<Node>, std::shared_ptr<Node>)\x1b[m\x1b[K\xe2\x80\x99:\n'}
+[27.923303] (dubin) StderrLine: {'line': b'\x1b[01m\x1b[K/home/marko/ros_ws/src/dubin/src/graph.cpp:166:28:\x1b[m\x1b[K \x1b[01;35m\x1b[Kwarning: \x1b[m\x1b[Kcomparison of integer expressions of different signedness: \xe2\x80\x98\x1b[01m\x1b[Kint\x1b[m\x1b[K\xe2\x80\x99 and \xe2\x80\x98\x1b[01m\x1b[Kstd::vector<connection>::size_type\x1b[m\x1b[K\xe2\x80\x99 {aka \xe2\x80\x98\x1b[01m\x1b[Klong unsigned int\x1b[m\x1b[K\xe2\x80\x99} [\x1b[01;35m\x1b[K\x1b]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wsign-compare\x07-Wsign-compare\x1b]8;;\x07\x1b[m\x1b[K]\n'}
+[27.924077] (dubin) StderrLine: {'line': b'  166 |         for (auto i = 0; \x1b[01;35m\x1b[Ki < current->connected.size()\x1b[m\x1b[K; i++)\n'}
+[27.924494] (dubin) StderrLine: {'line': b'      |                          \x1b[01;35m\x1b[K~~^~~~~~~~~~~~~~~~~~~~~~~~~~~\x1b[m\x1b[K\n'}
+[27.946667] (dubin) StderrLine: {'line': b'\x1b[01m\x1b[K/home/marko/ros_ws/src/dubin/src/graph.cpp:\x1b[m\x1b[K In member function \xe2\x80\x98\x1b[01m\x1b[Kstd::deque<arcs> Graph::getPathPlus(std::shared_ptr<Node>, std::shared_ptr<Node>)\x1b[m\x1b[K\xe2\x80\x99:\n'}
+[27.947278] (dubin) StderrLine: {'line': b'\x1b[01m\x1b[K/home/marko/ros_ws/src/dubin/src/graph.cpp:231:28:\x1b[m\x1b[K \x1b[01;35m\x1b[Kwarning: \x1b[m\x1b[Kcomparison of integer expressions of different signedness: \xe2\x80\x98\x1b[01m\x1b[Kint\x1b[m\x1b[K\xe2\x80\x99 and \xe2\x80\x98\x1b[01m\x1b[Kstd::vector<connection>::size_type\x1b[m\x1b[K\xe2\x80\x99 {aka \xe2\x80\x98\x1b[01m\x1b[Klong unsigned int\x1b[m\x1b[K\xe2\x80\x99} [\x1b[01;35m\x1b[K\x1b]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wsign-compare\x07-Wsign-compare\x1b]8;;\x07\x1b[m\x1b[K]\n'}
+[27.947715] (dubin) StderrLine: {'line': b'  231 |         for (auto i = 0; \x1b[01;35m\x1b[Ki < current->connected.size()\x1b[m\x1b[K; i++)\n'}
+[27.948171] (dubin) StderrLine: {'line': b'      |                          \x1b[01;35m\x1b[K~~^~~~~~~~~~~~~~~~~~~~~~~~~~~\x1b[m\x1b[K\n'}
+[27.952701] (dubin) StderrLine: {'line': b'\x1b[01m\x1b[K/home/marko/ros_ws/src/dubin/src/graph.cpp:270:28:\x1b[m\x1b[K \x1b[01;35m\x1b[Kwarning: \x1b[m\x1b[Kcomparison of integer expressions of different signedness: \xe2\x80\x98\x1b[01m\x1b[Kint\x1b[m\x1b[K\xe2\x80\x99 and \xe2\x80\x98\x1b[01m\x1b[Kstd::vector<std::shared_ptr<Bundle> >::size_type\x1b[m\x1b[K\xe2\x80\x99 {aka \xe2\x80\x98\x1b[01m\x1b[Klong unsigned int\x1b[m\x1b[K\xe2\x80\x99} [\x1b[01;35m\x1b[K\x1b]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wsign-compare\x07-Wsign-compare\x1b]8;;\x07\x1b[m\x1b[K]\n'}
+[27.953170] (dubin) StderrLine: {'line': b'  270 |         for (auto i = 0; \x1b[01;35m\x1b[Ki < nearby.size()\x1b[m\x1b[K ; i++)\n'}
+[27.953894] (dubin) StderrLine: {'line': b'      |                          \x1b[01;35m\x1b[K~~^~~~~~~~~~~~~~~\x1b[m\x1b[K\n'}
+[27.955611] (dubin) StderrLine: {'line': b'\x1b[01m\x1b[K/home/marko/ros_ws/src/dubin/src/graph.cpp:272:31:\x1b[m\x1b[K \x1b[01;35m\x1b[Kwarning: \x1b[m\x1b[Kcomparison of integer expressions of different signedness: \xe2\x80\x98\x1b[01m\x1b[Kint\x1b[m\x1b[K\xe2\x80\x99 and \xe2\x80\x98\x1b[01m\x1b[Kstd::vector<std::shared_ptr<Node> >::size_type\x1b[m\x1b[K\xe2\x80\x99 {aka \xe2\x80\x98\x1b[01m\x1b[Klong unsigned int\x1b[m\x1b[K\xe2\x80\x99} [\x1b[01;35m\x1b[K\x1b]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wsign-compare\x07-Wsign-compare\x1b]8;;\x07\x1b[m\x1b[K]\n'}
+[27.956111] (dubin) StderrLine: {'line': b'  272 |             for (int a = 0; \x1b[01;35m\x1b[Ka < nearby[i]->nodes.size()\x1b[m\x1b[K; a++)\n'}
+[27.956443] (dubin) StderrLine: {'line': b'      |                             \x1b[01;35m\x1b[K~~^~~~~~~~~~~~~~~~~~~~~~~~~\x1b[m\x1b[K\n'}
+[27.961588] (dubin) StderrLine: {'line': b'\x1b[01m\x1b[K/home/marko/ros_ws/src/dubin/src/graph.cpp:\x1b[m\x1b[K In member function \xe2\x80\x98\x1b[01m\x1b[Kstd::deque<arcs> Graph::getPathPlusManyExits(std::shared_ptr<Node>, std::vector<std::shared_ptr<Node> >)\x1b[m\x1b[K\xe2\x80\x99:\n'}
+[27.962043] (dubin) StderrLine: {'line': b'\x1b[01m\x1b[K/home/marko/ros_ws/src/dubin/src/graph.cpp:316:29:\x1b[m\x1b[K \x1b[01;35m\x1b[Kwarning: \x1b[m\x1b[Kcomparison of integer expressions of different signedness: \xe2\x80\x98\x1b[01m\x1b[Kint\x1b[m\x1b[K\xe2\x80\x99 and \xe2\x80\x98\x1b[01m\x1b[Kstd::vector<std::shared_ptr<Node> >::size_type\x1b[m\x1b[K\xe2\x80\x99 {aka \xe2\x80\x98\x1b[01m\x1b[Klong unsigned int\x1b[m\x1b[K\xe2\x80\x99} [\x1b[01;35m\x1b[K\x1b]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wsign-compare\x07-Wsign-compare\x1b]8;;\x07\x1b[m\x1b[K]\n'}
+[27.962481] (dubin) StderrLine: {'line': b'  316 |         for (int nn = 0; \x1b[01;35m\x1b[Knn < end_nodes.size()\x1b[m\x1b[K; nn++)\n'}
+[27.962807] (dubin) StderrLine: {'line': b'      |                          \x1b[01;35m\x1b[K~~~^~~~~~~~~~~~~~~~~~\x1b[m\x1b[K\n'}
+[28.020501] (-) TimerEvent: {}
+[28.022929] (dubin) StderrLine: {'line': b'\x1b[01m\x1b[K/home/marko/ros_ws/src/dubin/src/graph.cpp:326:28:\x1b[m\x1b[K \x1b[01;35m\x1b[Kwarning: \x1b[m\x1b[Kcomparison of integer expressions of different signedness: \xe2\x80\x98\x1b[01m\x1b[Kint\x1b[m\x1b[K\xe2\x80\x99 and \xe2\x80\x98\x1b[01m\x1b[Kstd::vector<connection>::size_type\x1b[m\x1b[K\xe2\x80\x99 {aka \xe2\x80\x98\x1b[01m\x1b[Klong unsigned int\x1b[m\x1b[K\xe2\x80\x99} [\x1b[01;35m\x1b[K\x1b]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wsign-compare\x07-Wsign-compare\x1b]8;;\x07\x1b[m\x1b[K]\n'}
+[28.023440] (dubin) StderrLine: {'line': b'  326 |         for (auto i = 0; \x1b[01;35m\x1b[Ki < current->connected.size()\x1b[m\x1b[K; i++)\n'}
+[28.023734] (dubin) StderrLine: {'line': b'      |                          \x1b[01;35m\x1b[K~~^~~~~~~~~~~~~~~~~~~~~~~~~~~\x1b[m\x1b[K\n'}
+[28.027257] (dubin) StderrLine: {'line': b'\x1b[01m\x1b[K/home/marko/ros_ws/src/dubin/src/graph.cpp:367:28:\x1b[m\x1b[K \x1b[01;35m\x1b[Kwarning: \x1b[m\x1b[Kcomparison of integer expressions of different signedness: \xe2\x80\x98\x1b[01m\x1b[Kint\x1b[m\x1b[K\xe2\x80\x99 and \xe2\x80\x98\x1b[01m\x1b[Kstd::vector<std::shared_ptr<Bundle> >::size_type\x1b[m\x1b[K\xe2\x80\x99 {aka \xe2\x80\x98\x1b[01m\x1b[Klong unsigned int\x1b[m\x1b[K\xe2\x80\x99} [\x1b[01;35m\x1b[K\x1b]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wsign-compare\x07-Wsign-compare\x1b]8;;\x07\x1b[m\x1b[K]\n'}
+[28.028043] (dubin) StderrLine: {'line': b'  367 |         for (auto i = 0; \x1b[01;35m\x1b[Ki < nearby.size()\x1b[m\x1b[K ; i++)\n'}
+[28.028426] (dubin) StderrLine: {'line': b'      |                          \x1b[01;35m\x1b[K~~^~~~~~~~~~~~~~~\x1b[m\x1b[K\n'}
+[28.028793] (dubin) StderrLine: {'line': b'\x1b[01m\x1b[K/home/marko/ros_ws/src/dubin/src/graph.cpp:369:31:\x1b[m\x1b[K \x1b[01;35m\x1b[Kwarning: \x1b[m\x1b[Kcomparison of integer expressions of different signedness: \xe2\x80\x98\x1b[01m\x1b[Kint\x1b[m\x1b[K\xe2\x80\x99 and \xe2\x80\x98\x1b[01m\x1b[Kstd::vector<std::shared_ptr<Node> >::size_type\x1b[m\x1b[K\xe2\x80\x99 {aka \xe2\x80\x98\x1b[01m\x1b[Klong unsigned int\x1b[m\x1b[K\xe2\x80\x99} [\x1b[01;35m\x1b[K\x1b]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wsign-compare\x07-Wsign-compare\x1b]8;;\x07\x1b[m\x1b[K]\n'}
+[28.029247] (dubin) StderrLine: {'line': b'  369 |             for (int a = 0; \x1b[01;35m\x1b[Ka < nearby[i]->nodes.size()\x1b[m\x1b[K; a++)\n'}
+[28.029554] (dubin) StderrLine: {'line': b'      |                             \x1b[01;35m\x1b[K~~^~~~~~~~~~~~~~~~~~~~~~~~~\x1b[m\x1b[K\n'}
+[28.032484] (dubin) StderrLine: {'line': b'\x1b[01m\x1b[K/home/marko/ros_ws/src/dubin/src/graph.cpp:\x1b[m\x1b[K In member function \xe2\x80\x98\x1b[01m\x1b[Kvoid Graph::print_nodes()\x1b[m\x1b[K\xe2\x80\x99:\n'}
+[28.032974] (dubin) StderrLine: {'line': b'\x1b[01m\x1b[K/home/marko/ros_ws/src/dubin/src/graph.cpp:387:24:\x1b[m\x1b[K \x1b[01;35m\x1b[Kwarning: \x1b[m\x1b[Kcomparison of integer expressions of different signedness: \xe2\x80\x98\x1b[01m\x1b[Kint\x1b[m\x1b[K\xe2\x80\x99 and \xe2\x80\x98\x1b[01m\x1b[Kstd::vector<std::shared_ptr<Node> >::size_type\x1b[m\x1b[K\xe2\x80\x99 {aka \xe2\x80\x98\x1b[01m\x1b[Klong unsigned int\x1b[m\x1b[K\xe2\x80\x99} [\x1b[01;35m\x1b[K\x1b]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wsign-compare\x07-Wsign-compare\x1b]8;;\x07\x1b[m\x1b[K]\n'}
+[28.033344] (dubin) StderrLine: {'line': b'  387 |     for (auto i = 0; \x1b[01;35m\x1b[Ki < nodes.size()\x1b[m\x1b[K; i++)\n'}
+[28.033669] (dubin) StderrLine: {'line': b'      |                      \x1b[01;35m\x1b[K~~^~~~~~~~~~~~~~\x1b[m\x1b[K\n'}
+[28.123697] (-) TimerEvent: {}
+[28.134279] (dubin) StderrLine: {'line': b'In file included from \x1b[01m\x1b[K/home/marko/ros_ws/src/dubin/src/map.cpp:1\x1b[m\x1b[K:\n'}
+[28.134941] (dubin) StderrLine: {'line': b'\x1b[01m\x1b[K/home/marko/ros_ws/src/dubin/include/geometry.h:\x1b[m\x1b[K In constructor \xe2\x80\x98\x1b[01m\x1b[Karc::arc(pose2d, float, float)\x1b[m\x1b[K\xe2\x80\x99:\n'}
+[28.135534] (dubin) StderrLine: {'line': b'\x1b[01m\x1b[K/home/marko/ros_ws/src/dubin/include/geometry.h:128:9:\x1b[m\x1b[K \x1b[01;35m\x1b[Kwarning: \x1b[m\x1b[K\xe2\x80\x98\x1b[01m\x1b[Karc::s\x1b[m\x1b[K\xe2\x80\x99 will be initialized after [\x1b[01;35m\x1b[K\x1b]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wreorder\x07-Wreorder\x1b]8;;\x07\x1b[m\x1b[K]\n'}
+[28.136088] (dubin) StderrLine: {'line': b'  128 |   float \x1b[01;35m\x1b[Ks\x1b[m\x1b[K;\n'}
+[28.136660] (dubin) StderrLine: {'line': b'      |         \x1b[01;35m\x1b[K^\x1b[m\x1b[K\n'}
+[28.137080] (dubin) StderrLine: {'line': b'\x1b[01m\x1b[K/home/marko/ros_ws/src/dubin/include/geometry.h:127:9:\x1b[m\x1b[K \x1b[01;35m\x1b[Kwarning: \x1b[m\x1b[K  \xe2\x80\x98\x1b[01m\x1b[Kfloat arc::K\x1b[m\x1b[K\xe2\x80\x99 [\x1b[01;35m\x1b[K\x1b]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wreorder\x07-Wreorder\x1b]8;;\x07\x1b[m\x1b[K]\n'}
+[28.137355] (dubin) StderrLine: {'line': b'  127 |   float \x1b[01;35m\x1b[KK\x1b[m\x1b[K;\n'}
+[28.137644] (dubin) StderrLine: {'line': b'      |         \x1b[01;35m\x1b[K^\x1b[m\x1b[K\n'}
+[28.137880] (dubin) StderrLine: {'line': b'\x1b[01m\x1b[K/home/marko/ros_ws/src/dubin/include/geometry.h:114:3:\x1b[m\x1b[K \x1b[01;35m\x1b[Kwarning: \x1b[m\x1b[K  when initialized here [\x1b[01;35m\x1b[K\x1b]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wreorder\x07-Wreorder\x1b]8;;\x07\x1b[m\x1b[K]\n'}
+[28.138218] (dubin) StderrLine: {'line': b'  114 |   \x1b[01;35m\x1b[Karc\x1b[m\x1b[K(pose2d start, float K, float s) : start(start), s(s), K(K)\n'}
+[28.138540] (dubin) StderrLine: {'line': b'      |   \x1b[01;35m\x1b[K^~~\x1b[m\x1b[K\n'}
+[28.211235] (dubin) StderrLine: {'line': b'In file included from \x1b[01m\x1b[K/home/marko/ros_ws/src/dubin/src/map.cpp:2\x1b[m\x1b[K:\n'}
+[28.212301] (dubin) StderrLine: {'line': b'\x1b[01m\x1b[K/home/marko/ros_ws/src/dubin/include/map.h:\x1b[m\x1b[K In constructor \xe2\x80\x98\x1b[01m\x1b[KMap::Map(Polygon)\x1b[m\x1b[K\xe2\x80\x99:\n'}
+[28.212769] (dubin) StderrLine: {'line': b'\x1b[01m\x1b[K/home/marko/ros_ws/src/dubin/include/map.h:42:17:\x1b[m\x1b[K \x1b[01;35m\x1b[Kwarning: \x1b[m\x1b[K\xe2\x80\x98\x1b[01m\x1b[KMap::total_map_poly\x1b[m\x1b[K\xe2\x80\x99 will be initialized after [\x1b[01;35m\x1b[K\x1b]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wreorder\x07-Wreorder\x1b]8;;\x07\x1b[m\x1b[K]\n'}
+[28.213215] (dubin) StderrLine: {'line': b'   42 |         Polygon \x1b[01;35m\x1b[Ktotal_map_poly\x1b[m\x1b[K;\n'}
+[28.213643] (dubin) StderrLine: {'line': b'      |                 \x1b[01;35m\x1b[K^~~~~~~~~~~~~~\x1b[m\x1b[K\n'}
+[28.214034] (dubin) StderrLine: {'line': b'\x1b[01m\x1b[K/home/marko/ros_ws/src/dubin/include/map.h:40:15:\x1b[m\x1b[K \x1b[01;35m\x1b[Kwarning: \x1b[m\x1b[K  \xe2\x80\x98\x1b[01m\x1b[Kfloat Map::freeSpace\x1b[m\x1b[K\xe2\x80\x99 [\x1b[01;35m\x1b[K\x1b]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wreorder\x07-Wreorder\x1b]8;;\x07\x1b[m\x1b[K]\n'}
+[28.214479] (dubin) StderrLine: {'line': b'   40 |         float \x1b[01;35m\x1b[KfreeSpace\x1b[m\x1b[K;\n'}
+[28.214859] (dubin) StderrLine: {'line': b'      |               \x1b[01;35m\x1b[K^~~~~~~~~\x1b[m\x1b[K\n'}
+[28.215211] (dubin) StderrLine: {'line': b'\x1b[01m\x1b[K/home/marko/ros_ws/src/dubin/include/map.h:45:9:\x1b[m\x1b[K \x1b[01;35m\x1b[Kwarning: \x1b[m\x1b[K  when initialized here [\x1b[01;35m\x1b[K\x1b]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wreorder\x07-Wreorder\x1b]8;;\x07\x1b[m\x1b[K]\n'}
+[28.216012] (dubin) StderrLine: {'line': b'   45 |         \x1b[01;35m\x1b[KMap\x1b[m\x1b[K(Polygon map): total_map_poly(map.verteces), freeSpace(map.area), halton_index(0){\n'}
+[28.216444] (dubin) StderrLine: {'line': b'      |         \x1b[01;35m\x1b[K^~~\x1b[m\x1b[K\n'}
+[28.216815] (dubin) StderrLine: {'line': b'\x1b[01m\x1b[K/home/marko/ros_ws/src/dubin/include/map.h:40:15:\x1b[m\x1b[K \x1b[01;35m\x1b[Kwarning: \x1b[m\x1b[K\xe2\x80\x98\x1b[01m\x1b[KMap::freeSpace\x1b[m\x1b[K\xe2\x80\x99 will be initialized after [\x1b[01;35m\x1b[K\x1b]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wreorder\x07-Wreorder\x1b]8;;\x07\x1b[m\x1b[K]\n'}
+[28.217153] (dubin) StderrLine: {'line': b'   40 |         float \x1b[01;35m\x1b[KfreeSpace\x1b[m\x1b[K;\n'}
+[28.217481] (dubin) StderrLine: {'line': b'      |               \x1b[01;35m\x1b[K^~~~~~~~~\x1b[m\x1b[K\n'}
+[28.217962] (dubin) StderrLine: {'line': b'\x1b[01m\x1b[K/home/marko/ros_ws/src/dubin/include/map.h:39:13:\x1b[m\x1b[K \x1b[01;35m\x1b[Kwarning: \x1b[m\x1b[K  \xe2\x80\x98\x1b[01m\x1b[Kint Map::halton_index\x1b[m\x1b[K\xe2\x80\x99 [\x1b[01;35m\x1b[K\x1b]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wreorder\x07-Wreorder\x1b]8;;\x07\x1b[m\x1b[K]\n'}
+[28.218365] (dubin) StderrLine: {'line': b'   39 |         int \x1b[01;35m\x1b[Khalton_index\x1b[m\x1b[K;\n'}
+[28.219092] (dubin) StderrLine: {'line': b'      |             \x1b[01;35m\x1b[K^~~~~~~~~~~~\x1b[m\x1b[K\n'}
+[28.219576] (dubin) StderrLine: {'line': b'\x1b[01m\x1b[K/home/marko/ros_ws/src/dubin/include/map.h:45:9:\x1b[m\x1b[K \x1b[01;35m\x1b[Kwarning: \x1b[m\x1b[K  when initialized here [\x1b[01;35m\x1b[K\x1b]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wreorder\x07-Wreorder\x1b]8;;\x07\x1b[m\x1b[K]\n'}
+[28.220273] (dubin) StderrLine: {'line': b'   45 |         \x1b[01;35m\x1b[KMap\x1b[m\x1b[K(Polygon map): total_map_poly(map.verteces), freeSpace(map.area), halton_index(0){\n'}
+[28.220812] (dubin) StderrLine: {'line': b'      |         \x1b[01;35m\x1b[K^~~\x1b[m\x1b[K\n'}
+[28.224284] (-) TimerEvent: {}
+[28.327978] (-) TimerEvent: {}
+[28.429699] (-) TimerEvent: {}
+[28.531602] (-) TimerEvent: {}
+[28.636961] (-) TimerEvent: {}
+[28.740726] (-) TimerEvent: {}
+[28.843314] (-) TimerEvent: {}
+[28.911581] (dubin) StderrLine: {'line': b'In file included from \x1b[01m\x1b[K/home/marko/ros_ws/src/dubin/src/collision_check.cpp:2\x1b[m\x1b[K:\n'}
+[28.912184] (dubin) StderrLine: {'line': b'\x1b[01m\x1b[K/home/marko/ros_ws/src/dubin/include/geometry.h:\x1b[m\x1b[K In constructor \xe2\x80\x98\x1b[01m\x1b[Karc::arc(pose2d, float, float)\x1b[m\x1b[K\xe2\x80\x99:\n'}
+[28.912551] (dubin) StderrLine: {'line': b'\x1b[01m\x1b[K/home/marko/ros_ws/src/dubin/include/geometry.h:128:9:\x1b[m\x1b[K \x1b[01;35m\x1b[Kwarning: \x1b[m\x1b[K\xe2\x80\x98\x1b[01m\x1b[Karc::s\x1b[m\x1b[K\xe2\x80\x99 will be initialized after [\x1b[01;35m\x1b[K\x1b]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wreorder\x07-Wreorder\x1b]8;;\x07\x1b[m\x1b[K]\n'}
+[28.912980] (dubin) StderrLine: {'line': b'  128 |   float \x1b[01;35m\x1b[Ks\x1b[m\x1b[K;\n'}
+[28.913379] (dubin) StderrLine: {'line': b'      |         \x1b[01;35m\x1b[K^\x1b[m\x1b[K\n'}
+[28.913841] (dubin) StderrLine: {'line': b'\x1b[01m\x1b[K/home/marko/ros_ws/src/dubin/include/geometry.h:127:9:\x1b[m\x1b[K \x1b[01;35m\x1b[Kwarning: \x1b[m\x1b[K  \xe2\x80\x98\x1b[01m\x1b[Kfloat arc::K\x1b[m\x1b[K\xe2\x80\x99 [\x1b[01;35m\x1b[K\x1b]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wreorder\x07-Wreorder\x1b]8;;\x07\x1b[m\x1b[K]\n'}
+[28.914252] (dubin) StderrLine: {'line': b'  127 |   float \x1b[01;35m\x1b[KK\x1b[m\x1b[K;\n'}
+[28.914673] (dubin) StderrLine: {'line': b'      |         \x1b[01;35m\x1b[K^\x1b[m\x1b[K\n'}
+[28.915245] (dubin) StderrLine: {'line': b'\x1b[01m\x1b[K/home/marko/ros_ws/src/dubin/include/geometry.h:114:3:\x1b[m\x1b[K \x1b[01;35m\x1b[Kwarning: \x1b[m\x1b[K  when initialized here [\x1b[01;35m\x1b[K\x1b]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wreorder\x07-Wreorder\x1b]8;;\x07\x1b[m\x1b[K]\n'}
+[28.915576] (dubin) StderrLine: {'line': b'  114 |   \x1b[01;35m\x1b[Karc\x1b[m\x1b[K(pose2d start, float K, float s) : start(start), s(s), K(K)\n'}
+[28.916048] (dubin) StderrLine: {'line': b'      |   \x1b[01;35m\x1b[K^~~\x1b[m\x1b[K\n'}
+[28.943826] (-) TimerEvent: {}
+[29.044732] (-) TimerEvent: {}
+[29.148298] (-) TimerEvent: {}
+[29.265567] (-) TimerEvent: {}
+[29.374995] (-) TimerEvent: {}
+[29.469130] (dubin) StderrLine: {'line': b'In file included from \x1b[01m\x1b[K/home/marko/ros_ws/src/dubin/include/PRMstar.h:2\x1b[m\x1b[K,\n'}
+[29.469726] (dubin) StderrLine: {'line': b'                 from \x1b[01m\x1b[K/home/marko/ros_ws/src/dubin/src/PRMstar.cpp:1\x1b[m\x1b[K:\n'}
+[29.470252] (dubin) StderrLine: {'line': b'\x1b[01m\x1b[K/home/marko/ros_ws/src/dubin/include/geometry.h:\x1b[m\x1b[K In constructor \xe2\x80\x98\x1b[01m\x1b[Karc::arc(pose2d, float, float)\x1b[m\x1b[K\xe2\x80\x99:\n'}
+[29.470653] (dubin) StderrLine: {'line': b'\x1b[01m\x1b[K/home/marko/ros_ws/src/dubin/include/geometry.h:128:9:\x1b[m\x1b[K \x1b[01;35m\x1b[Kwarning: \x1b[m\x1b[K\xe2\x80\x98\x1b[01m\x1b[Karc::s\x1b[m\x1b[K\xe2\x80\x99 will be initialized after [\x1b[01;35m\x1b[K\x1b]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wreorder\x07-Wreorder\x1b]8;;\x07\x1b[m\x1b[K]\n'}
+[29.471113] (dubin) StderrLine: {'line': b'  128 |   float \x1b[01;35m\x1b[Ks\x1b[m\x1b[K;\n'}
+[29.471497] (dubin) StderrLine: {'line': b'      |         \x1b[01;35m\x1b[K^\x1b[m\x1b[K\n'}
+[29.471935] (dubin) StderrLine: {'line': b'\x1b[01m\x1b[K/home/marko/ros_ws/src/dubin/include/geometry.h:127:9:\x1b[m\x1b[K \x1b[01;35m\x1b[Kwarning: \x1b[m\x1b[K  \xe2\x80\x98\x1b[01m\x1b[Kfloat arc::K\x1b[m\x1b[K\xe2\x80\x99 [\x1b[01;35m\x1b[K\x1b]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wreorder\x07-Wreorder\x1b]8;;\x07\x1b[m\x1b[K]\n'}
+[29.472279] (dubin) StderrLine: {'line': b'  127 |   float \x1b[01;35m\x1b[KK\x1b[m\x1b[K;\n'}
+[29.472627] (dubin) StderrLine: {'line': b'      |         \x1b[01;35m\x1b[K^\x1b[m\x1b[K\n'}
+[29.473105] (dubin) StderrLine: {'line': b'\x1b[01m\x1b[K/home/marko/ros_ws/src/dubin/include/geometry.h:114:3:\x1b[m\x1b[K \x1b[01;35m\x1b[Kwarning: \x1b[m\x1b[K  when initialized here [\x1b[01;35m\x1b[K\x1b]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wreorder\x07-Wreorder\x1b]8;;\x07\x1b[m\x1b[K]\n'}
+[29.473494] (dubin) StderrLine: {'line': b'  114 |   \x1b[01;35m\x1b[Karc\x1b[m\x1b[K(pose2d start, float K, float s) : start(start), s(s), K(K)\n'}
+[29.473960] (dubin) StderrLine: {'line': b'      |   \x1b[01;35m\x1b[K^~~\x1b[m\x1b[K\n'}
+[29.484874] (-) TimerEvent: {}
+[29.587466] (-) TimerEvent: {}
+[29.688748] (-) TimerEvent: {}
+[29.690118] (dubin) StderrLine: {'line': b'In file included from \x1b[01m\x1b[K/home/marko/ros_ws/src/dubin/include/PRMstar.h:3\x1b[m\x1b[K,\n'}
+[29.690622] (dubin) StderrLine: {'line': b'                 from \x1b[01m\x1b[K/home/marko/ros_ws/src/dubin/src/PRMstar.cpp:1\x1b[m\x1b[K:\n'}
+[29.690908] (dubin) StderrLine: {'line': b'\x1b[01m\x1b[K/home/marko/ros_ws/src/dubin/include/graph.h:\x1b[m\x1b[K In constructor \xe2\x80\x98\x1b[01m\x1b[KNode::Node(pose2d)\x1b[m\x1b[K\xe2\x80\x99:\n'}
+[29.691204] (dubin) StderrLine: {'line': b'\x1b[01m\x1b[K/home/marko/ros_ws/src/dubin/include/graph.h:21:10:\x1b[m\x1b[K \x1b[01;35m\x1b[Kwarning: \x1b[m\x1b[K\xe2\x80\x98\x1b[01m\x1b[KNode::opened\x1b[m\x1b[K\xe2\x80\x99 will be initialized after [\x1b[01;35m\x1b[K\x1b]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wreorder\x07-Wreorder\x1b]8;;\x07\x1b[m\x1b[K]\n'}
+[29.691581] (dubin) StderrLine: {'line': b'   21 |     bool \x1b[01;35m\x1b[Kopened\x1b[m\x1b[K;\n'}
+[29.692032] (dubin) StderrLine: {'line': b'      |          \x1b[01;35m\x1b[K^~~~~~\x1b[m\x1b[K\n'}
+[29.692392] (dubin) StderrLine: {'line': b'\x1b[01m\x1b[K/home/marko/ros_ws/src/dubin/include/graph.h:20:11:\x1b[m\x1b[K \x1b[01;35m\x1b[Kwarning: \x1b[m\x1b[K  \xe2\x80\x98\x1b[01m\x1b[Kfloat Node::cost\x1b[m\x1b[K\xe2\x80\x99 [\x1b[01;35m\x1b[K\x1b]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wreorder\x07-Wreorder\x1b]8;;\x07\x1b[m\x1b[K]\n'}
+[29.692781] (dubin) StderrLine: {'line': b'   20 |     float \x1b[01;35m\x1b[Kcost\x1b[m\x1b[K;\n'}
+[29.693189] (dubin) StderrLine: {'line': b'      |           \x1b[01;35m\x1b[K^~~~\x1b[m\x1b[K\n'}
+[29.693818] (dubin) StderrLine: {'line': b'\x1b[01m\x1b[K/home/marko/ros_ws/src/dubin/include/graph.h:14:5:\x1b[m\x1b[K \x1b[01;35m\x1b[Kwarning: \x1b[m\x1b[K  when initialized here [\x1b[01;35m\x1b[K\x1b]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wreorder\x07-Wreorder\x1b]8;;\x07\x1b[m\x1b[K]\n'}
+[29.694208] (dubin) StderrLine: {'line': b'   14 |     \x1b[01;35m\x1b[KNode\x1b[m\x1b[K(pose2d point): opened(false), cost(0), parent(nullptr) {\n'}
+[29.694598] (dubin) StderrLine: {'line': b'      |     \x1b[01;35m\x1b[K^~~~\x1b[m\x1b[K\n'}
+[29.697082] (dubin) StderrLine: {'line': b'\x1b[01m\x1b[K/home/marko/ros_ws/src/dubin/include/graph.h:\x1b[m\x1b[K In member function \xe2\x80\x98\x1b[01m\x1b[Kbool Node::check_availability(float, float)\x1b[m\x1b[K\xe2\x80\x99:\n'}
+[29.697653] (dubin) StderrLine: {'line': b'\x1b[01m\x1b[K/home/marko/ros_ws/src/dubin/include/graph.h:29:27:\x1b[m\x1b[K \x1b[01;35m\x1b[Kwarning: \x1b[m\x1b[Kcomparison of integer expressions of different signedness: \xe2\x80\x98\x1b[01m\x1b[Kint\x1b[m\x1b[K\xe2\x80\x99 and \xe2\x80\x98\x1b[01m\x1b[Kstd::vector<float>::size_type\x1b[m\x1b[K\xe2\x80\x99 {aka \xe2\x80\x98\x1b[01m\x1b[Klong unsigned int\x1b[m\x1b[K\xe2\x80\x99} [\x1b[01;35m\x1b[K\x1b]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wsign-compare\x07-Wsign-compare\x1b]8;;\x07\x1b[m\x1b[K]\n'}
+[29.698022] (dubin) StderrLine: {'line': b'   29 |         for (int i = 0; \x1b[01;35m\x1b[Ki < arrival_time.size()\x1b[m\x1b[K; i++)\n'}
+[29.698395] (dubin) StderrLine: {'line': b'      |                         \x1b[01;35m\x1b[K~~^~~~~~~~~~~~~~~~~~~~~\x1b[m\x1b[K\n'}
+[29.761731] (dubin) StderrLine: {'line': b'\x1b[01m\x1b[K/home/marko/ros_ws/src/dubin/src/map.cpp:\x1b[m\x1b[K In member function \xe2\x80\x98\x1b[01m\x1b[Kvoid Polygon::getMinMax()\x1b[m\x1b[K\xe2\x80\x99:\n'}
+[29.762496] (dubin) StderrLine: {'line': b'\x1b[01m\x1b[K/home/marko/ros_ws/src/dubin/src/map.cpp:80:23:\x1b[m\x1b[K \x1b[01;35m\x1b[Kwarning: \x1b[m\x1b[Kcomparison of integer expressions of different signedness: \xe2\x80\x98\x1b[01m\x1b[Kint\x1b[m\x1b[K\xe2\x80\x99 and \xe2\x80\x98\x1b[01m\x1b[Kstd::vector<point2d>::size_type\x1b[m\x1b[K\xe2\x80\x99 {aka \xe2\x80\x98\x1b[01m\x1b[Klong unsigned int\x1b[m\x1b[K\xe2\x80\x99} [\x1b[01;35m\x1b[K\x1b]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wsign-compare\x07-Wsign-compare\x1b]8;;\x07\x1b[m\x1b[K]\n'}
+[29.765243] (dubin) StderrLine: {'line': b'   80 |     for (int i = 0; \x1b[01;35m\x1b[Ki < verteces.size()\x1b[m\x1b[K; i++)\n'}
+[29.765860] (dubin) StderrLine: {'line': b'      |                     \x1b[01;35m\x1b[K~~^~~~~~~~~~~~~~~~~\x1b[m\x1b[K\n'}
+[29.766889] (dubin) StderrLine: {'line': b'\x1b[01m\x1b[K/home/marko/ros_ws/src/dubin/src/map.cpp:\x1b[m\x1b[K In member function \xe2\x80\x98\x1b[01m\x1b[Kbool Map::colliding(point2d)\x1b[m\x1b[K\xe2\x80\x99:\n'}
+[29.768292] (dubin) StderrLine: {'line': b'\x1b[01m\x1b[K/home/marko/ros_ws/src/dubin/src/map.cpp:106:24:\x1b[m\x1b[K \x1b[01;35m\x1b[Kwarning: \x1b[m\x1b[Kcomparison of integer expressions of different signedness: \xe2\x80\x98\x1b[01m\x1b[Kint\x1b[m\x1b[K\xe2\x80\x99 and \xe2\x80\x98\x1b[01m\x1b[Kstd::vector<Polygon>::size_type\x1b[m\x1b[K\xe2\x80\x99 {aka \xe2\x80\x98\x1b[01m\x1b[Klong unsigned int\x1b[m\x1b[K\xe2\x80\x99} [\x1b[01;35m\x1b[K\x1b]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wsign-compare\x07-Wsign-compare\x1b]8;;\x07\x1b[m\x1b[K]\n'}
+[29.768633] (dubin) StderrLine: {'line': b'  106 |     for (auto i = 0; \x1b[01;35m\x1b[Ki < obstacles.size()\x1b[m\x1b[K; i++)\n'}
+[29.768931] (dubin) StderrLine: {'line': b'      |                      \x1b[01;35m\x1b[K~~^~~~~~~~~~~~~~~~~~\x1b[m\x1b[K\n'}
+[29.769377] (dubin) StderrLine: {'line': b'\x1b[01m\x1b[K/home/marko/ros_ws/src/dubin/src/map.cpp:\x1b[m\x1b[K In member function \xe2\x80\x98\x1b[01m\x1b[Kbool Map::colliding(arc)\x1b[m\x1b[K\xe2\x80\x99:\n'}
+[29.769748] (dubin) StderrLine: {'line': b'\x1b[01m\x1b[K/home/marko/ros_ws/src/dubin/src/map.cpp:160:23:\x1b[m\x1b[K \x1b[01;35m\x1b[Kwarning: \x1b[m\x1b[Kcomparison of integer expressions of different signedness: \xe2\x80\x98\x1b[01m\x1b[Kint\x1b[m\x1b[K\xe2\x80\x99 and \xe2\x80\x98\x1b[01m\x1b[Kstd::vector<Polygon>::size_type\x1b[m\x1b[K\xe2\x80\x99 {aka \xe2\x80\x98\x1b[01m\x1b[Klong unsigned int\x1b[m\x1b[K\xe2\x80\x99} [\x1b[01;35m\x1b[K\x1b]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wsign-compare\x07-Wsign-compare\x1b]8;;\x07\x1b[m\x1b[K]\n'}
+[29.828896] (-) TimerEvent: {}
+[29.829308] (dubin) StderrLine: {'line': b'  160 |     for (int i = 0; \x1b[01;35m\x1b[Ki < obstacles.size()\x1b[m\x1b[K; i++)\n'}
+[29.844864] (dubin) StderrLine: {'line': b'      |                     \x1b[01;35m\x1b[K~~^~~~~~~~~~~~~~~~~~\x1b[m\x1b[K\n'}
+[29.845292] (dubin) StderrLine: {'line': b'\x1b[01m\x1b[K/home/marko/ros_ws/src/dubin/src/map.cpp:\x1b[m\x1b[K In member function \xe2\x80\x98\x1b[01m\x1b[Kbool Map::colliding(line)\x1b[m\x1b[K\xe2\x80\x99:\n'}
+[29.845911] (dubin) StderrLine: {'line': b'\x1b[01m\x1b[K/home/marko/ros_ws/src/dubin/src/map.cpp:170:24:\x1b[m\x1b[K \x1b[01;35m\x1b[Kwarning: \x1b[m\x1b[Kcomparison of integer expressions of different signedness: \xe2\x80\x98\x1b[01m\x1b[Kint\x1b[m\x1b[K\xe2\x80\x99 and \xe2\x80\x98\x1b[01m\x1b[Kstd::vector<Polygon>::size_type\x1b[m\x1b[K\xe2\x80\x99 {aka \xe2\x80\x98\x1b[01m\x1b[Klong unsigned int\x1b[m\x1b[K\xe2\x80\x99} [\x1b[01;35m\x1b[K\x1b]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wsign-compare\x07-Wsign-compare\x1b]8;;\x07\x1b[m\x1b[K]\n'}
+[29.846433] (dubin) StderrLine: {'line': b'  170 |     for (auto i = 0; \x1b[01;35m\x1b[Ki < obstacles.size()\x1b[m\x1b[K; i++)\n'}
+[29.847202] (dubin) StderrLine: {'line': b'      |                      \x1b[01;35m\x1b[K~~^~~~~~~~~~~~~~~~~~\x1b[m\x1b[K\n'}
+[29.848019] (dubin) StderrLine: {'line': b'\x1b[01m\x1b[K/home/marko/ros_ws/src/dubin/src/map.cpp:180:28:\x1b[m\x1b[K \x1b[01;35m\x1b[Kwarning: \x1b[m\x1b[Kcomparison of integer expressions of different signedness: \xe2\x80\x98\x1b[01m\x1b[Kint\x1b[m\x1b[K\xe2\x80\x99 and \xe2\x80\x98\x1b[01m\x1b[Kstd::vector<line>::size_type\x1b[m\x1b[K\xe2\x80\x99 {aka \xe2\x80\x98\x1b[01m\x1b[Klong unsigned int\x1b[m\x1b[K\xe2\x80\x99} [\x1b[01;35m\x1b[K\x1b]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wsign-compare\x07-Wsign-compare\x1b]8;;\x07\x1b[m\x1b[K]\n'}
+[29.848488] (dubin) StderrLine: {'line': b'  180 |         for (auto j = 0; \x1b[01;35m\x1b[Kj < obs.edges.size()\x1b[m\x1b[K; j++)\n'}
+[29.849136] (dubin) StderrLine: {'line': b'      |                          \x1b[01;35m\x1b[K~~^~~~~~~~~~~~~~~~~~\x1b[m\x1b[K\n'}
+[29.849742] (dubin) StderrLine: {'line': b'\x1b[01m\x1b[K/home/marko/ros_ws/src/dubin/src/map.cpp:\x1b[m\x1b[K In member function \xe2\x80\x98\x1b[01m\x1b[Kvoid Map::processBounds()\x1b[m\x1b[K\xe2\x80\x99:\n'}
+[29.850197] (dubin) StderrLine: {'line': b'\x1b[01m\x1b[K/home/marko/ros_ws/src/dubin/src/map.cpp:208:23:\x1b[m\x1b[K \x1b[01;35m\x1b[Kwarning: \x1b[m\x1b[Kcomparison of integer expressions of different signedness: \xe2\x80\x98\x1b[01m\x1b[Kint\x1b[m\x1b[K\xe2\x80\x99 and \xe2\x80\x98\x1b[01m\x1b[Kstd::vector<point2d>::size_type\x1b[m\x1b[K\xe2\x80\x99 {aka \xe2\x80\x98\x1b[01m\x1b[Klong unsigned int\x1b[m\x1b[K\xe2\x80\x99} [\x1b[01;35m\x1b[K\x1b]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wsign-compare\x07-Wsign-compare\x1b]8;;\x07\x1b[m\x1b[K]\n'}
+[29.850592] (dubin) StderrLine: {'line': b'  208 |     for (int i = 0; \x1b[01;35m\x1b[Ki < verteces.size()\x1b[m\x1b[K; i++)\n'}
+[29.851023] (dubin) StderrLine: {'line': b'      |                     \x1b[01;35m\x1b[K~~^~~~~~~~~~~~~~~~~\x1b[m\x1b[K\n'}
+[29.851382] (dubin) StderrLine: {'line': b'\x1b[01m\x1b[K/home/marko/ros_ws/src/dubin/src/map.cpp:\x1b[m\x1b[K In member function \xe2\x80\x98\x1b[01m\x1b[Kfloat Map::halton_min(int, int, float, float)\x1b[m\x1b[K\xe2\x80\x99:\n'}
+[29.851979] (dubin) StderrLine: {'line': b'\x1b[01m\x1b[K/home/marko/ros_ws/src/dubin/src/map.cpp:240:50:\x1b[m\x1b[K \x1b[01;35m\x1b[Kwarning: \x1b[m\x1b[Kunused parameter \xe2\x80\x98\x1b[01m\x1b[Kmin\x1b[m\x1b[K\xe2\x80\x99 [\x1b[01;35m\x1b[K\x1b]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wunused-parameter\x07-Wunused-parameter\x1b]8;;\x07\x1b[m\x1b[K]\n'}
+[29.852433] (dubin) StderrLine: {'line': b'  240 | float Map::halton_min(int index, int base, \x1b[01;35m\x1b[Kfloat min\x1b[m\x1b[K, float max)\n'}
+[29.852867] (dubin) StderrLine: {'line': b'      |                                            \x1b[01;35m\x1b[K~~~~~~^~~\x1b[m\x1b[K\n'}
+[29.853299] (dubin) StderrLine: {'line': b'\x1b[01m\x1b[K/home/marko/ros_ws/src/dubin/src/map.cpp:240:61:\x1b[m\x1b[K \x1b[01;35m\x1b[Kwarning: \x1b[m\x1b[Kunused parameter \xe2\x80\x98\x1b[01m\x1b[Kmax\x1b[m\x1b[K\xe2\x80\x99 [\x1b[01;35m\x1b[K\x1b]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wunused-parameter\x07-Wunused-parameter\x1b]8;;\x07\x1b[m\x1b[K]\n'}
+[29.853699] (dubin) StderrLine: {'line': b'  240 | float Map::halton_min(int index, int base, float min, \x1b[01;35m\x1b[Kfloat max\x1b[m\x1b[K)\n'}
+[29.854071] (dubin) StderrLine: {'line': b'      |                                                       \x1b[01;35m\x1b[K~~~~~~^~~\x1b[m\x1b[K\n'}
+[29.857741] (dubin) StderrLine: {'line': b'In file included from \x1b[01m\x1b[K/home/marko/ros_ws/src/dubin/include/PRMstar.h:4\x1b[m\x1b[K,\n'}
+[29.858284] (dubin) StderrLine: {'line': b'                 from \x1b[01m\x1b[K/home/marko/ros_ws/src/dubin/src/PRMstar.cpp:1\x1b[m\x1b[K:\n'}
+[29.858711] (dubin) StderrLine: {'line': b'\x1b[01m\x1b[K/home/marko/ros_ws/src/dubin/include/map.h:\x1b[m\x1b[K In constructor \xe2\x80\x98\x1b[01m\x1b[KMap::Map(Polygon)\x1b[m\x1b[K\xe2\x80\x99:\n'}
+[29.859100] (dubin) StderrLine: {'line': b'\x1b[01m\x1b[K/home/marko/ros_ws/src/dubin/include/map.h:42:17:\x1b[m\x1b[K \x1b[01;35m\x1b[Kwarning: \x1b[m\x1b[K\xe2\x80\x98\x1b[01m\x1b[KMap::total_map_poly\x1b[m\x1b[K\xe2\x80\x99 will be initialized after [\x1b[01;35m\x1b[K\x1b]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wreorder\x07-Wreorder\x1b]8;;\x07\x1b[m\x1b[K]\n'}
+[29.859489] (dubin) StderrLine: {'line': b'   42 |         Polygon \x1b[01;35m\x1b[Ktotal_map_poly\x1b[m\x1b[K;\n'}
+[29.860099] (dubin) StderrLine: {'line': b'      |                 \x1b[01;35m\x1b[K^~~~~~~~~~~~~~\x1b[m\x1b[K\n'}
+[29.860498] (dubin) StderrLine: {'line': b'\x1b[01m\x1b[K/home/marko/ros_ws/src/dubin/include/map.h:40:15:\x1b[m\x1b[K \x1b[01;35m\x1b[Kwarning: \x1b[m\x1b[K  \xe2\x80\x98\x1b[01m\x1b[Kfloat Map::freeSpace\x1b[m\x1b[K\xe2\x80\x99 [\x1b[01;35m\x1b[K\x1b]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wreorder\x07-Wreorder\x1b]8;;\x07\x1b[m\x1b[K]\n'}
+[29.860894] (dubin) StderrLine: {'line': b'   40 |         float \x1b[01;35m\x1b[KfreeSpace\x1b[m\x1b[K;\n'}
+[29.861245] (dubin) StderrLine: {'line': b'      |               \x1b[01;35m\x1b[K^~~~~~~~~\x1b[m\x1b[K\n'}
+[29.861595] (dubin) StderrLine: {'line': b'\x1b[01m\x1b[K/home/marko/ros_ws/src/dubin/include/map.h:45:9:\x1b[m\x1b[K \x1b[01;35m\x1b[Kwarning: \x1b[m\x1b[K  when initialized here [\x1b[01;35m\x1b[K\x1b]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wreorder\x07-Wreorder\x1b]8;;\x07\x1b[m\x1b[K]\n'}
+[29.861969] (dubin) StderrLine: {'line': b'   45 |         \x1b[01;35m\x1b[KMap\x1b[m\x1b[K(Polygon map): total_map_poly(map.verteces), freeSpace(map.area), halton_index(0){\n'}
+[29.862375] (dubin) StderrLine: {'line': b'      |         \x1b[01;35m\x1b[K^~~\x1b[m\x1b[K\n'}
+[29.862723] (dubin) StderrLine: {'line': b'\x1b[01m\x1b[K/home/marko/ros_ws/src/dubin/include/map.h:40:15:\x1b[m\x1b[K \x1b[01;35m\x1b[Kwarning: \x1b[m\x1b[K\xe2\x80\x98\x1b[01m\x1b[KMap::freeSpace\x1b[m\x1b[K\xe2\x80\x99 will be initialized after [\x1b[01;35m\x1b[K\x1b]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wreorder\x07-Wreorder\x1b]8;;\x07\x1b[m\x1b[K]\n'}
+[29.863150] (dubin) StderrLine: {'line': b'   40 |         float \x1b[01;35m\x1b[KfreeSpace\x1b[m\x1b[K;\n'}
+[29.863471] (dubin) StderrLine: {'line': b'      |               \x1b[01;35m\x1b[K^~~~~~~~~\x1b[m\x1b[K\n'}
+[29.863759] (dubin) StderrLine: {'line': b'\x1b[01m\x1b[K/home/marko/ros_ws/src/dubin/include/map.h:39:13:\x1b[m\x1b[K \x1b[01;35m\x1b[Kwarning: \x1b[m\x1b[K  \xe2\x80\x98\x1b[01m\x1b[Kint Map::halton_index\x1b[m\x1b[K\xe2\x80\x99 [\x1b[01;35m\x1b[K\x1b]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wreorder\x07-Wreorder\x1b]8;;\x07\x1b[m\x1b[K]\n'}
+[29.864009] (dubin) StderrLine: {'line': b'   39 |         int \x1b[01;35m\x1b[Khalton_index\x1b[m\x1b[K;\n'}
+[29.864258] (dubin) StderrLine: {'line': b'      |             \x1b[01;35m\x1b[K^~~~~~~~~~~~\x1b[m\x1b[K\n'}
+[29.864503] (dubin) StderrLine: {'line': b'\x1b[01m\x1b[K/home/marko/ros_ws/src/dubin/include/map.h:45:9:\x1b[m\x1b[K \x1b[01;35m\x1b[Kwarning: \x1b[m\x1b[K  when initialized here [\x1b[01;35m\x1b[K\x1b]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wreorder\x07-Wreorder\x1b]8;;\x07\x1b[m\x1b[K]\n'}
+[29.864783] (dubin) StderrLine: {'line': b'   45 |         \x1b[01;35m\x1b[KMap\x1b[m\x1b[K(Polygon map): total_map_poly(map.verteces), freeSpace(map.area), halton_index(0){\n'}
+[29.865127] (dubin) StderrLine: {'line': b'      |         \x1b[01;35m\x1b[K^~~\x1b[m\x1b[K\n'}
+[29.929864] (-) TimerEvent: {}
+[30.032406] (-) TimerEvent: {}
+[30.133726] (-) TimerEvent: {}
+[30.143064] (dubin) StderrLine: {'line': b'In file included from \x1b[01m\x1b[K/home/marko/ros_ws/src/dubin/include/MissionPlanner.h:20\x1b[m\x1b[K,\n'}
+[30.144351] (dubin) StderrLine: {'line': b'                 from \x1b[01m\x1b[K/home/marko/ros_ws/src/dubin/src/dubinCurve.cpp:19\x1b[m\x1b[K:\n'}
+[30.145607] (dubin) StderrLine: {'line': b'\x1b[01m\x1b[K/home/marko/ros_ws/src/dubin/include/geometry.h:\x1b[m\x1b[K In constructor \xe2\x80\x98\x1b[01m\x1b[Karc::arc(pose2d, float, float)\x1b[m\x1b[K\xe2\x80\x99:\n'}
+[30.147622] (dubin) StderrLine: {'line': b'\x1b[01m\x1b[K/home/marko/ros_ws/src/dubin/include/geometry.h:128:9:\x1b[m\x1b[K \x1b[01;35m\x1b[Kwarning: \x1b[m\x1b[K\xe2\x80\x98\x1b[01m\x1b[Karc::s\x1b[m\x1b[K\xe2\x80\x99 will be initialized after [\x1b[01;35m\x1b[K\x1b]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wreorder\x07-Wreorder\x1b]8;;\x07\x1b[m\x1b[K]\n'}
+[30.147897] (dubin) StderrLine: {'line': b'  128 |   float \x1b[01;35m\x1b[Ks\x1b[m\x1b[K;\n'}
+[30.148166] (dubin) StderrLine: {'line': b'      |         \x1b[01;35m\x1b[K^\x1b[m\x1b[K\n'}
+[30.148412] (dubin) StderrLine: {'line': b'\x1b[01m\x1b[K/home/marko/ros_ws/src/dubin/include/geometry.h:127:9:\x1b[m\x1b[K \x1b[01;35m\x1b[Kwarning: \x1b[m\x1b[K  \xe2\x80\x98\x1b[01m\x1b[Kfloat arc::K\x1b[m\x1b[K\xe2\x80\x99 [\x1b[01;35m\x1b[K\x1b]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wreorder\x07-Wreorder\x1b]8;;\x07\x1b[m\x1b[K]\n'}
+[30.148711] (dubin) StderrLine: {'line': b'  127 |   float \x1b[01;35m\x1b[KK\x1b[m\x1b[K;\n'}
+[30.149050] (dubin) StderrLine: {'line': b'      |         \x1b[01;35m\x1b[K^\x1b[m\x1b[K\n'}
+[30.149418] (dubin) StderrLine: {'line': b'\x1b[01m\x1b[K/home/marko/ros_ws/src/dubin/include/geometry.h:114:3:\x1b[m\x1b[K \x1b[01;35m\x1b[Kwarning: \x1b[m\x1b[K  when initialized here [\x1b[01;35m\x1b[K\x1b]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wreorder\x07-Wreorder\x1b]8;;\x07\x1b[m\x1b[K]\n'}
+[30.149775] (dubin) StderrLine: {'line': b'  114 |   \x1b[01;35m\x1b[Karc\x1b[m\x1b[K(pose2d start, float K, float s) : start(start), s(s), K(K)\n'}
+[30.150105] (dubin) StderrLine: {'line': b'      |   \x1b[01;35m\x1b[K^~~\x1b[m\x1b[K\n'}
+[30.233028] (dubin) StderrLine: {'line': b'In file included from \x1b[01m\x1b[K/home/marko/ros_ws/src/dubin/include/PRMstar.h:3\x1b[m\x1b[K,\n'}
+[30.234214] (-) TimerEvent: {}
+[30.237821] (dubin) StderrLine: {'line': b'                 from \x1b[01m\x1b[K/home/marko/ros_ws/src/dubin/include/MissionPlanner.h:21\x1b[m\x1b[K,\n'}
+[30.238433] (dubin) StderrLine: {'line': b'                 from \x1b[01m\x1b[K/home/marko/ros_ws/src/dubin/src/dubinCurve.cpp:19\x1b[m\x1b[K:\n'}
+[30.238834] (dubin) StderrLine: {'line': b'\x1b[01m\x1b[K/home/marko/ros_ws/src/dubin/include/graph.h:\x1b[m\x1b[K In constructor \xe2\x80\x98\x1b[01m\x1b[KNode::Node(pose2d)\x1b[m\x1b[K\xe2\x80\x99:\n'}
+[30.239247] (dubin) StderrLine: {'line': b'\x1b[01m\x1b[K/home/marko/ros_ws/src/dubin/include/graph.h:21:10:\x1b[m\x1b[K \x1b[01;35m\x1b[Kwarning: \x1b[m\x1b[K\xe2\x80\x98\x1b[01m\x1b[KNode::opened\x1b[m\x1b[K\xe2\x80\x99 will be initialized after [\x1b[01;35m\x1b[K\x1b]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wreorder\x07-Wreorder\x1b]8;;\x07\x1b[m\x1b[K]\n'}
+[30.239863] (dubin) StderrLine: {'line': b'   21 |     bool \x1b[01;35m\x1b[Kopened\x1b[m\x1b[K;\n'}
+[30.240388] (dubin) StderrLine: {'line': b'      |          \x1b[01;35m\x1b[K^~~~~~\x1b[m\x1b[K\n'}
+[30.242562] (dubin) StderrLine: {'line': b'\x1b[01m\x1b[K/home/marko/ros_ws/src/dubin/include/graph.h:20:11:\x1b[m\x1b[K \x1b[01;35m\x1b[Kwarning: \x1b[m\x1b[K  \xe2\x80\x98\x1b[01m\x1b[Kfloat Node::cost\x1b[m\x1b[K\xe2\x80\x99 [\x1b[01;35m\x1b[K\x1b]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wreorder\x07-Wreorder\x1b]8;;\x07\x1b[m\x1b[K]\n'}
+[30.244705] (dubin) StderrLine: {'line': b'   20 |     float \x1b[01;35m\x1b[Kcost\x1b[m\x1b[K;\n'}
+[30.246757] (dubin) StderrLine: {'line': b'      |           \x1b[01;35m\x1b[K^~~~\x1b[m\x1b[K\n'}
+[30.248761] (dubin) StderrLine: {'line': b'\x1b[01m\x1b[K/home/marko/ros_ws/src/dubin/include/graph.h:14:5:\x1b[m\x1b[K \x1b[01;35m\x1b[Kwarning: \x1b[m\x1b[K  when initialized here [\x1b[01;35m\x1b[K\x1b]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wreorder\x07-Wreorder\x1b]8;;\x07\x1b[m\x1b[K]\n'}
+[30.250682] (dubin) StderrLine: {'line': b'   14 |     \x1b[01;35m\x1b[KNode\x1b[m\x1b[K(pose2d point): opened(false), cost(0), parent(nullptr) {\n'}
+[30.252735] (dubin) StderrLine: {'line': b'      |     \x1b[01;35m\x1b[K^~~~\x1b[m\x1b[K\n'}
+[30.256876] (dubin) StderrLine: {'line': b'\x1b[01m\x1b[K/home/marko/ros_ws/src/dubin/include/graph.h:\x1b[m\x1b[K In member function \xe2\x80\x98\x1b[01m\x1b[Kbool Node::check_availability(float, float)\x1b[m\x1b[K\xe2\x80\x99:\n'}
+[30.260040] (dubin) StderrLine: {'line': b'\x1b[01m\x1b[K/home/marko/ros_ws/src/dubin/include/graph.h:29:27:\x1b[m\x1b[K \x1b[01;35m\x1b[Kwarning: \x1b[m\x1b[Kcomparison of integer expressions of different signedness: \xe2\x80\x98\x1b[01m\x1b[Kint\x1b[m\x1b[K\xe2\x80\x99 and \xe2\x80\x98\x1b[01m\x1b[Kstd::vector<float>::size_type\x1b[m\x1b[K\xe2\x80\x99 {aka \xe2\x80\x98\x1b[01m\x1b[Klong unsigned int\x1b[m\x1b[K\xe2\x80\x99} [\x1b[01;35m\x1b[K\x1b]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wsign-compare\x07-Wsign-compare\x1b]8;;\x07\x1b[m\x1b[K]\n'}
+[30.264432] (dubin) StderrLine: {'line': b'   29 |         for (int i = 0; \x1b[01;35m\x1b[Ki < arrival_time.size()\x1b[m\x1b[K; i++)\n'}
+[30.267708] (dubin) StderrLine: {'line': b'      |                         \x1b[01;35m\x1b[K~~^~~~~~~~~~~~~~~~~~~~~\x1b[m\x1b[K\n'}
+[30.270572] (dubin) StderrLine: {'line': b'In file included from \x1b[01m\x1b[K/home/marko/ros_ws/src/dubin/src/MissionPlanner.cpp:13\x1b[m\x1b[K:\n'}
+[30.283795] (dubin) StderrLine: {'line': b'\x1b[01m\x1b[K/home/marko/ros_ws/src/dubin/include/geometry.h:\x1b[m\x1b[K In constructor \xe2\x80\x98\x1b[01m\x1b[Karc::arc(pose2d, float, float)\x1b[m\x1b[K\xe2\x80\x99:\n'}
+[30.284776] (dubin) StderrLine: {'line': b'\x1b[01m\x1b[K/home/marko/ros_ws/src/dubin/include/geometry.h:128:9:\x1b[m\x1b[K \x1b[01;35m\x1b[Kwarning: \x1b[m\x1b[K\xe2\x80\x98\x1b[01m\x1b[Karc::s\x1b[m\x1b[K\xe2\x80\x99 will be initialized after [\x1b[01;35m\x1b[K\x1b]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wreorder\x07-Wreorder\x1b]8;;\x07\x1b[m\x1b[K]\n'}
+[30.291255] (dubin) StderrLine: {'line': b'  128 |   float \x1b[01;35m\x1b[Ks\x1b[m\x1b[K;\n'}
+[30.297148] (dubin) StderrLine: {'line': b'      |         \x1b[01;35m\x1b[K^\x1b[m\x1b[K\n'}
+[30.300695] (dubin) StderrLine: {'line': b'\x1b[01m\x1b[K/home/marko/ros_ws/src/dubin/include/geometry.h:127:9:\x1b[m\x1b[K \x1b[01;35m\x1b[Kwarning: \x1b[m\x1b[K  \xe2\x80\x98\x1b[01m\x1b[Kfloat arc::K\x1b[m\x1b[K\xe2\x80\x99 [\x1b[01;35m\x1b[K\x1b]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wreorder\x07-Wreorder\x1b]8;;\x07\x1b[m\x1b[K]\n'}
+[30.303324] (dubin) StderrLine: {'line': b'  127 |   float \x1b[01;35m\x1b[KK\x1b[m\x1b[K;\n'}
+[30.306193] (dubin) StderrLine: {'line': b'      |         \x1b[01;35m\x1b[K^\x1b[m\x1b[K\n'}
+[30.316448] (dubin) StderrLine: {'line': b'\x1b[01m\x1b[K/home/marko/ros_ws/src/dubin/include/geometry.h:114:3:\x1b[m\x1b[K \x1b[01;35m\x1b[Kwarning: \x1b[m\x1b[K  when initialized here [\x1b[01;35m\x1b[K\x1b]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wreorder\x07-Wreorder\x1b]8;;\x07\x1b[m\x1b[K]\n'}
+[30.320050] (dubin) StderrLine: {'line': b'  114 |   \x1b[01;35m\x1b[Karc\x1b[m\x1b[K(pose2d start, float K, float s) : start(start), s(s), K(K)\n'}
+[30.323231] (dubin) StderrLine: {'line': b'      |   \x1b[01;35m\x1b[K^~~\x1b[m\x1b[K\n'}
+[30.325896] (dubin) StderrLine: {'line': b'In file included from \x1b[01m\x1b[K/home/marko/ros_ws/src/dubin/include/collision_check.h:6\x1b[m\x1b[K,\n'}
+[30.328599] (dubin) StderrLine: {'line': b'                 from \x1b[01m\x1b[K/home/marko/ros_ws/src/dubin/src/collision_check.cpp:3\x1b[m\x1b[K:\n'}
+[30.333420] (dubin) StderrLine: {'line': b'\x1b[01m\x1b[K/home/marko/ros_ws/src/dubin/include/map.h:\x1b[m\x1b[K In constructor \xe2\x80\x98\x1b[01m\x1b[KMap::Map(Polygon)\x1b[m\x1b[K\xe2\x80\x99:\n'}
+[30.336608] (-) TimerEvent: {}
+[30.338966] (dubin) StderrLine: {'line': b'\x1b[01m\x1b[K/home/marko/ros_ws/src/dubin/include/map.h:42:17:\x1b[m\x1b[K \x1b[01;35m\x1b[Kwarning: \x1b[m\x1b[K\xe2\x80\x98\x1b[01m\x1b[KMap::total_map_poly\x1b[m\x1b[K\xe2\x80\x99 will be initialized after [\x1b[01;35m\x1b[K\x1b]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wreorder\x07-Wreorder\x1b]8;;\x07\x1b[m\x1b[K]\n'}
+[30.341896] (dubin) StderrLine: {'line': b'   42 |         Polygon \x1b[01;35m\x1b[Ktotal_map_poly\x1b[m\x1b[K;\n'}
+[30.345025] (dubin) StderrLine: {'line': b'      |                 \x1b[01;35m\x1b[K^~~~~~~~~~~~~~\x1b[m\x1b[K\n'}
+[30.349011] (dubin) StderrLine: {'line': b'\x1b[01m\x1b[K/home/marko/ros_ws/src/dubin/include/map.h:40:15:\x1b[m\x1b[K \x1b[01;35m\x1b[Kwarning: \x1b[m\x1b[K  \xe2\x80\x98\x1b[01m\x1b[Kfloat Map::freeSpace\x1b[m\x1b[K\xe2\x80\x99 [\x1b[01;35m\x1b[K\x1b]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wreorder\x07-Wreorder\x1b]8;;\x07\x1b[m\x1b[K]\n'}
+[30.353245] (dubin) StderrLine: {'line': b'   40 |         float \x1b[01;35m\x1b[KfreeSpace\x1b[m\x1b[K;\n'}
+[30.355978] (dubin) StderrLine: {'line': b'      |               \x1b[01;35m\x1b[K^~~~~~~~~\x1b[m\x1b[K\n'}
+[30.358814] (dubin) StderrLine: {'line': b'\x1b[01m\x1b[K/home/marko/ros_ws/src/dubin/include/map.h:45:9:\x1b[m\x1b[K \x1b[01;35m\x1b[Kwarning: \x1b[m\x1b[K  when initialized here [\x1b[01;35m\x1b[K\x1b]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wreorder\x07-Wreorder\x1b]8;;\x07\x1b[m\x1b[K]\n'}
+[30.361642] (dubin) StderrLine: {'line': b'   45 |         \x1b[01;35m\x1b[KMap\x1b[m\x1b[K(Polygon map): total_map_poly(map.verteces), freeSpace(map.area), halton_index(0){\n'}
+[30.364669] (dubin) StderrLine: {'line': b'      |         \x1b[01;35m\x1b[K^~~\x1b[m\x1b[K\n'}
+[30.367395] (dubin) StderrLine: {'line': b'\x1b[01m\x1b[K/home/marko/ros_ws/src/dubin/include/map.h:40:15:\x1b[m\x1b[K \x1b[01;35m\x1b[Kwarning: \x1b[m\x1b[K\xe2\x80\x98\x1b[01m\x1b[KMap::freeSpace\x1b[m\x1b[K\xe2\x80\x99 will be initialized after [\x1b[01;35m\x1b[K\x1b]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wreorder\x07-Wreorder\x1b]8;;\x07\x1b[m\x1b[K]\n'}
+[30.370030] (dubin) StderrLine: {'line': b'   40 |         float \x1b[01;35m\x1b[KfreeSpace\x1b[m\x1b[K;\n'}
+[30.376403] (dubin) StderrLine: {'line': b'      |               \x1b[01;35m\x1b[K^~~~~~~~~\x1b[m\x1b[K\n'}
+[30.376910] (dubin) StderrLine: {'line': b'\x1b[01m\x1b[K/home/marko/ros_ws/src/dubin/include/map.h:39:13:\x1b[m\x1b[K \x1b[01;35m\x1b[Kwarning: \x1b[m\x1b[K  \xe2\x80\x98\x1b[01m\x1b[Kint Map::halton_index\x1b[m\x1b[K\xe2\x80\x99 [\x1b[01;35m\x1b[K\x1b]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wreorder\x07-Wreorder\x1b]8;;\x07\x1b[m\x1b[K]\n'}
+[30.377305] (dubin) StderrLine: {'line': b'   39 |         int \x1b[01;35m\x1b[Khalton_index\x1b[m\x1b[K;\n'}
+[30.377741] (dubin) StderrLine: {'line': b'      |             \x1b[01;35m\x1b[K^~~~~~~~~~~~\x1b[m\x1b[K\n'}
+[30.378103] (dubin) StderrLine: {'line': b'\x1b[01m\x1b[K/home/marko/ros_ws/src/dubin/include/map.h:45:9:\x1b[m\x1b[K \x1b[01;35m\x1b[Kwarning: \x1b[m\x1b[K  when initialized here [\x1b[01;35m\x1b[K\x1b]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wreorder\x07-Wreorder\x1b]8;;\x07\x1b[m\x1b[K]\n'}
+[30.378510] (dubin) StderrLine: {'line': b'   45 |         \x1b[01;35m\x1b[KMap\x1b[m\x1b[K(Polygon map): total_map_poly(map.verteces), freeSpace(map.area), halton_index(0){\n'}
+[30.378901] (dubin) StderrLine: {'line': b'      |         \x1b[01;35m\x1b[K^~~\x1b[m\x1b[K\n'}
+[30.379279] (dubin) StderrLine: {'line': b'\x1b[01m\x1b[K/home/marko/ros_ws/src/dubin/src/collision_check.cpp:\x1b[m\x1b[K In static member function \xe2\x80\x98\x1b[01m\x1b[Kstatic bool CollisionCheck::point_in_polygon(point2d, Polygon)\x1b[m\x1b[K\xe2\x80\x99:\n'}
+[30.379715] (dubin) StderrLine: {'line': b'\x1b[01m\x1b[K/home/marko/ros_ws/src/dubin/src/collision_check.cpp:234:24:\x1b[m\x1b[K \x1b[01;35m\x1b[Kwarning: \x1b[m\x1b[Kcomparison of integer expressions of different signedness: \xe2\x80\x98\x1b[01m\x1b[Kint\x1b[m\x1b[K\xe2\x80\x99 and \xe2\x80\x98\x1b[01m\x1b[Kstd::vector<line>::size_type\x1b[m\x1b[K\xe2\x80\x99 {aka \xe2\x80\x98\x1b[01m\x1b[Klong unsigned int\x1b[m\x1b[K\xe2\x80\x99} [\x1b[01;35m\x1b[K\x1b]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wsign-compare\x07-Wsign-compare\x1b]8;;\x07\x1b[m\x1b[K]\n'}
+[30.380130] (dubin) StderrLine: {'line': b'  234 |     for (auto j = 0; \x1b[01;35m\x1b[Kj < shape.edges.size()\x1b[m\x1b[K; j++)\n'}
+[30.380527] (dubin) StderrLine: {'line': b'      |                      \x1b[01;35m\x1b[K~~^~~~~~~~~~~~~~~~~~~~\x1b[m\x1b[K\n'}
+[30.380977] (dubin) StderrLine: {'line': b'\x1b[01m\x1b[K/home/marko/ros_ws/src/dubin/src/collision_check.cpp:\x1b[m\x1b[K In static member function \xe2\x80\x98\x1b[01m\x1b[Kstatic bool CollisionCheck::arc_with_polygon(arc, Polygon)\x1b[m\x1b[K\xe2\x80\x99:\n'}
+[30.381338] (dubin) StderrLine: {'line': b'\x1b[01m\x1b[K/home/marko/ros_ws/src/dubin/src/collision_check.cpp:252:24:\x1b[m\x1b[K \x1b[01;35m\x1b[Kwarning: \x1b[m\x1b[Kcomparison of integer expressions of different signedness: \xe2\x80\x98\x1b[01m\x1b[Kint\x1b[m\x1b[K\xe2\x80\x99 and \xe2\x80\x98\x1b[01m\x1b[Kstd::vector<line>::size_type\x1b[m\x1b[K\xe2\x80\x99 {aka \xe2\x80\x98\x1b[01m\x1b[Klong unsigned int\x1b[m\x1b[K\xe2\x80\x99} [\x1b[01;35m\x1b[K\x1b]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wsign-compare\x07-Wsign-compare\x1b]8;;\x07\x1b[m\x1b[K]\n'}
+[30.381782] (dubin) StderrLine: {'line': b'  252 |     for (auto j = 0; \x1b[01;35m\x1b[Kj < shape.edges.size()\x1b[m\x1b[K; j++)\n'}
+[30.382128] (dubin) StderrLine: {'line': b'      |                      \x1b[01;35m\x1b[K~~^~~~~~~~~~~~~~~~~~~~\x1b[m\x1b[K\n'}
+[30.382481] (dubin) StderrLine: {'line': b'\x1b[01m\x1b[K/home/marko/ros_ws/src/dubin/src/collision_check.cpp:\x1b[m\x1b[K In static member function \xe2\x80\x98\x1b[01m\x1b[Kstatic float CollisionCheck::point_lineseg_dist(point2d, line)\x1b[m\x1b[K\xe2\x80\x99:\n'}
+[30.382837] (dubin) StderrLine: {'line': b'\x1b[01m\x1b[K/home/marko/ros_ws/src/dubin/src/collision_check.cpp:270:12:\x1b[m\x1b[K \x1b[01;35m\x1b[Kwarning: \x1b[m\x1b[Kvariable \xe2\x80\x98\x1b[01m\x1b[Kab_be\x1b[m\x1b[K\xe2\x80\x99 set but not used [\x1b[01;35m\x1b[K\x1b]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wunused-but-set-variable\x07-Wunused-but-set-variable\x1b]8;;\x07\x1b[m\x1b[K]\n'}
+[30.383190] (dubin) StderrLine: {'line': b'  270 |     double \x1b[01;35m\x1b[Kab_be\x1b[m\x1b[K, ab_ae;\n'}
+[30.383580] (dubin) StderrLine: {'line': b'      |            \x1b[01;35m\x1b[K^~~~~\x1b[m\x1b[K\n'}
+[30.383980] (dubin) StderrLine: {'line': b'In file included from \x1b[01m\x1b[K/home/marko/ros_ws/src/dubin/src/MissionPlanner.cpp:14\x1b[m\x1b[K:\n'}
+[30.384426] (dubin) StderrLine: {'line': b'\x1b[01m\x1b[K/home/marko/ros_ws/src/dubin/include/graph.h:\x1b[m\x1b[K In constructor \xe2\x80\x98\x1b[01m\x1b[KNode::Node(pose2d)\x1b[m\x1b[K\xe2\x80\x99:\n'}
+[30.385752] (dubin) StderrLine: {'line': b'\x1b[01m\x1b[K/home/marko/ros_ws/src/dubin/include/graph.h:21:10:\x1b[m\x1b[K \x1b[01;35m\x1b[Kwarning: \x1b[m\x1b[K\xe2\x80\x98\x1b[01m\x1b[KNode::opened\x1b[m\x1b[K\xe2\x80\x99 will be initialized after [\x1b[01;35m\x1b[K\x1b]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wreorder\x07-Wreorder\x1b]8;;\x07\x1b[m\x1b[K]\n'}
+[30.386271] (dubin) StderrLine: {'line': b'   21 |     bool \x1b[01;35m\x1b[Kopened\x1b[m\x1b[K;\n'}
+[30.386682] (dubin) StderrLine: {'line': b'      |          \x1b[01;35m\x1b[K^~~~~~\x1b[m\x1b[K\n'}
+[30.387393] (dubin) StderrLine: {'line': b'\x1b[01m\x1b[K/home/marko/ros_ws/src/dubin/include/graph.h:20:11:\x1b[m\x1b[K \x1b[01;35m\x1b[Kwarning: \x1b[m\x1b[K  \xe2\x80\x98\x1b[01m\x1b[Kfloat Node::cost\x1b[m\x1b[K\xe2\x80\x99 [\x1b[01;35m\x1b[K\x1b]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wreorder\x07-Wreorder\x1b]8;;\x07\x1b[m\x1b[K]\n'}
+[30.388154] (dubin) StderrLine: {'line': b'   20 |     float \x1b[01;35m\x1b[Kcost\x1b[m\x1b[K;\n'}
+[30.388958] (dubin) StderrLine: {'line': b'      |           \x1b[01;35m\x1b[K^~~~\x1b[m\x1b[K\n'}
+[30.389459] (dubin) StderrLine: {'line': b'\x1b[01m\x1b[K/home/marko/ros_ws/src/dubin/include/graph.h:14:5:\x1b[m\x1b[K \x1b[01;35m\x1b[Kwarning: \x1b[m\x1b[K  when initialized here [\x1b[01;35m\x1b[K\x1b]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wreorder\x07-Wreorder\x1b]8;;\x07\x1b[m\x1b[K]\n'}
+[30.390808] (dubin) StderrLine: {'line': b'   14 |     \x1b[01;35m\x1b[KNode\x1b[m\x1b[K(pose2d point): opened(false), cost(0), parent(nullptr) {\n'}
+[30.391336] (dubin) StderrLine: {'line': b'      |     \x1b[01;35m\x1b[K^~~~\x1b[m\x1b[K\n'}
+[30.391898] (dubin) StderrLine: {'line': b'\x1b[01m\x1b[K/home/marko/ros_ws/src/dubin/include/graph.h:\x1b[m\x1b[K In member function \xe2\x80\x98\x1b[01m\x1b[Kbool Node::check_availability(float, float)\x1b[m\x1b[K\xe2\x80\x99:\n'}
+[30.392238] (dubin) StderrLine: {'line': b'\x1b[01m\x1b[K/home/marko/ros_ws/src/dubin/include/graph.h:29:27:\x1b[m\x1b[K \x1b[01;35m\x1b[Kwarning: \x1b[m\x1b[Kcomparison of integer expressions of different signedness: \xe2\x80\x98\x1b[01m\x1b[Kint\x1b[m\x1b[K\xe2\x80\x99 and \xe2\x80\x98\x1b[01m\x1b[Kstd::vector<float>::size_type\x1b[m\x1b[K\xe2\x80\x99 {aka \xe2\x80\x98\x1b[01m\x1b[Klong unsigned int\x1b[m\x1b[K\xe2\x80\x99} [\x1b[01;35m\x1b[K\x1b]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wsign-compare\x07-Wsign-compare\x1b]8;;\x07\x1b[m\x1b[K]\n'}
+[30.392637] (dubin) StderrLine: {'line': b'   29 |         for (int i = 0; \x1b[01;35m\x1b[Ki < arrival_time.size()\x1b[m\x1b[K; i++)\n'}
+[30.393174] (dubin) StderrLine: {'line': b'      |                         \x1b[01;35m\x1b[K~~^~~~~~~~~~~~~~~~~~~~~\x1b[m\x1b[K\n'}
+[30.393637] (dubin) StderrLine: {'line': b'In file included from \x1b[01m\x1b[K/home/marko/ros_ws/src/dubin/include/PRMstar.h:4\x1b[m\x1b[K,\n'}
+[30.393986] (dubin) StderrLine: {'line': b'                 from \x1b[01m\x1b[K/home/marko/ros_ws/src/dubin/include/MissionPlanner.h:21\x1b[m\x1b[K,\n'}
+[30.394257] (dubin) StderrLine: {'line': b'                 from \x1b[01m\x1b[K/home/marko/ros_ws/src/dubin/src/dubinCurve.cpp:19\x1b[m\x1b[K:\n'}
+[30.418301] (dubin) StderrLine: {'line': b'\x1b[01m\x1b[K/home/marko/ros_ws/src/dubin/include/map.h:\x1b[m\x1b[K In constructor \xe2\x80\x98\x1b[01m\x1b[KMap::Map(Polygon)\x1b[m\x1b[K\xe2\x80\x99:\n'}
+[30.418912] (dubin) StderrLine: {'line': b'\x1b[01m\x1b[K/home/marko/ros_ws/src/dubin/include/map.h:42:17:\x1b[m\x1b[K \x1b[01;35m\x1b[Kwarning: \x1b[m\x1b[K\xe2\x80\x98\x1b[01m\x1b[KMap::total_map_poly\x1b[m\x1b[K\xe2\x80\x99 will be initialized after [\x1b[01;35m\x1b[K\x1b]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wreorder\x07-Wreorder\x1b]8;;\x07\x1b[m\x1b[K]\n'}
+[30.419265] (dubin) StderrLine: {'line': b'   42 |         Polygon \x1b[01;35m\x1b[Ktotal_map_poly\x1b[m\x1b[K;\n'}
+[30.419557] (dubin) StderrLine: {'line': b'      |                 \x1b[01;35m\x1b[K^~~~~~~~~~~~~~\x1b[m\x1b[K\n'}
+[30.419837] (dubin) StderrLine: {'line': b'\x1b[01m\x1b[K/home/marko/ros_ws/src/dubin/include/map.h:40:15:\x1b[m\x1b[K \x1b[01;35m\x1b[Kwarning: \x1b[m\x1b[K  \xe2\x80\x98\x1b[01m\x1b[Kfloat Map::freeSpace\x1b[m\x1b[K\xe2\x80\x99 [\x1b[01;35m\x1b[K\x1b]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wreorder\x07-Wreorder\x1b]8;;\x07\x1b[m\x1b[K]\n'}
+[30.420112] (dubin) StderrLine: {'line': b'   40 |         float \x1b[01;35m\x1b[KfreeSpace\x1b[m\x1b[K;\n'}
+[30.420372] (dubin) StderrLine: {'line': b'      |               \x1b[01;35m\x1b[K^~~~~~~~~\x1b[m\x1b[K\n'}
+[30.420662] (dubin) StderrLine: {'line': b'\x1b[01m\x1b[K/home/marko/ros_ws/src/dubin/include/map.h:45:9:\x1b[m\x1b[K \x1b[01;35m\x1b[Kwarning: \x1b[m\x1b[K  when initialized here [\x1b[01;35m\x1b[K\x1b]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wreorder\x07-Wreorder\x1b]8;;\x07\x1b[m\x1b[K]\n'}
+[30.421038] (dubin) StderrLine: {'line': b'   45 |         \x1b[01;35m\x1b[KMap\x1b[m\x1b[K(Polygon map): total_map_poly(map.verteces), freeSpace(map.area), halton_index(0){\n'}
+[30.436063] (dubin) StderrLine: {'line': b'      |         \x1b[01;35m\x1b[K^~~\x1b[m\x1b[K\n'}
+[30.439017] (-) TimerEvent: {}
+[30.441102] (dubin) StderrLine: {'line': b'\x1b[01m\x1b[K/home/marko/ros_ws/src/dubin/include/map.h:40:15:\x1b[m\x1b[K \x1b[01;35m\x1b[Kwarning: \x1b[m\x1b[K\xe2\x80\x98\x1b[01m\x1b[KMap::freeSpace\x1b[m\x1b[K\xe2\x80\x99 will be initialized after [\x1b[01;35m\x1b[K\x1b]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wreorder\x07-Wreorder\x1b]8;;\x07\x1b[m\x1b[K]\n'}
+[30.448668] (dubin) StderrLine: {'line': b'   40 |         float \x1b[01;35m\x1b[KfreeSpace\x1b[m\x1b[K;\n'}
+[30.455102] (dubin) StderrLine: {'line': b'      |               \x1b[01;35m\x1b[K^~~~~~~~~\x1b[m\x1b[K\n'}
+[30.458313] (dubin) StderrLine: {'line': b'\x1b[01m\x1b[K/home/marko/ros_ws/src/dubin/include/map.h:39:13:\x1b[m\x1b[K \x1b[01;35m\x1b[Kwarning: \x1b[m\x1b[K  \xe2\x80\x98\x1b[01m\x1b[Kint Map::halton_index\x1b[m\x1b[K\xe2\x80\x99 [\x1b[01;35m\x1b[K\x1b]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wreorder\x07-Wreorder\x1b]8;;\x07\x1b[m\x1b[K]\n'}
+[30.461403] (dubin) StderrLine: {'line': b'   39 |         int \x1b[01;35m\x1b[Khalton_index\x1b[m\x1b[K;\n'}
+[30.464465] (dubin) StderrLine: {'line': b'      |             \x1b[01;35m\x1b[K^~~~~~~~~~~~\x1b[m\x1b[K\n'}
+[30.468925] (dubin) StderrLine: {'line': b'\x1b[01m\x1b[K/home/marko/ros_ws/src/dubin/include/map.h:45:9:\x1b[m\x1b[K \x1b[01;35m\x1b[Kwarning: \x1b[m\x1b[K  when initialized here [\x1b[01;35m\x1b[K\x1b]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wreorder\x07-Wreorder\x1b]8;;\x07\x1b[m\x1b[K]\n'}
+[30.482472] (dubin) StderrLine: {'line': b'   45 |         \x1b[01;35m\x1b[KMap\x1b[m\x1b[K(Polygon map): total_map_poly(map.verteces), freeSpace(map.area), halton_index(0){\n'}
+[30.483161] (dubin) StderrLine: {'line': b'      |         \x1b[01;35m\x1b[K^~~\x1b[m\x1b[K\n'}
+[30.484292] (dubin) StderrLine: {'line': b'In file included from \x1b[01m\x1b[K/home/marko/ros_ws/src/dubin/src/MissionPlanner.cpp:15\x1b[m\x1b[K:\n'}
+[30.484850] (dubin) StderrLine: {'line': b'\x1b[01m\x1b[K/home/marko/ros_ws/src/dubin/include/map.h:\x1b[m\x1b[K In constructor \xe2\x80\x98\x1b[01m\x1b[KMap::Map(Polygon)\x1b[m\x1b[K\xe2\x80\x99:\n'}
+[30.485266] (dubin) StderrLine: {'line': b'\x1b[01m\x1b[K/home/marko/ros_ws/src/dubin/include/map.h:42:17:\x1b[m\x1b[K \x1b[01;35m\x1b[Kwarning: \x1b[m\x1b[K\xe2\x80\x98\x1b[01m\x1b[KMap::total_map_poly\x1b[m\x1b[K\xe2\x80\x99 will be initialized after [\x1b[01;35m\x1b[K\x1b]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wreorder\x07-Wreorder\x1b]8;;\x07\x1b[m\x1b[K]\n'}
+[30.485726] (dubin) StderrLine: {'line': b'   42 |         Polygon \x1b[01;35m\x1b[Ktotal_map_poly\x1b[m\x1b[K;\n'}
+[30.486507] (dubin) StderrLine: {'line': b'      |                 \x1b[01;35m\x1b[K^~~~~~~~~~~~~~\x1b[m\x1b[K\n'}
+[30.487276] (dubin) StderrLine: {'line': b'\x1b[01m\x1b[K/home/marko/ros_ws/src/dubin/include/map.h:40:15:\x1b[m\x1b[K \x1b[01;35m\x1b[Kwarning: \x1b[m\x1b[K  \xe2\x80\x98\x1b[01m\x1b[Kfloat Map::freeSpace\x1b[m\x1b[K\xe2\x80\x99 [\x1b[01;35m\x1b[K\x1b]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wreorder\x07-Wreorder\x1b]8;;\x07\x1b[m\x1b[K]\n'}
+[30.488000] (dubin) StderrLine: {'line': b'   40 |         float \x1b[01;35m\x1b[KfreeSpace\x1b[m\x1b[K;\n'}
+[30.494995] (dubin) StderrLine: {'line': b'      |               \x1b[01;35m\x1b[K^~~~~~~~~\x1b[m\x1b[K\n'}
+[30.499948] (dubin) StderrLine: {'line': b'\x1b[01m\x1b[K/home/marko/ros_ws/src/dubin/include/map.h:45:9:\x1b[m\x1b[K \x1b[01;35m\x1b[Kwarning: \x1b[m\x1b[K  when initialized here [\x1b[01;35m\x1b[K\x1b]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wreorder\x07-Wreorder\x1b]8;;\x07\x1b[m\x1b[K]\n'}
+[30.506198] (dubin) StderrLine: {'line': b'   45 |         \x1b[01;35m\x1b[KMap\x1b[m\x1b[K(Polygon map): total_map_poly(map.verteces), freeSpace(map.area), halton_index(0){\n'}
+[30.509084] (dubin) StderrLine: {'line': b'      |         \x1b[01;35m\x1b[K^~~\x1b[m\x1b[K\n'}
+[30.511535] (dubin) StderrLine: {'line': b'\x1b[01m\x1b[K/home/marko/ros_ws/src/dubin/include/map.h:40:15:\x1b[m\x1b[K \x1b[01;35m\x1b[Kwarning: \x1b[m\x1b[K\xe2\x80\x98\x1b[01m\x1b[KMap::freeSpace\x1b[m\x1b[K\xe2\x80\x99 will be initialized after [\x1b[01;35m\x1b[K\x1b]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wreorder\x07-Wreorder\x1b]8;;\x07\x1b[m\x1b[K]\n'}
+[30.514157] (dubin) StderrLine: {'line': b'   40 |         float \x1b[01;35m\x1b[KfreeSpace\x1b[m\x1b[K;\n'}
+[30.517227] (dubin) StderrLine: {'line': b'      |               \x1b[01;35m\x1b[K^~~~~~~~~\x1b[m\x1b[K\n'}
+[30.520173] (dubin) StderrLine: {'line': b'\x1b[01m\x1b[K/home/marko/ros_ws/src/dubin/include/map.h:39:13:\x1b[m\x1b[K \x1b[01;35m\x1b[Kwarning: \x1b[m\x1b[K  \xe2\x80\x98\x1b[01m\x1b[Kint Map::halton_index\x1b[m\x1b[K\xe2\x80\x99 [\x1b[01;35m\x1b[K\x1b]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wreorder\x07-Wreorder\x1b]8;;\x07\x1b[m\x1b[K]\n'}
+[30.523260] (dubin) StderrLine: {'line': b'   39 |         int \x1b[01;35m\x1b[Khalton_index\x1b[m\x1b[K;\n'}
+[30.526125] (dubin) StderrLine: {'line': b'      |             \x1b[01;35m\x1b[K^~~~~~~~~~~~\x1b[m\x1b[K\n'}
+[30.529737] (dubin) StderrLine: {'line': b'\x1b[01m\x1b[K/home/marko/ros_ws/src/dubin/include/map.h:45:9:\x1b[m\x1b[K \x1b[01;35m\x1b[Kwarning: \x1b[m\x1b[K  when initialized here [\x1b[01;35m\x1b[K\x1b]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wreorder\x07-Wreorder\x1b]8;;\x07\x1b[m\x1b[K]\n'}
+[30.533909] (dubin) StderrLine: {'line': b'   45 |         \x1b[01;35m\x1b[KMap\x1b[m\x1b[K(Polygon map): total_map_poly(map.verteces), freeSpace(map.area), halton_index(0){\n'}
+[30.538025] (dubin) StderrLine: {'line': b'      |         \x1b[01;35m\x1b[K^~~\x1b[m\x1b[K\n'}
+[30.540990] (-) TimerEvent: {}
+[30.644119] (-) TimerEvent: {}
+[30.745506] (-) TimerEvent: {}
+[30.846748] (-) TimerEvent: {}
+[30.947845] (-) TimerEvent: {}
+[31.049027] (-) TimerEvent: {}
+[31.125349] (dubin) StderrLine: {'line': b'\x1b[01m\x1b[K/home/marko/ros_ws/src/dubin/src/PRMstar.cpp:\x1b[m\x1b[K In member function \xe2\x80\x98\x1b[01m\x1b[Kvoid PRMstar::genRoadmap(int)\x1b[m\x1b[K\xe2\x80\x99:\n'}
+[31.126206] (dubin) StderrLine: {'line': b'\x1b[01m\x1b[K/home/marko/ros_ws/src/dubin/src/PRMstar.cpp:22:28:\x1b[m\x1b[K \x1b[01;35m\x1b[Kwarning: \x1b[m\x1b[Kcomparison of integer expressions of different signedness: \xe2\x80\x98\x1b[01m\x1b[Kint\x1b[m\x1b[K\xe2\x80\x99 and \xe2\x80\x98\x1b[01m\x1b[Kstd::vector<std::shared_ptr<Bundle> >::size_type\x1b[m\x1b[K\xe2\x80\x99 {aka \xe2\x80\x98\x1b[01m\x1b[Klong unsigned int\x1b[m\x1b[K\xe2\x80\x99} [\x1b[01;35m\x1b[K\x1b]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wsign-compare\x07-Wsign-compare\x1b]8;;\x07\x1b[m\x1b[K]\n'}
+[31.127201] (dubin) StderrLine: {'line': b'   22 |         for (auto x = 0; \x1b[01;35m\x1b[Kx < nearest.size()\x1b[m\x1b[K; x++)\n'}
+[31.127986] (dubin) StderrLine: {'line': b'      |                          \x1b[01;35m\x1b[K~~^~~~~~~~~~~~~~~~\x1b[m\x1b[K\n'}
+[31.137192] (dubin) StderrLine: {'line': b'\x1b[01m\x1b[K/home/marko/ros_ws/src/dubin/src/PRMstar.cpp:24:31:\x1b[m\x1b[K \x1b[01;35m\x1b[Kwarning: \x1b[m\x1b[Kcomparison of integer expressions of different signedness: \xe2\x80\x98\x1b[01m\x1b[Kint\x1b[m\x1b[K\xe2\x80\x99 and \xe2\x80\x98\x1b[01m\x1b[Kstd::vector<std::shared_ptr<Node> >::size_type\x1b[m\x1b[K\xe2\x80\x99 {aka \xe2\x80\x98\x1b[01m\x1b[Klong unsigned int\x1b[m\x1b[K\xe2\x80\x99} [\x1b[01;35m\x1b[K\x1b]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wsign-compare\x07-Wsign-compare\x1b]8;;\x07\x1b[m\x1b[K]\n'}
+[31.139436] (dubin) StderrLine: {'line': b'   24 |             for (int a = 0; \x1b[01;35m\x1b[Ka < nearest[x]->nodes.size()\x1b[m\x1b[K; a++)\n'}
+[31.141178] (dubin) StderrLine: {'line': b'      |                             \x1b[01;35m\x1b[K~~^~~~~~~~~~~~~~~~~~~~~~~~~~\x1b[m\x1b[K\n'}
+[31.150138] (-) TimerEvent: {}
+[31.189004] (dubin) StderrLine: {'line': b'\x1b[01m\x1b[K/home/marko/ros_ws/src/dubin/src/PRMstar.cpp:\x1b[m\x1b[K In member function \xe2\x80\x98\x1b[01m\x1b[Kstd::vector<point2d> PRMstar::getPath(point2d, point2d)\x1b[m\x1b[K\xe2\x80\x99:\n'}
+[31.190780] (dubin) StderrLine: {'line': b'\x1b[01m\x1b[K/home/marko/ros_ws/src/dubin/src/PRMstar.cpp:54:24:\x1b[m\x1b[K \x1b[01;35m\x1b[Kwarning: \x1b[m\x1b[Kcomparison of integer expressions of different signedness: \xe2\x80\x98\x1b[01m\x1b[Kint\x1b[m\x1b[K\xe2\x80\x99 and \xe2\x80\x98\x1b[01m\x1b[Kstd::vector<std::shared_ptr<Bundle> >::size_type\x1b[m\x1b[K\xe2\x80\x99 {aka \xe2\x80\x98\x1b[01m\x1b[Klong unsigned int\x1b[m\x1b[K\xe2\x80\x99} [\x1b[01;35m\x1b[K\x1b]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wsign-compare\x07-Wsign-compare\x1b]8;;\x07\x1b[m\x1b[K]\n'}
+[31.195021] (dubin) StderrLine: {'line': b'   54 |     for (auto x = 0; \x1b[01;35m\x1b[Kx < nearest_s.size()\x1b[m\x1b[K; x++)\n'}
+[31.201408] (dubin) StderrLine: {'line': b'      |                      \x1b[01;35m\x1b[K~~^~~~~~~~~~~~~~~~~~\x1b[m\x1b[K\n'}
+[31.204905] (dubin) StderrLine: {'line': b'\x1b[01m\x1b[K/home/marko/ros_ws/src/dubin/src/PRMstar.cpp:56:27:\x1b[m\x1b[K \x1b[01;35m\x1b[Kwarning: \x1b[m\x1b[Kcomparison of integer expressions of different signedness: \xe2\x80\x98\x1b[01m\x1b[Kint\x1b[m\x1b[K\xe2\x80\x99 and \xe2\x80\x98\x1b[01m\x1b[Kstd::vector<std::shared_ptr<Node> >::size_type\x1b[m\x1b[K\xe2\x80\x99 {aka \xe2\x80\x98\x1b[01m\x1b[Klong unsigned int\x1b[m\x1b[K\xe2\x80\x99} [\x1b[01;35m\x1b[K\x1b]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wsign-compare\x07-Wsign-compare\x1b]8;;\x07\x1b[m\x1b[K]\n'}
+[31.208147] (dubin) StderrLine: {'line': b'   56 |         for (int a = 0; \x1b[01;35m\x1b[Ka < nearest_s[x]->nodes.size()\x1b[m\x1b[K; a++)\n'}
+[31.211471] (dubin) StderrLine: {'line': b'      |                         \x1b[01;35m\x1b[K~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~\x1b[m\x1b[K\n'}
+[31.215915] (dubin) StderrLine: {'line': b'\x1b[01m\x1b[K/home/marko/ros_ws/src/dubin/src/PRMstar.cpp:74:24:\x1b[m\x1b[K \x1b[01;35m\x1b[Kwarning: \x1b[m\x1b[Kcomparison of integer expressions of different signedness: \xe2\x80\x98\x1b[01m\x1b[Kint\x1b[m\x1b[K\xe2\x80\x99 and \xe2\x80\x98\x1b[01m\x1b[Kstd::vector<std::shared_ptr<Bundle> >::size_type\x1b[m\x1b[K\xe2\x80\x99 {aka \xe2\x80\x98\x1b[01m\x1b[Klong unsigned int\x1b[m\x1b[K\xe2\x80\x99} [\x1b[01;35m\x1b[K\x1b]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wsign-compare\x07-Wsign-compare\x1b]8;;\x07\x1b[m\x1b[K]\n'}
+[31.219591] (dubin) StderrLine: {'line': b'   74 |     for (auto x = 0; \x1b[01;35m\x1b[Kx < nearest_e.size()\x1b[m\x1b[K; x++)\n'}
+[31.222264] (dubin) StderrLine: {'line': b'      |                      \x1b[01;35m\x1b[K~~^~~~~~~~~~~~~~~~~~\x1b[m\x1b[K\n'}
+[31.224968] (dubin) StderrLine: {'line': b'\x1b[01m\x1b[K/home/marko/ros_ws/src/dubin/src/PRMstar.cpp:76:27:\x1b[m\x1b[K \x1b[01;35m\x1b[Kwarning: \x1b[m\x1b[Kcomparison of integer expressions of different signedness: \xe2\x80\x98\x1b[01m\x1b[Kint\x1b[m\x1b[K\xe2\x80\x99 and \xe2\x80\x98\x1b[01m\x1b[Kstd::vector<std::shared_ptr<Node> >::size_type\x1b[m\x1b[K\xe2\x80\x99 {aka \xe2\x80\x98\x1b[01m\x1b[Klong unsigned int\x1b[m\x1b[K\xe2\x80\x99} [\x1b[01;35m\x1b[K\x1b]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wsign-compare\x07-Wsign-compare\x1b]8;;\x07\x1b[m\x1b[K]\n'}
+[31.231299] (dubin) StderrLine: {'line': b'   76 |         for (int a = 0; \x1b[01;35m\x1b[Ka < nearest_e[x]->nodes.size()\x1b[m\x1b[K; a++)\n'}
+[31.234659] (dubin) StderrLine: {'line': b'      |                         \x1b[01;35m\x1b[K~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~\x1b[m\x1b[K\n'}
+[31.237346] (dubin) StderrLine: {'line': b'\x1b[01m\x1b[K/home/marko/ros_ws/src/dubin/src/PRMstar.cpp:\x1b[m\x1b[K In member function \xe2\x80\x98\x1b[01m\x1b[Kvoid PRMstar::genRoadmapPlus(int, int)\x1b[m\x1b[K\xe2\x80\x99:\n'}
+[31.240934] (dubin) StderrLine: {'line': b'\x1b[01m\x1b[K/home/marko/ros_ws/src/dubin/src/PRMstar.cpp:131:32:\x1b[m\x1b[K \x1b[01;35m\x1b[Kwarning: \x1b[m\x1b[Kcomparison of integer expressions of different signedness: \xe2\x80\x98\x1b[01m\x1b[Kint\x1b[m\x1b[K\xe2\x80\x99 and \xe2\x80\x98\x1b[01m\x1b[Kstd::vector<std::shared_ptr<Bundle> >::size_type\x1b[m\x1b[K\xe2\x80\x99 {aka \xe2\x80\x98\x1b[01m\x1b[Klong unsigned int\x1b[m\x1b[K\xe2\x80\x99} [\x1b[01;35m\x1b[K\x1b]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wsign-compare\x07-Wsign-compare\x1b]8;;\x07\x1b[m\x1b[K]\n'}
+[31.243579] (dubin) StderrLine: {'line': b'  131 |             for (auto x = 0; \x1b[01;35m\x1b[Kx < nearest.size()\x1b[m\x1b[K; x++)\n'}
+[31.246261] (dubin) StderrLine: {'line': b'      |                              \x1b[01;35m\x1b[K~~^~~~~~~~~~~~~~~~\x1b[m\x1b[K\n'}
+[31.258112] (-) TimerEvent: {}
+[31.265357] (dubin) StderrLine: {'line': b'\x1b[01m\x1b[K/home/marko/ros_ws/src/dubin/src/PRMstar.cpp:133:35:\x1b[m\x1b[K \x1b[01;35m\x1b[Kwarning: \x1b[m\x1b[Kcomparison of integer expressions of different signedness: \xe2\x80\x98\x1b[01m\x1b[Kint\x1b[m\x1b[K\xe2\x80\x99 and \xe2\x80\x98\x1b[01m\x1b[Kstd::vector<std::shared_ptr<Node> >::size_type\x1b[m\x1b[K\xe2\x80\x99 {aka \xe2\x80\x98\x1b[01m\x1b[Klong unsigned int\x1b[m\x1b[K\xe2\x80\x99} [\x1b[01;35m\x1b[K\x1b]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wsign-compare\x07-Wsign-compare\x1b]8;;\x07\x1b[m\x1b[K]\n'}
+[31.269809] (dubin) StderrLine: {'line': b'  133 |                 for (int b = 0; \x1b[01;35m\x1b[Kb < nearest[x]->nodes.size()\x1b[m\x1b[K; b++)\n'}
+[31.273734] (dubin) StderrLine: {'line': b'      |                                 \x1b[01;35m\x1b[K~~^~~~~~~~~~~~~~~~~~~~~~~~~~\x1b[m\x1b[K\n'}
+[31.276865] (dubin) StderrLine: {'line': b'\x1b[01m\x1b[K/home/marko/ros_ws/src/dubin/src/PRMstar.cpp:102:34:\x1b[m\x1b[K \x1b[01;35m\x1b[Kwarning: \x1b[m\x1b[Kunused parameter \xe2\x80\x98\x1b[01m\x1b[Kn\x1b[m\x1b[K\xe2\x80\x99 [\x1b[01;35m\x1b[K\x1b]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wunused-parameter\x07-Wunused-parameter\x1b]8;;\x07\x1b[m\x1b[K]\n'}
+[31.279552] (dubin) StderrLine: {'line': b'  102 | void PRMstar::genRoadmapPlus(\x1b[01;35m\x1b[Kint n\x1b[m\x1b[K, int angles)\n'}
+[31.282805] (dubin) StderrLine: {'line': b'      |                              \x1b[01;35m\x1b[K~~~~^\x1b[m\x1b[K\n'}
+[31.286193] (dubin) StderrLine: {'line': b'\x1b[01m\x1b[K/home/marko/ros_ws/src/dubin/src/PRMstar.cpp:\x1b[m\x1b[K In member function \xe2\x80\x98\x1b[01m\x1b[Kstd::deque<arcs> PRMstar::getPath(pose2d, pose2d)\x1b[m\x1b[K\xe2\x80\x99:\n'}
+[31.289334] (dubin) StderrLine: {'line': b'\x1b[01m\x1b[K/home/marko/ros_ws/src/dubin/src/PRMstar.cpp:166:24:\x1b[m\x1b[K \x1b[01;35m\x1b[Kwarning: \x1b[m\x1b[Kcomparison of integer expressions of different signedness: \xe2\x80\x98\x1b[01m\x1b[Kint\x1b[m\x1b[K\xe2\x80\x99 and \xe2\x80\x98\x1b[01m\x1b[Kstd::vector<std::shared_ptr<Bundle> >::size_type\x1b[m\x1b[K\xe2\x80\x99 {aka \xe2\x80\x98\x1b[01m\x1b[Klong unsigned int\x1b[m\x1b[K\xe2\x80\x99} [\x1b[01;35m\x1b[K\x1b]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wsign-compare\x07-Wsign-compare\x1b]8;;\x07\x1b[m\x1b[K]\n'}
+[31.302425] (dubin) StderrLine: {'line': b'  166 |     for (auto x = 0; \x1b[01;35m\x1b[Kx < nearest_s.size()\x1b[m\x1b[K; x++)\n'}
+[31.307771] (dubin) StderrLine: {'line': b'      |                      \x1b[01;35m\x1b[K~~^~~~~~~~~~~~~~~~~~\x1b[m\x1b[K\n'}
+[31.310882] (dubin) StderrLine: {'line': b'\x1b[01m\x1b[K/home/marko/ros_ws/src/dubin/src/PRMstar.cpp:168:27:\x1b[m\x1b[K \x1b[01;35m\x1b[Kwarning: \x1b[m\x1b[Kcomparison of integer expressions of different signedness: \xe2\x80\x98\x1b[01m\x1b[Kint\x1b[m\x1b[K\xe2\x80\x99 and \xe2\x80\x98\x1b[01m\x1b[Kstd::vector<std::shared_ptr<Node> >::size_type\x1b[m\x1b[K\xe2\x80\x99 {aka \xe2\x80\x98\x1b[01m\x1b[Klong unsigned int\x1b[m\x1b[K\xe2\x80\x99} [\x1b[01;35m\x1b[K\x1b]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wsign-compare\x07-Wsign-compare\x1b]8;;\x07\x1b[m\x1b[K]\n'}
+[31.313055] (dubin) StderrLine: {'line': b'  168 |         for (int a = 0; \x1b[01;35m\x1b[Ka < nearest_s[x]->nodes.size()\x1b[m\x1b[K; a++)\n'}
+[31.314010] (dubin) StderrLine: {'line': b'      |                         \x1b[01;35m\x1b[K~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~\x1b[m\x1b[K\n'}
+[31.315179] (dubin) StderrLine: {'line': b'\x1b[01m\x1b[K/home/marko/ros_ws/src/dubin/src/PRMstar.cpp:187:23:\x1b[m\x1b[K \x1b[01;35m\x1b[Kwarning: \x1b[m\x1b[Kcomparison of integer expressions of different signedness: \xe2\x80\x98\x1b[01m\x1b[Kint\x1b[m\x1b[K\xe2\x80\x99 and \xe2\x80\x98\x1b[01m\x1b[Kstd::vector<std::shared_ptr<Bundle> >::size_type\x1b[m\x1b[K\xe2\x80\x99 {aka \xe2\x80\x98\x1b[01m\x1b[Klong unsigned int\x1b[m\x1b[K\xe2\x80\x99} [\x1b[01;35m\x1b[K\x1b]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wsign-compare\x07-Wsign-compare\x1b]8;;\x07\x1b[m\x1b[K]\n'}
+[31.317607] (dubin) StderrLine: {'line': b'  187 |     for (int y = 0; \x1b[01;35m\x1b[Ky < nearest_e.size()\x1b[m\x1b[K; y++)\n'}
+[31.318708] (dubin) StderrLine: {'line': b'      |                     \x1b[01;35m\x1b[K~~^~~~~~~~~~~~~~~~~~\x1b[m\x1b[K\n'}
+[31.319696] (dubin) StderrLine: {'line': b'\x1b[01m\x1b[K/home/marko/ros_ws/src/dubin/src/PRMstar.cpp:189:27:\x1b[m\x1b[K \x1b[01;35m\x1b[Kwarning: \x1b[m\x1b[Kcomparison of integer expressions of different signedness: \xe2\x80\x98\x1b[01m\x1b[Kint\x1b[m\x1b[K\xe2\x80\x99 and \xe2\x80\x98\x1b[01m\x1b[Kstd::vector<std::shared_ptr<Node> >::size_type\x1b[m\x1b[K\xe2\x80\x99 {aka \xe2\x80\x98\x1b[01m\x1b[Klong unsigned int\x1b[m\x1b[K\xe2\x80\x99} [\x1b[01;35m\x1b[K\x1b]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wsign-compare\x07-Wsign-compare\x1b]8;;\x07\x1b[m\x1b[K]\n'}
+[31.322907] (dubin) StderrLine: {'line': b'  189 |         for (int a = 0; \x1b[01;35m\x1b[Ka < nearest_e[y]->nodes.size()\x1b[m\x1b[K; a++)\n'}
+[31.324929] (dubin) StderrLine: {'line': b'      |                         \x1b[01;35m\x1b[K~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~\x1b[m\x1b[K\n'}
+[31.325867] (dubin) StderrLine: {'line': b'\x1b[01m\x1b[K/home/marko/ros_ws/src/dubin/src/PRMstar.cpp:\x1b[m\x1b[K In member function \xe2\x80\x98\x1b[01m\x1b[Kstd::deque<arcs> PRMstar::getPathManyExits(pose2d, std::vector<pose2d>)\x1b[m\x1b[K\xe2\x80\x99:\n'}
+[31.327276] (dubin) StderrLine: {'line': b'\x1b[01m\x1b[K/home/marko/ros_ws/src/dubin/src/PRMstar.cpp:233:24:\x1b[m\x1b[K \x1b[01;35m\x1b[Kwarning: \x1b[m\x1b[Kcomparison of integer expressions of different signedness: \xe2\x80\x98\x1b[01m\x1b[Kint\x1b[m\x1b[K\xe2\x80\x99 and \xe2\x80\x98\x1b[01m\x1b[Kstd::vector<std::shared_ptr<Bundle> >::size_type\x1b[m\x1b[K\xe2\x80\x99 {aka \xe2\x80\x98\x1b[01m\x1b[Klong unsigned int\x1b[m\x1b[K\xe2\x80\x99} [\x1b[01;35m\x1b[K\x1b]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wsign-compare\x07-Wsign-compare\x1b]8;;\x07\x1b[m\x1b[K]\n'}
+[31.328246] (dubin) StderrLine: {'line': b'  233 |     for (auto x = 0; \x1b[01;35m\x1b[Kx < nearest_s.size()\x1b[m\x1b[K; x++)\n'}
+[31.329156] (dubin) StderrLine: {'line': b'      |                      \x1b[01;35m\x1b[K~~^~~~~~~~~~~~~~~~~~\x1b[m\x1b[K\n'}
+[31.330210] (dubin) StderrLine: {'line': b'\x1b[01m\x1b[K/home/marko/ros_ws/src/dubin/src/PRMstar.cpp:235:27:\x1b[m\x1b[K \x1b[01;35m\x1b[Kwarning: \x1b[m\x1b[Kcomparison of integer expressions of different signedness: \xe2\x80\x98\x1b[01m\x1b[Kint\x1b[m\x1b[K\xe2\x80\x99 and \xe2\x80\x98\x1b[01m\x1b[Kstd::vector<std::shared_ptr<Node> >::size_type\x1b[m\x1b[K\xe2\x80\x99 {aka \xe2\x80\x98\x1b[01m\x1b[Klong unsigned int\x1b[m\x1b[K\xe2\x80\x99} [\x1b[01;35m\x1b[K\x1b]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wsign-compare\x07-Wsign-compare\x1b]8;;\x07\x1b[m\x1b[K]\n'}
+[31.331083] (dubin) StderrLine: {'line': b'  235 |         for (int a = 0; \x1b[01;35m\x1b[Ka < nearest_s[x]->nodes.size()\x1b[m\x1b[K; a++)\n'}
+[31.331586] (dubin) StderrLine: {'line': b'      |                         \x1b[01;35m\x1b[K~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~\x1b[m\x1b[K\n'}
+[31.332713] (dubin) StderrLine: {'line': b'\x1b[01m\x1b[K/home/marko/ros_ws/src/dubin/src/PRMstar.cpp:248:24:\x1b[m\x1b[K \x1b[01;35m\x1b[Kwarning: \x1b[m\x1b[Kcomparison of integer expressions of different signedness: \xe2\x80\x98\x1b[01m\x1b[Kint\x1b[m\x1b[K\xe2\x80\x99 and \xe2\x80\x98\x1b[01m\x1b[Kstd::vector<pose2d>::size_type\x1b[m\x1b[K\xe2\x80\x99 {aka \xe2\x80\x98\x1b[01m\x1b[Klong unsigned int\x1b[m\x1b[K\xe2\x80\x99} [\x1b[01;35m\x1b[K\x1b]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wsign-compare\x07-Wsign-compare\x1b]8;;\x07\x1b[m\x1b[K]\n'}
+[31.334481] (dubin) StderrLine: {'line': b'  248 |     for (int i = 0 ; \x1b[01;35m\x1b[Ki < end.size()\x1b[m\x1b[K; i++)\n'}
+[31.335793] (dubin) StderrLine: {'line': b'      |                      \x1b[01;35m\x1b[K~~^~~~~~~~~~~~\x1b[m\x1b[K\n'}
+[31.336773] (dubin) StderrLine: {'line': b'\x1b[01m\x1b[K/home/marko/ros_ws/src/dubin/src/PRMstar.cpp:259:27:\x1b[m\x1b[K \x1b[01;35m\x1b[Kwarning: \x1b[m\x1b[Kcomparison of integer expressions of different signedness: \xe2\x80\x98\x1b[01m\x1b[Kint\x1b[m\x1b[K\xe2\x80\x99 and \xe2\x80\x98\x1b[01m\x1b[Kstd::vector<std::shared_ptr<Bundle> >::size_type\x1b[m\x1b[K\xe2\x80\x99 {aka \xe2\x80\x98\x1b[01m\x1b[Klong unsigned int\x1b[m\x1b[K\xe2\x80\x99} [\x1b[01;35m\x1b[K\x1b]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wsign-compare\x07-Wsign-compare\x1b]8;;\x07\x1b[m\x1b[K]\n'}
+[31.337493] (dubin) StderrLine: {'line': b'  259 |         for (int y = 0; \x1b[01;35m\x1b[Ky < nearest_e.size()\x1b[m\x1b[K; y++)\n'}
+[31.338568] (dubin) StderrLine: {'line': b'      |                         \x1b[01;35m\x1b[K~~^~~~~~~~~~~~~~~~~~\x1b[m\x1b[K\n'}
+[31.339009] (dubin) StderrLine: {'line': b'\x1b[01m\x1b[K/home/marko/ros_ws/src/dubin/src/PRMstar.cpp:261:31:\x1b[m\x1b[K \x1b[01;35m\x1b[Kwarning: \x1b[m\x1b[Kcomparison of integer expressions of different signedness: \xe2\x80\x98\x1b[01m\x1b[Kint\x1b[m\x1b[K\xe2\x80\x99 and \xe2\x80\x98\x1b[01m\x1b[Kstd::vector<std::shared_ptr<Node> >::size_type\x1b[m\x1b[K\xe2\x80\x99 {aka \xe2\x80\x98\x1b[01m\x1b[Klong unsigned int\x1b[m\x1b[K\xe2\x80\x99} [\x1b[01;35m\x1b[K\x1b]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wsign-compare\x07-Wsign-compare\x1b]8;;\x07\x1b[m\x1b[K]\n'}
+[31.339750] (dubin) StderrLine: {'line': b'  261 |             for (int a = 0; \x1b[01;35m\x1b[Ka < nearest_e[y]->nodes.size()\x1b[m\x1b[K; a++)\n'}
+[31.347798] (dubin) StderrLine: {'line': b'      |                             \x1b[01;35m\x1b[K~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~\x1b[m\x1b[K\n'}
+[31.359500] (-) TimerEvent: {}
+[31.462528] (-) TimerEvent: {}
+[31.563912] (-) TimerEvent: {}
+[31.665913] (-) TimerEvent: {}
+[31.706773] (dubin) StderrLine: {'line': b'\x1b[01m\x1b[K/home/marko/ros_ws/src/dubin/src/MissionPlanner.cpp:\x1b[m\x1b[K In member function \xe2\x80\x98\x1b[01m\x1b[Kvoid MissionPlanner::map_topic_callback(geometry_msgs::msg::PolygonStamped)\x1b[m\x1b[K\xe2\x80\x99:\n'}
+[31.707630] (dubin) StderrLine: {'line': b'\x1b[01m\x1b[K/home/marko/ros_ws/src/dubin/src/MissionPlanner.cpp:79:23:\x1b[m\x1b[K \x1b[01;35m\x1b[Kwarning: \x1b[m\x1b[Kcomparison of integer expressions of different signedness: \xe2\x80\x98\x1b[01m\x1b[Kint\x1b[m\x1b[K\xe2\x80\x99 and \xe2\x80\x98\x1b[01m\x1b[Kstd::vector<geometry_msgs::msg::Point32_<std::allocator<void> >, std::allocator<geometry_msgs::msg::Point32_<std::allocator<void> > > >::size_type\x1b[m\x1b[K\xe2\x80\x99 {aka \xe2\x80\x98\x1b[01m\x1b[Klong unsigned int\x1b[m\x1b[K\xe2\x80\x99} [\x1b[01;35m\x1b[K\x1b]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wsign-compare\x07-Wsign-compare\x1b]8;;\x07\x1b[m\x1b[K]\n'}
+[31.708300] (dubin) StderrLine: {'line': b'   79 |     for (int i = 0; \x1b[01;35m\x1b[Ki < outline_message.polygon.points.size()\x1b[m\x1b[K; i++)\n'}
+[31.708599] (dubin) StderrLine: {'line': b'      |                     \x1b[01;35m\x1b[K~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\x1b[m\x1b[K\n'}
+[31.714020] (dubin) StderrLine: {'line': b'\x1b[01m\x1b[K/home/marko/ros_ws/src/dubin/src/MissionPlanner.cpp:\x1b[m\x1b[K In member function \xe2\x80\x98\x1b[01m\x1b[Kvoid MissionPlanner::gate_topic_callback(geometry_msgs::msg::PoseArray)\x1b[m\x1b[K\xe2\x80\x99:\n'}
+[31.716946] (dubin) StderrLine: {'line': b'\x1b[01m\x1b[K/home/marko/ros_ws/src/dubin/src/MissionPlanner.cpp:99:23:\x1b[m\x1b[K \x1b[01;35m\x1b[Kwarning: \x1b[m\x1b[Kcomparison of integer expressions of different signedness: \xe2\x80\x98\x1b[01m\x1b[Kint\x1b[m\x1b[K\xe2\x80\x99 and \xe2\x80\x98\x1b[01m\x1b[Kstd::vector<geometry_msgs::msg::Pose_<std::allocator<void> >, std::allocator<geometry_msgs::msg::Pose_<std::allocator<void> > > >::size_type\x1b[m\x1b[K\xe2\x80\x99 {aka \xe2\x80\x98\x1b[01m\x1b[Klong unsigned int\x1b[m\x1b[K\xe2\x80\x99} [\x1b[01;35m\x1b[K\x1b]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wsign-compare\x07-Wsign-compare\x1b]8;;\x07\x1b[m\x1b[K]\n'}
+[31.718290] (dubin) StderrLine: {'line': b'   99 |     for (int i = 0; \x1b[01;35m\x1b[Ki < outline_message.poses.size()\x1b[m\x1b[K; i++)\n'}
+[31.718999] (dubin) StderrLine: {'line': b'      |                     \x1b[01;35m\x1b[K~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\x1b[m\x1b[K\n'}
+[31.742234] (dubin) StderrLine: {'line': b'\x1b[01m\x1b[K/home/marko/ros_ws/src/dubin/src/MissionPlanner.cpp:\x1b[m\x1b[K In member function \xe2\x80\x98\x1b[01m\x1b[Kvoid MissionPlanner::build_roadmap()\x1b[m\x1b[K\xe2\x80\x99:\n'}
+[31.743155] (dubin) StderrLine: {'line': b'\x1b[01m\x1b[K/home/marko/ros_ws/src/dubin/src/MissionPlanner.cpp:189:23:\x1b[m\x1b[K \x1b[01;35m\x1b[Kwarning: \x1b[m\x1b[Kcomparison of integer expressions of different signedness: \xe2\x80\x98\x1b[01m\x1b[Kint\x1b[m\x1b[K\xe2\x80\x99 and \xe2\x80\x98\x1b[01m\x1b[Kstd::vector<Polygon>::size_type\x1b[m\x1b[K\xe2\x80\x99 {aka \xe2\x80\x98\x1b[01m\x1b[Klong unsigned int\x1b[m\x1b[K\xe2\x80\x99} [\x1b[01;35m\x1b[K\x1b]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wsign-compare\x07-Wsign-compare\x1b]8;;\x07\x1b[m\x1b[K]\n'}
+[31.744519] (dubin) StderrLine: {'line': b'  189 |     for (int i = 0; \x1b[01;35m\x1b[Ki < obstacle_list.size()\x1b[m\x1b[K; i++)\n'}
+[31.745680] (dubin) StderrLine: {'line': b'      |                     \x1b[01;35m\x1b[K~~^~~~~~~~~~~~~~~~~~~~~~\x1b[m\x1b[K\n'}
+[31.753500] (dubin) StderrLine: {'line': b'\x1b[01m\x1b[K/home/marko/ros_ws/src/dubin/src/MissionPlanner.cpp:\x1b[m\x1b[K In member function \xe2\x80\x98\x1b[01m\x1b[Kvoid MissionPlanner::getPaths_and_Publish()\x1b[m\x1b[K\xe2\x80\x99:\n'}
+[31.754681] (dubin) StderrLine: {'line': b'\x1b[01m\x1b[K/home/marko/ros_ws/src/dubin/src/MissionPlanner.cpp:223:31:\x1b[m\x1b[K \x1b[01;35m\x1b[Kwarning: \x1b[m\x1b[Kcomparison of integer expressions of different signedness: \xe2\x80\x98\x1b[01m\x1b[Kint\x1b[m\x1b[K\xe2\x80\x99 and \xe2\x80\x98\x1b[01m\x1b[Kstd::vector<pose2d>::size_type\x1b[m\x1b[K\xe2\x80\x99 {aka \xe2\x80\x98\x1b[01m\x1b[Klong unsigned int\x1b[m\x1b[K\xe2\x80\x99} [\x1b[01;35m\x1b[K\x1b]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wsign-compare\x07-Wsign-compare\x1b]8;;\x07\x1b[m\x1b[K]\n'}
+[31.755306] (dubin) StderrLine: {'line': b'  223 |         for (int rob = 0; \x1b[01;35m\x1b[Krob < initial_poses.size()\x1b[m\x1b[K; rob++)\n'}
+[31.756322] (dubin) StderrLine: {'line': b'      |                           \x1b[01;35m\x1b[K~~~~^~~~~~~~~~~~~~~~~~~~~~\x1b[m\x1b[K\n'}
+[31.767240] (-) TimerEvent: {}
+[31.870855] (-) TimerEvent: {}
+[31.951156] (dubin) StderrLine: {'line': b'\x1b[01m\x1b[K/home/marko/ros_ws/src/dubin/src/MissionPlanner.cpp:\x1b[m\x1b[K In member function \xe2\x80\x98\x1b[01m\x1b[Kvoid MissionPlanner::test()\x1b[m\x1b[K\xe2\x80\x99:\n'}
+[31.951861] (dubin) StderrLine: {'line': b'\x1b[01m\x1b[K/home/marko/ros_ws/src/dubin/src/MissionPlanner.cpp:329:23:\x1b[m\x1b[K \x1b[01;35m\x1b[Kwarning: \x1b[m\x1b[Kcomparison of integer expressions of different signedness: \xe2\x80\x98\x1b[01m\x1b[Kint\x1b[m\x1b[K\xe2\x80\x99 and \xe2\x80\x98\x1b[01m\x1b[Kstd::vector<geometry_msgs::msg::PoseStamped_<std::allocator<void> >, std::allocator<geometry_msgs::msg::PoseStamped_<std::allocator<void> > > >::size_type\x1b[m\x1b[K\xe2\x80\x99 {aka \xe2\x80\x98\x1b[01m\x1b[Klong unsigned int\x1b[m\x1b[K\xe2\x80\x99} [\x1b[01;35m\x1b[K\x1b]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wsign-compare\x07-Wsign-compare\x1b]8;;\x07\x1b[m\x1b[K]\n'}
+[31.952681] (dubin) StderrLine: {'line': b'  329 |     for (int i = 0; \x1b[01;35m\x1b[Ki < traj.poses.size()\x1b[m\x1b[K; i++)\n'}
+[31.953068] (dubin) StderrLine: {'line': b'      |                     \x1b[01;35m\x1b[K~~^~~~~~~~~~~~~~~~~~~\x1b[m\x1b[K\n'}
+[31.972156] (-) TimerEvent: {}
+[32.077785] (-) TimerEvent: {}
+[32.179675] (-) TimerEvent: {}
+[32.280798] (-) TimerEvent: {}
+[32.383120] (-) TimerEvent: {}
+[32.485100] (-) TimerEvent: {}
+[32.586678] (-) TimerEvent: {}
+[32.687406] (-) TimerEvent: {}
+[32.788696] (-) TimerEvent: {}
+[32.889596] (-) TimerEvent: {}
+[32.990750] (-) TimerEvent: {}
+[33.092199] (-) TimerEvent: {}
+[33.193991] (-) TimerEvent: {}
+[33.295124] (-) TimerEvent: {}
+[33.396363] (-) TimerEvent: {}
+[33.498358] (-) TimerEvent: {}
+[33.599494] (-) TimerEvent: {}
+[33.701574] (-) TimerEvent: {}
+[33.802842] (-) TimerEvent: {}
+[33.904202] (-) TimerEvent: {}
+[34.006036] (-) TimerEvent: {}
+[34.107218] (-) TimerEvent: {}
+[34.208366] (-) TimerEvent: {}
+[34.309513] (-) TimerEvent: {}
+[34.411656] (-) TimerEvent: {}
+[34.513413] (-) TimerEvent: {}
+[34.614979] (-) TimerEvent: {}
+[34.716943] (-) TimerEvent: {}
+[34.818005] (-) TimerEvent: {}
+[34.919254] (-) TimerEvent: {}
+[35.020499] (-) TimerEvent: {}
+[35.121451] (-) TimerEvent: {}
+[35.222504] (-) TimerEvent: {}
+[35.323623] (-) TimerEvent: {}
+[35.424803] (-) TimerEvent: {}
+[35.525895] (-) TimerEvent: {}
+[35.626944] (-) TimerEvent: {}
+[35.728016] (-) TimerEvent: {}
+[35.829151] (-) TimerEvent: {}
+[35.930184] (-) TimerEvent: {}
+[36.031341] (-) TimerEvent: {}
+[36.133232] (-) TimerEvent: {}
+[36.235598] (-) TimerEvent: {}
+[36.336754] (-) TimerEvent: {}
+[36.437946] (-) TimerEvent: {}
+[36.538860] (-) TimerEvent: {}
+[36.639999] (-) TimerEvent: {}
+[36.741138] (-) TimerEvent: {}
+[36.843127] (-) TimerEvent: {}
+[36.944288] (-) TimerEvent: {}
+[37.045437] (-) TimerEvent: {}
+[37.146425] (-) TimerEvent: {}
+[37.247607] (-) TimerEvent: {}
+[37.348595] (-) TimerEvent: {}
+[37.449569] (-) TimerEvent: {}
+[37.550593] (-) TimerEvent: {}
+[37.651574] (-) TimerEvent: {}
+[37.752704] (-) TimerEvent: {}
+[37.853614] (-) TimerEvent: {}
+[37.954453] (-) TimerEvent: {}
+[38.055579] (-) TimerEvent: {}
+[38.156604] (-) TimerEvent: {}
+[38.257534] (-) TimerEvent: {}
+[38.358619] (-) TimerEvent: {}
+[38.459580] (-) TimerEvent: {}
+[38.560617] (-) TimerEvent: {}
+[38.661540] (-) TimerEvent: {}
+[38.762741] (-) TimerEvent: {}
+[38.864590] (-) TimerEvent: {}
+[38.965588] (-) TimerEvent: {}
+[39.066610] (-) TimerEvent: {}
+[39.167449] (-) TimerEvent: {}
+[39.268640] (-) TimerEvent: {}
+[39.369620] (-) TimerEvent: {}
+[39.470583] (-) TimerEvent: {}
+[39.571616] (-) TimerEvent: {}
+[39.672652] (-) TimerEvent: {}
+[39.773647] (-) TimerEvent: {}
+[39.874677] (-) TimerEvent: {}
+[39.976597] (-) TimerEvent: {}
+[40.077684] (-) TimerEvent: {}
+[40.178654] (-) TimerEvent: {}
+[40.279651] (-) TimerEvent: {}
+[40.380581] (-) TimerEvent: {}
+[40.481643] (-) TimerEvent: {}
+[40.582834] (-) TimerEvent: {}
+[40.683693] (-) TimerEvent: {}
+[40.784852] (-) TimerEvent: {}
+[40.886666] (-) TimerEvent: {}
+[40.987746] (-) TimerEvent: {}
+[41.088724] (-) TimerEvent: {}
+[41.189720] (-) TimerEvent: {}
+[41.290765] (-) TimerEvent: {}
+[41.391848] (-) TimerEvent: {}
+[41.493763] (-) TimerEvent: {}
+[41.595918] (-) TimerEvent: {}
+[41.697851] (-) TimerEvent: {}
+[41.799775] (-) TimerEvent: {}
+[41.901864] (-) TimerEvent: {}
+[42.003774] (-) TimerEvent: {}
+[42.104745] (-) TimerEvent: {}
+[42.205824] (-) TimerEvent: {}
+[42.306759] (-) TimerEvent: {}
+[42.407843] (-) TimerEvent: {}
+[42.508734] (-) TimerEvent: {}
+[42.609878] (-) TimerEvent: {}
+[42.710820] (-) TimerEvent: {}
+[42.811948] (-) TimerEvent: {}
+[42.912865] (-) TimerEvent: {}
+[43.013910] (-) TimerEvent: {}
+[43.115123] (-) TimerEvent: {}
+[43.217113] (-) TimerEvent: {}
+[43.318937] (-) TimerEvent: {}
+[43.420030] (-) TimerEvent: {}
+[43.522088] (-) TimerEvent: {}
+[43.623966] (-) TimerEvent: {}
+[43.726044] (-) TimerEvent: {}
+[43.828261] (-) TimerEvent: {}
+[43.930123] (-) TimerEvent: {}
+[44.032136] (-) TimerEvent: {}
+[44.134027] (-) TimerEvent: {}
+[44.236352] (-) TimerEvent: {}
+[44.338204] (-) TimerEvent: {}
+[44.440131] (-) TimerEvent: {}
+[44.542199] (-) TimerEvent: {}
+[44.644243] (-) TimerEvent: {}
+[44.746188] (-) TimerEvent: {}
+[44.848199] (-) TimerEvent: {}
+[44.950255] (-) TimerEvent: {}
+[45.052202] (-) TimerEvent: {}
+[45.153308] (-) TimerEvent: {}
+[45.255351] (-) TimerEvent: {}
+[45.357276] (-) TimerEvent: {}
+[45.459245] (-) TimerEvent: {}
+[45.560394] (-) TimerEvent: {}
+[45.662286] (-) TimerEvent: {}
+[45.764463] (-) TimerEvent: {}
+[45.866461] (-) TimerEvent: {}
+[45.968538] (-) TimerEvent: {}
+[46.070469] (-) TimerEvent: {}
+[46.172449] (-) TimerEvent: {}
+[46.273422] (-) TimerEvent: {}
+[46.374463] (-) TimerEvent: {}
+[46.475460] (-) TimerEvent: {}
+[46.576640] (-) TimerEvent: {}
+[46.677458] (-) TimerEvent: {}
+[46.778571] (-) TimerEvent: {}
+[46.879558] (-) TimerEvent: {}
+[46.980643] (-) TimerEvent: {}
+[47.081615] (-) TimerEvent: {}
+[47.182635] (-) TimerEvent: {}
+[47.283792] (-) TimerEvent: {}
+[47.385951] (-) TimerEvent: {}
+[47.487812] (-) TimerEvent: {}
+[47.589877] (-) TimerEvent: {}
+[47.691803] (-) TimerEvent: {}
+[47.792928] (-) TimerEvent: {}
+[47.894831] (-) TimerEvent: {}
+[47.995913] (-) TimerEvent: {}
+[48.096831] (-) TimerEvent: {}
+[48.198481] (-) TimerEvent: {}
+[48.299951] (-) TimerEvent: {}
+[48.400878] (-) TimerEvent: {}
+[48.501957] (-) TimerEvent: {}
+[48.602934] (-) TimerEvent: {}
+[48.704122] (-) TimerEvent: {}
+[48.804977] (-) TimerEvent: {}
+[48.906020] (-) TimerEvent: {}
+[49.007036] (-) TimerEvent: {}
+[49.108113] (-) TimerEvent: {}
+[49.209054] (-) TimerEvent: {}
+[49.310004] (-) TimerEvent: {}
+[49.411134] (-) TimerEvent: {}
+[49.512123] (-) TimerEvent: {}
+[49.613271] (-) TimerEvent: {}
+[49.714250] (-) TimerEvent: {}
+[49.815292] (-) TimerEvent: {}
+[49.916268] (-) TimerEvent: {}
+[50.017371] (-) TimerEvent: {}
+[50.118328] (-) TimerEvent: {}
+[50.219453] (-) TimerEvent: {}
+[50.320501] (-) TimerEvent: {}
+[50.421398] (-) TimerEvent: {}
+[50.522408] (-) TimerEvent: {}
+[50.623610] (-) TimerEvent: {}
+[50.724509] (-) TimerEvent: {}
+[50.825514] (-) TimerEvent: {}
+[50.926495] (-) TimerEvent: {}
+[51.027680] (-) TimerEvent: {}
+[51.129601] (-) TimerEvent: {}
+[51.230648] (-) TimerEvent: {}
+[51.331695] (-) TimerEvent: {}
+[51.432761] (-) TimerEvent: {}
+[51.533709] (-) TimerEvent: {}
+[51.634727] (-) TimerEvent: {}
+[51.735771] (-) TimerEvent: {}
+[51.836777] (-) TimerEvent: {}
+[51.937840] (-) TimerEvent: {}
+[52.038848] (-) TimerEvent: {}
+[52.139985] (-) TimerEvent: {}
+[52.240850] (-) TimerEvent: {}
+[52.341903] (-) TimerEvent: {}
+[52.442942] (-) TimerEvent: {}
+[52.543993] (-) TimerEvent: {}
+[52.644978] (-) TimerEvent: {}
+[52.746055] (-) TimerEvent: {}
+[52.847049] (-) TimerEvent: {}
+[52.948139] (-) TimerEvent: {}
+[53.049059] (-) TimerEvent: {}
+[53.150172] (-) TimerEvent: {}
+[53.251220] (-) TimerEvent: {}
+[53.352249] (-) TimerEvent: {}
+[53.453255] (-) TimerEvent: {}
+[53.554284] (-) TimerEvent: {}
+[53.655361] (-) TimerEvent: {}
+[53.756465] (-) TimerEvent: {}
+[53.857428] (-) TimerEvent: {}
+[53.958494] (-) TimerEvent: {}
+[54.059642] (-) TimerEvent: {}
+[54.160528] (-) TimerEvent: {}
+[54.261490] (-) TimerEvent: {}
+[54.362507] (-) TimerEvent: {}
+[54.463581] (-) TimerEvent: {}
+[54.564657] (-) TimerEvent: {}
+[54.665680] (-) TimerEvent: {}
+[54.766630] (-) TimerEvent: {}
+[54.867729] (-) TimerEvent: {}
+[54.968719] (-) TimerEvent: {}
+[55.069757] (-) TimerEvent: {}
+[55.170899] (-) TimerEvent: {}
+[55.271871] (-) TimerEvent: {}
+[55.372878] (-) TimerEvent: {}
+[55.473897] (-) TimerEvent: {}
+[55.574910] (-) TimerEvent: {}
+[55.675917] (-) TimerEvent: {}
+[55.776948] (-) TimerEvent: {}
+[55.878088] (-) TimerEvent: {}
+[55.980078] (-) TimerEvent: {}
+[56.081847] (-) TimerEvent: {}
+[56.183995] (-) TimerEvent: {}
+[56.286282] (-) TimerEvent: {}
+[56.387885] (-) TimerEvent: {}
+[56.488998] (-) TimerEvent: {}
+[56.590989] (-) TimerEvent: {}
+[56.692091] (-) TimerEvent: {}
+[56.793075] (-) TimerEvent: {}
+[56.894163] (-) TimerEvent: {}
+[56.995167] (-) TimerEvent: {}
+[57.096274] (-) TimerEvent: {}
+[57.197258] (-) TimerEvent: {}
+[57.298255] (-) TimerEvent: {}
+[57.399236] (-) TimerEvent: {}
+[57.500301] (-) TimerEvent: {}
+[57.601391] (-) TimerEvent: {}
+[57.702373] (-) TimerEvent: {}
+[57.803452] (-) TimerEvent: {}
+[57.904615] (-) TimerEvent: {}
+[58.005471] (-) TimerEvent: {}
+[58.106587] (-) TimerEvent: {}
+[58.207559] (-) TimerEvent: {}
+[58.308635] (-) TimerEvent: {}
+[58.409603] (-) TimerEvent: {}
+[58.510692] (-) TimerEvent: {}
+[58.611689] (-) TimerEvent: {}
+[58.712750] (-) TimerEvent: {}
+[58.813821] (-) TimerEvent: {}
+[58.914715] (-) TimerEvent: {}
+[59.015842] (-) TimerEvent: {}
+[59.116840] (-) TimerEvent: {}
+[59.217931] (-) TimerEvent: {}
+[59.319386] (-) TimerEvent: {}
+[59.421940] (-) TimerEvent: {}
+[59.523068] (-) TimerEvent: {}
+[59.624435] (-) TimerEvent: {}
+[59.726438] (-) TimerEvent: {}
+[59.830737] (-) TimerEvent: {}
+[59.934627] (-) TimerEvent: {}
+[60.039590] (-) TimerEvent: {}
+[60.141554] (-) TimerEvent: {}
+[60.243277] (-) TimerEvent: {}
+[60.348827] (-) TimerEvent: {}
+[60.452062] (-) TimerEvent: {}
+[60.554534] (-) TimerEvent: {}
+[60.656719] (-) TimerEvent: {}
+[60.758589] (-) TimerEvent: {}
+[60.861157] (-) TimerEvent: {}
+[60.962711] (-) TimerEvent: {}
+[61.064753] (-) TimerEvent: {}
+[61.166572] (-) TimerEvent: {}
+[61.267760] (-) TimerEvent: {}
+[61.368704] (-) TimerEvent: {}
+[61.469883] (-) TimerEvent: {}
+[61.572164] (-) TimerEvent: {}
+[61.674163] (-) TimerEvent: {}
+[61.775853] (-) TimerEvent: {}
+[61.876755] (-) TimerEvent: {}
+[61.977930] (-) TimerEvent: {}
+[62.078951] (-) TimerEvent: {}
+[62.179897] (-) TimerEvent: {}
+[62.281022] (-) TimerEvent: {}
+[62.382041] (-) TimerEvent: {}
+[62.484915] (-) TimerEvent: {}
+[62.588185] (-) TimerEvent: {}
+[62.690158] (-) TimerEvent: {}
+[62.792322] (-) TimerEvent: {}
+[62.894269] (-) TimerEvent: {}
+[62.996453] (-) TimerEvent: {}
+[63.098393] (-) TimerEvent: {}
+[63.199998] (-) TimerEvent: {}
+[63.301886] (-) TimerEvent: {}
+[63.403140] (-) TimerEvent: {}
+[63.504921] (-) TimerEvent: {}
+[63.606047] (-) TimerEvent: {}
+[63.707001] (-) TimerEvent: {}
+[63.808205] (-) TimerEvent: {}
+[63.909115] (-) TimerEvent: {}
+[64.010665] (-) TimerEvent: {}
+[64.111652] (-) TimerEvent: {}
+[64.212750] (-) TimerEvent: {}
+[64.313697] (-) TimerEvent: {}
+[64.414785] (-) TimerEvent: {}
+[64.515819] (-) TimerEvent: {}
+[64.616872] (-) TimerEvent: {}
+[64.719024] (-) TimerEvent: {}
+[64.820125] (-) TimerEvent: {}
+[64.922004] (-) TimerEvent: {}
+[65.024053] (-) TimerEvent: {}
+[65.125032] (-) TimerEvent: {}
+[65.226272] (-) TimerEvent: {}
+[65.328313] (-) TimerEvent: {}
+[65.430386] (-) TimerEvent: {}
+[65.531999] (-) TimerEvent: {}
+[65.627183] (dubin) StdoutLine: {'line': b'[100%] \x1b[32m\x1b[1mLinking CXX executable mission_planner\x1b[0m\n'}
+[65.632794] (-) TimerEvent: {}
+[65.735083] (-) TimerEvent: {}
+[65.836929] (-) TimerEvent: {}
+[65.937882] (-) TimerEvent: {}
+[66.039137] (-) TimerEvent: {}
+[66.140235] (-) TimerEvent: {}
+[66.242353] (-) TimerEvent: {}
+[66.344374] (-) TimerEvent: {}
+[66.446363] (-) TimerEvent: {}
+[66.547460] (-) TimerEvent: {}
+[66.649483] (-) TimerEvent: {}
+[66.750753] (-) TimerEvent: {}
+[66.852994] (-) TimerEvent: {}
+[66.954484] (-) TimerEvent: {}
+[67.055672] (-) TimerEvent: {}
+[67.157534] (-) TimerEvent: {}
+[67.258719] (-) TimerEvent: {}
+[67.359958] (-) TimerEvent: {}
+[67.461735] (-) TimerEvent: {}
+[67.562822] (-) TimerEvent: {}
+[67.663778] (-) TimerEvent: {}
+[67.764659] (-) TimerEvent: {}
+[67.865792] (-) TimerEvent: {}
+[67.966710] (-) TimerEvent: {}
+[68.068839] (-) TimerEvent: {}
+[68.169931] (-) TimerEvent: {}
+[68.270897] (-) TimerEvent: {}
+[68.371953] (-) TimerEvent: {}
+[68.473013] (-) TimerEvent: {}
+[68.575047] (-) TimerEvent: {}
+[68.677402] (-) TimerEvent: {}
+[68.779194] (-) TimerEvent: {}
+[68.880125] (-) TimerEvent: {}
+[68.982200] (-) TimerEvent: {}
+[69.084304] (-) TimerEvent: {}
+[69.186247] (-) TimerEvent: {}
+[69.287274] (-) TimerEvent: {}
+[69.388385] (-) TimerEvent: {}
+[69.489354] (-) TimerEvent: {}
+[69.590379] (-) TimerEvent: {}
+[69.691494] (-) TimerEvent: {}
+[69.792908] (-) TimerEvent: {}
+[69.893919] (-) TimerEvent: {}
+[69.995886] (-) TimerEvent: {}
+[70.097741] (-) TimerEvent: {}
+[70.199681] (-) TimerEvent: {}
+[70.300877] (-) TimerEvent: {}
+[70.402759] (-) TimerEvent: {}
+[70.503944] (-) TimerEvent: {}
+[70.605710] (-) TimerEvent: {}
+[70.706767] (-) TimerEvent: {}
+[70.807882] (-) TimerEvent: {}
+[70.908865] (-) TimerEvent: {}
+[71.009999] (-) TimerEvent: {}
+[71.111972] (-) TimerEvent: {}
+[71.200110] (dubin) StdoutLine: {'line': b'[100%] Built target mission_planner\n'}
+[71.212562] (-) TimerEvent: {}
+[71.272717] (dubin) CommandEnded: {'returncode': 0}
+[71.314035] (-) TimerEvent: {}
+[71.415045] (-) TimerEvent: {}
+[71.516298] (-) TimerEvent: {}
+[71.618228] (-) TimerEvent: {}
+[71.724819] (dubin) JobProgress: {'identifier': 'dubin', 'progress': 'install'}
+[71.725099] (-) TimerEvent: {}
+[71.779359] (dubin) Command: {'cmd': ['/usr/bin/cmake', '--install', '/home/marko/ros_ws/src/dubin/build/dubin'], 'cwd': '/home/marko/ros_ws/src/dubin/build/dubin', 'env': OrderedDict([('GJS_DEBUG_TOPICS', 'JS ERROR;JS LOG'), ('LESSOPEN', '| /usr/bin/lesspipe %s'), ('LANGUAGE', 'en_US:'), ('USER', 'marko'), ('LC_TIME', 'it_IT.UTF-8'), ('ROS_PACKAGE_PATH', '/opt/openrobots/share'), ('XDG_SESSION_TYPE', 'wayland'), ('SHLVL', '1'), ('LD_LIBRARY_PATH', '/home/marko/ros_ws/install/obstacles_msgs/lib:/opt/openrobots/lib:/usr/lib/x86_64-linux-gnu/gazebo-11/plugins:/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/x86_64-linux-gnu:/opt/ros/humble/lib'), ('HOME', '/home/marko'), ('OLDPWD', '/home/marko/ros_ws'), ('DESKTOP_SESSION', 'ubuntu'), ('GIO_LAUNCHED_DESKTOP_FILE', '/usr/share/applications/terminator.desktop'), ('ROS_PYTHON_VERSION', '3'), ('GNOME_SHELL_SESSION_MODE', 'ubuntu'), ('GTK_MODULES', 'gail:atk-bridge'), ('LC_MONETARY', 'it_IT.UTF-8'), ('MANAGERPID', '1184'), ('SYSTEMD_EXEC_PID', '1343'), ('DBUS_SESSION_BUS_ADDRESS', 'unix:path=/run/user/1000/bus'), ('COLORTERM', 'truecolor'), ('TERMINATOR_DBUS_NAME', 'net.tenshu.Terminator25ef4b219e3b005583550f2b0f9f990c3'), ('GIO_LAUNCHED_DESKTOP_FILE_PID', '35693'), ('PYTHON_PATH', '/opt/ros/humble/lib/python3.10/site-packages:/opt/ros/humble/local/lib/python3.10/dist-packages:/opt/openrobots/lib/python3.10/site-packages:/home/marko/orc:/home/marko'), ('_colcon_cd_root', '/opt/ros/humble/'), ('IM_CONFIG_PHASE', '1'), ('WAYLAND_DISPLAY', 'wayland-0'), ('COLCON_PREFIX_PATH', '/home/marko/ros_ws/install'), ('ROS_DISTRO', 'humble'), ('LOGNAME', 'marko'), ('JOURNAL_STREAM', '8:41330'), ('_', '/usr/bin/colcon'), ('ROS_VERSION', '2'), ('PKG_CONFIG_PATH', '/opt/openrobots/lib/pkgconfig:'), ('XDG_SESSION_CLASS', 'user'), ('USERNAME', 'marko'), ('TERM', 'xterm-256color'), ('GNOME_DESKTOP_SESSION_ID', 'this-is-deprecated'), ('ROS_LOCALHOST_ONLY', '0'), ('PATH', '/opt/openrobots/bin:/opt/ros/humble/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin:/var/test'), ('SESSION_MANAGER', 'local/marko-virtual-machine:@/tmp/.ICE-unix/1322,unix/marko-virtual-machine:/tmp/.ICE-unix/1322'), ('INVOCATION_ID', '8451e7c746ec4bda819b0a70ddd70fe5'), ('XDG_MENU_PREFIX', 'gnome-'), ('LC_ADDRESS', 'it_IT.UTF-8'), ('GNOME_SETUP_DISPLAY', ':1'), ('XDG_RUNTIME_DIR', '/run/user/1000'), ('DISPLAY', ':0'), ('TERMINATOR_DBUS_PATH', '/net/tenshu/Terminator2'), ('LANG', 'en_US.UTF-8'), ('XDG_CURRENT_DESKTOP', 'ubuntu:GNOME'), ('IBUS_DISABLE_SNOOPER', '1'), ('LC_TELEPHONE', 'it_IT.UTF-8'), ('XMODIFIERS', '@im=ibus'), ('XDG_SESSION_DESKTOP', 'ubuntu'), ('XAUTHORITY', '/run/user/1000/.mutter-Xwaylandauth.1FA8Y1'), ('LS_COLORS', 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:'), ('SSH_AGENT_LAUNCHER', 'gnome-keyring'), ('SSH_AUTH_SOCK', '/run/user/1000/keyring/ssh'), ('AMENT_PREFIX_PATH', '/home/marko/ros_ws/install/shelfino_node:/home/marko/ros_ws/install/shelfino_navigation:/home/marko/ros_ws/install/shelfino_gazebo:/home/marko/ros_ws/install/shelfino_description:/home/marko/ros_ws/install/send_obstacles:/home/marko/ros_ws/install/send_gates:/home/marko/ros_ws/install/send_borders:/home/marko/ros_ws/install/remote_control:/home/marko/ros_ws/install/dubin:/home/marko/ros_ws/install/obstacles_msgs:/home/marko/ros_ws/install/get_positions:/opt/ros/humble'), ('SHELL', '/bin/bash'), ('LC_NAME', 'it_IT.UTF-8'), ('TERMINATOR_UUID', 'urn:uuid:a6ffd9fe-e55b-4109-b38b-e192b0941abb'), ('QT_ACCESSIBILITY', '1'), ('GDMSESSION', 'ubuntu'), ('LESSCLOSE', '/usr/bin/lesspipe %s %s'), ('LC_MEASUREMENT', 'it_IT.UTF-8'), ('GJS_DEBUG_OUTPUT', 'stderr'), ('LC_IDENTIFICATION', 'it_IT.UTF-8'), ('QT_IM_MODULE', 'ibus'), ('PWD', '/home/marko/ros_ws/src/dubin/build/dubin'), ('XDG_CONFIG_DIRS', '/etc/xdg/xdg-ubuntu:/etc/xdg'), ('XDG_DATA_DIRS', '/usr/share/ubuntu:/usr/local/share/:/usr/share/:/var/lib/snapd/desktop'), ('PYTHONPATH', '/home/marko/ros_ws/install/obstacles_msgs/local/lib/python3.10/dist-packages:/opt/ros/humble/lib/python3.10/site-packages:/opt/ros/humble/local/lib/python3.10/dist-packages:/opt/openrobots/lib/python3.10/site-packages:/home/marko/orc:/home/marko'), ('LC_NUMERIC', 'it_IT.UTF-8'), ('LC_PAPER', 'it_IT.UTF-8'), ('COLCON', '1'), ('VTE_VERSION', '6800'), ('CMAKE_PREFIX_PATH', '/home/marko/ros_ws/install/shelfino_node:/home/marko/ros_ws/install/shelfino_navigation:/home/marko/ros_ws/install/shelfino_gazebo:/home/marko/ros_ws/install/shelfino_description:/home/marko/ros_ws/install/send_obstacles:/home/marko/ros_ws/install/send_gates:/home/marko/ros_ws/install/send_borders:/home/marko/ros_ws/install/remote_control:/home/marko/ros_ws/install/dubin:/home/marko/ros_ws/install/obstacles_msgs:/home/marko/ros_ws/install/get_positions:/opt/ros/humble')]), 'shell': False}
+[71.826188] (-) TimerEvent: {}
+[71.839092] (dubin) StdoutLine: {'line': b'-- Install configuration: ""\n'}
+[71.841480] (dubin) StdoutLine: {'line': b'-- Installing: /home/marko/ros_ws/src/dubin/install/dubin/lib/dubin/mission_planner\n'}
+[71.927314] (-) TimerEvent: {}
+[71.954069] (dubin) StdoutLine: {'line': b'-- Set runtime path of "/home/marko/ros_ws/src/dubin/install/dubin/lib/dubin/mission_planner" to ""\n'}
+[71.956262] (dubin) StdoutLine: {'line': b'-- Installing: /home/marko/ros_ws/src/dubin/install/dubin/share/ament_index/resource_index/package_run_dependencies/dubin\n'}
+[71.956988] (dubin) StdoutLine: {'line': b'-- Installing: /home/marko/ros_ws/src/dubin/install/dubin/share/ament_index/resource_index/parent_prefix_path/dubin\n'}
+[71.962807] (dubin) StdoutLine: {'line': b'-- Installing: /home/marko/ros_ws/src/dubin/install/dubin/share/dubin/environment/ament_prefix_path.sh\n'}
+[71.965215] (dubin) StdoutLine: {'line': b'-- Installing: /home/marko/ros_ws/src/dubin/install/dubin/share/dubin/environment/ament_prefix_path.dsv\n'}
+[71.968537] (dubin) StdoutLine: {'line': b'-- Installing: /home/marko/ros_ws/src/dubin/install/dubin/share/dubin/environment/path.sh\n'}
+[71.971107] (dubin) StdoutLine: {'line': b'-- Installing: /home/marko/ros_ws/src/dubin/install/dubin/share/dubin/environment/path.dsv\n'}
+[71.973366] (dubin) StdoutLine: {'line': b'-- Installing: /home/marko/ros_ws/src/dubin/install/dubin/share/dubin/local_setup.bash\n'}
+[71.976050] (dubin) StdoutLine: {'line': b'-- Installing: /home/marko/ros_ws/src/dubin/install/dubin/share/dubin/local_setup.sh\n'}
+[71.980017] (dubin) StdoutLine: {'line': b'-- Installing: /home/marko/ros_ws/src/dubin/install/dubin/share/dubin/local_setup.zsh\n'}
+[71.983117] (dubin) StdoutLine: {'line': b'-- Installing: /home/marko/ros_ws/src/dubin/install/dubin/share/dubin/local_setup.dsv\n'}
+[71.984583] (dubin) StdoutLine: {'line': b'-- Installing: /home/marko/ros_ws/src/dubin/install/dubin/share/dubin/package.dsv\n'}
+[71.987125] (dubin) StdoutLine: {'line': b'-- Installing: /home/marko/ros_ws/src/dubin/install/dubin/share/ament_index/resource_index/packages/dubin\n'}
+[71.988731] (dubin) StdoutLine: {'line': b'-- Installing: /home/marko/ros_ws/src/dubin/install/dubin/share/dubin/cmake/dubinConfig.cmake\n'}
+[71.991085] (dubin) StdoutLine: {'line': b'-- Installing: /home/marko/ros_ws/src/dubin/install/dubin/share/dubin/cmake/dubinConfig-version.cmake\n'}
+[71.992877] (dubin) StdoutLine: {'line': b'-- Installing: /home/marko/ros_ws/src/dubin/install/dubin/share/dubin/package.xml\n'}
+[72.006976] (dubin) CommandEnded: {'returncode': 0}
+[72.028466] (-) TimerEvent: {}
+[72.130501] (-) TimerEvent: {}
+[72.236512] (-) TimerEvent: {}
+[72.338381] (-) TimerEvent: {}
+[72.440200] (-) TimerEvent: {}
+[72.542720] (-) TimerEvent: {}
+[72.644725] (-) TimerEvent: {}
+[72.746756] (-) TimerEvent: {}
+[72.837583] (dubin) JobEnded: {'identifier': 'dubin', 'rc': 0}
+[72.867206] (-) TimerEvent: {}
+[72.868031] (-) EventReactorShutdown: {}
