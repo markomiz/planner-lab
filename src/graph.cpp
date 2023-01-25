@@ -20,7 +20,7 @@ quad::quad(int max_depth, point2d tl, point2d br) : tl(tl), br(br), max_depth(ma
     br_tree = NULL;
     
     center.x = (tr.x + bl.x) / 2;
-    center.y = (tr.x + bl.x) / 2;
+    center.y = (tr.y + bl.y) / 2;
     radius = (tr - bl).norm() / 2;
 
 }
@@ -29,9 +29,9 @@ bool quad::insert(shared_ptr<Node> node)
     if (max_depth == 0) { nodes.push_back(node);
         return true;
     }
-    if ((tl.x + br.x) / 2 >= node->pt.x.x) {
+    if (center.x >= node->pt.x.x) {
         // Indicates tl_tree
-        if ((tl.y + br.y) / 2 >= node->pt.x.y) {
+        if (center.y <= node->pt.x.y) {
             if (tl_tree == NULL)
                 tl_tree = new quad( max_depth - 1,
                     point2d(tl.x, tl.y),
@@ -50,7 +50,7 @@ bool quad::insert(shared_ptr<Node> node)
         }
     }
     else {
-        if ((tl.y + br.y) / 2 >= node->pt.x.y) {
+        if (center.y  <= node->pt.x.y) {
             if (tr_tree == NULL)
                 tr_tree = new quad( max_depth - 1,
                     point2d((tl.x + br.x) / 2,

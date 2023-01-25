@@ -62,7 +62,7 @@ class MissionPlanner : public rclcpp::Node
 
         bool has_received_map = false;
         bool has_received_gate = false;
-        bool has_received_obs = true;
+        bool has_received_obs = false;
         bool has_received_pose1 = false;
         bool has_received_pose2 = false;
 
