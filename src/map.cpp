@@ -171,19 +171,22 @@ bool Map::colliding(line l)
     {
         Polygon obs = obstacles[i];
         // rough pass with radius of obstacles
-        if ((CollisionCheck::point_lineseg_dist(obs.center, l)) > obs.radius){
-
-            continue;
-
+        bool xout = false;
+        bool yout = false;
+        if ( (l.p_initial.x > obstacles[i].radius + obstacles[i].x_max && l.p_final.x > obstacles[i].radius  + obstacles[i].x_max) ) xout = true;
+        else if ( (l.p_initial.x < obstacles[i].radius - obstacles[i].x_max && l.p_final.x < obstacles[i].radius  -  obstacles[i].x_max) ) xout = true;
+        if (xout)
+        {
+        if ( (l.p_initial.y > obstacles[i].radius + obstacles[i].y_max && l.p_final.y > obstacles[i].radius  + obstacles[i].y_max) ) yout = true;
+        else if ( (l.p_initial.y < obstacles[i].radius - obstacles[i].y_max && l.p_final.y < obstacles[i].radius  -  obstacles[i].y_max) ) yout = true;
         }
+        if (xout & yout) continue;
         // second check more detailed check if rough pass not passing
         for (auto j = 0; j < obs.edges.size(); j++)
         {
 
             if (CollisionCheck::line_line_intersect(obs.edges[j], l).intersects)
             {
-                // cout << "edge fails\n";
-
                 return true;
             } 
         }

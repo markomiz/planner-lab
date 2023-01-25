@@ -120,10 +120,8 @@ void PRMstar::genRoadmapPlus(int n, int angles)
         std::vector<shared_ptr<Bundle>> nearest = graph->in_range(new_p,rad); //find all nodes within a Radius
         for (int a = 0; a < angles; a ++)
         {
-
             shared_ptr<Node> new_node(new Node(new_pose));
             shared_ptr<Node> cor(new Node(c_pose));
-            
             new_node->opposite = cor;
             cor->opposite = new_node;
             new_node->pt.theta = a * d_ang;
@@ -134,9 +132,11 @@ void PRMstar::genRoadmapPlus(int n, int angles)
                 {
                     dubins_params sol = dCurve->calculateSinglePath(new_node->pt, nearest[x]->nodes[b]->pt);
                     arcs A = arcs(new_node->pt, sol);
-                    // if (!map->colliding(A) &&  A.L < rad){
+                    float dist = (new_node->pt.x - nearest[x]->nodes[b]->pt.x).norm();
+
+                    if (!map->colliding(A) &&  A.L < dist * M_PI/2){
                     // if (map->colliding(A)) cout << "collision --- \n";
-                    if (!map->colliding(A)){
+                    //if (!map->colliding(A)){
                         graph->add(new_node, nearest[x]->nodes[b], A);
                         cons ++;
                     }
@@ -171,7 +171,8 @@ deque<arcs> PRMstar::getPath(pose2d start, pose2d end)
             dubins_params sol = dCurve->calculateSinglePath(start, nearest_s[x]->nodes[a]->pt);
             arcs A(start, sol);
             // if doesn't collide add connections to graph
-            if (map->colliding(A)) continue;
+            float dist = (start_node->pt.x - nearest_s[x]->nodes[a]->pt.x).norm();
+            if (map->colliding(A) ||  A.L < dist * M_PI/3) continue;
             graph->add(start_node, nearest_s[x]->nodes[a], A);
         }
 
@@ -191,7 +192,8 @@ deque<arcs> PRMstar::getPath(pose2d start, pose2d end)
             dubins_params sol = dCurve->calculateSinglePath( nearest_e[y]->nodes[a]->pt, end);
             arcs A(nearest_e[y]->nodes[a]->pt, sol);
             // if doesn't collide add connections to graph
-            if (map->colliding(A)) continue;
+            float dist = (end_node->pt.x - nearest_e[y]->nodes[a]->pt.x).norm();
+            if (map->colliding(A) ||  A.L < dist * M_PI/3) continue;
             graph->add(nearest_e[y]->nodes[a], end_node,  A);
         }
 
@@ -238,7 +240,8 @@ deque<arcs> PRMstar::getPathManyExits(pose2d start, vector<pose2d> end)
             dubins_params sol = dCurve->calculateSinglePath(start, nearest_s[x]->nodes[a]->pt);
             arcs A(start, sol);
             // if doesn't collide add connections to graph
-            if (map->colliding(A)) continue;
+            float dist = (start_node->pt.x - nearest_s[x]->nodes[a]->pt.x).norm();
+            if (map->colliding(A) ||  A.L < dist * M_PI/3) continue;
             graph->add(start_node, nearest_s[x]->nodes[a], A);
         }
 
@@ -263,7 +266,8 @@ deque<arcs> PRMstar::getPathManyExits(pose2d start, vector<pose2d> end)
                 dubins_params sol = dCurve->calculateSinglePath( nearest_e[y]->nodes[a]->pt, end[i]);
                 arcs A(nearest_e[y]->nodes[a]->pt, sol);
                 // if doesn't collide add connections to graph
-                if (map->colliding(A)) continue;
+                float dist = (end_node->pt.x - nearest_e[y]->nodes[a]->pt.x).norm();
+                if (map->colliding(A) ||  A.L < dist * M_PI/3) continue;
                 graph->add(nearest_e[y]->nodes[a], end_node,  A);
             }
 
@@ -289,4 +293,4 @@ deque<arcs> PRMstar::getPathManyExits(pose2d start, vector<pose2d> end)
     deque<arcs> points = graph->getPathPlusManyExits(start_node, end_nodes);
     // TRY DO A MULTIPOINT ONCE IT'S DONE?
     return points;
-}
+};
