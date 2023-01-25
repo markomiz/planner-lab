@@ -90,6 +90,7 @@ void PRMstar::genRoadmapPlus(int n, int angles)
     float d_ang = M_PI * 2/float(angles);
     for (auto i = 0; i < config->getNumPoints(); i ++)
     {
+
         point2d new_p;
         new_p = map->halton_sample(i);
         float rad = yprm*sqrt(log(i+1)/(i+1));
@@ -169,7 +170,6 @@ deque<arcs> PRMstar::getPath(pose2d start, pose2d end)
 
     graph->nodes.push_back(start_node);
     graph->points_quad.add_node(start_node);
-
     graph->nodes.push_back(end_node);
     graph->points_quad.add_node(end_node);
 
@@ -177,7 +177,9 @@ deque<arcs> PRMstar::getPath(pose2d start, pose2d end)
     graph->points_quad.add_node(cor);
 
     graph->nodes.push_back(cor_e);
+
     graph->points_quad.add_node(cor_e);
+
     cout << "hiit the graph \n";
     deque<arcs> points = graph->getPathPlus(start_node, end_node);
     return points;
@@ -185,6 +187,8 @@ deque<arcs> PRMstar::getPath(pose2d start, pose2d end)
 
 deque<arcs> PRMstar::getPathManyExits(pose2d start, vector<pose2d> end)
 {
+    cout << "Gate 1:" << end[0].x.x << "," << end[0].x.y << "," << end[0].theta << endl;
+    cout << "Gate 2:" << end[1].x.x << "," << end[1].x.y << "," << end[1].theta << endl;
     float TRSH = config->getStartEndThrsh();
     // fisrt connect start and end to graph
     std::vector<shared_ptr<Node>> nearest_s = graph->in_range(start.x, TRSH); // find all nodes within a Rad

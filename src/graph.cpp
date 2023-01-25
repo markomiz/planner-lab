@@ -9,6 +9,7 @@ Graph::Graph(int max_depth, point2d tl, point2d br) : points_quad(-15.0, 25.0, -
 
 };
 
+
 void quad::add_node(shared_ptr<Node> point){
     //cout << " add node" << endl;
     if (children.size() == 0)
@@ -114,7 +115,9 @@ shared_ptr<Node> Graph::add(shared_ptr<Node> point, shared_ptr<Node> existing, a
 };
 vector<shared_ptr<Node>> Graph::in_range(point2d pt, float rad)
 {
+
     vector<shared_ptr<Node>> points = points_quad.get_nearest( pt, rad);
+
     return points;
 };
 void Graph::reset_nodes()
