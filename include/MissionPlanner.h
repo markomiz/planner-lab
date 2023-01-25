@@ -51,7 +51,7 @@ class MissionPlanner : public rclcpp::Node
         shared_ptr<dubinCurve> d;
 
         rclcpp::Subscription<obstacles_msgs::msg::ObstacleArrayMsg>::SharedPtr obs_subscription_;
-        rclcpp::Subscription<geometry_msgs::msg::PolygonStamped>::SharedPtr map_subscription_;
+        rclcpp::Subscription<geometry_msgs::msg::Polygon>::SharedPtr map_subscription_;
         rclcpp::Subscription<geometry_msgs::msg::PoseArray>::SharedPtr gate_subscription_;
         rclcpp::Subscription<geometry_msgs::msg::TransformStamped>::SharedPtr pose1_subscription_;
         rclcpp::Subscription<geometry_msgs::msg::TransformStamped>::SharedPtr pose2_subscription_;
@@ -60,7 +60,7 @@ class MissionPlanner : public rclcpp::Node
         std::shared_ptr<ConfigParams> conf;
         size_t count_;
 
-        bool has_received_map = true;
+        bool has_received_map = false;
         bool has_received_gate = false;
         bool has_received_obs = false;
         bool has_received_pose1 = false;
@@ -69,7 +69,7 @@ class MissionPlanner : public rclcpp::Node
         
         //Subscribers
         void obstacle_topic_callback(const obstacles_msgs::msg::ObstacleArrayMsg obstacle_message);
-        void map_topic_callback(const geometry_msgs::msg::PolygonStamped outline_message);
+        void map_topic_callback(const geometry_msgs::msg::Polygon outline_message);
         void gate_topic_callback(const geometry_msgs::msg::PoseArray outline_message);
         void pose1_topic_callback(const geometry_msgs::msg::TransformStamped outline_message);
         void pose2_topic_callback(const geometry_msgs::msg::TransformStamped outline_message);
