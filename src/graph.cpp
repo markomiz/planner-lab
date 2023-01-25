@@ -4,13 +4,14 @@
 #include <iostream>
 #include <deque>
 using namespace std;
-Graph::Graph(int max_depth, point2d tl, point2d br) : points_quad(-15.0, 25.0, -15.0, 25.0, 0)
+Graph::Graph(int max_depth, point2d tl, point2d br) : points_quad(-6.0, 6.0, -6.0, 6.0, 0)
 {
 
 };
 
 
-void quad::add_node(shared_ptr<Node> point){
+void quad::add_bundle(shared_ptr<Bundle> point){
+
     //cout << " add node" << endl;
     if (children.size() == 0)
     {
@@ -20,7 +21,7 @@ void quad::add_node(shared_ptr<Node> point){
         }
     }
     else {
-        add_node_to_children(point);
+        add_bundle_to_children(point);
     }
 };
 void quad::subdivide(){
@@ -33,48 +34,57 @@ void quad::subdivide(){
 
     for (int i = 0; i < points.size(); i++)
     {
-        add_node_to_children(points[i]);
+        add_bundle_to_children(points[i]);
     }            
     points.clear();
 };
-void quad::add_node_to_children(shared_ptr<Node> point) {
-    float x = point->pt.x.x;
-    float y = point->pt.x.y;
+void quad::add_bundle_to_children(shared_ptr<Bundle> point) {
+    float x = point->pos.x;
+    float y = point->pos.y;
     
     for (int i = 0; i < children.size(); i++)
     {    
         if (children[i].xmin <= x && x <= children[i].xmax && children[i].ymin <= y && y <= children[i].ymax)
         {
             // cout << " x " << x << " y " << y << endl;
-            children[i].add_node(point);
+            children[i].add_bundle(point);
             break;
         }
     }
 };
-vector<shared_ptr<Node>> quad::get_nearest(point2d pt, float r)
+vector<shared_ptr<Bundle>> quad::get_nearest(point2d pt, float r)
 {
-    vector<shared_ptr<Node>> neighbors;
+    vector<shared_ptr<Bundle>> neighbors;
     find_neighbors_r(pt, r, neighbors);
     return neighbors;
 };
-void quad::find_neighbors_r(point2d point, float r, vector<shared_ptr<Node>> &neighbors)
+void quad::find_neighbors_r(point2d point, float r, vector<shared_ptr<Bundle>> &neighbors)
 {
     float x = point.x;
     float y = point.y;
     
     if (children.size() == 0){
-        for (int i = 0; i < points.size(); i++ )
-        {
-            if ((point - points[i]->pt.x).norm() <= r)
+        if (xmin <= x - r && x + r <= xmax && ymin <= y - r && y + r <= ymax) // whole quad is inside
             {
-                neighbors.push_back(points[i]);
-            }   
+                neighbors.insert(neighbors.end(), points.begin(), points.end());
+            }
+        else
+        {
+            for (int i = 0; i < points.size(); i++ )
+            {
+                point2d p = (point - points[i]->pos);
+                if (p.x*p.x + p.y*p.y <= r*r)
+                {
+                    neighbors.push_back(points[i]);
+                }   
+            }
         }
+
     }
     else{
         for (int i = 0; i < children.size(); i++ )
         {
-            if (children[i].xmin <= x + r && x - r <= children[i].xmax && children[i].ymin <= y + r && y - r <= children[i].ymax)
+            if (children[i].xmin <= x + r && x - r <= children[i].xmax && children[i].ymin <= y + r && y - r <= children[i].ymax) // quad partially inside 
             {
                 children[i].find_neighbors_r(point, r, neighbors);
             }
@@ -84,14 +94,15 @@ void quad::find_neighbors_r(point2d point, float r, vector<shared_ptr<Node>> &ne
 shared_ptr<Node> Graph::add(shared_ptr<Node> point, shared_ptr<Node> existing)
 {
     
-    float dist = (point->pt.x - existing->pt.x).norm();
+    point2d l = (point->pt.x - existing->pt.x);
+    float sqdist = l.x*l.x + l.y+l.y;
     connection c1;
     c1.node = existing;
-    c1.cost = dist;
+    c1.cost = sqdist;
     point->connected.push_back(c1);
     connection c2;
     c2.node = point;
-    c2.cost = dist;
+    c2.cost = sqdist;
     existing->connected.push_back(c2);
     return point;
 
@@ -113,10 +124,10 @@ shared_ptr<Node> Graph::add(shared_ptr<Node> point, shared_ptr<Node> existing, a
     return point;
 
 };
-vector<shared_ptr<Node>> Graph::in_range(point2d pt, float rad)
+vector<shared_ptr<Bundle>> Graph::in_range(point2d pt, float rad)
 {
 
-    vector<shared_ptr<Node>> points = points_quad.get_nearest( pt, rad);
+    vector<shared_ptr<Bundle>> points = points_quad.get_nearest( pt, rad);
 
     return points;
 };
@@ -259,10 +270,14 @@ deque<arcs> Graph::getPathPlus(shared_ptr<Node> start_node, shared_ptr<Node> end
         float node_time = current->cost;
         current->arrival_time.push_back(node_time);
         point2d current_point = current->pt.x;
-        vector<shared_ptr<Node>> nearby = points_quad.get_nearest(current_point, config->getTPRM_D()); 
+        vector<shared_ptr<Bundle>> nearby = points_quad.get_nearest(current_point, config->getTPRM_D()); 
         for (auto i = 0; i < nearby.size() ; i++)
         {
-            nearby[i]->arrival_time.push_back(node_time);     
+            for (int a = 0; a < nearby[i]->nodes.size(); a++)
+            {
+               nearby[i]->nodes[a]->arrival_time.push_back(node_time);  
+            }
+                
         }
         current = current->parent;
     }
@@ -352,10 +367,14 @@ deque<arcs> Graph::getPathPlusManyExits(shared_ptr<Node> start_node, vector<shar
         current->arrival_time.push_back(node_time);
 
         point2d current_point = current->pt.x;
-        vector<shared_ptr<Node>> nearby = points_quad.get_nearest(current_point, config->getTPRM_D()); 
+        vector<shared_ptr<Bundle>> nearby = points_quad.get_nearest(current_point, config->getTPRM_D()); 
         for (auto i = 0; i < nearby.size() ; i++)
         {
-            nearby[i]->arrival_time.push_back(node_time);     
+            for (int a = 0; a < nearby[i]->nodes.size(); a++)
+            {
+               nearby[i]->nodes[a]->arrival_time.push_back(node_time);  
+            }
+                
         }
   
         current = current->parent;
@@ -375,18 +394,18 @@ void Graph::print_nodes(){
     }
 };
 void quad::print_nodes(){
-    if (children.size() == 0 )
-    {
-        for (auto i = 0; i < points.size(); i++)
-        {
-            cout << (points[i]->pt).x.x << " x ins y " << (points[i]->pt).x.y << "\n";
-        }
-    }
-    else
-    {
-        for (auto i = 0; i < children.size(); i++)
-        {
-            children[i].print_nodes();
-        }
-    }
+    // if (children.size() == 0 )
+    // {
+    //     for (auto i = 0; i < points.size(); i++)
+    //     {
+    //         cout << (points[i]->pt).x.x << " x ins y " << (points[i]->pt).x.y << "\n";
+    //     }
+    // }
+    // else
+    // {
+    //     for (auto i = 0; i < children.size(); i++)
+    //     {
+    //         children[i].print_nodes();
+    //     }
+    // }
 };

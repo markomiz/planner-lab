@@ -6,6 +6,7 @@
 using namespace std;
 
 struct connection;
+struct Bundle;
 
 
 struct Node
@@ -35,6 +36,11 @@ struct Node
         return true;
     }    
 };
+struct Bundle
+{
+    vector<shared_ptr< Node>> nodes;
+    point2d pos;
+};
 
 struct connection
 {
@@ -48,18 +54,18 @@ class quad
     public:
     quad(float xmin, float xmax, float ymin, float ymax, int depth): xmin(xmin), ymin(ymin), xmax(xmax), ymax(ymax), depth(depth)
     {};
-    void add_node(shared_ptr<Node> point);
+    void add_bundle(shared_ptr<Bundle> point);
     void subdivide();
-    void add_node_to_children(shared_ptr<Node> point);
-    vector<shared_ptr<Node>> get_nearest(point2d point, float r);
-    void find_neighbors_r(point2d point, float r, vector<shared_ptr<Node>> &neighbors);
+    void add_bundle_to_children(shared_ptr<Bundle> point);
+    vector<shared_ptr<Bundle>> get_nearest(point2d point, float r);
+    void find_neighbors_r(point2d point, float r, vector<shared_ptr<Bundle>> &neighbors);
     float xmin;
     float ymin;
     float xmax;
     float ymax;
     int depth;
     const int max_depth = 10;
-    vector<shared_ptr<Node>> points;
+    vector<shared_ptr<Bundle>> points;
     vector<quad> children;
     void print_nodes();
 };
@@ -72,7 +78,7 @@ class Graph
         // creates node for point adds, returns new node ptr
         shared_ptr<Node> add(shared_ptr<Node> pt, shared_ptr<Node> existing);
         shared_ptr<Node> add(shared_ptr<Node> pt, shared_ptr<Node> existing, arcs A);
-        vector<shared_ptr<Node>> in_range(point2d pt, float rad);
+        vector<shared_ptr<Bundle>> in_range(point2d pt, float rad);
         void reset_nodes();
         vector<point2d> getPath(shared_ptr<Node> start, shared_ptr<Node> end);
         deque<arcs> getPathPlus(shared_ptr<Node> start, shared_ptr<Node> end);

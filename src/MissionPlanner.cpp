@@ -42,10 +42,8 @@ using namespace std::chrono_literals;
 
 void MissionPlanner::obstacle_topic_callback(const obstacles_msgs::msg::ObstacleArrayMsg obstacle_message)
 {
-    if(has_received_obs)
-    {
-        return;
-    }
+    if(has_received_obs) return;
+    
     // create polygon obstacle object
     int n_obs = obstacle_message.obstacles.size();
     
@@ -69,16 +67,14 @@ void MissionPlanner::obstacle_topic_callback(const obstacles_msgs::msg::Obstacle
     }
     RCLCPP_INFO(this->get_logger(), "Got obstacles information");
     has_received_obs = true;
-    // getPaths_and_Publish();
+    getPaths_and_Publish();
 
 };
 
 void MissionPlanner::map_topic_callback(const geometry_msgs::msg::Polygon outline_message)
 {
-    if(has_received_map)
-    {
-        return;
-    }
+    if(has_received_map) return;
+    
     vector<point2d> outer_verteces;
     for (int i = 0; i < outline_message.points.size(); i++)
     {
@@ -90,15 +86,13 @@ void MissionPlanner::map_topic_callback(const geometry_msgs::msg::Polygon outlin
     map_poly = Polygon(outer_verteces);
     has_received_map = true;
     RCLCPP_INFO(this->get_logger(), "Got map information.");
-    // getPaths_and_Publish();
+    getPaths_and_Publish();
 };
 
 void MissionPlanner::gate_topic_callback(const geometry_msgs::msg::PoseArray outline_message)
 {
-    if(has_received_gate)
-    {
-        return;
-    }
+    if(has_received_gate) return;
+    
     cout << "the gates are " << outline_message.poses.size() << endl;
     for (int i = 0; i < outline_message.poses.size(); i++)
     {
@@ -115,16 +109,14 @@ void MissionPlanner::gate_topic_callback(const geometry_msgs::msg::PoseArray out
     }
     has_received_gate = true;
     RCLCPP_INFO(this->get_logger(), "Got gates information");
-    // getPaths_and_Publish();
+    getPaths_and_Publish();
     
 };
 
 void MissionPlanner::pose1_topic_callback(const geometry_msgs::msg::TransformStamped t)
 {
-    if(has_received_pose1)
-    {
-        return;
-    }
+    if(has_received_pose1) return;
+    
     pose2d temp_init_pose(__FLT_MAX__,__FLT_MAX__,__FLT_MAX__);
     tf2::Quaternion q(t.transform.rotation.x,t.transform.rotation.y,t.transform.rotation.z,t.transform.rotation.w);
     tf2::Matrix3x3 m(q);
@@ -136,29 +128,25 @@ void MissionPlanner::pose1_topic_callback(const geometry_msgs::msg::TransformSta
     initial_poses.push_back(temp_init_pose);
     has_received_pose1 = true;
     RCLCPP_INFO(this->get_logger(), "Got initial pose 1");
-    // getPaths_and_Publish();
+    getPaths_and_Publish();
 };
 
 void MissionPlanner::pose2_topic_callback(const geometry_msgs::msg::TransformStamped t)
 {
-    if(has_received_pose2 && has_received_pose1)
-    {
-        getPaths_and_Publish();
-        return;
-    } else if (has_received_pose1)
-    {
-        pose2d temp_init_pose(__FLT_MAX__,__FLT_MAX__,__FLT_MAX__);
-        tf2::Quaternion q(t.transform.rotation.x,t.transform.rotation.y,t.transform.rotation.z,t.transform.rotation.w);
-        tf2::Matrix3x3 m(q);
-        double roll, pitch, yaw;
-        m.getRPY(roll, pitch, yaw);
-        temp_init_pose.x.x  = t.transform.translation.x;
-        temp_init_pose.x.y  = t.transform.translation.y;
-        temp_init_pose.theta = yaw;
-        initial_poses.push_back(temp_init_pose);
-        has_received_pose2 = true;
-        RCLCPP_INFO(this->get_logger(), "Got initial pose 2");
-    } else return;
+    if(has_received_pose2) return;
+    
+    pose2d temp_init_pose(__FLT_MAX__,__FLT_MAX__,__FLT_MAX__);
+    tf2::Quaternion q(t.transform.rotation.x,t.transform.rotation.y,t.transform.rotation.z,t.transform.rotation.w);
+    tf2::Matrix3x3 m(q);
+    double roll, pitch, yaw;
+    m.getRPY(roll, pitch, yaw);
+    temp_init_pose.x.x  = t.transform.translation.x;
+    temp_init_pose.x.y  = t.transform.translation.y;
+    temp_init_pose.theta = yaw;
+    initial_poses.push_back(temp_init_pose);
+    has_received_pose2 = true;
+    RCLCPP_INFO(this->get_logger(), "Got initial pose 2");
+
 };
 
 /*
@@ -168,10 +156,10 @@ void MissionPlanner::pose2_topic_callback(const geometry_msgs::msg::TransformSta
 void MissionPlanner::build_roadmap()
 {
     // shared_ptr<Map> map (new Map(map_poly));
-    point2d t1(-12.0,-12.0);
-    point2d t2(-12.0,12.0);
-    point2d t3(12.0,12.0);
-    point2d t4(12.0,-12.0);
+    point2d t1(-6.0,-6.0);
+    point2d t2(-6.0,6.0);
+    point2d t3(6.0,6.0);
+    point2d t4(6.0,-6.0);
     
     vector<point2d> vec_vert;
     vec_vert.push_back(t1);
@@ -179,10 +167,10 @@ void MissionPlanner::build_roadmap()
     vec_vert.push_back(t3);
     vec_vert.push_back(t4);
 
-    point2d p1(-3.0,-3.0);
-    point2d p2(-3.0,3.0);
-    point2d p3(3.0,3.0);
-    point2d p4(3.0,-3.0);
+    point2d p1(-2.0,-2.0);
+    point2d p2(-2.0,2.0);
+    point2d p3(2.0,2.0);
+    point2d p4(2.0,-2.0);
     
     vector<point2d> obs_vert;
     obs_vert.push_back(p1);
@@ -220,22 +208,20 @@ void MissionPlanner::getPaths_and_Publish()
 {
     if (path_done) return;
     if(has_received_map && has_received_gate && has_received_obs && has_received_pose1 && has_received_pose2)
-    {
+    {        
         RCLCPP_INFO(this->get_logger(), "Got all information from simulation");
         RCLCPP_INFO(this->get_logger(), "Calculating Roadmap");
         clock_t beforeTime = clock();
         build_roadmap();
         clock_t afterTime = clock() - beforeTime;
-        
         cout << "Building the roadmap took " <<(float)afterTime/CLOCKS_PER_SEC << " seconds." << endl;
+
         
         for (int rob = 1; rob <= initial_poses.size(); rob++)
         {
             cout << "Pose is: " << initial_poses[rob-1].x.x << ", " << initial_poses[rob-1].x.y << ", " << initial_poses[rob-1].theta << endl;
             deque<arcs> path = planner->getPathManyExits(initial_poses[rob-1], gates);
-
             publish_path("shelfino" + to_string(rob) + "/follow_path", path);
-
         }
         path_done = true;
     }
@@ -342,7 +328,6 @@ void MissionPlanner::test()
     myfile.open ("path.csv");
     for (int i = 0; i < traj.poses.size(); i++)
     {
-    
         myfile << traj.poses[i].pose.position.x << "," << traj.poses[i].pose.position.y << endl;
     }
     myfile.close();
