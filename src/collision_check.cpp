@@ -53,7 +53,6 @@ intersection_result CollisionCheck::line_line_intersect(line l1, line l2)
             && (result.intersection.y >= std::min(l2.p_initial.y, l2.p_final.y) && result.intersection.y <= std::max(l2.p_initial.y, l2.p_final.y))
             )
         {
-            // cout << "here2" << endl;
             result.intersects = true;
             return result;
         }
@@ -76,8 +75,18 @@ intersection_result CollisionCheck::line_arc_intersect(line l1, arc arc1)
     
     center2initial.x = l1.p_initial.x - arc1.center.x;
     center2initial.y = l1.p_initial.y - arc1.center.y;
-    float angle_start = atan2(arc1.start.x.y-arc1.center.y, arc1.start.x.x-arc1.center.x);
-    float angle_end = atan2(arc1.end.x.y-arc1.center.y, arc1.end.x.x-arc1.center.x);
+    float angle_start;
+    float angle_end;
+    if (arc1.K > 0)
+    {
+        angle_end = atan2(arc1.start.x.y-arc1.center.y, arc1.start.x.x-arc1.center.x);
+        angle_start = atan2(arc1.end.x.y-arc1.center.y, arc1.end.x.x-arc1.center.x);
+    }
+    else
+    {
+        angle_start = atan2(arc1.start.x.y-arc1.center.y, arc1.start.x.x-arc1.center.x);
+        angle_end = atan2(arc1.end.x.y-arc1.center.y, arc1.end.x.x-arc1.center.x);
+    }
 
     float a = line_vector.x*line_vector.x + line_vector.y*line_vector.y;
     float b = 2*(center2initial.x*line_vector.x + center2initial.y*line_vector.y);

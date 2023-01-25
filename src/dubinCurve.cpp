@@ -53,17 +53,9 @@ nav_msgs::msg::Path dubinCurve::arcs_to_path(deque<arcs> input_arcs, float delta
   ofstream myfile ("path_points.txt");
 
   pose2d currentPoint = input_arcs[0].a[0].start;
-  myfile << currentPoint.x.x << "; " << currentPoint.x.y << "\n";
   final_path.poses.push_back(currentPoint.to_Pose());
-  cout << "final path arcs: "<< int(input_arcs.size())<<endl;
   for (auto i = 0; i < int(input_arcs.size()); i++)
   {
-    if ((currentPoint.x - input_arcs[i].a[0].start.x).norm() != 0)
-    {
-      cout << "\nMISS MATCH ";
-      cout << "\n" << currentPoint.x.x << " " << currentPoint.x.y << " " << currentPoint.theta << " p1";
-      cout << "\n" << input_arcs[i].a[0].start.x.x << " " << input_arcs[i].a[0].start.x.y << " " << input_arcs[i].a[0].start.theta << " p2";
-    }
     currentPoint =  input_arcs[i].a[0].start;
     for (auto j = 0; j < 3; j++)
     {
@@ -73,11 +65,11 @@ nav_msgs::msg::Path dubinCurve::arcs_to_path(deque<arcs> input_arcs, float delta
         {
           currentPoint = arc::next_pose(a.start, ds, a.K);
           final_path.poses.push_back(currentPoint.to_Pose());
-          myfile << currentPoint.x.x << "; " << currentPoint.x.y << "\n"; 
+       
         }
         currentPoint = a.end;
         final_path.poses.push_back(currentPoint.to_Pose()); 
-        myfile << currentPoint.x.x << "; " << currentPoint.x.y << "\n";
+    
     }
   }
   myfile.close();
@@ -111,7 +103,6 @@ std::vector<dubins_params> dubinCurve::calculateMultiPoint(pose2d start, pose2d 
       }
       if (best_solution.L == __FLT_MAX__)
       {
-        // cout << "shitty bum - the points couldn't connect with dubins curves\n ";
         std::vector<dubins_params> empty;
         return empty;
       }

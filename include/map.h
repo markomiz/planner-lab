@@ -68,7 +68,7 @@ class Map
         float getFreeSpace() { return freeSpace;};
         point2d uniform_sample();
         float halton_min(int index, int base, float min, float max);
-        point2d halton_sample(int i);
+        point2d halton_sample(int &i);
 
         
 };
