@@ -41,18 +41,27 @@ void Polygon::expandShape(float size)
     {
         // get vector connecting center to vertex
         point2d vec = verteces[i] - center;
-
         float th = atan2(vec.y,vec.x);
-
         point2d size_vec;
-        size_vec.x = size * cos(th);
-        size_vec.y = size * sin(th);
+        if(th <= 0)
+        {
+            size_vec.y = -size;
+            if (th > -M_PI/2)
+            {
+                size_vec.x = size;
+            } else size_vec.x = -size;
+               
+        } else{
+            size_vec.y = size;
+            if (th > M_PI/2) 
+            {
+                size_vec.x = -size;
+            } else size_vec.x = size;   
+        }
         // increase length by size
-        vec = vec + size_vec;
-
-        // swap vertex position for new expanded one
-        verteces[i] = vec;
-    };
+        verteces[i] = verteces[i] + size_vec;
+    }
+    radius = (center - verteces[0]).norm();
 };
 void Polygon::calculateArea()
 {
@@ -173,12 +182,12 @@ bool Map::colliding(line l)
         // rough pass with radius of obstacles
         bool xout = false;
         bool yout = false;
-        if ( (l.p_initial.x > obstacles[i].radius + obstacles[i].x_max && l.p_final.x > obstacles[i].radius  + obstacles[i].x_max) ) xout = true;
-        else if ( (l.p_initial.x < obstacles[i].radius - obstacles[i].x_max && l.p_final.x < obstacles[i].radius  -  obstacles[i].x_max) ) xout = true;
+        if ( (l.p_initial.x > obstacles[i].center.x + obstacles[i].radius && l.p_final.x > obstacles[i].radius  + obstacles[i].center.x) ) xout = true;
+        else if ( (l.p_initial.x < obstacles[i].center.x - obstacles[i].radius && l.p_final.x < obstacles[i].radius  -  obstacles[i].x_min) ) xout = true;
         if (xout)
         {
-        if ( (l.p_initial.y > obstacles[i].radius + obstacles[i].y_max && l.p_final.y > obstacles[i].radius  + obstacles[i].y_max) ) yout = true;
-        else if ( (l.p_initial.y < obstacles[i].radius - obstacles[i].y_max && l.p_final.y < obstacles[i].radius  -  obstacles[i].y_max) ) yout = true;
+            if ( (l.p_initial.y > obstacles[i].radius + obstacles[i].center.x && l.p_final.y > obstacles[i].radius  + obstacles[i].center.x) ) yout = true;
+            else if ( (l.p_initial.y < obstacles[i].center.y - obstacles[i].radius && l.p_final.y < obstacles[i].center.y  -  obstacles[i].radius) ) yout = true;
         }
         if (xout & yout) continue;
         // second check more detailed check if rough pass not passing

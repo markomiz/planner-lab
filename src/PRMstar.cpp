@@ -104,6 +104,8 @@ void PRMstar::genRoadmapPlus(int n, int angles)
     cout <<" gen roadmap pluss\n";
     float yprm  = sqrt(2*(1+ 1/2)) * sqrt(map->getFreeSpace()/M_PI) * config->getConnectDist();
     //  init empty graph
+    ofstream node_file ("nodes.txt");
+
     int cons = 0;
     float d_ang = M_PI * 2/float(angles);
     for (auto i = 0; i < config->getNumPoints(); i ++)
@@ -143,6 +145,7 @@ void PRMstar::genRoadmapPlus(int n, int angles)
                     }
                 }
             };
+            node_file << new_node->pt.x.x << "; " << new_node->pt.x.y << "\n";
             new_bundle->nodes.push_back(new_node);
             new_bundle->nodes.push_back(cor);
             graph->nodes.push_back(new_node);
@@ -151,6 +154,7 @@ void PRMstar::genRoadmapPlus(int n, int angles)
         }
         graph->points_quad.add_bundle(new_bundle);
     }
+    node_file.close();
     cout << cons <<" connections test \n";
 };
 deque<arcs> PRMstar::getPath(pose2d start, pose2d end)

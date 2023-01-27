@@ -100,11 +100,10 @@ class MissionPlanner : public rclcpp::Node
             path_done = false;
             conf = std::shared_ptr<ConfigParams>(new ConfigParams("src/dubin/config.txt"));
             d = std::shared_ptr<dubinCurve>(new dubinCurve());
-            test();
-            // subscribe_to_map();
-            // subscribe_to_obstacles();
-            // subscribe_to_gate();
-            // subscribe_to_pose1();
-            // subscribe_to_pose2();
+            subscribe_to_map();
+            subscribe_to_obstacles();
+            subscribe_to_gate();
+            subscribe_to_pose1();
+            subscribe_to_pose2();
         }       
 };
