@@ -1,6 +1,6 @@
 planner_type: PRMstar
-num_points: 200
-num_angles: 5
+num_points: 1000
+num_angles: 4
 K: 3.0
 sample_type: Uniform
 connect_distance: 1.0
