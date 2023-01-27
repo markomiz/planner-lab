@@ -28,7 +28,7 @@ nav_msgs::msg::Path dubinCurve::generatePathFromDubins(pose2d start, std::vector
   final_path.header.frame_id = "map";
   pose2d currentPoint = start;
   final_path.poses.push_back(currentPoint.to_Pose());
-
+  cout << "sub paths " << sub_paths.size() << endl;
   for (auto i = 0; i < int(sub_paths.size()); i++)
   {
     for (auto j = 0; j < 3; j++)
@@ -36,10 +36,10 @@ nav_msgs::msg::Path dubinCurve::generatePathFromDubins(pose2d start, std::vector
       pose2d referencePoint = currentPoint;
       for (float z = 0; z < sub_paths[i].s[j]; z+=delta )
       {
-        currentPoint = arc::next_pose(referencePoint, z, sub_paths[i].k.l[j]  * this->_K);
+        currentPoint = arc::next_pose(referencePoint, z, sub_paths[i].k.l[j] * _K);
         final_path.poses.push_back(currentPoint.to_Pose());         
       }
-      currentPoint = arc::next_pose(referencePoint, sub_paths[i].s[j], sub_paths[i].k.l[j]  * this->_K);
+      currentPoint = arc::next_pose(referencePoint, sub_paths[i].s[j], sub_paths[i].k.l[j] * _K );
       final_path.poses.push_back(currentPoint.to_Pose());
     }
   }
@@ -57,6 +57,7 @@ nav_msgs::msg::Path dubinCurve::arcs_to_path(deque<arcs> input_arcs, float delta
   for (auto i = 0; i < int(input_arcs.size()); i++)
   {
     currentPoint =  input_arcs[i].a[0].start;
+    myfile << input_arcs[i].a[0].start.x.x << "," << input_arcs[i].a[0].start.x.y << ", arcstart! " << endl;
     for (auto j = 0; j < 3; j++)
     {
         arc &a = input_arcs[i].a[j];
@@ -65,10 +66,11 @@ nav_msgs::msg::Path dubinCurve::arcs_to_path(deque<arcs> input_arcs, float delta
         {
           currentPoint = arc::next_pose(a.start, ds, a.K);
           final_path.poses.push_back(currentPoint.to_Pose());
-       
+          myfile << currentPoint.x.x << "," << currentPoint.x.y <<  endl;
         }
         currentPoint = a.end;
         final_path.poses.push_back(currentPoint.to_Pose()); 
+        myfile << currentPoint.x.x << "," << currentPoint.x.y <<  endl;
     
     }
   }
@@ -78,40 +80,45 @@ nav_msgs::msg::Path dubinCurve::arcs_to_path(deque<arcs> input_arcs, float delta
 std::vector<dubins_params> dubinCurve::calculateMultiPoint(pose2d start, pose2d end, std::vector<point2d> mid_points, int n_angles) // DONE
 {
   std::vector<dubins_params> best_path;
-  float angle_dif = 2* M_PI / (float)n_angles;
+  float angle_dif = 2* M_PI / (float(n_angles));
   pose2d x1 = end;
   pose2d x0 = start;
-  for (auto i = mid_points.size(); i > 0; i--)
+  for (auto i = mid_points.size() - 1; i >= 0; i--)
   {
-    x0.x = mid_points[i-1];
+    x0.x = mid_points[i];
     dubins_params best_solution;
     best_solution.L = __FLT_MAX__;
     float best_theta;
     for (float theta = 0.0f; theta < 2* M_PI; theta += angle_dif)
       {
+        cout << "angle " << theta << endl;
         x0.theta = theta;
         auto solution = calculateSinglePath(x0, x1);
-        bool col_arc = map->colliding(arcs(start, solution));
+        if (map->colliding(arcs(x0, solution)) ) continue;
 
-        // create arc from x1, x0 and see if it collides, TODO
-        if (solution.L < best_solution.L && !col_arc)
+        
+        if (solution.L < best_solution.L )
         {
           best_solution = solution;
           best_theta = theta;
+          cout << "improve";
         }
         
       }
       if (best_solution.L == __FLT_MAX__)
       {
+        cout << "NO WAY!";
         std::vector<dubins_params> empty;
         return empty;
       }
+      cout << x0.x.x << " -x0-- " << x0.x.y << endl;
+      cout << x1.x.x << " -x1-- " << x1.x.y << endl;
       best_path.push_back(best_solution);
       x1 = x0;
       x1.theta = best_theta;
   }
   x0 = start;
-  best_path.push_back(calculateSinglePath(start, end));
+  best_path.push_back(calculateSinglePath(x0, x1));
   return best_path;
 };
 // Scale the input problem to standard form (x0: -1, y0: 0, xf: 1, yf: 0)

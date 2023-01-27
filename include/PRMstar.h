@@ -21,6 +21,7 @@ class PRMstar
         vector<point2d> getPath(point2d start, point2d end);
         deque<arcs> getPath(pose2d start, pose2d end);
         deque<arcs> getPathManyExits(pose2d start, vector<pose2d> end);
+        vector<dubins_params> smoothWithMulti(deque<arcs> original);
         shared_ptr<dubinCurve> dCurve;
         shared_ptr<ConfigParams> config;
         shared_ptr<Graph> graph;

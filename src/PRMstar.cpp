@@ -105,7 +105,7 @@ void PRMstar::genRoadmapPlus(int n, int angles)
     float yprm  = sqrt(2*(1+ 1/2)) * sqrt(map->getFreeSpace()/M_PI) * config->getConnectDist();
     //  init empty graph
     int cons = 0;
-    float d_ang = M_PI * 2/float(angles);
+    float d_ang = M_PI /float(angles);
     for (auto i = 0; i < config->getNumPoints(); i ++)
     {
         point2d new_p;
@@ -130,14 +130,20 @@ void PRMstar::genRoadmapPlus(int n, int angles)
             {
                 for (int b = 0; b < nearest[x]->nodes.size(); b++)
                 {
+                    // one way
                     dubins_params sol = dCurve->calculateSinglePath(new_node->pt, nearest[x]->nodes[b]->pt);
                     arcs A = arcs(new_node->pt, sol);
                     float dist = (new_node->pt.x - nearest[x]->nodes[b]->pt.x).norm();
-
                     if (!map->colliding(A) &&  A.L < dist * M_PI/2){
-                    // if (map->colliding(A)) cout << "collision --- \n";
-                    //if (!map->colliding(A)){
                         graph->add(new_node, nearest[x]->nodes[b], A);
+                        cons ++;
+                    }
+                    // cor
+                    sol = dCurve->calculateSinglePath(cor->pt, nearest[x]->nodes[b]->pt);
+                    A = arcs(cor->pt, sol);
+                    dist = (cor->pt.x - nearest[x]->nodes[b]->pt.x).norm();
+                    if (!map->colliding(A) &&  A.L < dist * M_PI/2){
+                        graph->add(cor, nearest[x]->nodes[b], A);
                         cons ++;
                     }
                 }
@@ -293,4 +299,19 @@ deque<arcs> PRMstar::getPathManyExits(pose2d start, vector<pose2d> end)
     deque<arcs> points = graph->getPathPlusManyExits(start_node, end_nodes);
     // TRY DO A MULTIPOINT ONCE IT'S DONE?
     return points;
+};
+vector<dubins_params> PRMstar::smoothWithMulti(deque<arcs> original)
+{
+    pose2d start = original[0].a[0].start;
+    pose2d end = original.back().a[2].end;
+    vector<point2d> mids;
+    for (int i = 2; i < original.size(); i++)
+    {
+        mids.push_back(original[i].a[0].start.x);
+        cout << original[i].a[0].start.x.x << " " <<   original[i].a[0].start.x.y << endl;  
+    }
+    // mids.push_back(point2d(-4,-5));
+    auto p = dCurve->calculateMultiPoint(start, end, mids, 5 );
+    // deque<arcs> p2 = arcs(start, p);
+    return p;
 };

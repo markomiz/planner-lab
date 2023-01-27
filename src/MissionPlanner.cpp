@@ -159,10 +159,10 @@ void MissionPlanner::build_roadmap()
     vec_vert.push_back(t3);
     vec_vert.push_back(t4);
 
-    point2d p1(-2.0,-2.0);
-    point2d p2(-2.0,2.0);
-    point2d p3(2.0,2.0);
-    point2d p4(2.0,-2.0);
+    point2d p1(-3.5,-3.5);
+    point2d p2(-3.5,3.5);
+    point2d p3(3.5,3.5);
+    point2d p4(3.5,-3.5);
     
     vector<point2d> obs_vert;
     obs_vert.push_back(p1);
@@ -306,8 +306,16 @@ void MissionPlanner::test()
     auto all2 = planner->graph->points_quad.get_nearest(e.x,1.0);
     cout << all2.size() << "  e2 size " << endl;
 
+    beforeTime = clock();
     auto path = planner->getPath(e, e2);
+    afterTime = clock() - beforeTime;
+    cout << "Building the path took " <<(float)afterTime/CLOCKS_PER_SEC << " seconds." << endl;
+
+    beforeTime = clock();
     auto traj = d->arcs_to_path(path, 0.1);
+    //auto traj = d->generatePathFromDubins(e, new_path, 0.1);
+    afterTime = clock() - beforeTime;
+    
     ofstream myfile;
     myfile.open ("path.csv");
     for (int i = 0; i < traj.poses.size(); i++)
