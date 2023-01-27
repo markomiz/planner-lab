@@ -175,7 +175,6 @@ bool Map::colliding(arc a)
 };
 bool Map::colliding(line l)
 {
-    
     for (auto i = 0; i < obstacles.size(); i++)
     {
         Polygon obs = obstacles[i];

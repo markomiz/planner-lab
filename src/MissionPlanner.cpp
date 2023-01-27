@@ -195,10 +195,10 @@ void MissionPlanner::getPaths_and_Publish()
         
         for (int rob = 1; rob <= initial_poses.size(); rob++)
         {
-            // pose2d gate(2.5, -5, -M_PI);
+            pose2d gate(2.5, -5, -M_PI);
             cout << "Pose is: " << initial_poses[rob-1].x.x << ", " << initial_poses[rob-1].x.y << ", " << initial_poses[rob-1].theta << endl;
-            deque<arcs> path = planner->getPath(initial_poses[rob-1], gates[0]);
-            // deque<arcs> path = planner->getPath(initial_poses[rob-1], gate);
+            // deque<arcs> path = planner->getPath(initial_poses[rob-1], gates[0]);
+            deque<arcs> path = planner->getPath(initial_poses[rob-1], gate);
             publish_path("shelfino" + to_string(rob) + "/follow_path", path);
         }
         path_done = true;

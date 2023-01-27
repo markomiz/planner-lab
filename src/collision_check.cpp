@@ -84,16 +84,16 @@ intersection_result CollisionCheck::line_arc_intersect(line l1, arc arc1)
     center2initial.y = l1.p_initial.y - arc1.center.y;
     float angle_start;
     float angle_end;
-    if (arc1.K > 0)
+    if (arc1.K < 0)
     {
         angle_end = atan2(arc1.start.x.y-arc1.center.y, arc1.start.x.x-arc1.center.x);
         angle_start = atan2(arc1.end.x.y-arc1.center.y, arc1.end.x.x-arc1.center.x);
     }
-    else if (arc1.K < 0)
+    else
     {
         angle_start = atan2(arc1.start.x.y-arc1.center.y, arc1.start.x.x-arc1.center.x);
         angle_end = atan2(arc1.end.x.y-arc1.center.y, arc1.end.x.x-arc1.center.x);
-    } else cout << "Isto dá merda" << endl;
+    }
 
     float a = line_vector.x*line_vector.x + line_vector.y*line_vector.y;
     float b = 2*(center2initial.x*line_vector.x + center2initial.y*line_vector.y);
@@ -101,7 +101,7 @@ intersection_result CollisionCheck::line_arc_intersect(line l1, arc arc1)
     
     float discriminant = b*b-4*a*c;
     
-    if( discriminant < 0)
+    if(discriminant < 0)
     {
         // no intersection
         result.intersects = false;
@@ -109,7 +109,7 @@ intersection_result CollisionCheck::line_arc_intersect(line l1, arc arc1)
     else if (discriminant == 0)
     {
         float t = -b/(2*a);
-        if (t > 0 && t < 1)
+        if (t >= 0 && t <= 1)
         {
             result.intersection.x = l1.p_initial.x + t*line_vector.x;
             result.intersection.y = l1.p_initial.y + t*line_vector.y;

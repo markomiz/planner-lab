@@ -69,10 +69,8 @@ nav_msgs::msg::Path dubinCurve::arcs_to_path(deque<arcs> input_arcs, float delta
         {
           currentPoint = arc::next_pose(a.start, ds, a.K);
           final_path.poses.push_back(currentPoint.to_Pose());
-          
-       
         }
-        myfile << currentPoint.x.x << "; " << currentPoint.x.y << "\n"; 
+        myfile << currentPoint.x.x << "; " << currentPoint.x.y << "; " << input_arcs[i].a[j].K << "\n"; 
         currentPoint = a.end;
         final_path.poses.push_back(currentPoint.to_Pose()); 
     
