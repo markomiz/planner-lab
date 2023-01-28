@@ -16,6 +16,7 @@ class CollisionCheck
         static bool arc_with_polygon(arc a, Polygon shape);
         static float point_lineseg_dist(point2d p, line l);
         static float distance(point2d p1, point2d p2);
+        static bool line_line_intersect2(line l1, line l2);
         
         
 };

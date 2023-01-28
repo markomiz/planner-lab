@@ -6,6 +6,39 @@
 float CollisionCheck::distance(point2d p1, point2d p2){
     return (p2 - p1).norm();
 }
+bool CollisionCheck::line_line_intersect2(line l1, line l2)
+{
+
+        float l1xmin = (l1.p_initial.x > l1.p_final.x) ? l1.p_final.x : l1.p_initial.x;
+        float l1xmax = (l1.p_initial.x < l1.p_final.x) ? l1.p_final.x : l1.p_initial.x; 
+        float l1ymin = (l1.p_initial.y > l1.p_final.y) ? l1.p_final.y : l1.p_initial.y;
+        float l1ymax = (l1.p_initial.y < l1.p_final.y) ? l1.p_final.y : l1.p_initial.y;
+
+        float l2xmin = (l2.p_initial.x > l2.p_final.x) ? l2.p_final.x : l2.p_initial.x;
+        float l2xmax = (l2.p_initial.x < l2.p_final.x) ? l2.p_final.x : l2.p_initial.x; 
+        float l2ymin = (l2.p_initial.y > l2.p_final.y) ? l2.p_final.y : l2.p_initial.y;
+        float l2ymax = (l2.p_initial.y < l2.p_final.y) ? l2.p_final.y : l2.p_initial.y;
+
+        if (l1xmin > l2xmax || l2xmin > l2xmax) return false;
+        if (l1ymin > l2ymax || l2ymin > l2ymax) return false;
+
+        point2d p1 = l1.p_initial;
+        point2d p2 = l1.p_final;
+        point2d p3 = l2.p_initial;
+        point2d p4 = l2.p_final;
+
+        float val1 = (float(p2.y - p1.y) * (p3.x - p2.x)) - 
+           (float(p2.x - p1.x) * (p3.y - p2.y));
+
+        float val2 = (float(p2.y - p1.y) * (p4.x - p2.x)) - 
+           (float(p2.x - p1.x) * (p4.y - p2.y));
+
+        if (val1 == 0 || val2 == 0 ) return false;
+
+        if (val1/abs(val1) == val2/abs(val2)) return false;
+
+        return true;
+}
 
 intersection_result CollisionCheck::line_line_intersect(line l1, line l2)
 {

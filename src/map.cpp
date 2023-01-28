@@ -152,7 +152,6 @@ bool Map::colliding(arcs A)
         }
         else
         {
-            
             if (colliding(A.a[i])){
                  return true;
             }
@@ -177,28 +176,14 @@ bool Map::colliding(line l)
 {
     for (auto i = 0; i < obstacles.size(); i++)
     {
-        Polygon obs = obstacles[i];
-        // rough pass with radius of obstacles
-        bool xout = false;
-        bool yout = false;
-        if ( (l.p_initial.x > obstacles[i].center.x + obstacles[i].radius && l.p_final.x > obstacles[i].radius  + obstacles[i].center.x) ) xout = true;
-        else if ( (l.p_initial.x < obstacles[i].center.x - obstacles[i].radius && l.p_final.x < obstacles[i].radius  -  obstacles[i].x_min) ) xout = true;
-        if (xout)
-        {
-            if ( (l.p_initial.y > obstacles[i].radius + obstacles[i].center.x && l.p_final.y > obstacles[i].radius  + obstacles[i].center.x) ) yout = true;
-            else if ( (l.p_initial.y < obstacles[i].center.y - obstacles[i].radius && l.p_final.y < obstacles[i].center.y  -  obstacles[i].radius) ) yout = true;
-        }
-        if (xout & yout) continue;
         // second check more detailed check if rough pass not passing
-        for (auto j = 0; j < obs.edges.size(); j++)
+        for (auto j = 0; j < obstacles[i].edges.size(); j++)
         {
-
-            if (CollisionCheck::line_line_intersect(obs.edges[j], l).intersects)
+            if (CollisionCheck::line_line_intersect2(obstacles[i].edges[j], l))
             {
                 return true;
             } 
         }
-        
     }
     if (!inBounds(l.p_final)) return true;
     if (!inBounds(l.p_initial)) return true;

@@ -156,7 +156,35 @@ void MissionPlanner::pose2_topic_callback(const geometry_msgs::msg::TransformSta
 
 void MissionPlanner::build_roadmap()
 {
-    shared_ptr<Map> map (new Map(map_poly));
+
+    // shared_ptr<Map> map (new Map(map_poly));
+    point2d t1(-6.0,-6.0);
+    point2d t2(-6.0,6.0);
+    point2d t3(6.0,6.0);
+    point2d t4(6.0,-6.0);
+    
+    vector<point2d> vec_vert;
+    vec_vert.push_back(t1);
+    vec_vert.push_back(t2);
+    vec_vert.push_back(t3);
+    vec_vert.push_back(t4);
+
+    point2d p1(-3.5,-3.5);
+    point2d p2(-3.5,3.5);
+    point2d p3(3.5,3.5);
+    point2d p4(3.5,-3.5);
+    
+    vector<point2d> obs_vert;
+    obs_vert.push_back(p1);
+    obs_vert.push_back(p2);
+    obs_vert.push_back(p3);
+    obs_vert.push_back(p4);
+
+    Polygon test_map(vec_vert); 
+    Polygon test_obs(obs_vert);
+
+    shared_ptr<Map> map (new Map(test_map));
+
 
     for (int i = 0; i < obstacle_list.size(); i++)
     {
@@ -284,6 +312,41 @@ void MissionPlanner::publish_path(string topic, deque<arcs> way)
         usleep(1000000);
         RCLCPP_INFO(this->get_logger(), "%s", path.header.frame_id.c_str());
     }
+}
+
+
+void MissionPlanner::test()
+{
+    clock_t beforeTime = clock();
+    build_roadmap();
+    clock_t afterTime = clock() - beforeTime;
+    cout << "Building the roadmap took " <<(float)afterTime/CLOCKS_PER_SEC << " seconds." << endl;
+    vector<pose2d> exits;
+    pose2d e(-5.0,-5.0,0.0);
+    auto all = planner->graph->points_quad.get_nearest(e.x,1.0);
+    cout << all.size() << "  e size " << endl;
+    pose2d e2(5.0,5.0,0.0);
+    auto all2 = planner->graph->points_quad.get_nearest(e.x,1.0);
+    cout << all2.size() << "  e2 size " << endl;
+
+    beforeTime = clock();
+    auto path = planner->getPath(e, e2);
+    afterTime = clock() - beforeTime;
+    cout << "Building the path took " <<(float)afterTime/CLOCKS_PER_SEC << " seconds." << endl;
+
+    beforeTime = clock();
+    auto traj = d->arcs_to_path(path, 0.1);
+    //auto traj = d->generatePathFromDubins(e, new_path, 0.1);
+    afterTime = clock() - beforeTime;
+    
+    ofstream myfile;
+    myfile.open ("path.csv");
+    for (int i = 0; i < traj.poses.size(); i++)
+    {
+        myfile << traj.poses[i].pose.position.x << "," << traj.poses[i].pose.position.y << endl;
+    }
+    myfile.close();
+
 }
 
 int main(int argc, char * argv[])
