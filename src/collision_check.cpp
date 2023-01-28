@@ -62,6 +62,13 @@ intersection_result CollisionCheck::line_line_intersect(line l1, line l2)
 
     if (determinant == 0)
     {
+        if (std::isnan(offset1) && std::isnan(offset2))
+        {
+            result.intersection.x = FLT_MAX;
+            result.intersection.y = FLT_MAX;
+            result.intersects = true;
+            return result;
+        }
         double d = fabs(offset2 - offset1) / ((m1 * m2) - 1);
         result.intersection.x = FLT_MAX;
         result.intersection.y = FLT_MAX;
@@ -110,7 +117,7 @@ intersection_result CollisionCheck::line_arc_intersect(line l1, arc arc1)
     center2initial.y = l1.p_initial.y - arc1.center.y;
     float angle_start;
     float angle_end;
-    if (arc1.K > 0)
+    if (arc1.K < 0)
     {
         angle_end = atan2(arc1.start.x.y-arc1.center.y, arc1.start.x.x-arc1.center.x);
         angle_start = atan2(arc1.end.x.y-arc1.center.y, arc1.end.x.x-arc1.center.x);
@@ -127,7 +134,7 @@ intersection_result CollisionCheck::line_arc_intersect(line l1, arc arc1)
     
     float discriminant = b*b-4*a*c;
     
-    if( discriminant < 0 || a <= 0.0000001)
+    if(discriminant < 0)
     {
         // no intersection
         result.intersects = false;
@@ -135,14 +142,14 @@ intersection_result CollisionCheck::line_arc_intersect(line l1, arc arc1)
     else if (discriminant == 0)
     {
         float t = -b/(2*a);
-        if (t > 0 && t < 1)
+        if (t >= 0 && t <= 1)
         {
             result.intersection.x = l1.p_initial.x + t*line_vector.x;
             result.intersection.y = l1.p_initial.y + t*line_vector.y;
             float angle = atan2(result.intersection.y - arc1.center.y, result.intersection.x - arc1.center.x);
             if (angle_start < angle_end)
             {
-                if (angle > angle_start && angle < angle_end)
+                if (angle >= angle_start && angle <= angle_end)
                 {
                     result.intersects = true;
                 }
@@ -169,14 +176,14 @@ intersection_result CollisionCheck::line_arc_intersect(line l1, arc arc1)
         float t1 = (-b - discriminant)/(2*a);
         float t2 = (-b + discriminant)/(2*a);
 
-        if((t1 > 0 && t1 < 1))
+        if((t1 >= 0 && t1 <= 1))
         {
             intersection_result temp1;
             temp1.intersection.x = l1.p_initial.x + t1*line_vector.x;
             temp1.intersection.y = l1.p_initial.y + t1*line_vector.y;
 
             float angle1 = atan2(temp1.intersection.y - arc1.center.y, temp1.intersection.x - arc1.center.x);
-            if((t2 > 0 && t2 < 1))
+            if((t2 >= 0 && t2 <= 1))
             {
                 intersection_result temp2;
                 temp2.intersection.x = l1.p_initial.x + t2*line_vector.x;
@@ -184,7 +191,7 @@ intersection_result CollisionCheck::line_arc_intersect(line l1, arc arc1)
                 float angle2 = atan2(temp2.intersection.y - arc1.center.y, temp2.intersection.x - arc1.center.x);
                 if (angle_start < angle_end)
                 {
-                    if ((angle1 > angle_start && angle1 < angle_end)||(angle2 > angle_start && angle2 < angle_end))
+                    if ((angle1 >= angle_start && angle1 <= angle_end)||(angle2 >= angle_start && angle2 <= angle_end))
                     {
                         result.intersects = true;
                     }
@@ -207,7 +214,7 @@ intersection_result CollisionCheck::line_arc_intersect(line l1, arc arc1)
             
             if (angle_start < angle_end)
             {
-                if ((angle1 > angle_start && angle1 < angle_end))
+                if ((angle1 >= angle_start && angle1 <= angle_end))
                 {
                     result.intersects = true;
                 }
@@ -227,7 +234,7 @@ intersection_result CollisionCheck::line_arc_intersect(line l1, arc arc1)
                 }
             }
         }
-        else if(t2 > 0 && t2 < 1)
+        else if(t2 >= 0 && t2 <= 1)
         {
             intersection_result temp2;
             temp2.intersection.x = l1.p_initial.x + t2*line_vector.x;
@@ -235,7 +242,7 @@ intersection_result CollisionCheck::line_arc_intersect(line l1, arc arc1)
             float angle2 = atan2(temp2.intersection.y - arc1.center.y, temp2.intersection.x - arc1.center.x);
             if (angle_start < angle_end)
             {
-                if (angle2 > angle_start && angle2 < angle_end)
+                if (angle2 >= angle_start && angle2 <= angle_end)
                 {
                     result.intersects = true;
                 }
@@ -270,23 +277,24 @@ bool CollisionCheck::point_in_polygon(point2d p, Polygon shape)
     l.p_initial = p;
     point2d end;
     end.x = p.x + 100;
-    end.y = p.y + 100;
+    end.y = p.y;
     l.p_final = end;
 
     int num_intersections = 0;
     for (auto j = 0; j < shape.edges.size(); j++)
     {
+        if (shape.edges.size() < 4) sleep(5);
         intersection_result i = line_line_intersect(shape.edges[j], l);
         if (i.intersects) 
         {
             num_intersections += 1;
         }
     }
-    if (num_intersections == 1)
+    if (num_intersections%2 == 0)
     {
-        return true;
+        return false;
     }
-    return false;
+    return true;
 };
 
 bool CollisionCheck::arc_with_polygon(arc a, Polygon shape)

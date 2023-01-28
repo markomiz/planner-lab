@@ -61,8 +61,8 @@ void MissionPlanner::obstacle_topic_callback(const obstacles_msgs::msg::Obstacle
             polygon_input.push_back(temp);
             // RCLCPP_INFO(this->get_logger(), "Getting obs info: x = '%0.2f', y = '%0.2f'", temp.x, temp.y);
         }
-        Polygon poly(polygon_input);
-        poly.expandShape(conf->getExpandSize());
+        Polygon poly(polygon_input, conf->getExpandSize());
+        // poly.expandShape(conf->getExpandSize());
         obstacle_list.push_back(poly);
     }
     RCLCPP_INFO(this->get_logger(), "Got obstacles information");
@@ -83,7 +83,7 @@ void MissionPlanner::map_topic_callback(const geometry_msgs::msg::Polygon outlin
         temp.y = outline_message.points[i].y;
         outer_verteces.push_back(temp);        
     }
-    map_poly = Polygon(outer_verteces);
+    map_poly = Polygon(outer_verteces, conf->getExpandSize());
     has_received_map = true;
     RCLCPP_INFO(this->get_logger(), "Got map information.");
     getPaths_and_Publish();
@@ -133,7 +133,7 @@ void MissionPlanner::pose1_topic_callback(const geometry_msgs::msg::TransformSta
 
 void MissionPlanner::pose2_topic_callback(const geometry_msgs::msg::TransformStamped t)
 {
-    if(has_received_pose2) return;
+    if(has_received_pose2 || !has_received_pose1) return;
     
     pose2d temp_init_pose(__FLT_MAX__,__FLT_MAX__,__FLT_MAX__);
     tf2::Quaternion q(t.transform.rotation.x,t.transform.rotation.y,t.transform.rotation.z,t.transform.rotation.w);
@@ -146,6 +146,7 @@ void MissionPlanner::pose2_topic_callback(const geometry_msgs::msg::TransformSta
     initial_poses.push_back(temp_init_pose);
     has_received_pose2 = true;
     RCLCPP_INFO(this->get_logger(), "Got initial pose 2");
+    getPaths_and_Publish();
 
 };
 
@@ -155,6 +156,7 @@ void MissionPlanner::pose2_topic_callback(const geometry_msgs::msg::TransformSta
 
 void MissionPlanner::build_roadmap()
 {
+
     // shared_ptr<Map> map (new Map(map_poly));
     point2d t1(-6.0,-6.0);
     point2d t2(-6.0,6.0);
@@ -183,11 +185,13 @@ void MissionPlanner::build_roadmap()
 
     shared_ptr<Map> map (new Map(test_map));
 
+
     for (int i = 0; i < obstacle_list.size(); i++)
     {
+        // cout << obstacle_list[i].verteces << endl;
         map->addObstacle(obstacle_list[i]);
     }
-    map->addObstacle(test_obs);
+    // map->addObstacle(test_obs);
 
     RCLCPP_INFO(this->get_logger(),"Map made and Obstacles included. Free space = %0.2f", map->getFreeSpace());
 
@@ -219,8 +223,10 @@ void MissionPlanner::getPaths_and_Publish()
         
         for (int rob = 1; rob <= initial_poses.size(); rob++)
         {
+            pose2d gate(2.5, -5, -M_PI);
             cout << "Pose is: " << initial_poses[rob-1].x.x << ", " << initial_poses[rob-1].x.y << ", " << initial_poses[rob-1].theta << endl;
-            deque<arcs> path = planner->getPathManyExits(initial_poses[rob-1], gates);
+            // deque<arcs> path = planner->getPath(initial_poses[rob-1], gates[0]);
+            deque<arcs> path = planner->getPath(initial_poses[rob-1], gate);
             publish_path("shelfino" + to_string(rob) + "/follow_path", path);
         }
         path_done = true;
@@ -307,6 +313,7 @@ void MissionPlanner::publish_path(string topic, deque<arcs> way)
         RCLCPP_INFO(this->get_logger(), "%s", path.header.frame_id.c_str());
     }
 }
+
 
 void MissionPlanner::test()
 {
