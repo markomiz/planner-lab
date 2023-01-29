@@ -95,7 +95,6 @@ deque<point2d> PRMstar::getPath(point2d start, point2d end)
     graph->points_quad.add_bundle(end_bundle);
     cout << "Still good";
     deque<point2d> points = graph->getPath(start_node, end_node);
-    cout << "point len " << points.size() << endl;
     return points;
 }
 
@@ -308,7 +307,6 @@ deque<arcs> PRMstar::smoothWithMulti(deque<arcs> original)
     for (int i = 2; i < original.size(); i++)
     {
         mids.push_back(original[i].a[0].start.x);
-        cout << original[i].a[0].start.x.x << " " <<   original[i].a[0].start.x.y << endl;  
     }
     // mids.push_back(point2d(-4,-5));
     auto p = dCurve->calculateMultiPoint(start, end, mids, 5 );

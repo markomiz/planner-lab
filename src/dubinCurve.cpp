@@ -28,7 +28,6 @@ nav_msgs::msg::Path dubinCurve::generatePathFromDubins(pose2d start, std::vector
   final_path.header.frame_id = "map";
   pose2d currentPoint = start;
   final_path.poses.push_back(currentPoint.to_Pose());
-  cout << "sub paths " << sub_paths.size() << endl;
   for (auto i = 0; i < int(sub_paths.size()); i++)
   {
     for (auto j = 0; j < 3; j++)
@@ -87,7 +86,6 @@ std::deque<arcs> dubinCurve::calculateMultiPoint(pose2d start, pose2d end, std::
   {
     
     x0.x = mid_points[i-1];
-    cout << x0.x.x << " "<< x0.x.y <<endl;
     arcs best_solution;
     best_solution.L = __FLT_MAX__;
     float best_theta;
