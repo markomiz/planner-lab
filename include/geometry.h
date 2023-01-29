@@ -96,12 +96,14 @@ struct transformedVars
   float lambda;
 };
 struct line{
-    point2d p_initial;
-    point2d p_final;
-    float length()
-    {
-        return sqrt((p_final.x-p_initial.x)*(p_final.x-p_initial.x)+(p_final.y-p_initial.y)*(p_final.y-p_initial.y));
-    }
+  line(point2d p_initial, point2d p_final):p_initial(p_initial), p_final(p_final){};
+  line(){};
+  point2d p_initial;
+  point2d p_final;
+  float length()
+  {
+      return sqrt((p_final.x-p_initial.x)*(p_final.x-p_initial.x)+(p_final.y-p_initial.y)*(p_final.y-p_initial.y));
+  }
 };
 struct intersection_result{
     point2d intersection;

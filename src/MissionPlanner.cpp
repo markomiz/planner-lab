@@ -37,6 +37,87 @@
 using namespace std::chrono_literals;
 
 /*
+----- Subscribers and Publishers -----------
+*/
+
+void MissionPlanner::subscribe_to_map()
+{
+    RCLCPP_INFO(this->get_logger(), "Getting map info");
+    rclcpp::QoS qos_map = rclcpp::QoS(rclcpp::KeepLast(1), rmw_qos_profile_sensor_data);
+    map_subscription_ = this->create_subscription<geometry_msgs::msg::Polygon>(
+    "map_borders", qos_map, std::bind(&MissionPlanner::map_topic_callback, this, _1));
+};
+
+void MissionPlanner::subscribe_to_obstacles()
+{
+    RCLCPP_INFO(this->get_logger(), "Getting obstacle info");
+    rclcpp::QoS qos_obs = rclcpp::QoS(rclcpp::KeepLast(1), rmw_qos_profile_sensor_data);
+    obs_subscription_ = this->create_subscription<obstacles_msgs::msg::ObstacleArrayMsg>(
+    "obstacles", qos_obs, std::bind(&MissionPlanner::obstacle_topic_callback, this, _1));
+};
+
+void MissionPlanner::subscribe_to_gate()
+{
+    RCLCPP_INFO(this->get_logger(), "Getting gate info");
+    rclcpp::QoS qos_gate = rclcpp::QoS(rclcpp::KeepLast(1), rmw_qos_profile_sensor_data);
+    gate_subscription_ = this->create_subscription<geometry_msgs::msg::PoseArray>(
+    "gate_position", qos_gate, std::bind(&MissionPlanner::gate_topic_callback, this, _1));
+};
+
+void MissionPlanner::subscribe_to_pose1()
+{
+    string name1 = "shelfino1/transform"; 
+    RCLCPP_INFO(this->get_logger(), "Getting position info for shelfino 1");
+    rclcpp::QoS qos_pose = rclcpp::QoS(rclcpp::KeepLast(1), rmw_qos_profile_sensor_data);
+
+    pose1_subscription_ = this->create_subscription<geometry_msgs::msg::TransformStamped>(
+    name1, qos_pose, std::bind(&MissionPlanner::pose1_topic_callback, this, _1));
+};
+
+void MissionPlanner::subscribe_to_pose2()
+{
+    string name2 = "shelfino2/transform"; 
+    RCLCPP_INFO(this->get_logger(), "Getting position info for shelfino 2");
+    rclcpp::QoS qos_pose = rclcpp::QoS(rclcpp::KeepLast(1), rmw_qos_profile_sensor_data);
+    pose2_subscription_ = this->create_subscription<geometry_msgs::msg::TransformStamped>(
+    name2, qos_pose, std::bind(&MissionPlanner::pose2_topic_callback, this, _1));
+};
+
+void MissionPlanner::publish_path(string topic, deque<arcs> way)
+{
+
+    nav_msgs::msg::Path path = d->arcs_to_path(way, 0.05);
+    RCLCPP_INFO(this->get_logger(),"Path %s found", topic.c_str());
+    // Publish results
+    RCLCPP_INFO(this->get_logger(), "Publishing path");
+    /*
+        ACTION CLIENT AND SERVER PART
+    */
+
+    rclcpp::Publisher<nav_msgs::msg::Path>::SharedPtr publisher = this->create_publisher<nav_msgs::msg::Path>(topic, 10);
+    rclcpp_action::Client<FollowPath>::SharedPtr client_ptr = rclcpp_action::create_client<FollowPath>(this,topic);
+
+    if (!client_ptr->wait_for_action_server()) {
+        RCLCPP_ERROR(this->get_logger(), "Action server not available after waiting");
+        rclcpp::shutdown();
+    }
+    
+    auto goal_msg2 = FollowPath::Goal();
+    goal_msg2.path = path;
+    goal_msg2.controller_id = "FollowPath";
+    
+    RCLCPP_INFO(this->get_logger(), "Sending goal position: ");
+    client_ptr->async_send_goal(goal_msg2);
+
+    for(int i = 0; i<2; i++)
+    {
+        publisher->publish(path);
+        usleep(1000000);
+        RCLCPP_INFO(this->get_logger(), "%s", path.header.frame_id.c_str());
+    }
+}
+
+/*
 ----- Callbacks for subscribers -----------
 */
 
@@ -156,12 +237,11 @@ void MissionPlanner::pose2_topic_callback(const geometry_msgs::msg::TransformSta
 
 void MissionPlanner::build_roadmap()
 {
-
     // shared_ptr<Map> map (new Map(map_poly));
-    point2d t1(-6.0,-6.0);
-    point2d t2(-6.0,6.0);
-    point2d t3(6.0,6.0);
-    point2d t4(6.0,-6.0);
+    point2d t1(-5.0,-5.0);
+    point2d t2(-5.0,5.0);
+    point2d t3(5.0,5.0);
+    point2d t4(5.0,-5.0);
     
     vector<point2d> vec_vert;
     vec_vert.push_back(t1);
@@ -169,10 +249,10 @@ void MissionPlanner::build_roadmap()
     vec_vert.push_back(t3);
     vec_vert.push_back(t4);
 
-    point2d p1(-3.5,-3.5);
-    point2d p2(-3.5,3.5);
-    point2d p3(3.5,3.5);
-    point2d p4(3.5,-3.5);
+    point2d p1(-2.0, -2.0);
+    point2d p2(-2.0, 0.0);
+    point2d p3(-3.0, 0.0);
+    point2d p4(-3.0, -2.0);
     
     vector<point2d> obs_vert;
     obs_vert.push_back(p1);
@@ -180,18 +260,30 @@ void MissionPlanner::build_roadmap()
     obs_vert.push_back(p3);
     obs_vert.push_back(p4);
 
-    Polygon test_map(vec_vert); 
-    Polygon test_obs(obs_vert);
+    point2d p5(0.0, -3.0);
+    point2d p6(3.0, -3.0);
+    point2d p7(3.0, -2.0);
+    point2d p8(0.0, -2.0);
+    
+    vector<point2d> obs_vert1;
+    obs_vert1.push_back(p5);
+    obs_vert1.push_back(p6);
+    obs_vert1.push_back(p7);
+    obs_vert1.push_back(p8);
+
+    Polygon test_map(vec_vert, conf->getExpandSize()); 
+    Polygon test_obs(obs_vert, conf->getExpandSize());
+    Polygon test_obs1(obs_vert1, conf->getExpandSize());
 
     shared_ptr<Map> map (new Map(test_map));
 
 
-    for (int i = 0; i < obstacle_list.size(); i++)
-    {
-        // cout << obstacle_list[i].verteces << endl;
-        map->addObstacle(obstacle_list[i]);
-    }
-    // map->addObstacle(test_obs);
+    // for (int i = 0; i < obstacle_list.size(); i++)
+    // {
+    //     map->addObstacle(obstacle_list[i]);
+    // }
+    map->addObstacle(test_obs);
+    map->addObstacle(test_obs1);
 
     RCLCPP_INFO(this->get_logger(),"Map made and Obstacles included. Free space = %0.2f", map->getFreeSpace());
 
@@ -225,95 +317,13 @@ void MissionPlanner::getPaths_and_Publish()
         {
             pose2d gate(2.5, -5, -M_PI);
             cout << "Pose is: " << initial_poses[rob-1].x.x << ", " << initial_poses[rob-1].x.y << ", " << initial_poses[rob-1].theta << endl;
-            // deque<arcs> path = planner->getPath(initial_poses[rob-1], gates[0]);
-            deque<arcs> path = planner->getPath(initial_poses[rob-1], gate);
+            deque<arcs> path = planner->getPath(initial_poses[rob-1], gates[0]);
+            // deque<arcs> path = planner->getPath(initial_poses[rob-1], gate);
             publish_path("shelfino" + to_string(rob) + "/follow_path", path);
         }
         path_done = true;
     }
 };
-
-/*
------ Subscribers and Publishers -----------
-*/
-
-void MissionPlanner::subscribe_to_map()
-{
-    RCLCPP_INFO(this->get_logger(), "Getting map info");
-    rclcpp::QoS qos_map = rclcpp::QoS(rclcpp::KeepLast(1), rmw_qos_profile_sensor_data);
-    map_subscription_ = this->create_subscription<geometry_msgs::msg::Polygon>(
-    "map_borders", qos_map, std::bind(&MissionPlanner::map_topic_callback, this, _1));
-};
-
-void MissionPlanner::subscribe_to_obstacles()
-{
-    RCLCPP_INFO(this->get_logger(), "Getting obstacle info");
-    rclcpp::QoS qos_obs = rclcpp::QoS(rclcpp::KeepLast(1), rmw_qos_profile_sensor_data);
-    obs_subscription_ = this->create_subscription<obstacles_msgs::msg::ObstacleArrayMsg>(
-    "obstacles", qos_obs, std::bind(&MissionPlanner::obstacle_topic_callback, this, _1));
-};
-
-void MissionPlanner::subscribe_to_gate()
-{
-    RCLCPP_INFO(this->get_logger(), "Getting gate info");
-    rclcpp::QoS qos_gate = rclcpp::QoS(rclcpp::KeepLast(1), rmw_qos_profile_sensor_data);
-    gate_subscription_ = this->create_subscription<geometry_msgs::msg::PoseArray>(
-    "gate_position", qos_gate, std::bind(&MissionPlanner::gate_topic_callback, this, _1));
-};
-
-void MissionPlanner::subscribe_to_pose1()
-{
-    string name1 = "shelfino1/transform"; 
-    RCLCPP_INFO(this->get_logger(), "Getting position info for shelfino 1");
-    rclcpp::QoS qos_pose = rclcpp::QoS(rclcpp::KeepLast(1), rmw_qos_profile_sensor_data);
-
-    pose1_subscription_ = this->create_subscription<geometry_msgs::msg::TransformStamped>(
-    name1, qos_pose, std::bind(&MissionPlanner::pose1_topic_callback, this, _1));
-};
-
-void MissionPlanner::subscribe_to_pose2()
-{
-    string name2 = "shelfino2/transform"; 
-    RCLCPP_INFO(this->get_logger(), "Getting position info for shelfino 2");
-    rclcpp::QoS qos_pose = rclcpp::QoS(rclcpp::KeepLast(1), rmw_qos_profile_sensor_data);
-    pose2_subscription_ = this->create_subscription<geometry_msgs::msg::TransformStamped>(
-    name2, qos_pose, std::bind(&MissionPlanner::pose2_topic_callback, this, _1));
-};
-
-void MissionPlanner::publish_path(string topic, deque<arcs> way)
-{
-
-    nav_msgs::msg::Path path = d->arcs_to_path(way, 0.05);
-    RCLCPP_INFO(this->get_logger(),"Path %s found", topic.c_str());
-    // Publish results
-    RCLCPP_INFO(this->get_logger(), "Publishing path");
-    /*
-        ACTION CLIENT AND SERVER PART
-    */
-
-    rclcpp::Publisher<nav_msgs::msg::Path>::SharedPtr publisher = this->create_publisher<nav_msgs::msg::Path>(topic, 10);
-    rclcpp_action::Client<FollowPath>::SharedPtr client_ptr = rclcpp_action::create_client<FollowPath>(this,topic);
-
-    if (!client_ptr->wait_for_action_server()) {
-        RCLCPP_ERROR(this->get_logger(), "Action server not available after waiting");
-        rclcpp::shutdown();
-    }
-    
-    auto goal_msg2 = FollowPath::Goal();
-    goal_msg2.path = path;
-    goal_msg2.controller_id = "FollowPath";
-    
-    RCLCPP_INFO(this->get_logger(), "Sending goal position: ");
-    client_ptr->async_send_goal(goal_msg2);
-
-    for(int i = 0; i<2; i++)
-    {
-        publisher->publish(path);
-        usleep(1000000);
-        RCLCPP_INFO(this->get_logger(), "%s", path.header.frame_id.c_str());
-    }
-}
-
 
 void MissionPlanner::test()
 {
@@ -321,32 +331,28 @@ void MissionPlanner::test()
     build_roadmap();
     clock_t afterTime = clock() - beforeTime;
     cout << "Building the roadmap took " <<(float)afterTime/CLOCKS_PER_SEC << " seconds." << endl;
-    vector<pose2d> exits;
-    pose2d e(-5.0,-5.0,0.0);
-    auto all = planner->graph->points_quad.get_nearest(e.x,1.0);
-    cout << all.size() << "  e size " << endl;
-    pose2d e2(5.0,5.0,0.0);
-    auto all2 = planner->graph->points_quad.get_nearest(e.x,1.0);
-    cout << all2.size() << "  e2 size " << endl;
-
-    beforeTime = clock();
-    auto path = planner->getPath(e, e2);
-    afterTime = clock() - beforeTime;
-    cout << "Building the path took " <<(float)afterTime/CLOCKS_PER_SEC << " seconds." << endl;
-
-    beforeTime = clock();
-    auto traj = d->arcs_to_path(path, 0.1);
-    //auto traj = d->generatePathFromDubins(e, new_path, 0.1);
-    afterTime = clock() - beforeTime;
     
-    ofstream myfile;
-    myfile.open ("path.csv");
-    for (int i = 0; i < traj.poses.size(); i++)
-    {
-        myfile << traj.poses[i].pose.position.x << "," << traj.poses[i].pose.position.y << endl;
-    }
-    myfile.close();
+    vector<pose2d>exit_poses;
+    pose2d exit1(-5, -3, -M_PI/2);
+    exit_poses.push_back(exit1);
+    pose2d exit2(5, -2, M_PI/2);
+    exit_poses.push_back(exit2);
 
+    beforeTime = clock();
+    for (int i = 0; i < 3; i++)
+    {
+        pose2d e(0, i, 0);
+        auto path = planner->getPath(e, exit_poses[0]);
+    
+        afterTime = clock() - beforeTime;
+        cout << "Building the path took " <<(float)afterTime/CLOCKS_PER_SEC << " seconds." << endl;
+
+        beforeTime = clock();
+        auto traj = d->arcs_to_path(path, 0.1);
+        //auto traj = d->generatePathFromDubins(e, new_path, 0.1);
+        afterTime = clock() - beforeTime;
+        cout << "Converting the path took " <<(float)afterTime/CLOCKS_PER_SEC << " seconds." << endl;
+    }
 }
 
 int main(int argc, char * argv[])

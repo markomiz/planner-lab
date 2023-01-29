@@ -16,6 +16,7 @@ class PRMstar
         ~PRMstar(){
         };
 
+        void genExactRoadmap(int angles);
         void genRoadmap(int n);
         void genRoadmapPlus(int n, int angles);
         vector<point2d> getPath(point2d start, point2d end);
