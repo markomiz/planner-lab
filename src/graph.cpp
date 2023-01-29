@@ -321,7 +321,7 @@ deque<arcs> Graph::getPathPlusManyExits(shared_ptr<Node> start_node, vector<shar
                 break;
             } 
         }
-
+        if (end_reached) break;
         // for all nodes connected to current
         for (auto i = 0; i < current->connected.size(); i++)
         {

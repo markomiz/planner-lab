@@ -298,16 +298,19 @@ void MissionPlanner::test()
     build_roadmap();
     clock_t afterTime = clock() - beforeTime;
     cout << "Building the roadmap took " <<(float)afterTime/CLOCKS_PER_SEC << " seconds." << endl;
-    vector<pose2d> exits;
+
     pose2d e(-5.0,-5.0,0.0);
     auto all = planner->graph->points_quad.get_nearest(e.x,1.0);
     cout << all.size() << "  e size " << endl;
     pose2d e2(5.0,5.0,0.0);
+    pose2d e3(5.0,-5.0,0.0);
     auto all2 = planner->graph->points_quad.get_nearest(e.x,1.0);
     cout << all2.size() << "  e2 size " << endl;
-
+    vector<pose2d> exits;
+    exits.push_back(e2);
+    exits.push_back(e3);
     beforeTime = clock();
-    auto path = planner->getPath(e, e2);
+    auto path = planner->getPathManyExits(e, exits);
     afterTime = clock() - beforeTime;
     cout << "Building the path took " <<(float)afterTime/CLOCKS_PER_SEC << " seconds." << endl;
 

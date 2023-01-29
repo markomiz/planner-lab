@@ -297,7 +297,7 @@ deque<arcs> PRMstar::getPathManyExits(pose2d start, vector<pose2d> end)
     
     cout << "hiit the graph \n";
     deque<arcs> points = graph->getPathPlusManyExits(start_node, end_nodes);
-    // TRY DO A MULTIPOINT ONCE IT'S DONE?
+
     return points;
 };
 vector<dubins_params> PRMstar::smoothWithMulti(deque<arcs> original)
