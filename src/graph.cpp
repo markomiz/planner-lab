@@ -93,11 +93,13 @@ shared_ptr<Node> Graph::add(shared_ptr<Node> point, shared_ptr<Node> existing)
 {
     
     point2d l = (point->pt.x - existing->pt.x);
-    float sqdist = l.x*l.x + l.y+l.y;
+    float sqdist = l.x*l.x + l.y*l.y;
+
     connection c1;
     c1.node = existing;
     c1.cost = sqdist;
     point->connected.push_back(c1);
+
     connection c2;
     c2.node = point;
     c2.cost = sqdist;
@@ -136,17 +138,21 @@ void Graph::reset_nodes()
         nodes[i]->opened = false;
     }
 }
-vector<point2d> Graph::getPath(shared_ptr<Node> start, shared_ptr<Node> end)
+deque<point2d> Graph::getPath(shared_ptr<Node> start_node, shared_ptr<Node> end_node)
 {
-    vector<point2d> points;
+    std::cout << "start get path \n";
+    // add start and end points to graph - connecting them to nearest
+    deque<point2d> points;
     // init open list
     vector<shared_ptr<Node>> OPEN;
     // add start node on open list
     shared_ptr<Node> current = nullptr;
-    OPEN.push_back(start);
-    start->cost = 0.0;
+    OPEN.push_back(start_node);
+    int its = 0;
+    bool end_reached = false;
     while (OPEN.size() > 0)
-    {   
+    {
+        its++; 
         auto cur_it = OPEN.begin();
         current = *cur_it;
         // always work on minimal cost node in open set
@@ -159,35 +165,48 @@ vector<point2d> Graph::getPath(shared_ptr<Node> start, shared_ptr<Node> end)
             }
         }
         OPEN.erase(cur_it);
-        if (current == end) {
+        float dist = (current->pt.x - end_node->pt.x).norm();
+        // if (dist < 8 ) cout << dist << " dist \n";
+        if (dist < 0.1) // end reached
+        // if (current == end_node)
+        {
+            end_reached = true;
             break;
-        }
+        } 
         // for all nodes connected to current
         for (auto i = 0; i < current->connected.size(); i++)
         {
-            if ( ! current->connected[i].node->opened )
+            auto &con = current->connected[i];
+            if (!con.node->opened)
             {
-                // if not opened, add to open, store that current is parent
-                // update their cost to current + dist between nodes
-                current->connected[i].node->parent = current; // 
-                OPEN.push_back(current->connected[i].node);
-                current->connected[i].node->opened = true;
-                current->connected[i].node->cost = current->cost + current->connected[i].cost;
+                // Check if node is available at that time
+                float length = current->cost + con.cost;
+                float time_stamp = length;
+                
+                con.node->parent = current; // ok
+                con.node->parent_connection = make_shared<connection>(con); 
+                OPEN.push_back(con.node);
+                con.node->opened = true;
+                con.node->cost = length;
+                
             }
         }
     }
-    std::cout << "still working \n";
-    if (!current->parent) {
+    cout << " searched: " << its << " \n";
+    if (!end_reached) cout << "\n END NOT REACHED :( ";
+    if (!current->parent || !end_reached) {
         std::cout << "oopsie no path \n";
         return points;
     }
-    while (current->parent != start)
+    int count = 0;
+    while (current->parent != start_node)
     {
-        points.push_back(current->pt.x);
+        //cout << " adding " << count<< endl;
+        count++;
+        points.push_front(current->pt.x);
         current = current->parent;
     }
     reset_nodes(); 
-    
     current = nullptr;
     OPEN.clear();
     std::cout << "further! \n";
@@ -221,7 +240,7 @@ deque<arcs> Graph::getPathPlus(shared_ptr<Node> start_node, shared_ptr<Node> end
         }
         OPEN.erase(cur_it);
         float dist = (current->pt.x - end_node->pt.x).norm();
-        if (dist < 0.2) // end reached
+        if (dist < 0.1) // end reached
         // if (current == end_node)
         {
             end_reached = true;

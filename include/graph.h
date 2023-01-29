@@ -80,7 +80,7 @@ class Graph
         shared_ptr<Node> add(shared_ptr<Node> pt, shared_ptr<Node> existing, arcs A);
         vector<shared_ptr<Bundle>> in_range(point2d pt, float rad);
         void reset_nodes();
-        vector<point2d> getPath(shared_ptr<Node> start, shared_ptr<Node> end);
+        deque<point2d> getPath(shared_ptr<Node> start, shared_ptr<Node> end);
         deque<arcs> getPathPlus(shared_ptr<Node> start, shared_ptr<Node> end);
         deque<arcs> getPathPlusManyExits(shared_ptr<Node> start_node, vector<shared_ptr<Node>> end_nodes);
         quad points_quad;

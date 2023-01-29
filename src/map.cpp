@@ -148,7 +148,7 @@ bool Map::colliding(arcs A)
             }
         }
     }
-    // cout << "NOT COLLIDING!\n";
+
     return false;
 
 }
@@ -177,6 +177,7 @@ bool Map::colliding(line l)
         }
     }
     if (!inBounds(l.p_final)) return true;
+    
     if (!inBounds(l.p_initial)) return true;
 
     return false;

@@ -269,18 +269,19 @@ bool CollisionCheck::point_in_polygon(point2d p, Polygon shape)
     line l;
     l.p_initial = p;
     point2d end;
-    end.x = p.x + 100;
-    end.y = p.y + 100;
+    end.x = p.x + 100000000;
+    end.y = p.y;
+
     l.p_final = end;
 
     int num_intersections = 0;
     for (auto j = 0; j < shape.edges.size(); j++)
     {
-        intersection_result i = line_line_intersect(shape.edges[j], l);
-        if (i.intersects) 
+        if( line_line_intersect2(shape.edges[j], l))
         {
-            num_intersections += 1;
+             num_intersections += 1;
         }
+
     }
     if (num_intersections == 1)
     {

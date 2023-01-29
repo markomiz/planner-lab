@@ -178,7 +178,7 @@ void MissionPlanner::build_roadmap()
     {
         map->addObstacle(obstacle_list[i]);
     }
-    map->addObstacle(test_obs);
+    // map->addObstacle(test_obs);
 
     RCLCPP_INFO(this->get_logger(),"Map made and Obstacles included. Free space = %0.2f", map->getFreeSpace());
 
@@ -190,7 +190,8 @@ void MissionPlanner::build_roadmap()
     planner->graph->config = conf;
     RCLCPP_INFO(this->get_logger(),"Planner made");
     planner->dCurve = d;
-    planner->genRoadmapPlus(conf->getNumPoints(), conf->getNumAngles());
+    planner->genRoadmap(conf->getNumPoints());
+    //planner->genRoadmapPlus(conf->getNumPoints(), conf->getNumAngles());
     RCLCPP_INFO(this->get_logger(),"Roadmap Generated");
 
 };
@@ -310,19 +311,24 @@ void MissionPlanner::test()
     exits.push_back(e2);
     exits.push_back(e3);
     beforeTime = clock();
-    auto path = planner->getPathManyExits(e, exits);
+    auto path = planner->getPath(e.x, e2.x);
+
+    //auto path = planner->getPathManyExits(e, exits);
     afterTime = clock() - beforeTime;
     cout << "Building the path took " <<(float)afterTime/CLOCKS_PER_SEC << " seconds." << endl;
 
     beforeTime = clock();
-    auto traj = d->arcs_to_path(path, 0.1);
-    //auto traj = d->generatePathFromDubins(e, new_path, 0.1);
+    auto path2 = d->calculateMultiPoint(e, e2, path, 36);
+    cout << "multi generated " << endl;
+    //auto traj = d->arcs_to_path(path, 0.1);
+    auto traj = d->arcs_to_path(path2, 0.1);
     afterTime = clock() - beforeTime;
     
     ofstream myfile;
     myfile.open ("path.csv");
     for (int i = 0; i < traj.poses.size(); i++)
     {
+        //cout << traj.poses[i].pose.position.x << "," << traj.poses[i].pose.position.y << endl;
         myfile << traj.poses[i].pose.position.x << "," << traj.poses[i].pose.position.y << endl;
     }
     myfile.close();

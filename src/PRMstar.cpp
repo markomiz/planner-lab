@@ -7,13 +7,13 @@
 void PRMstar::genRoadmap(int n)
 {
     float yprm  = sqrt(2*(1+ 1/2)) * sqrt(map->getFreeSpace()/M_PI) * 1.0;
-    //  init empty graph
     int cons = 0;
     for (auto i = 0; i < n; i ++)
     {
         
-        // point2d new_point = map->halton_sample(i);
-        point2d new_point = map->uniform_sample();
+        point2d new_point = map->halton_sample(i);
+        // cout << new_point.x <<  " " << new_point.y << " point\n";
+        //point2d new_point = map->uniform_sample();
         pose2d new_pose;
         new_pose.x = new_point;
         float rad = yprm*sqrt(log(i+1)/(i+1));
@@ -31,7 +31,6 @@ void PRMstar::genRoadmap(int n)
                     cons ++;
                 };
             }
-
         }
         shared_ptr<Bundle> new_bundle(new Bundle());
         new_bundle->pos = new_point;
@@ -39,10 +38,10 @@ void PRMstar::genRoadmap(int n)
         graph->nodes.push_back(new_node);
         graph->points_quad.add_bundle(new_bundle);
     }
-
+    cout << cons <<" connections test \n";
 };
 
-vector<point2d> PRMstar::getPath(point2d start, point2d end)
+deque<point2d> PRMstar::getPath(point2d start, point2d end)
 {
     float TRSH = config->getStartEndThrsh();
     // first connect start and end to graph
@@ -60,12 +59,9 @@ vector<point2d> PRMstar::getPath(point2d start, point2d end)
             l.p_initial = nearest_s[x]->nodes[a]->pt.x;
             if (!map->colliding(l)) {
                 graph->add(start_node, nearest_s[x]->nodes[a]);
-
             };
         }
-
     }
-
     std::vector<shared_ptr<Bundle>> nearest_e = graph->in_range(end, TRSH); // find all nodes within a Rad
     pose2d end_pose;
     end_pose.x = end;
@@ -78,12 +74,14 @@ vector<point2d> PRMstar::getPath(point2d start, point2d end)
             line l;
             l.p_final = end;
             l.p_initial = nearest_e[x]->nodes[a]->pt.x;
+            
             if (!map->colliding(l)){
-                graph->add(end_node, nearest_e[x]->nodes[a]);
-            };
+                graph->add(nearest_e[x]->nodes[a], end_node);
+            }
         }
-
     }
+    cout << "start connections: " << nearest_s.size() << endl;
+    cout << "end connections: " << nearest_e.size() << endl;
     shared_ptr<Bundle> start_bundle(new Bundle());
     start_bundle->pos = start;
     shared_ptr<Bundle> end_bundle(new Bundle());
@@ -95,7 +93,9 @@ vector<point2d> PRMstar::getPath(point2d start, point2d end)
     graph->points_quad.add_bundle(start_bundle);
     graph->nodes.push_back(end_node);
     graph->points_quad.add_bundle(end_bundle);
-    std::vector<point2d> points = graph->getPath(start_node, end_node);
+    cout << "Still good";
+    deque<point2d> points = graph->getPath(start_node, end_node);
+    cout << "point len " << points.size() << endl;
     return points;
 }
 
@@ -140,10 +140,10 @@ void PRMstar::genRoadmapPlus(int n, int angles)
                     }
                     // cor
                     sol = dCurve->calculateSinglePath(cor->pt, nearest[x]->nodes[b]->pt);
-                    A = arcs(cor->pt, sol);
+                    arcs A2 = arcs(cor->pt, sol);
                     dist = (cor->pt.x - nearest[x]->nodes[b]->pt.x).norm();
                     if (!map->colliding(A) &&  A.L < dist * M_PI/2){
-                        graph->add(cor, nearest[x]->nodes[b], A);
+                        graph->add(cor, nearest[x]->nodes[b], A2);
                         cons ++;
                     }
                 }
@@ -300,11 +300,11 @@ deque<arcs> PRMstar::getPathManyExits(pose2d start, vector<pose2d> end)
 
     return points;
 };
-vector<dubins_params> PRMstar::smoothWithMulti(deque<arcs> original)
+deque<arcs> PRMstar::smoothWithMulti(deque<arcs> original)
 {
     pose2d start = original[0].a[0].start;
     pose2d end = original.back().a[2].end;
-    vector<point2d> mids;
+    deque<point2d> mids;
     for (int i = 2; i < original.size(); i++)
     {
         mids.push_back(original[i].a[0].start.x);
