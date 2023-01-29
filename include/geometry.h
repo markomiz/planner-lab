@@ -41,6 +41,15 @@ struct point2d
     return c;
   };
 };
+
+struct exactpoint2d : public point2d {
+    int poly_id;
+    exactpoint2d(float x_in, float y_in, int poly_id) : poly_id(poly_id){
+      x = x_in;
+      y = y_in;
+    }
+};
+
 struct pose2d 
 {
   point2d x;

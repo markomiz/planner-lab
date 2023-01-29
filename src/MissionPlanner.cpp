@@ -109,7 +109,7 @@ void MissionPlanner::publish_path(string topic, deque<arcs> way)
     RCLCPP_INFO(this->get_logger(), "Sending goal position: ");
     client_ptr->async_send_goal(goal_msg2);
 
-    for(int i = 0; i<2; i++)
+    for(auto i = 0; i<2; i++)
     {
         publisher->publish(path);
         usleep(1000000);
@@ -128,13 +128,13 @@ void MissionPlanner::obstacle_topic_callback(const obstacles_msgs::msg::Obstacle
     // create polygon obstacle object
     int n_obs = obstacle_message.obstacles.size();
     
-    for (int i = 0; i < n_obs; i++)
+    for (auto i = 0; i < n_obs; i++)
     {
         vector<point2d> polygon_input = {};
         // RCLCPP_INFO(this->get_logger(), "Obstacle '%i' points:", i);
         geometry_msgs::msg::Polygon aux = obstacle_message.obstacles[i].polygon;
         int nr_points = aux.points.size();
-        for (int j = 0; j < nr_points; j++)
+        for (auto j = 0; j < nr_points; j++)
         {
             point2d temp;
             temp.x = float(aux.points[j].x);
@@ -157,7 +157,7 @@ void MissionPlanner::map_topic_callback(const geometry_msgs::msg::Polygon outlin
     if(has_received_map) return;
     
     vector<point2d> outer_verteces;
-    for (int i = 0; i < outline_message.points.size(); i++)
+    for (auto i = 0; i < outline_message.points.size(); i++)
     {
         point2d temp;
         temp.x = outline_message.points[i].x;
@@ -175,7 +175,7 @@ void MissionPlanner::gate_topic_callback(const geometry_msgs::msg::PoseArray out
     if(has_received_gate) return;
     
     cout << "the gates are " << outline_message.poses.size() << endl;
-    for (int i = 0; i < outline_message.poses.size(); i++)
+    for (auto i = 0; i < outline_message.poses.size(); i++)
     {
         pose2d temp_gate;
         tf2::Quaternion q(outline_message.poses[i].orientation.x, outline_message.poses[i].orientation.y, outline_message.poses[i].orientation.z, outline_message.poses[i].orientation.w);
@@ -278,7 +278,7 @@ void MissionPlanner::build_roadmap()
     shared_ptr<Map> map (new Map(test_map));
 
 
-    // for (int i = 0; i < obstacle_list.size(); i++)
+    // for (auto i = 0; i < obstacle_list.size(); i++)
     // {
     //     map->addObstacle(obstacle_list[i]);
     // }
@@ -290,40 +290,40 @@ void MissionPlanner::build_roadmap()
     d->map = map;
     d->_K = conf->getK();
 
-    planner = new PRMstar(map);
+    planner = new GeometricPRMstar(map);
     planner->config = conf;
     planner->graph->config = conf;
     RCLCPP_INFO(this->get_logger(),"Planner made");
     planner->dCurve = d;
-    planner->genRoadmapPlus(conf->getNumPoints(), conf->getNumAngles());
+    // planner->genRoadmap(conf->getNumPoints(), conf->getNumAngles());
+    planner->genRoadmap(conf->getNumPoints());
+    // planner->genRoadmap();
     RCLCPP_INFO(this->get_logger(),"Roadmap Generated");
 
 };
 
-void MissionPlanner::getPaths_and_Publish()
-{
-    if (path_done) return;
-    if(has_received_map && has_received_gate && has_received_obs && has_received_pose1 && has_received_pose2)
-    {        
-        RCLCPP_INFO(this->get_logger(), "Got all information from simulation");
-        RCLCPP_INFO(this->get_logger(), "Calculating Roadmap");
-        clock_t beforeTime = clock();
-        build_roadmap();
-        clock_t afterTime = clock() - beforeTime;
-        cout << "Building the roadmap took " <<(float)afterTime/CLOCKS_PER_SEC << " seconds." << endl;
-
-        
-        for (int rob = 1; rob <= initial_poses.size(); rob++)
-        {
-            pose2d gate(2.5, -5, -M_PI);
-            cout << "Pose is: " << initial_poses[rob-1].x.x << ", " << initial_poses[rob-1].x.y << ", " << initial_poses[rob-1].theta << endl;
-            deque<arcs> path = planner->getPath(initial_poses[rob-1], gates[0]);
-            // deque<arcs> path = planner->getPath(initial_poses[rob-1], gate);
-            publish_path("shelfino" + to_string(rob) + "/follow_path", path);
-        }
-        path_done = true;
-    }
-};
+// void MissionPlanner::getPaths_and_Publish()
+// {
+//     if (path_done) return;
+//     if(has_received_map && has_received_gate && has_received_obs && has_received_pose1 && has_received_pose2)
+//     {        
+//         RCLCPP_INFO(this->get_logger(), "Got all information from simulation");
+//         RCLCPP_INFO(this->get_logger(), "Calculating Roadmap");
+//         clock_t beforeTime = clock();
+//         build_roadmap();
+//         clock_t afterTime = clock() - beforeTime;
+//         cout << "Building the roadmap took " <<(float)afterTime/CLOCKS_PER_SEC << " seconds." << endl;        
+//         for (auto rob = 1; rob <= initial_poses.size(); rob++)
+//         {
+//             pose2d gate(2.5, -5, -M_PI);
+//             cout << "Pose is: " << initial_poses[rob-1].x.x << ", " << initial_poses[rob-1].x.y << ", " << initial_poses[rob-1].theta << endl;
+//             deque<arcs> path = planner->getPath(initial_poses[rob-1], gates[0]);
+//             // deque<arcs> path = planner->getPath(initial_poses[rob-1], gate);
+//             publish_path("shelfino" + to_string(rob) + "/follow_path", path);
+//         }
+//         path_done = true;
+//     }
+// };
 
 void MissionPlanner::test()
 {
@@ -339,10 +339,11 @@ void MissionPlanner::test()
     exit_poses.push_back(exit2);
 
     beforeTime = clock();
-    for (int i = 0; i < 3; i++)
+    for (auto i = 0; i < 3; i++)
     {
         pose2d e(0, i, 0);
-        auto path = planner->getPath(e, exit_poses[0]);
+        // auto path = planner->getPath(e, exit_poses[0]);
+        auto path = planner->getPath(e.x, exit_poses[0].x);
     
         afterTime = clock() - beforeTime;
         cout << "Building the path took " <<(float)afterTime/CLOCKS_PER_SEC << " seconds." << endl;

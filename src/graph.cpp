@@ -32,7 +32,7 @@ void quad::subdivide(){
     children.push_back(quad(xmin, xmid, ymid, ymax, depth + 1));
     children.push_back(quad(xmid, xmax, ymid, ymax, depth + 1));
 
-    for (int i = 0; i < points.size(); i++)
+    for (auto i = 0; i < points.size(); i++)
     {
         add_bundle_to_children(points[i]);
     }            
@@ -42,7 +42,7 @@ void quad::add_bundle_to_children(shared_ptr<Bundle> point) {
     float x = point->pos.x;
     float y = point->pos.y;
     
-    for (int i = 0; i < children.size(); i++)
+    for (auto i = 0; i < children.size(); i++)
     {    
         if (children[i].xmin <= x && x <= children[i].xmax && children[i].ymin <= y && y <= children[i].ymax)
         {
@@ -70,7 +70,7 @@ void quad::find_neighbors_r(point2d point, float r, vector<shared_ptr<Bundle>> &
             }
         else
         {
-            for (int i = 0; i < points.size(); i++ )
+            for (auto i = 0; i < points.size(); i++ )
             {
                 point2d p = (point - points[i]->pos);
                 if (p.x*p.x + p.y*p.y <= r*r)
@@ -82,7 +82,7 @@ void quad::find_neighbors_r(point2d point, float r, vector<shared_ptr<Bundle>> &
 
     }
     else{
-        for (int i = 0; i < children.size(); i++ )
+        for (auto i = 0; i < children.size(); i++ )
         {
             if (children[i].xmin <= x + r && x - r <= children[i].xmax && children[i].ymin <= y + r && y - r <= children[i].ymax) // quad partially inside 
             {
@@ -273,7 +273,7 @@ deque<arcs> Graph::getPathPlus(shared_ptr<Node> start_node, shared_ptr<Node> end
         vector<shared_ptr<Bundle>> nearby = points_quad.get_nearest(current_point, config->getTPRM_D()); 
         for (auto i = 0; i < nearby.size() ; i++)
         {
-            for (int a = 0; a < nearby[i]->nodes.size(); a++)
+            for (auto a = 0; a < nearby[i]->nodes.size(); a++)
             {
                nearby[i]->nodes[a]->arrival_time.push_back(node_time);  
             }
@@ -317,7 +317,7 @@ deque<arcs> Graph::getPathPlusManyExits(shared_ptr<Node> start_node, vector<shar
         }
         OPEN.erase(cur_it);
         
-        for (int nn = 0; nn < end_nodes.size(); nn++)
+        for (auto nn = 0; nn < end_nodes.size(); nn++)
         {
             if (current == end_nodes[nn]) // end reached
             {
@@ -370,7 +370,7 @@ deque<arcs> Graph::getPathPlusManyExits(shared_ptr<Node> start_node, vector<shar
         vector<shared_ptr<Bundle>> nearby = points_quad.get_nearest(current_point, config->getTPRM_D()); 
         for (auto i = 0; i < nearby.size() ; i++)
         {
-            for (int a = 0; a < nearby[i]->nodes.size(); a++)
+            for (auto a = 0; a < nearby[i]->nodes.size(); a++)
             {
                nearby[i]->nodes[a]->arrival_time.push_back(node_time);  
             }

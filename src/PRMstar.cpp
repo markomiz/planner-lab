@@ -9,49 +9,7 @@
 
 using namespace std;
 
-struct exactpoint2d {
-    double x;
-    double y;
-    int poly_id;
-    exactpoint2d(double x, double y, int poly_id):x(x), y(y), poly_id(poly_id){}
-};
-
-bool comparePoints(exactpoint2d p1, exactpoint2d p2) {
-    if (p1.x == p2.x) {
-        return (p1.y < p2.y);
-    }
-    return (p1.x < p2.x);
-}
-
-// Quicksort algorithm to sort the points according to their x coordinates
-void quickSort(vector<exactpoint2d> &points, int low, int high) {
-    if (low < high) {
-        int pivotIndex = (low + high) / 2;
-        exactpoint2d pivot = points[pivotIndex];
-
-        int i = low;
-        int j = high;
-
-        while (i <= j) {
-            while (comparePoints(points[i], pivot)) {
-                i++;
-            }
-            while (comparePoints(pivot, points[j])) {
-                j--;
-            }
-            if (i <= j) {
-                swap(points[i], points[j]);
-                i++;
-                j--;
-            }
-        }
-
-        quickSort(points, low, j);
-        quickSort(points, i, high);
-    }
-}
-
-void PRMstar::genExactRoadmap(int angles)
+void ExactCell::genRoadmap()
 {
     vector<exactpoint2d> points;
     vector<Polygon> obstacles = map->getObstacles();
@@ -67,6 +25,7 @@ void PRMstar::genExactRoadmap(int angles)
     int n = points.size();
 
     quickSort(points, 0, n - 1);
+
     double maxy = 10;
     double miny = -10;
     double maxx = 10;
@@ -158,60 +117,62 @@ void PRMstar::genExactRoadmap(int angles)
     
     ofstream node_file ("nodes.txt");
     int cons = 0;
-    float d_ang = M_PI /float(angles);
     for (auto i = 0; i < nodes.size(); i++)
     {
         pose2d new_pose(nodes[i].x, nodes[i].y, 0);
-        pose2d c_pose = new_pose;
-        for (int a = 0; a < angles; a++)
+        shared_ptr<Node> new_node(new Node(new_pose));
+        for (auto j = 0; j < i; j++)
         {
-            shared_ptr<Node> new_node(new Node(new_pose));
-            shared_ptr<Node> cor(new Node(c_pose));
-            new_node->opposite = cor;
-            cor->opposite = new_node;
-            new_node->pt.theta = a * d_ang;
-            cor->pt.theta = arc::mod2pi(a * d_ang+ M_PI);
-            // for (auto j = 0; j < i; j++)
-            // {
-            //     pose2d near_pose(nodes[j].x, nodes[j].y, 0);
-            //     shared_ptr<Node> near_node(new Node(new_pose));
-            //     // one way
-            //     dubins_params sol = dCurve->calculateSinglePath(new_node->pt, near_node->pt);
-            //     arcs A = arcs(new_node->pt, sol);
-            //     float dist = (new_node->pt.x - near_node->pt.x).norm();
-            //     if (!map->colliding(A) &&  A.L < dist * M_PI/2){
-            //         graph->add(new_node, near_node, A);
-            //         cons ++;
-            //     }
-            //     // cor
-            //     sol = dCurve->calculateSinglePath(cor->pt, near_node->pt);
-            //     A = arcs(cor->pt, sol);
-            //     dist = (cor->pt.x - near_node->pt.x).norm();
-            //     if (!map->colliding(A) &&  A.L < dist * M_PI/2){
-            //         graph->add(cor, near_node, A);
-            //     }
-            // }
-            for (auto j = 0; j < i; j++)
-            {
-                pose2d near_pose(nodes[j].x, nodes[j].y, 0);
-                shared_ptr<Node> near_node(new Node(new_pose));
-                // one way
-                line l(new_pose.x, near_pose.x);
-                // float dist = (new_node->pt.x - near_node->pt.x).norm();
-                if (!map->colliding(l) /* &&  A.L < dist * M_PI/2 */){
-                    graph->add(new_node, near_node);
-                    cons ++;
-                    graph->add(cor, near_node);
-                }
-            }    
-        }
+            pose2d near_pose(nodes[j].x, nodes[j].y, 0);
+            shared_ptr<Node> near_node(new Node(near_pose));
+            // one way
+            line l(new_pose.x, near_pose.x);
+            // float dist = (new_node->pt.x - near_node->pt.x).norm();
+            if (!map->colliding(l) /* &&  A.L < dist * M_PI/2 */){
+                graph->add(new_node, near_node);
+                cons ++;
+            }
+        }    
     }
     node_file.close();
     cout << cons <<" connections test \n";
 };
 
+bool ExactCell::comparePoints(exactpoint2d p1, exactpoint2d p2) {
+    if (p1.x == p2.x) {
+        return (p1.y < p2.y);
+    }
+    return (p1.x < p2.x);
+}
 
-void PRMstar::genRoadmap(int n)
+void ExactCell::quickSort(vector<exactpoint2d> &points, int low, int high) {
+    if (low < high) {
+        int pivotIndex = (low + high) / 2;
+        exactpoint2d pivot = points[pivotIndex];
+
+        int i = low;
+        int j = high;
+
+        while (i <= j) {
+            while (comparePoints(points[i], pivot)) {
+                i++;
+            }
+            while (comparePoints(pivot, points[j])) {
+                j--;
+            }
+            if (i <= j) {
+                swap(points[i], points[j]);
+                i++;
+                j--;
+            }
+        }
+
+        quickSort(points, low, j);
+        quickSort(points, i, high);
+    }
+}
+
+void GeometricPRMstar::genRoadmap(int n)
 {
     float yprm  = sqrt(2*(1+ 1/2)) * sqrt(map->getFreeSpace()/M_PI) * 1.0;
     //  init empty graph
@@ -228,7 +189,7 @@ void PRMstar::genRoadmap(int n)
         shared_ptr<Node> new_node(new Node(new_pose));
         for (auto x = 0; x < nearest.size(); x++)
         {
-            for (int a = 0; a < nearest[x]->nodes.size(); a++)
+            for (auto a = 0; a < nearest[x]->nodes.size(); a++)
             {
                 line l;
                 l.p_final = new_point;
@@ -249,7 +210,7 @@ void PRMstar::genRoadmap(int n)
 
 };
 
-vector<point2d> PRMstar::getPath(point2d start, point2d end)
+vector<point2d> Planner::getPath(point2d start, point2d end)
 {
     float TRSH = config->getStartEndThrsh();
     // first connect start and end to graph
@@ -260,7 +221,7 @@ vector<point2d> PRMstar::getPath(point2d start, point2d end)
     
     for (auto x = 0; x < nearest_s.size(); x++)
     {
-        for (int a = 0; a < nearest_s[x]->nodes.size(); a++)
+        for (auto a = 0; a < nearest_s[x]->nodes.size(); a++)
         {
             line l;
             l.p_final = start;
@@ -280,7 +241,7 @@ vector<point2d> PRMstar::getPath(point2d start, point2d end)
 
     for (auto x = 0; x < nearest_e.size(); x++)
     {
-        for (int a = 0; a < nearest_e[x]->nodes.size(); a++)
+        for (auto a = 0; a < nearest_e[x]->nodes.size(); a++)
         {
             line l;
             l.p_final = end;
@@ -306,7 +267,7 @@ vector<point2d> PRMstar::getPath(point2d start, point2d end)
     return points;
 }
 
-void PRMstar::genRoadmapPlus(int n, int angles)
+void DubinsPRMstar::genRoadmap(int n, int angles)
 {
     cout <<" gen roadmap pluss\n";
     float yprm  = sqrt(2*(1+ 1/2)) * sqrt(map->getFreeSpace()/M_PI) * config->getConnectDist();
@@ -328,7 +289,7 @@ void PRMstar::genRoadmapPlus(int n, int angles)
         shared_ptr<Bundle> new_bundle(new Bundle());
         new_bundle->pos = new_p;
         std::vector<shared_ptr<Bundle>> nearest = graph->in_range(new_p,rad); //find all nodes within a Radius
-        for (int a = 0; a < angles; a ++)
+        for (auto a = 0; a < angles; a ++)
         {
             shared_ptr<Node> new_node(new Node(new_pose));
             shared_ptr<Node> cor(new Node(c_pose));
@@ -338,7 +299,7 @@ void PRMstar::genRoadmapPlus(int n, int angles)
             cor->pt.theta = arc::mod2pi(a * d_ang+ M_PI);
             for (auto x = 0; x < nearest.size(); x++)
             {
-                for (int b = 0; b < nearest[x]->nodes.size(); b++)
+                for (auto b = 0; b < nearest[x]->nodes.size(); b++)
                 {
                     // one way
                     dubins_params sol = dCurve->calculateSinglePath(new_node->pt, nearest[x]->nodes[b]->pt);
@@ -370,7 +331,8 @@ void PRMstar::genRoadmapPlus(int n, int angles)
     node_file.close();
     cout << cons <<" connections test \n";
 };
-deque<arcs> PRMstar::getPath(pose2d start, pose2d end)
+
+deque<arcs> DubinsPRMstar::getPath(pose2d start, pose2d end)
 {
     const float TRSH = config->getStartEndThrsh();
     // fisrt connect start and end to graph
@@ -383,7 +345,7 @@ deque<arcs> PRMstar::getPath(pose2d start, pose2d end)
     cor->opposite = start_node;
     for (auto x = 0; x < nearest_s.size(); x++)
     {
-        for (int a = 0; a < nearest_s[x]->nodes.size(); a++)
+        for (auto a = 0; a < nearest_s[x]->nodes.size(); a++)
         {
 
             dubins_params sol = dCurve->calculateSinglePath(start, nearest_s[x]->nodes[a]->pt);
@@ -403,9 +365,9 @@ deque<arcs> PRMstar::getPath(pose2d start, pose2d end)
     shared_ptr<Node> cor_e(new Node(end_c_pose));
     end_node->opposite = cor_e;
     cor_e->opposite = end_node;
-    for (int y = 0; y < nearest_e.size(); y++)
+    for (auto y = 0; y < nearest_e.size(); y++)
     {
-        for (int a = 0; a < nearest_e[y]->nodes.size(); a++)
+        for (auto a = 0; a < nearest_e[y]->nodes.size(); a++)
         {
             dubins_params sol = dCurve->calculateSinglePath( nearest_e[y]->nodes[a]->pt, end);
             arcs A(nearest_e[y]->nodes[a]->pt, sol);
@@ -441,7 +403,7 @@ deque<arcs> PRMstar::getPath(pose2d start, pose2d end)
     return points;
 }
 
-deque<arcs> PRMstar::getPathManyExits(pose2d start, vector<pose2d> end)
+deque<arcs> DubinsPRMstar::getPathManyExits(pose2d start, vector<pose2d> end)
 {
     cout << "Gate 1:" << end[0].x.x << "," << end[0].x.y << "," << end[0].theta << endl;
     cout << "Gate 2:" << end[1].x.x << "," << end[1].x.y << "," << end[1].theta << endl;
@@ -456,7 +418,7 @@ deque<arcs> PRMstar::getPathManyExits(pose2d start, vector<pose2d> end)
     cor->opposite = start_node;
     for (auto x = 0; x < nearest_s.size(); x++)
     {
-        for (int a = 0; a < nearest_s[x]->nodes.size(); a++)
+        for (auto a = 0; a < nearest_s[x]->nodes.size(); a++)
         {
 
             dubins_params sol = dCurve->calculateSinglePath(start, nearest_s[x]->nodes[a]->pt);
@@ -470,7 +432,7 @@ deque<arcs> PRMstar::getPathManyExits(pose2d start, vector<pose2d> end)
     };
     vector<shared_ptr<Node>> end_nodes;
     
-    for (int i = 0 ; i < end.size(); i++)
+    for (auto i = 0 ; i < end.size(); i++)
     {
         shared_ptr<Bundle> end_bundle(new Bundle());
         end_bundle->pos = end[i].x;
@@ -481,9 +443,9 @@ deque<arcs> PRMstar::getPathManyExits(pose2d start, vector<pose2d> end)
         shared_ptr<Node> cor_e(new Node(end_c_pose));
         end_node->opposite = cor_e;
         cor_e->opposite = end_node;
-        for (int y = 0; y < nearest_e.size(); y++)
+        for (auto y = 0; y < nearest_e.size(); y++)
         {
-            for (int a = 0; a < nearest_e[y]->nodes.size(); a++)
+            for (auto a = 0; a < nearest_e[y]->nodes.size(); a++)
             {
                 dubins_params sol = dCurve->calculateSinglePath( nearest_e[y]->nodes[a]->pt, end[i]);
                 arcs A(nearest_e[y]->nodes[a]->pt, sol);
@@ -515,19 +477,4 @@ deque<arcs> PRMstar::getPathManyExits(pose2d start, vector<pose2d> end)
     deque<arcs> points = graph->getPathPlusManyExits(start_node, end_nodes);
     // TRY DO A MULTIPOINT ONCE IT'S DONE?
     return points;
-};
-vector<dubins_params> PRMstar::smoothWithMulti(deque<arcs> original)
-{
-    pose2d start = original[0].a[0].start;
-    pose2d end = original.back().a[2].end;
-    vector<point2d> mids;
-    for (int i = 2; i < original.size(); i++)
-    {
-        mids.push_back(original[i].a[0].start.x);
-        cout << original[i].a[0].start.x.x << " " <<   original[i].a[0].start.x.y << endl;  
-    }
-    // mids.push_back(point2d(-4,-5));
-    auto p = dCurve->calculateMultiPoint(start, end, mids, 5 );
-    // deque<arcs> p2 = arcs(start, p);
-    return p;
 };

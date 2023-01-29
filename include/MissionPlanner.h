@@ -44,7 +44,7 @@ class MissionPlanner : public rclcpp::Node
         vector<Polygon> obstacle_list;
         Polygon map_poly;
         vector<pose2d> gates;
-        PRMstar* planner;
+        GeometricPRMstar* planner;
 
         bool path_done;
         vector<pose2d> initial_poses;
