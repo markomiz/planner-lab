@@ -41,6 +41,15 @@ struct point2d
     return c;
   };
 };
+
+struct exactpoint2d : public point2d {
+    int poly_id;
+    exactpoint2d(float x_in, float y_in, int poly_id) : poly_id(poly_id){
+      x = x_in;
+      y = y_in;
+    }
+};
+
 struct pose2d 
 {
   point2d x;
@@ -96,12 +105,14 @@ struct transformedVars
   float lambda;
 };
 struct line{
-    point2d p_initial;
-    point2d p_final;
-    float length()
-    {
-        return sqrt((p_final.x-p_initial.x)*(p_final.x-p_initial.x)+(p_final.y-p_initial.y)*(p_final.y-p_initial.y));
-    }
+  line(point2d p_initial, point2d p_final):p_initial(p_initial), p_final(p_final){};
+  line(){};
+  point2d p_initial;
+  point2d p_final;
+  float length()
+  {
+      return sqrt((p_final.x-p_initial.x)*(p_final.x-p_initial.x)+(p_final.y-p_initial.y)*(p_final.y-p_initial.y));
+  }
 };
 struct intersection_result{
     point2d intersection;

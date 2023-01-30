@@ -26,7 +26,7 @@ struct Node
     // vector<shared_ptr<Node>> siblings;
     bool check_availability(float current_time, float threshold)
     {
-        for (int i = 0; i < arrival_time.size(); i++)
+        for (auto i = 0; i < arrival_time.size(); i++)
         {
             if (current_time > arrival_time[i] - threshold  && current_time < arrival_time[i] + threshold)
             {
@@ -80,9 +80,13 @@ class Graph
         shared_ptr<Node> add(shared_ptr<Node> pt, shared_ptr<Node> existing, arcs A);
         vector<shared_ptr<Bundle>> in_range(point2d pt, float rad);
         void reset_nodes();
+
         deque<point2d> getPath(shared_ptr<Node> start, shared_ptr<Node> end);
         deque<arcs> getPathPlus(shared_ptr<Node> start, shared_ptr<Node> end);
+        // Dubins path with multiple possible exits
         deque<arcs> getPathPlusManyExits(shared_ptr<Node> start_node, vector<shared_ptr<Node>> end_nodes);
+        
+        
         quad points_quad;
         vector<shared_ptr<Node>> nodes;
         void print_nodes();

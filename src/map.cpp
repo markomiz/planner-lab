@@ -69,12 +69,12 @@ void Polygon::calculateArea()
     // area = verteces.size() * a * a / (4 * sin(M_PI/ a));
 
     int n = verteces.size();
-    for(int i = 0; i < n - 1; i++) {
+    for(auto i = 0; i < n - 1; i++) {
         area += verteces[i].x * verteces[i+1].y;
 
     }
     area += verteces[n-1].x * verteces[0].y;
-    for(int i = 0; i < n - 1; i++) {
+    for(auto i = 0; i < n - 1; i++) {
         area -= verteces[i].y * verteces[i+1].x;
     }
     area -= verteces[n-1].y * verteces[0].x;
@@ -86,7 +86,7 @@ void Polygon::getMinMax()
 {
     vector<float> temp_vec_x;
     vector<float> temp_vec_y;
-    for (int i = 0; i < verteces.size(); i++)
+    for (auto i = 0; i < verteces.size(); i++)
     {
         temp_vec_x.push_back(verteces[i].x);
         temp_vec_y.push_back(verteces[i].y);
@@ -137,7 +137,7 @@ bool Map::colliding(point2d point)
 };
 bool Map::colliding(arcs A)
 {
-    for (int i=0; i < 3; i++)
+    for (auto i=0; i < 3; i++)
     {
         if(A.a[i].radius == 0)
         {
@@ -165,7 +165,7 @@ bool Map::colliding(arc a)
 {
     // obstacle check
     if (CollisionCheck::arc_with_polygon(a, total_map_poly)) return true;
-    for (int i = 0; i < obstacles.size(); i++)
+    for (auto i = 0; i < obstacles.size(); i++)
     {
         if ((a.center - obstacles[i].center).norm() > a.radius + obstacles[i].radius ) continue;
         if (CollisionCheck::arc_with_polygon(a, obstacles[i])) return true;
@@ -202,7 +202,7 @@ void Map::processBounds(){
     vector<point2d> verteces = total_map_poly.verteces;
     vector<float> temp_vec_x;
     vector<float> temp_vec_y;
-    for (int i = 0; i < verteces.size(); i++)
+    for (auto i = 0; i < verteces.size(); i++)
     {
         temp_vec_x.push_back(verteces[i].x);
         temp_vec_y.push_back(verteces[i].y);

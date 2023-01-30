@@ -22,8 +22,8 @@ vector<Polygon> getAvailableSquares(Map map, int split = 4)
   // Split the figure into smaller squares
   double min_x = map.min_x, min_y = map.min_y, max_x = map.max_x, max_y = map.max_y;
 
-  for (int y = 0; y < split; y++) {
-    for (int x = 0; x < split; x++) {
+  for (auto y = 0; y < split; y++) {
+    for (auto x = 0; x < split; x++) {
       vector<point2d> square_pts;
       min_x = min_x + x * sizeX;
       min_y = min_x + y * sizeY;
@@ -50,14 +50,14 @@ vector<Polygon> getAvailableSquares(Map map, int split = 4)
   }
   double area_threshold = 1.0;
   // Eval valid squares to get the path
-  for (int i = 0; i < totalSquares.size(); i++)
+  for (auto i = 0; i < totalSquares.size(); i++)
   {
     
     Polygon temp_square = totalSquares[i];
     int colliding_edges = 0;
     if (temp_square.area < area_threshold) continue; //TO BE DEFINED
     
-    for (int j = 0; j < 4; j++)
+    for (auto j = 0; j < 4; j++)
     {
       colliding_edges += map.colliding(temp_square.edges[j]);
     }
@@ -92,8 +92,8 @@ vector<Cell> getAvailableSquares(Map map, int split = 2, vector<Cell> possibleCe
   // Split the figure into smaller squares
   double min_x = map.min_x, min_y = map.min_y, max_x = map.max_x, max_y = map.max_y;
 
-  for (int y = 0; y < split; y++) {
-    for (int x = 0; x < split; x++) {
+  for (auto y = 0; y < split; y++) {
+    for (auto x = 0; x < split; x++) {
       vector<point2d> square_pts;
       min_x = min_x + x * sizeX;
       min_y = min_x + y * sizeY;
@@ -120,14 +120,14 @@ vector<Cell> getAvailableSquares(Map map, int split = 2, vector<Cell> possibleCe
   }
 
   // Eval valid squares to get the path
-  for (int i = 0; i < totalSquares.size(); i++)
+  for (auto i = 0; i < totalSquares.size(); i++)
   {
     
     Polygon temp_square = totalSquares[i];
     Cell temp_cell(temp_square);
     int colliding_edges;
     
-    for (int j = 0; j < 4; j++)
+    for (auto j = 0; j < 4; j++)
     {
       colliding_edges += map.colliding(temp_square.edges[j]);
     }

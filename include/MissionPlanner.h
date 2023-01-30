@@ -44,7 +44,7 @@ class MissionPlanner : public rclcpp::Node
         vector<Polygon> obstacle_list;
         Polygon map_poly;
         vector<pose2d> gates;
-        PRMstar* planner;
+        GeometricPRMstar* planner;
 
         bool path_done;
         vector<pose2d> initial_poses;
@@ -100,10 +100,11 @@ class MissionPlanner : public rclcpp::Node
             path_done = false;
             conf = std::shared_ptr<ConfigParams>(new ConfigParams("src/dubin/config.txt"));
             d = std::shared_ptr<dubinCurve>(new dubinCurve());
-            subscribe_to_map();
-            subscribe_to_obstacles();
-            subscribe_to_gate();
-            subscribe_to_pose1();
-            subscribe_to_pose2();
+            // subscribe_to_map();
+            // subscribe_to_obstacles();
+            // subscribe_to_gate();
+            // subscribe_to_pose1();
+            // subscribe_to_pose2();
+            test();
         }       
 };

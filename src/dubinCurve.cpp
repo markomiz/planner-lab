@@ -60,21 +60,18 @@ nav_msgs::msg::Path dubinCurve::arcs_to_path(deque<arcs> input_arcs, float delta
   for (auto i = 0; i < int(input_arcs.size()); i++)
   {
     currentPoint =  input_arcs[i].a[0].start;
-    myfile << input_arcs[i].a[0].start.x.x << "," << input_arcs[i].a[0].start.x.y << ", arcstart! " << endl;
     for (auto j = 0; j < 3; j++)
     {
-        arc &a = input_arcs[i].a[j];
-        
-        for (float ds = 0; ds < a.s; ds += delta)
-        {
-          currentPoint = arc::next_pose(a.start, ds, a.K);
-          final_path.poses.push_back(currentPoint.to_Pose());
-        }
-        myfile << currentPoint.x.x << "; " << currentPoint.x.y << "; " << input_arcs[i].a[j].K << "\n"; 
-        currentPoint = a.end;
-        final_path.poses.push_back(currentPoint.to_Pose()); 
-        myfile << currentPoint.x.x << "," << currentPoint.x.y <<  endl;
-    
+      arc &a = input_arcs[i].a[j];
+      
+      for (float ds = 0; ds < a.s; ds += delta)
+      {
+        currentPoint = arc::next_pose(a.start, ds, a.K);
+        final_path.poses.push_back(currentPoint.to_Pose());
+      }
+      myfile << currentPoint.x.x << "; " << currentPoint.x.y << "; " << input_arcs[i].a[j].K << "\n"; 
+      currentPoint = a.end;
+      final_path.poses.push_back(currentPoint.to_Pose());
     }
   }
   myfile.close();
