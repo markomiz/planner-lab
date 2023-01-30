@@ -31,6 +31,7 @@ def store_output(dist, points, angles):
                     "points": points,
                     "dist": dist,
                     "comp_time": comp_time,
+                    "connections": connections,
                     "length": length}
     results.append(result_entry)
 
