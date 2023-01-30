@@ -36,6 +36,10 @@
 
 using namespace std::chrono_literals;
 
+/*
+----- Callbacks for subscribers -----------
+*/
+
 void MissionPlanner::obstacle_topic_callback(const obstacles_msgs::msg::ObstacleArrayMsg obstacle_message)
 {
     if(has_received_obs) return;
@@ -57,8 +61,8 @@ void MissionPlanner::obstacle_topic_callback(const obstacles_msgs::msg::Obstacle
             polygon_input.push_back(temp);
             // RCLCPP_INFO(this->get_logger(), "Getting obs info: x = '%0.2f', y = '%0.2f'", temp.x, temp.y);
         }
-        Polygon poly(polygon_input);
-        poly.expandShape(conf->getExpandSize());
+        Polygon poly(polygon_input, conf->getExpandSize());
+        // poly.expandShape(conf->getExpandSize());
         obstacle_list.push_back(poly);
     }
     RCLCPP_INFO(this->get_logger(), "Got obstacles information");
@@ -67,19 +71,19 @@ void MissionPlanner::obstacle_topic_callback(const obstacles_msgs::msg::Obstacle
 
 };
 
-void MissionPlanner::map_topic_callback(const geometry_msgs::msg::PolygonStamped outline_message)
+void MissionPlanner::map_topic_callback(const geometry_msgs::msg::Polygon outline_message)
 {
     if(has_received_map) return;
     
     vector<point2d> outer_verteces;
-    for (int i = 0; i < outline_message.polygon.points.size(); i++)
+    for (int i = 0; i < outline_message.points.size(); i++)
     {
         point2d temp;
-        temp.x = outline_message.polygon.points[i].x;
-        temp.y = outline_message.polygon.points[i].y;
+        temp.x = outline_message.points[i].x;
+        temp.y = outline_message.points[i].y;
         outer_verteces.push_back(temp);        
     }
-    map_poly = Polygon(outer_verteces);
+    map_poly = Polygon(outer_verteces, conf->getExpandSize());
     has_received_map = true;
     RCLCPP_INFO(this->get_logger(), "Got map information.");
     getPaths_and_Publish();
@@ -100,7 +104,7 @@ void MissionPlanner::gate_topic_callback(const geometry_msgs::msg::PoseArray out
 
         temp_gate.x.x  = outline_message.poses[i].position.x;
         temp_gate.x.y  = outline_message.poses[i].position.y;
-        temp_gate.theta = yaw;
+        temp_gate.theta = 0;
         gates.push_back(temp_gate);   
     }
     has_received_gate = true;
@@ -129,7 +133,7 @@ void MissionPlanner::pose1_topic_callback(const geometry_msgs::msg::TransformSta
 
 void MissionPlanner::pose2_topic_callback(const geometry_msgs::msg::TransformStamped t)
 {
-    if(has_received_pose2) return;
+    if(has_received_pose2 || !has_received_pose1) return;
     
     pose2d temp_init_pose(__FLT_MAX__,__FLT_MAX__,__FLT_MAX__);
     tf2::Quaternion q(t.transform.rotation.x,t.transform.rotation.y,t.transform.rotation.z,t.transform.rotation.w);
@@ -142,11 +146,17 @@ void MissionPlanner::pose2_topic_callback(const geometry_msgs::msg::TransformSta
     initial_poses.push_back(temp_init_pose);
     has_received_pose2 = true;
     RCLCPP_INFO(this->get_logger(), "Got initial pose 2");
+    getPaths_and_Publish();
 
 };
 
+/*
+----- Function for calculating paths and roadmap and publish -----------
+*/
+
 void MissionPlanner::build_roadmap()
 {
+
     // shared_ptr<Map> map (new Map(map_poly));
     point2d t1(-6.0,-6.0);
     point2d t2(-6.0,6.0);
@@ -174,8 +184,11 @@ void MissionPlanner::build_roadmap()
     Polygon test_obs(obs_vert);
 
     shared_ptr<Map> map (new Map(test_map));
+
+
     for (int i = 0; i < obstacle_list.size(); i++)
     {
+        // cout << obstacle_list[i].verteces << endl;
         map->addObstacle(obstacle_list[i]);
     }
     // map->addObstacle(test_obs);
@@ -207,20 +220,29 @@ void MissionPlanner::getPaths_and_Publish()
         build_roadmap();
         clock_t afterTime = clock() - beforeTime;
         cout << "Building the roadmap took " <<(float)afterTime/CLOCKS_PER_SEC << " seconds." << endl;
-        for (int rob = 0; rob < initial_poses.size(); rob++)
+
+        
+        for (int rob = 1; rob <= initial_poses.size(); rob++)
         {
-            deque<arcs> path = planner->getPathManyExits(initial_poses[rob], gates);
+            pose2d gate(2.5, -5, -M_PI);
+            cout << "Pose is: " << initial_poses[rob-1].x.x << ", " << initial_poses[rob-1].x.y << ", " << initial_poses[rob-1].theta << endl;
+            // deque<arcs> path = planner->getPath(initial_poses[rob-1], gates[0]);
+            deque<arcs> path = planner->getPath(initial_poses[rob-1], gate);
             publish_path("shelfino" + to_string(rob) + "/follow_path", path);
         }
         path_done = true;
     }
 };
 
+/*
+----- Subscribers and Publishers -----------
+*/
+
 void MissionPlanner::subscribe_to_map()
 {
     RCLCPP_INFO(this->get_logger(), "Getting map info");
     rclcpp::QoS qos_map = rclcpp::QoS(rclcpp::KeepLast(1), rmw_qos_profile_sensor_data);
-    map_subscription_ = this->create_subscription<geometry_msgs::msg::PolygonStamped>(
+    map_subscription_ = this->create_subscription<geometry_msgs::msg::Polygon>(
     "map_borders", qos_map, std::bind(&MissionPlanner::map_topic_callback, this, _1));
 };
 
@@ -263,7 +285,7 @@ void MissionPlanner::publish_path(string topic, deque<arcs> way)
 {
 
     nav_msgs::msg::Path path = d->arcs_to_path(way, 0.05);
-    RCLCPP_INFO(this->get_logger(),"Path2 found");
+    RCLCPP_INFO(this->get_logger(),"Path %s found", topic.c_str());
     // Publish results
     RCLCPP_INFO(this->get_logger(), "Publishing path");
     /*
@@ -292,6 +314,7 @@ void MissionPlanner::publish_path(string topic, deque<arcs> way)
         RCLCPP_INFO(this->get_logger(), "%s", path.header.frame_id.c_str());
     }
 }
+
 
 void MissionPlanner::test()
 {

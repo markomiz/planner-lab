@@ -41,18 +41,27 @@ void Polygon::expandShape(float size)
     {
         // get vector connecting center to vertex
         point2d vec = verteces[i] - center;
-
         float th = atan2(vec.y,vec.x);
-
         point2d size_vec;
-        size_vec.x = size * cos(th);
-        size_vec.y = size * sin(th);
+        if(th <= 0)
+        {
+            size_vec.y = -size;
+            if (th > -M_PI/2)
+            {
+                size_vec.x = size;
+            } else size_vec.x = -size;
+               
+        } else{
+            size_vec.y = size;
+            if (th > M_PI/2) 
+            {
+                size_vec.x = -size;
+            } else size_vec.x = size;   
+        }
         // increase length by size
-        vec = vec + size_vec;
-
-        // swap vertex position for new expanded one
-        verteces[i] = vec;
-    };
+        verteces[i] = verteces[i] + size_vec;
+    }
+    radius = (center - verteces[0]).norm();
 };
 void Polygon::calculateArea()
 {

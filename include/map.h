@@ -11,10 +11,18 @@ class Polygon
 
         Polygon(std::vector<point2d> v): verteces(v)
         {
-            processEdges();
-            getMinMax();
             calculateCenter();
+            processEdges();
             calculateArea();
+            getMinMax();
+        }
+        Polygon(std::vector<point2d> v, float expandSize): verteces(v)
+        {
+            calculateCenter();
+            expandShape(expandSize);
+            processEdges();
+            calculateArea();
+            getMinMax();
         }
         void calculateArea();
         void calculateCenter();
@@ -43,20 +51,15 @@ class Map
 
     public:
         Map(Polygon map): total_map_poly(map), freeSpace(map.area), halton_index(0){
-            // createMap(map);
             processBounds();
         };
 
-        // Map(float min_x ,float min_y ,float max_x ,float max_y): min_x(min_x),
-        // min_y(min_y), max_x(max_x), max_y(max_y), halton_index(0) 
-        // {processBounds();};
         
-        void addObstacle(Polygon shape); //NOT DONE
+        void addObstacle(Polygon shape); //DONE
         bool colliding(point2d point); //DONE: MAP.CPP
         bool colliding(arc a); //DONE: MAP.CPP
         bool colliding(line l); //DONE: MAP.CPP
         bool colliding(arcs A); //DONE: MAP.CPP
-        // void createMap(Polygon map);
 
         bool inBounds(point2d point);
         float min_x;

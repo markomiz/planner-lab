@@ -6,14 +6,11 @@
 
 void PRMstar::genRoadmap(int n)
 {
-    float yprm  = sqrt(2*(1+ 1/2)) * sqrt(map->getFreeSpace()/M_PI) * 1.0;
+    float yprm  = sqrt(2*(1+ 1/2)) * sqrt(map->getFreeSpace()/M_PI) * config->getConnectDist();
     int cons = 0;
     for (auto i = 0; i < n; i ++)
     {
-        
         point2d new_point = map->halton_sample(i);
-        // cout << new_point.x <<  " " << new_point.y << " point\n";
-        //point2d new_point = map->uniform_sample();
         pose2d new_pose;
         new_pose.x = new_point;
         float rad = yprm*sqrt(log(i+1)/(i+1));
@@ -103,10 +100,13 @@ void PRMstar::genRoadmapPlus(int n, int angles)
     cout <<" gen roadmap pluss\n";
     float yprm  = sqrt(2*(1+ 1/2)) * sqrt(map->getFreeSpace()/M_PI) * config->getConnectDist();
     //  init empty graph
+    ofstream node_file ("nodes.txt");
+
     int cons = 0;
     float d_ang = M_PI /float(angles);
     for (auto i = 0; i < config->getNumPoints(); i ++)
     {
+
         point2d new_p;
         new_p = map->halton_sample(i);
         //if (map->colliding(new_p)) continue;
@@ -147,6 +147,7 @@ void PRMstar::genRoadmapPlus(int n, int angles)
                     }
                 }
             };
+            node_file << new_node->pt.x.x << "; " << new_node->pt.x.y << "\n";
             new_bundle->nodes.push_back(new_node);
             new_bundle->nodes.push_back(cor);
             graph->nodes.push_back(new_node);
@@ -155,6 +156,7 @@ void PRMstar::genRoadmapPlus(int n, int angles)
         }
         graph->points_quad.add_bundle(new_bundle);
     }
+    node_file.close();
     cout << cons <<" connections test \n";
 };
 deque<arcs> PRMstar::getPath(pose2d start, pose2d end)
@@ -214,6 +216,7 @@ deque<arcs> PRMstar::getPath(pose2d start, pose2d end)
     end_bundle->nodes.push_back(end_node);
     end_bundle->nodes.push_back(cor_e);
 
+
     graph->points_quad.add_bundle(start_bundle);
     graph->points_quad.add_bundle(end_bundle);
 
@@ -221,6 +224,7 @@ deque<arcs> PRMstar::getPath(pose2d start, pose2d end)
     graph->nodes.push_back(end_node);
     graph->nodes.push_back(cor);
     graph->nodes.push_back(cor_e);
+
     cout << "hiit the graph \n";
     deque<arcs> points = graph->getPathPlus(start_node, end_node);
     return points;
@@ -228,6 +232,8 @@ deque<arcs> PRMstar::getPath(pose2d start, pose2d end)
 
 deque<arcs> PRMstar::getPathManyExits(pose2d start, vector<pose2d> end)
 {
+    cout << "Gate 1:" << end[0].x.x << "," << end[0].x.y << "," << end[0].theta << endl;
+    cout << "Gate 2:" << end[1].x.x << "," << end[1].x.y << "," << end[1].theta << endl;
     float TRSH = config->getStartEndThrsh();
     // fisrt connect start and end to graph
     std::vector<shared_ptr<Bundle>> nearest_s = graph->in_range(start.x, TRSH); // find all nodes within a Rad
