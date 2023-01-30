@@ -13,7 +13,7 @@
 #include "geometry.h"
 #include "graph.h"
 #include "map.h"
-#include "PRMstar.h"
+#include "Planner.h"
 #include "dubinCurve.h"
 #include "config_server.h"
 #include "MissionPlanner.h"
@@ -295,34 +295,33 @@ void MissionPlanner::build_roadmap()
     planner->graph->config = conf;
     RCLCPP_INFO(this->get_logger(),"Planner made");
     planner->dCurve = d;
-    planner->genRoadmap(conf->getNumPoints());
-    //planner->genRoadmapPlus(conf->getNumPoints(), conf->getNumAngles());
+    planner->genRoadmap(conf->getNumPoints(), conf->getNumAngles());
     RCLCPP_INFO(this->get_logger(),"Roadmap Generated");
 
 };
 
-// void MissionPlanner::getPaths_and_Publish()
-// {
-//     if (path_done) return;
-//     if(has_received_map && has_received_gate && has_received_obs && has_received_pose1 && has_received_pose2)
-//     {        
-//         RCLCPP_INFO(this->get_logger(), "Got all information from simulation");
-//         RCLCPP_INFO(this->get_logger(), "Calculating Roadmap");
-//         clock_t beforeTime = clock();
-//         build_roadmap();
-//         clock_t afterTime = clock() - beforeTime;
-//         cout << "Building the roadmap took " <<(float)afterTime/CLOCKS_PER_SEC << " seconds." << endl;        
-//         for (auto rob = 1; rob <= initial_poses.size(); rob++)
-//         {
-//             pose2d gate(2.5, -5, -M_PI);
-//             cout << "Pose is: " << initial_poses[rob-1].x.x << ", " << initial_poses[rob-1].x.y << ", " << initial_poses[rob-1].theta << endl;
-//             deque<arcs> path = planner->getPath(initial_poses[rob-1], gates[0]);
-//             // deque<arcs> path = planner->getPath(initial_poses[rob-1], gate);
-//             publish_path("shelfino" + to_string(rob) + "/follow_path", path);
-//         }
-//         path_done = true;
-//     }
-// };
+void MissionPlanner::getPaths_and_Publish()
+{
+    if (path_done) return;
+    if(has_received_map && has_received_gate && has_received_obs && has_received_pose1 && has_received_pose2)
+    {        
+        RCLCPP_INFO(this->get_logger(), "Got all information from simulation");
+        RCLCPP_INFO(this->get_logger(), "Calculating Roadmap");
+        clock_t beforeTime = clock();
+        build_roadmap();
+        clock_t afterTime = clock() - beforeTime;
+        cout << "Building the roadmap took " <<(float)afterTime/CLOCKS_PER_SEC << " seconds." << endl;        
+        for (auto rob = 1; rob <= initial_poses.size(); rob++)
+        {
+            pose2d gate(2.5, -5, -M_PI);
+            cout << "Pose is: " << initial_poses[rob-1].x.x << ", " << initial_poses[rob-1].x.y << ", " << initial_poses[rob-1].theta << endl;
+            deque<arcs> path = planner->getPath(initial_poses[rob-1], gates[0]);
+            // deque<arcs> path = planner->getPath(initial_poses[rob-1], gate);
+            publish_path("shelfino" + to_string(rob) + "/follow_path", path);
+        }
+        path_done = true;
+    }
+};
 
 void MissionPlanner::test()
 {
@@ -348,10 +347,10 @@ void MissionPlanner::test()
     cout << "Building the path took " <<(float)afterTime/CLOCKS_PER_SEC << " seconds." << endl;
 
     beforeTime = clock();
-    auto path2 = d->calculateMultiPoint(e, e2, path, 36);
+
     cout << "multi generated " << endl;
     //auto traj = d->arcs_to_path(path, 0.1);
-    auto traj = d->arcs_to_path(path2, 0.1);
+    auto traj = d->arcs_to_path(path, 0.1);
     afterTime = clock() - beforeTime;
     
     ofstream myfile;

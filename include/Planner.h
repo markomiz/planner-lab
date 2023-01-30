@@ -19,7 +19,13 @@ class Planner
         shared_ptr<ConfigParams> config;
         shared_ptr<Graph> graph;
         shared_ptr<Map> map;
-        deque<arcs> SmoothWithMulti(deque<arcs> original);
+        deque<arcs> smoothWithMulti(deque<arcs> original);
+        // standard geometric
+        deque<arcs> getPath(point2d start, point2d end);
+
+        virtual deque<arcs> getPath(pose2d start, pose2d end) {};
+        virtual deque<arcs> getPathManyExits(pose2d start, vector<pose2d> end) {};
+        virtual void genRoadmap(int n, int angles) {};
 };
 
 class GeometricPRMstar : public Planner
@@ -27,15 +33,13 @@ class GeometricPRMstar : public Planner
     public:
         explicit GeometricPRMstar(shared_ptr<Map> m) : Planner(m){};
         // Geometric PRM 
-        void genRoadmap(int n);
-        // Geometric Dijkstra
-        deque<point2d> getPath(point2d start, point2d end);
+        void genRoadmap(int n, int angles);
 };
 
-class DubinsPRMstar : public Planner
+class DPRMstar : public Planner
 {
     public:
-        explicit DubinsPRMstar(shared_ptr<Map> m) : Planner(m){};
+        explicit DPRMstar(shared_ptr<Map> m) : Planner(m){};
         // Dubins PRM 
         void genRoadmap(int n, int angles);
         // Dubins Dijkstra
@@ -49,7 +53,7 @@ class ExactCell : public Planner
     public:
         explicit ExactCell(shared_ptr<Map> m) : Planner(m){};
         // Exact Cell Decomposition
-        void genRoadmap();
+        void genRoadmap(int n, int angles);
     private:
         bool comparePoints(exactpoint2d p1, exactpoint2d p2);
         void quickSort(vector<exactpoint2d> &points, int low, int high);

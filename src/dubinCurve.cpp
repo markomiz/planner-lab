@@ -17,7 +17,7 @@
 #include "geometry_msgs/msg/pose_stamped.hpp"
 
 #include "MissionPlanner.h"
-#include "PRMstar.h"
+#include "Planner.h"
 #include "dubinCurve.h"
 
 int num = 0;

@@ -18,9 +18,8 @@
 #include "geometry_msgs/msg/polygon_stamped.hpp"
 
 #include "geometry.h"
-#include "PRMstar.h"
 #include "graph.h"
-#include "PRMstar.h"
+#include "Planner.h"
 #include "map.h"
 #include "config_server.h"
 
@@ -44,7 +43,7 @@ class MissionPlanner : public rclcpp::Node
         vector<Polygon> obstacle_list;
         Polygon map_poly;
         vector<pose2d> gates;
-        GeometricPRMstar* planner;
+        Planner* planner;
 
         bool path_done;
         vector<pose2d> initial_poses;

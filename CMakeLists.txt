@@ -25,10 +25,13 @@ find_package(std_msgs REQUIRED)
 add_executable(mission_planner src/MissionPlanner.cpp
 src/collision_check.cpp
 src/config_server.cpp
+src/DPRMstar.cpp
 src/dubinCurve.cpp
+src/ExactCell.cpp
+src/GeometricPRMstar.cpp
 src/graph.cpp
 src/map.cpp
-src/PRMstar.cpp
+src/Planner.cpp
 #src/ApproximateCellDecomposition.cpp
 )
 

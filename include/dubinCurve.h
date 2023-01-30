@@ -17,9 +17,8 @@
 #include "geometry_msgs/msg/pose_stamped.hpp"
 
 #include "geometry.h"
-#include "PRMstar.h"
 #include "graph.h"
-#include "PRMstar.h"
+#include "Planner.h"
 #include <deque>
 
 using namespace std::chrono_literals;
