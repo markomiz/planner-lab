@@ -26,6 +26,7 @@ class Planner
         virtual deque<arcs> getPath(pose2d start, pose2d end) {};
         virtual deque<arcs> getPathManyExits(pose2d start, vector<pose2d> end) {};
         virtual void genRoadmap(int n, int angles) {};
+        int n_connections;
 };
 
 class GeometricPRMstar : public Planner

@@ -60,7 +60,9 @@ deque<arcs> Planner::getPath(point2d start, point2d end)
     graph->points_quad.add_bundle(end_bundle);
     cout << "Still good";
     deque<point2d> points = graph->getPath(start_node, end_node);
-    deque<arcs> dubined = dCurve->calculateMultiPoint(start_pose, end_pose, points, config->getNumAngles());
+    deque<arcs> dubined;
+
+    if (points.size() > 0) dubined = dCurve->calculateMultiPoint(start_pose, end_pose, points, config->getNumAngles());
     return dubined;
 }
 

@@ -290,7 +290,7 @@ void MissionPlanner::build_roadmap()
     d->map = map;
     d->_K = conf->getK();
 
-    planner = new GeometricPRMstar(map);
+    planner = new DPRMstar(map);
     planner->config = conf;
     planner->graph->config = conf;
     RCLCPP_INFO(this->get_logger(),"Planner made");
@@ -327,39 +327,27 @@ void MissionPlanner::test()
 {
     clock_t beforeTime = clock();
     build_roadmap();
-    clock_t afterTime = clock() - beforeTime;
-    cout << "Building the roadmap took " <<(float)afterTime/CLOCKS_PER_SEC << " seconds." << endl;
     pose2d e(-5.0,-5.0,0.0);
-    auto all = planner->graph->points_quad.get_nearest(e.x,1.0);
-    cout << all.size() << "  e size " << endl;
     pose2d e2(5.0,5.0,0.0);
     pose2d e3(5.0,-5.0,0.0);
-    auto all2 = planner->graph->points_quad.get_nearest(e.x,1.0);
-    cout << all2.size() << "  e2 size " << endl;
-    vector<pose2d> exits;
-    exits.push_back(e2);
-    exits.push_back(e3);
-    beforeTime = clock();
-    auto path = planner->getPath(e.x, e2.x);
 
-    //auto path = planner->getPathManyExits(e, exits);
-    afterTime = clock() - beforeTime;
-    cout << "Building the path took " <<(float)afterTime/CLOCKS_PER_SEC << " seconds." << endl;
-
-    beforeTime = clock();
-
-    cout << "multi generated " << endl;
-    //auto traj = d->arcs_to_path(path, 0.1);
+    auto path = planner->getPath(e, e2);
+    cout << " -----------   " << path.size()<< endl;
     auto traj = d->arcs_to_path(path, 0.1);
-    afterTime = clock() - beforeTime;
+
+    clock_t afterTime = clock() - beforeTime;
+    float comp_time = (float)afterTime/CLOCKS_PER_SEC;
+    float path_length = 0.0;
+    for (int i = 0; i < path.size(); i++)
+    {
+        path_length += path[i].L;
+    }
     
     ofstream myfile;
-    myfile.open ("path.csv");
-    for (int i = 0; i < traj.poses.size(); i++)
-    {
-        //cout << traj.poses[i].pose.position.x << "," << traj.poses[i].pose.position.y << endl;
-        myfile << traj.poses[i].pose.position.x << "," << traj.poses[i].pose.position.y << endl;
-    }
+    myfile.open ("results.txt");
+    myfile << comp_time << "," << path_length<< "," << planner->n_connections;
+    myfile.close();
+    exit(1);
 }
 
 int main(int argc, char * argv[])

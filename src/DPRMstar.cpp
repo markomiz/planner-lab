@@ -11,7 +11,7 @@ void DPRMstar::genRoadmap(int n, int angles)
     //  init empty graph
     ofstream node_file ("nodes.txt");
 
-    int cons = 0;
+    n_connections = 0;
     float d_ang = M_PI /float(angles);
     for (auto i = 0; i < config->getNumPoints(); i ++)
     {
@@ -44,7 +44,7 @@ void DPRMstar::genRoadmap(int n, int angles)
                     float dist = (new_node->pt.x - nearest[x]->nodes[b]->pt.x).norm();
                     if (!map->colliding(A) &&  A.L < dist * M_PI/2){
                         graph->add(new_node, nearest[x]->nodes[b], A);
-                        cons ++;
+                        n_connections ++;
                     }
                     // cor
                     sol = dCurve->calculateSinglePath(cor->pt, nearest[x]->nodes[b]->pt);
@@ -52,7 +52,7 @@ void DPRMstar::genRoadmap(int n, int angles)
                     dist = (cor->pt.x - nearest[x]->nodes[b]->pt.x).norm();
                     if (!map->colliding(A) &&  A.L < dist * M_PI/2){
                         graph->add(cor, nearest[x]->nodes[b], A2);
-                        cons ++;
+                        n_connections ++;
                     }
                 }
             };
@@ -66,7 +66,7 @@ void DPRMstar::genRoadmap(int n, int angles)
         graph->points_quad.add_bundle(new_bundle);
     }
     node_file.close();
-    cout << cons <<" connections test \n";
+    cout << n_connections <<" connections test \n";
 };
 
 deque<arcs> DPRMstar::getPath(pose2d start, pose2d end)
