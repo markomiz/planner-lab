@@ -31,7 +31,7 @@ class dubinCurve
 
   nav_msgs::msg::Path generatePathFromDubins(pose2d start, std::vector<dubins_params> sub_paths, float delta);
   nav_msgs::msg::Path arcs_to_path(deque<arcs> input_arcs, float delta);
-  std::vector<dubins_params> calculateMultiPoint(pose2d start, pose2d end, std::vector<point2d> mid_points, int n_angles);
+  std::deque<arcs> calculateMultiPoint(pose2d start, pose2d end, std::deque<point2d> mid_points, int n_angles);
 
   // Scale the input problem to standard form (x0: -1, y0: 0, xf: 1, yf: 0)
   transformedVars scaleToStandard(pose2d x0, pose2d x1);

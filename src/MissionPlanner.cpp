@@ -295,9 +295,8 @@ void MissionPlanner::build_roadmap()
     planner->graph->config = conf;
     RCLCPP_INFO(this->get_logger(),"Planner made");
     planner->dCurve = d;
-    // planner->genRoadmap(conf->getNumPoints(), conf->getNumAngles());
     planner->genRoadmap(conf->getNumPoints());
-    // planner->genRoadmap();
+    //planner->genRoadmapPlus(conf->getNumPoints(), conf->getNumAngles());
     RCLCPP_INFO(this->get_logger(),"Roadmap Generated");
 
 };
@@ -331,28 +330,36 @@ void MissionPlanner::test()
     build_roadmap();
     clock_t afterTime = clock() - beforeTime;
     cout << "Building the roadmap took " <<(float)afterTime/CLOCKS_PER_SEC << " seconds." << endl;
-    
-    vector<pose2d>exit_poses;
-    pose2d exit1(-5, -3, -M_PI/2);
-    exit_poses.push_back(exit1);
-    pose2d exit2(5, -2, M_PI/2);
-    exit_poses.push_back(exit2);
+    pose2d e(-5.0,-5.0,0.0);
+    auto all = planner->graph->points_quad.get_nearest(e.x,1.0);
+    cout << all.size() << "  e size " << endl;
+    pose2d e2(5.0,5.0,0.0);
+    pose2d e3(5.0,-5.0,0.0);
+    auto all2 = planner->graph->points_quad.get_nearest(e.x,1.0);
+    cout << all2.size() << "  e2 size " << endl;
+    vector<pose2d> exits;
+    exits.push_back(e2);
+    exits.push_back(e3);
+    beforeTime = clock();
+    auto path = planner->getPath(e.x, e2.x);
+
+    //auto path = planner->getPathManyExits(e, exits);
+    afterTime = clock() - beforeTime;
+    cout << "Building the path took " <<(float)afterTime/CLOCKS_PER_SEC << " seconds." << endl;
 
     beforeTime = clock();
-    for (auto i = 0; i < 3; i++)
-    {
-        pose2d e(0, i, 0);
-        // auto path = planner->getPath(e, exit_poses[0]);
-        auto path = planner->getPath(e.x, exit_poses[0].x);
+    auto path2 = d->calculateMultiPoint(e, e2, path, 36);
+    cout << "multi generated " << endl;
+    //auto traj = d->arcs_to_path(path, 0.1);
+    auto traj = d->arcs_to_path(path2, 0.1);
+    afterTime = clock() - beforeTime;
     
-        afterTime = clock() - beforeTime;
-        cout << "Building the path took " <<(float)afterTime/CLOCKS_PER_SEC << " seconds." << endl;
-
-        beforeTime = clock();
-        auto traj = d->arcs_to_path(path, 0.1);
-        //auto traj = d->generatePathFromDubins(e, new_path, 0.1);
-        afterTime = clock() - beforeTime;
-        cout << "Converting the path took " <<(float)afterTime/CLOCKS_PER_SEC << " seconds." << endl;
+    ofstream myfile;
+    myfile.open ("path.csv");
+    for (int i = 0; i < traj.poses.size(); i++)
+    {
+        //cout << traj.poses[i].pose.position.x << "," << traj.poses[i].pose.position.y << endl;
+        myfile << traj.poses[i].pose.position.x << "," << traj.poses[i].pose.position.y << endl;
     }
 }
 

@@ -174,14 +174,11 @@ void ExactCell::quickSort(vector<exactpoint2d> &points, int low, int high) {
 
 void GeometricPRMstar::genRoadmap(int n)
 {
-    float yprm  = sqrt(2*(1+ 1/2)) * sqrt(map->getFreeSpace()/M_PI) * 1.0;
-    //  init empty graph
+    float yprm  = sqrt(2*(1+ 1/2)) * sqrt(map->getFreeSpace()/M_PI) * config->getConnectDist();
     int cons = 0;
     for (auto i = 0; i < n; i ++)
     {
-        
-        // point2d new_point = map->halton_sample(i);
-        point2d new_point = map->uniform_sample();
+        point2d new_point = map->halton_sample(i);
         pose2d new_pose;
         new_pose.x = new_point;
         float rad = yprm*sqrt(log(i+1)/(i+1));
@@ -199,7 +196,6 @@ void GeometricPRMstar::genRoadmap(int n)
                     cons ++;
                 };
             }
-
         }
         shared_ptr<Bundle> new_bundle(new Bundle());
         new_bundle->pos = new_point;
@@ -207,10 +203,10 @@ void GeometricPRMstar::genRoadmap(int n)
         graph->nodes.push_back(new_node);
         graph->points_quad.add_bundle(new_bundle);
     }
-
+    cout << cons <<" connections test \n";
 };
 
-vector<point2d> Planner::getPath(point2d start, point2d end)
+deque<point2d> PRMstar::getPath(point2d start, point2d end)
 {
     float TRSH = config->getStartEndThrsh();
     // first connect start and end to graph
@@ -228,12 +224,9 @@ vector<point2d> Planner::getPath(point2d start, point2d end)
             l.p_initial = nearest_s[x]->nodes[a]->pt.x;
             if (!map->colliding(l)) {
                 graph->add(start_node, nearest_s[x]->nodes[a]);
-
             };
         }
-
     }
-
     std::vector<shared_ptr<Bundle>> nearest_e = graph->in_range(end, TRSH); // find all nodes within a Rad
     pose2d end_pose;
     end_pose.x = end;
@@ -246,12 +239,14 @@ vector<point2d> Planner::getPath(point2d start, point2d end)
             line l;
             l.p_final = end;
             l.p_initial = nearest_e[x]->nodes[a]->pt.x;
+            
             if (!map->colliding(l)){
-                graph->add(end_node, nearest_e[x]->nodes[a]);
-            };
+                graph->add(nearest_e[x]->nodes[a], end_node);
+            }
         }
-
     }
+    cout << "start connections: " << nearest_s.size() << endl;
+    cout << "end connections: " << nearest_e.size() << endl;
     shared_ptr<Bundle> start_bundle(new Bundle());
     start_bundle->pos = start;
     shared_ptr<Bundle> end_bundle(new Bundle());
@@ -263,7 +258,8 @@ vector<point2d> Planner::getPath(point2d start, point2d end)
     graph->points_quad.add_bundle(start_bundle);
     graph->nodes.push_back(end_node);
     graph->points_quad.add_bundle(end_bundle);
-    std::vector<point2d> points = graph->getPath(start_node, end_node);
+    cout << "Still good";
+    deque<point2d> points = graph->getPath(start_node, end_node);
     return points;
 }
 
@@ -311,10 +307,10 @@ void DubinsPRMstar::genRoadmap(int n, int angles)
                     }
                     // cor
                     sol = dCurve->calculateSinglePath(cor->pt, nearest[x]->nodes[b]->pt);
-                    A = arcs(cor->pt, sol);
+                    arcs A2 = arcs(cor->pt, sol);
                     dist = (cor->pt.x - nearest[x]->nodes[b]->pt.x).norm();
                     if (!map->colliding(A) &&  A.L < dist * M_PI/2){
-                        graph->add(cor, nearest[x]->nodes[b], A);
+                        graph->add(cor, nearest[x]->nodes[b], A2);
                         cons ++;
                     }
                 }
@@ -475,6 +471,21 @@ deque<arcs> DubinsPRMstar::getPathManyExits(pose2d start, vector<pose2d> end)
     
     cout << "hiit the graph \n";
     deque<arcs> points = graph->getPathPlusManyExits(start_node, end_nodes);
-    // TRY DO A MULTIPOINT ONCE IT'S DONE?
+
     return points;
+ };
+deque<arcs> Planner::smoothWithMulti(deque<arcs> original)
+{
+    pose2d start = original[0].a[0].start;
+    pose2d end = original.back().a[2].end;
+    deque<point2d> mids;
+    for (int i = 2; i < original.size(); i++)
+    {
+        mids.push_back(original[i].a[0].start.x);
+    }
+    // mids.push_back(point2d(-4,-5));
+    auto p = dCurve->calculateMultiPoint(start, end, mids, 5 );
+    // deque<arcs> p2 = arcs(start, p);
+    return p;
+
 };

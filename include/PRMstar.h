@@ -15,13 +15,11 @@ class Planner
         };
         ~Planner(){
         };
-
-        vector<point2d> getPath(point2d start, point2d end);
-
         shared_ptr<dubinCurve> dCurve;
         shared_ptr<ConfigParams> config;
         shared_ptr<Graph> graph;
         shared_ptr<Map> map;
+        deque<arcs> SmoothWithMulti(deque<arcs> original);
 };
 
 class GeometricPRMstar : public Planner
@@ -31,6 +29,7 @@ class GeometricPRMstar : public Planner
         // Geometric PRM 
         void genRoadmap(int n);
         // Geometric Dijkstra
+        deque<point2d> getPath(point2d start, point2d end);
 };
 
 class DubinsPRMstar : public Planner

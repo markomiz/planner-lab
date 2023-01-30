@@ -81,10 +81,7 @@ class Graph
         vector<shared_ptr<Bundle>> in_range(point2d pt, float rad);
         void reset_nodes();
 
-        // Geometric path
-        vector<point2d> getPath(shared_ptr<Node> start, shared_ptr<Node> end);
-        
-        // Dubins path
+        deque<point2d> getPath(shared_ptr<Node> start, shared_ptr<Node> end);
         deque<arcs> getPathPlus(shared_ptr<Node> start, shared_ptr<Node> end);
         // Dubins path with multiple possible exits
         deque<arcs> getPathPlusManyExits(shared_ptr<Node> start_node, vector<shared_ptr<Node>> end_nodes);

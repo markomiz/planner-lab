@@ -50,7 +50,7 @@ class Map
         Polygon total_map_poly;
 
     public:
-        Map(Polygon map): total_map_poly(map.verteces), freeSpace(map.area), halton_index(0){
+        Map(Polygon map): total_map_poly(map), freeSpace(map.area), halton_index(0){
             processBounds();
         };
 
