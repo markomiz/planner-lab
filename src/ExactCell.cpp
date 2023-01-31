@@ -3,6 +3,7 @@
 #include <iostream>
 #include <algorithm>
 #include <vector>
+#include <deque>
 
 void ExactCell::genRoadmap(int not_used, int angles_not_used)
 {
@@ -21,20 +22,30 @@ void ExactCell::genRoadmap(int not_used, int angles_not_used)
 
     quickSort(points, 0, n - 1);
 
-    double maxy = 10;
-    double miny = -10;
-    double maxx = 10;
-    double minx = -10;
+    for(int i = 1; i < n; i++)
+    {
+        if (points[i].y < points[i-1].y && points[i].x == points[i-1].x)
+        {
+            swap(points[i], points[i-1]);
+        } 
+    }
 
-    vector<point2d> nodes;
-    point2d p(minx, miny + (maxy-miny)/2);
-    
-    nodes.push_back(p);
+    double maxy = map->max_y;
+    double miny = map->min_y;
+    double maxx = map->max_x;
+    double minx = map->min_x;
+
+    vector<point2d> roadmap_points;
+    point2d p(minx + (points[0].x - minx)/2, miny + (maxy-miny)/2);
+
+
+    // roadmap_points.push_back(p);
 
     // Line sweep to draw vertical lines from obstacle vertices
 
     for (int i = 0; i < n; i++)
     {
+
         // Create line downwards 
         point2d temp_down(points[i].x, miny);
         point2d temp_pt(points[i].x, points[i].y);
@@ -44,8 +55,9 @@ void ExactCell::genRoadmap(int not_used, int angles_not_used)
         {
             if (CollisionCheck::line_line_intersect(obstacles[points[i].poly_id].edges[j], l_down).intersects) self_intersections++;
         }
-        if (self_intersections <= 2)
+        if (self_intersections < 2)
         {
+            cout << "First check: " << points[i].x << "; " << points[i].y << endl;
             float dist = __FLT_MAX__;
             point2d node(points[i].x, points[i].y);
             for (int j = 0; j < obstacles.size(); j++)
@@ -53,9 +65,10 @@ void ExactCell::genRoadmap(int not_used, int angles_not_used)
                 if (points[i].poly_id == j) continue;
                 for (int edge_num = 0; edge_num < obstacles[j].edges.size(); edge_num++)
                 {
-                    if (CollisionCheck::line_line_intersect(obstacles[j].edges[j], l_down).intersects)
+                    if (CollisionCheck::line_line_intersect(obstacles[j].edges[edge_num], l_down).intersects)
                     {
-                        double new_dist = (CollisionCheck::line_line_intersect(obstacles[j].edges[j], l_down).intersection - temp_pt).norm();
+                        cout << "Inter check: " << CollisionCheck::line_line_intersect(obstacles[j].edges[edge_num], l_down).intersection.x << "; " << CollisionCheck::line_line_intersect(obstacles[j].edges[edge_num], l_down).intersection.y << endl;
+                        double new_dist = (CollisionCheck::line_line_intersect(obstacles[j].edges[edge_num], l_down).intersection - temp_pt).norm();
                         if (new_dist < dist) 
                         {
                             dist = new_dist;
@@ -64,10 +77,10 @@ void ExactCell::genRoadmap(int not_used, int angles_not_used)
                 }
                 
             }
-            if (dist == __FLT_MAX__) node.y -= (node.y-miny)/2;
-            else node.y -= dist;
-            nodes.push_back(node);
-
+            if (l_down.length() == 0) {}
+            else if (dist == __FLT_MAX__) node.y -= (node.y-miny)/2;
+            else node.y -= dist/2;
+            roadmap_points.push_back(node);
         }
         
         // Create line upwards
@@ -78,8 +91,9 @@ void ExactCell::genRoadmap(int not_used, int angles_not_used)
         {
             if (CollisionCheck::line_line_intersect(obstacles[points[i].poly_id].edges[j], l_up).intersects) self_intersections++;
         }
-        if (self_intersections <= 2)
+        if (self_intersections < 2)
         {
+            cout << "Second check: " << points[i].x << "; " << points[i].y << endl;
             float dist = __FLT_MAX__;
             point2d node(points[i].x, points[i].y);
             for (int j = 0; j < obstacles.size(); j++)
@@ -87,9 +101,10 @@ void ExactCell::genRoadmap(int not_used, int angles_not_used)
                 if (points[i].poly_id == j) continue;
                 for (int edge_num = 0; edge_num < obstacles[j].edges.size(); edge_num++)
                 {
-                    if (CollisionCheck::line_line_intersect(obstacles[j].edges[j], l_up).intersects)
+                    if (CollisionCheck::line_line_intersect(obstacles[j].edges[edge_num], l_up).intersects)
                     {
-                        double new_dist = (CollisionCheck::line_line_intersect(obstacles[j].edges[j], l_up).intersection - temp_pt).norm();
+                        cout << "Inter check: " << CollisionCheck::line_line_intersect(obstacles[j].edges[edge_num], l_up).intersection.x << "; " << CollisionCheck::line_line_intersect(obstacles[j].edges[edge_num], l_up).intersection.y << endl;
+                        double new_dist = (CollisionCheck::line_line_intersect(obstacles[j].edges[edge_num], l_up).intersection - temp_pt).norm();
                         if (new_dist < dist) 
                         {
                             dist = new_dist;
@@ -98,71 +113,71 @@ void ExactCell::genRoadmap(int not_used, int angles_not_used)
                 }
                 
             }
-            if (dist == __FLT_MAX__) node.y += (node.y-miny)/2;
-            else node.y += dist;
-            nodes.push_back(node);
+            if (l_up.length() == 0) {}
+            else if (dist == __FLT_MAX__) node.y += (maxy - node.y)/2;
+            else node.y += dist/2;
+            roadmap_points.push_back(node);
         }
     }
 
 
-    point2d p2(maxx, miny + (maxy-miny)/2);
-    nodes.push_back(p2);
+    point2d p2(maxx - (maxx - points[n-1].x)/2, miny + (maxy-miny)/2);
+    // roadmap_points.push_back(p2);
 
-    // THIS NEEDS REDOING!!!
     
-    // ofstream node_file ("nodes.txt");
-    // int cons = 0;
-    // for (auto i = 0; i < nodes.size(); i++)
-    // {
-    //     pose2d new_pose(nodes[i].x, nodes[i].y, 0);
-    //     shared_ptr<Node> new_node(new Node(new_pose));
-    //     for (auto j = 0; j < i; j++)
-    //     {
-    //         pose2d near_pose(nodes[j].x, nodes[j].y, 0);
-    //         shared_ptr<Node> near_node(new Node(near_pose));
-    //         // one way
-    //         line l(new_pose.x, near_pose.x);
-    //         // float dist = (new_node->pt.x - near_node->pt.x).norm();
-    //         if (!map->colliding(l) /* &&  A.L < dist * M_PI/2 */){
-    //             graph->add(new_node, near_node);
-    //             cons ++;
-    //         }
-    //     }    
-    // }
-    // node_file.close();
-    // cout << cons <<" connections test \n";
+    ofstream node_file ("nodes.txt");
+    int cons = 0;
+
+    for (auto i = 0; i < roadmap_points.size(); i++)
+    {
+        shared_ptr<Bundle> new_bundle(new Bundle());
+        pose2d new_pose(roadmap_points[i].x, roadmap_points[i].y, 0);
+        new_bundle->pos = new_pose.x;
+        shared_ptr<Node> new_node(new Node(new_pose));
+        new_bundle->nodes.push_back(new_node);
+        
+        graph->nodes.push_back(new_node);
+        cout << "The node " << roadmap_points[i].x << "; " << roadmap_points[i].y << " is connected to: " << endl;
+        for (auto j = 0; j < i; j++)
+        {
+            // one way
+            line l(new_pose.x, graph->nodes[j]->pt.x);
+            if (!map->colliding(l))
+            {
+                graph->add(new_node, graph->nodes[j]);
+                cons ++;
+            } else cout << "collided" << endl;
+        }
+        graph->points_quad.add_bundle(new_bundle);
+        
+        for (int numb = 0; numb < graph->nodes[i]->connected.size(); numb++)
+        {
+            cout << graph->nodes[i]->connected[numb].node->pt.x.x << "; " << graph->nodes[i]->connected[numb].node->pt.x.y << endl;
+        }    
+    }
+    node_file.close();
+    cout << cons <<" connections test \n";
 };
 
-bool ExactCell::comparePoints(exactpoint2d p1, exactpoint2d p2) {
-    if (p1.x == p2.x) {
-        return (p1.y < p2.y);
+int ExactCell::partition(vector<exactpoint2d> &points, int low, int high) {
+    double pivot = points[high].x;
+    int i = low - 1;
+
+    for (int j = low; j <= high - 1; j++) {
+        if (points[j].x <= pivot) {
+            i++;
+            swap(points[i], points[j]);
+        }
     }
-    return (p1.x < p2.x);
+    swap(points[i + 1], points[high]);
+    return (i + 1);
 }
 
 void ExactCell::quickSort(vector<exactpoint2d> &points, int low, int high) {
     if (low < high) {
-        int pivotIndex = (low + high) / 2;
-        exactpoint2d pivot = points[pivotIndex];
+        int pi = partition(points, low, high);
 
-        int i = low;
-        int j = high;
-
-        while (i <= j) {
-            while (comparePoints(points[i], pivot)) {
-                i++;
-            }
-            while (comparePoints(pivot, points[j])) {
-                j--;
-            }
-            if (i <= j) {
-                swap(points[i], points[j]);
-                i++;
-                j--;
-            }
-        }
-
-        quickSort(points, low, j);
-        quickSort(points, i, high);
+        quickSort(points, low, pi - 1);
+        quickSort(points, pi + 1, high);
     }
 }

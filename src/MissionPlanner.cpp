@@ -285,7 +285,7 @@ void MissionPlanner::build_roadmap()
     //     map->addObstacle(obstacle_list[i]);
     // }
     map->addObstacle(test_obs);
-    map->addObstacle(test_obs1);
+    // map->addObstacle(test_obs1);
 
     RCLCPP_INFO(this->get_logger(),"Map made and Obstacles included. Free space = %0.2f", map->getFreeSpace());
 

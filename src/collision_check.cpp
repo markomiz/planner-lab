@@ -40,6 +40,7 @@ bool CollisionCheck::line_line_intersect2(line l1, line l2)
         return true;
 }
 
+
 intersection_result CollisionCheck::line_line_intersect(line l1, line l2)
 {
     intersection_result result;
@@ -66,7 +67,7 @@ intersection_result CollisionCheck::line_line_intersect(line l1, line l2)
         {
             result.intersection.x = FLT_MAX;
             result.intersection.y = FLT_MAX;
-            result.intersects = false;
+            result.intersects = true;
             return result;
         }
         double d = fabs(offset2 - offset1) / ((m1 * m2) - 1);

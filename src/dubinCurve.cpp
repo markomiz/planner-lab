@@ -50,7 +50,6 @@ nav_msgs::msg::Path dubinCurve::arcs_to_path(deque<arcs> input_arcs, float delta
   final_path.header.frame_id = "map";
 
   pose2d currentPoint = input_arcs[0].a[0].start;
-
   final_path.poses.push_back(currentPoint.to_Pose());
   for (auto i = 0; i < int(input_arcs.size()); i++)
   {
@@ -155,7 +154,7 @@ dubins_params dubinCurve::calculateSinglePath( pose2d x0, pose2d x1 ){
   koptions.push_back(ksigns(1,-1,1));
   koptions.push_back(ksigns(-1,1,-1));
   // go through cases 
-  // RCLCPP_INFO(this->get_logger(),"calc single");
+  // cout << "calc single" << endl;;
   // scale
   transformedVars v = scaleToStandard(x0,x1);
   for (auto i = 0; i < 6; i++)
