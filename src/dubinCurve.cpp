@@ -52,10 +52,8 @@ nav_msgs::msg::Path dubinCurve::arcs_to_path(deque<arcs> input_arcs, float delta
   final_path.header.frame_id = "map";
   num++;
   string path_name = "path" + to_string(num) + "_points.txt";
-  ofstream myfile (path_name);
 
   pose2d currentPoint = input_arcs[0].a[0].start;
-
   final_path.poses.push_back(currentPoint.to_Pose());
   for (auto i = 0; i < int(input_arcs.size()); i++)
   {
@@ -69,12 +67,10 @@ nav_msgs::msg::Path dubinCurve::arcs_to_path(deque<arcs> input_arcs, float delta
         currentPoint = arc::next_pose(a.start, ds, a.K);
         final_path.poses.push_back(currentPoint.to_Pose());
       }
-      myfile << currentPoint.x.x << "; " << currentPoint.x.y << "; " << input_arcs[i].a[j].K << "\n"; 
       currentPoint = a.end;
       final_path.poses.push_back(currentPoint.to_Pose());
     }
   }
-  myfile.close();
   return final_path;
 }
 std::deque<arcs> dubinCurve::calculateMultiPoint(pose2d start, pose2d end, std::deque<point2d> mid_points, int n_angles) // DONE
@@ -92,6 +88,7 @@ std::deque<arcs> dubinCurve::calculateMultiPoint(pose2d start, pose2d end, std::
     float best_theta;
     for (float theta = 0.0f; theta < 2* M_PI; theta += angle_dif)
       {
+        // cout << theta << "theta" << i << endl;
         x0.theta = theta;
         
         auto solution = calculateSinglePath(x0, x1);
@@ -160,7 +157,7 @@ dubins_params dubinCurve::calculateSinglePath( pose2d x0, pose2d x1 ){
   koptions.push_back(ksigns(1,-1,1));
   koptions.push_back(ksigns(-1,1,-1));
   // go through cases 
-  // RCLCPP_INFO(this->get_logger(),"calc single");
+  // cout << "calc single" << endl;;
   // scale
   transformedVars v = scaleToStandard(x0,x1);
   for (auto i = 0; i < 6; i++)

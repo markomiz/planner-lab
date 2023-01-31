@@ -249,10 +249,10 @@ void MissionPlanner::build_roadmap()
     vec_vert.push_back(t3);
     vec_vert.push_back(t4);
 
-    point2d p1(-2.0, -2.0);
-    point2d p2(-2.0, 0.0);
-    point2d p3(-3.0, 0.0);
-    point2d p4(-3.0, -2.0);
+    point2d p1(-3.0, -3.0);
+    point2d p2(-3.0, 3.0);
+    point2d p3(3.0, 3.0);
+    point2d p4(3.0, -3.0);
     
     vector<point2d> obs_vert;
     obs_vert.push_back(p1);
@@ -260,20 +260,20 @@ void MissionPlanner::build_roadmap()
     obs_vert.push_back(p3);
     obs_vert.push_back(p4);
 
-    point2d p5(0.0, -3.0);
-    point2d p6(3.0, -3.0);
-    point2d p7(3.0, -2.0);
-    point2d p8(0.0, -2.0);
+    // point2d p5(-2.0, 3.0);
+    // point2d p6(-2.0, 5.0);
+    // point2d p7(2.0, 5.0);
+    // point2d p8(2.0, 3.0);
     
-    vector<point2d> obs_vert1;
-    obs_vert1.push_back(p5);
-    obs_vert1.push_back(p6);
-    obs_vert1.push_back(p7);
-    obs_vert1.push_back(p8);
+    // vector<point2d> obs_vert1;
+    // obs_vert1.push_back(p5);
+    // obs_vert1.push_back(p6);
+    // obs_vert1.push_back(p7);
+    // obs_vert1.push_back(p8);
 
     Polygon test_map(vec_vert, conf->getExpandSize()); 
     Polygon test_obs(obs_vert, conf->getExpandSize());
-    Polygon test_obs1(obs_vert1, conf->getExpandSize());
+    // Polygon test_obs1(obs_vert1, conf->getExpandSize());
 
     shared_ptr<Map> map (new Map(test_map));
 
@@ -283,14 +283,14 @@ void MissionPlanner::build_roadmap()
     //     map->addObstacle(obstacle_list[i]);
     // }
     map->addObstacle(test_obs);
-    map->addObstacle(test_obs1);
+    // map->addObstacle(test_obs1);
 
     RCLCPP_INFO(this->get_logger(),"Map made and Obstacles included. Free space = %0.2f", map->getFreeSpace());
 
     d->map = map;
     d->_K = conf->getK();
 
-    planner = new GeometricPRMstar(map);
+    planner = new ExactCell(map);
     planner->config = conf;
     planner->graph->config = conf;
     RCLCPP_INFO(this->get_logger(),"Planner made");
@@ -334,14 +334,14 @@ void MissionPlanner::test()
     cout << all.size() << "  e size " << endl;
     pose2d e2(5.0,5.0,0.0);
     pose2d e3(5.0,-5.0,0.0);
-    auto all2 = planner->graph->points_quad.get_nearest(e.x,1.0);
+    auto all2 = planner->graph->points_quad.get_nearest(e2.x,1.0);
     cout << all2.size() << "  e2 size " << endl;
     vector<pose2d> exits;
     exits.push_back(e2);
     exits.push_back(e3);
     beforeTime = clock();
     auto path = planner->getPath(e.x, e2.x);
-
+    cout << " -----------   " << path.size()<< endl;
     //auto path = planner->getPathManyExits(e, exits);
     afterTime = clock() - beforeTime;
     cout << "Building the path took " <<(float)afterTime/CLOCKS_PER_SEC << " seconds." << endl;
@@ -351,15 +351,28 @@ void MissionPlanner::test()
     cout << "multi generated " << endl;
     //auto traj = d->arcs_to_path(path, 0.1);
     auto traj = d->arcs_to_path(path, 0.1);
-    afterTime = clock() - beforeTime;
     
+    afterTime = clock() - beforeTime;
+
+    float comp_time = (float)afterTime/CLOCKS_PER_SEC;
+    float path_length = 0.0;
+    for (int i = 0; i < path.size(); i++)
+    {
+        path_length += path[i].L;
+    }
     ofstream myfile;
     myfile.open ("path.csv");
     for (int i = 0; i < traj.poses.size(); i++)
     {
-        //cout << traj.poses[i].pose.position.x << "," << traj.poses[i].pose.position.y << endl;
+        cout << traj.poses[i].pose.position.x << "," << traj.poses[i].pose.position.y << endl;
         myfile << traj.poses[i].pose.position.x << "," << traj.poses[i].pose.position.y << endl;
     }
+    myfile.close();
+    ofstream myfile2;
+    myfile2.open ("results.txt");
+    myfile2 << comp_time << "," << path_length<< "," << endl;
+    myfile2.close();
+    exit(0);
 }
 
 int main(int argc, char * argv[])

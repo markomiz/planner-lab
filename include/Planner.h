@@ -55,6 +55,6 @@ class ExactCell : public Planner
         // Exact Cell Decomposition
         void genRoadmap(int n, int angles);
     private:
-        bool comparePoints(exactpoint2d p1, exactpoint2d p2);
+        int partition(vector<exactpoint2d> &points, int low, int high);
         void quickSort(vector<exactpoint2d> &points, int low, int high);
 };

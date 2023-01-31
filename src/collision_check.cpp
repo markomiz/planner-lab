@@ -19,8 +19,8 @@ bool CollisionCheck::line_line_intersect2(line l1, line l2)
         float l2ymin = (l2.p_initial.y > l2.p_final.y) ? l2.p_final.y : l2.p_initial.y;
         float l2ymax = (l2.p_initial.y < l2.p_final.y) ? l2.p_final.y : l2.p_initial.y;
 
-        if (l1xmin > l2xmax || l2xmin > l2xmax) return false;
-        if (l1ymin > l2ymax || l2ymin > l2ymax) return false;
+        if (l1xmin > l2xmax || l2xmin > l1xmax) return false;
+        if (l1ymin > l2ymax || l2ymin > l1ymax) return false;
 
         point2d p1 = l1.p_initial;
         point2d p2 = l1.p_final;
@@ -39,6 +39,7 @@ bool CollisionCheck::line_line_intersect2(line l1, line l2)
 
         return true;
 }
+
 
 intersection_result CollisionCheck::line_line_intersect(line l1, line l2)
 {
@@ -66,7 +67,7 @@ intersection_result CollisionCheck::line_line_intersect(line l1, line l2)
         {
             result.intersection.x = FLT_MAX;
             result.intersection.y = FLT_MAX;
-            result.intersects = false;
+            result.intersects = true;
             return result;
         }
         double d = fabs(offset2 - offset1) / ((m1 * m2) - 1);
