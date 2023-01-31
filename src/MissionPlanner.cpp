@@ -249,10 +249,10 @@ void MissionPlanner::build_roadmap()
     vec_vert.push_back(t3);
     vec_vert.push_back(t4);
 
-    point2d p1(-2.0, -2.0);
-    point2d p2(-2.0, 0.0);
-    point2d p3(-3.0, 0.0);
-    point2d p4(-3.0, -2.0);
+    point2d p1(-2.0, -8.0);
+    point2d p2(-2.0, 2.0);
+    point2d p3(2.0,2.0);
+    point2d p4(2.0, -8.0);
     
     vector<point2d> obs_vert;
     obs_vert.push_back(p1);
@@ -260,20 +260,22 @@ void MissionPlanner::build_roadmap()
     obs_vert.push_back(p3);
     obs_vert.push_back(p4);
 
-    point2d p5(0.0, -3.0);
-    point2d p6(3.0, -3.0);
-    point2d p7(3.0, -2.0);
-    point2d p8(0.0, -2.0);
+    point2d p21(-2.0, 3.0);
+    point2d p22(-2.0, 8.0);
+    point2d p23(2.0, 8.0);
+    point2d p24(2.0, 3.0);
     
-    vector<point2d> obs_vert1;
-    obs_vert1.push_back(p5);
-    obs_vert1.push_back(p6);
-    obs_vert1.push_back(p7);
-    obs_vert1.push_back(p8);
+    vector<point2d> obs_vert2;
+    obs_vert2.push_back(p21);
+    obs_vert2.push_back(p22);
+    obs_vert2.push_back(p23);
+    obs_vert2.push_back(p24);
+
+
 
     Polygon test_map(vec_vert, conf->getExpandSize()); 
-    Polygon test_obs(obs_vert, conf->getExpandSize());
-    Polygon test_obs1(obs_vert1, conf->getExpandSize());
+    Polygon test_obs(obs_vert);
+    Polygon test_obs1(obs_vert2);
 
     shared_ptr<Map> map (new Map(test_map));
 
@@ -290,7 +292,7 @@ void MissionPlanner::build_roadmap()
     d->map = map;
     d->_K = conf->getK();
 
-    planner = new DPRMstar(map);
+    planner = new GeometricPRMstar(map);
     planner->config = conf;
     planner->graph->config = conf;
     RCLCPP_INFO(this->get_logger(),"Planner made");
@@ -331,7 +333,7 @@ void MissionPlanner::test()
     pose2d e2(5.0,5.0,0.0);
     pose2d e3(5.0,-5.0,0.0);
 
-    auto path = planner->getPath(e, e2);
+    auto path = planner->getPath(e.x, e2.x);
     cout << " -----------   " << path.size()<< endl;
     auto traj = d->arcs_to_path(path, 0.1);
 
@@ -342,12 +344,17 @@ void MissionPlanner::test()
     {
         path_length += path[i].L;
     }
-    
     ofstream myfile;
+    myfile.open("path.csv");
+    for (int i = 0; i < traj.poses.size(); i++)
+    {
+        myfile << traj.poses[i].pose.position.x << "," << traj.poses[i].pose.position.y << endl;
+    }
+    myfile.close();
     myfile.open ("results.txt");
     myfile << comp_time << "," << path_length<< "," << planner->n_connections;
     myfile.close();
-    exit(1);
+    exit(0);
 }
 
 int main(int argc, char * argv[])

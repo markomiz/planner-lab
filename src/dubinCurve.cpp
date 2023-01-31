@@ -83,7 +83,8 @@ std::deque<arcs> dubinCurve::calculateMultiPoint(pose2d start, pose2d end, std::
   float angle_dif = 2* M_PI / (float(n_angles));
   pose2d x1 = end;
   pose2d x0 = start;
-  for (auto i = mid_points.size(); i > 0; i--)
+  cout << angle_dif << " angle dif" <<endl;
+  for (int i = mid_points.size(); i > 0; i--)
   {
     
     x0.x = mid_points[i-1];
@@ -92,11 +93,12 @@ std::deque<arcs> dubinCurve::calculateMultiPoint(pose2d start, pose2d end, std::
     float best_theta;
     for (float theta = 0.0f; theta < 2* M_PI; theta += angle_dif)
       {
+        // cout << theta << " theta " << i << endl;
         x0.theta = theta;
         
         auto solution = calculateSinglePath(x0, x1);
         arcs A = arcs(x0, solution);
-        //if (map->colliding(A) ) continue;
+        if (map->colliding(A) ) continue;
         if (A.L < best_solution.L )
         {
           best_solution = A;

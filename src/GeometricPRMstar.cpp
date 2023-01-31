@@ -7,7 +7,7 @@
 void GeometricPRMstar::genRoadmap(int n, int angles)
 {
     float yprm  = sqrt(2*(1+ 1/2)) * sqrt(map->getFreeSpace()/M_PI) * config->getConnectDist();
-    int cons = 0;
+    int n_connections = 0;
     for (auto i = 0; i < n; i ++)
     {
         point2d new_point = map->halton_sample(i);
@@ -25,7 +25,7 @@ void GeometricPRMstar::genRoadmap(int n, int angles)
                 l.p_initial = nearest[x]->nodes[a]->pt.x;
                 if (!map->colliding(l)){
                     graph->add(new_node, nearest[x]->nodes[a]);
-                    cons ++;
+                    n_connections ++;
                 };
             }
         }
@@ -35,5 +35,5 @@ void GeometricPRMstar::genRoadmap(int n, int angles)
         graph->nodes.push_back(new_node);
         graph->points_quad.add_bundle(new_bundle);
     }
-    cout << cons <<" connections test \n";
+    cout << n_connections <<" connections test \n";
 };
