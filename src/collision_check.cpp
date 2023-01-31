@@ -301,9 +301,7 @@ bool CollisionCheck::arc_with_polygon(arc a, Polygon shape)
     // for each line of polygon - see if arc crosses
     for (auto j = 0; j < shape.edges.size(); j++)
     {
-        // cout << "\n intersection result \n";
         intersection_result i = line_arc_intersect(shape.edges[j], a);
-
         if (i.intersects) return true;
     }
 

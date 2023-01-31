@@ -18,7 +18,7 @@ class ConfigParams
         void setFile(std::string filename);
         void loadParams();
         void addParam(std::string name, std::string value);
-        int getPlannerType();
+        std::string getPlannerType();
         int getNumPoints();
         int getNumAngles();
         float getK();
@@ -31,7 +31,7 @@ class ConfigParams
 
     private:
         std::string _file;
-        int _planner_type = 0;
+        std::string _planner_type = "ExactCell";
         int _num_points = 1000;
         int _num_angles = 3;
         float _K = 3.0;

@@ -1,10 +1,11 @@
-planner_type: PRMstar
-num_points: 2000
-num_angles: 360
+
+planner_type: DPRMstar
+num_points: 4000
+num_angles: 8
 K: 3.0
 sample_type: Halton
-connect_distance: 1.2
+connect_distance: 1.0
 tprm_t: 0.2
 tprm_d: 0.4
-expand_distance: 0.1
-start_end_thrsh: 12.0
+expand_distance: 0.0
+start_end_thrsh: 0.8

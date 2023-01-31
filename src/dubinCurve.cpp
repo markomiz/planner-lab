@@ -20,8 +20,6 @@
 #include "Planner.h"
 #include "dubinCurve.h"
 
-int num = 0;
-
 using namespace std::chrono_literals;
 
 nav_msgs::msg::Path dubinCurve::generatePathFromDubins(pose2d start, std::vector<dubins_params> sub_paths, float delta) // DONE
@@ -50,8 +48,6 @@ nav_msgs::msg::Path dubinCurve::arcs_to_path(deque<arcs> input_arcs, float delta
 {
   nav_msgs::msg::Path final_path;
   final_path.header.frame_id = "map";
-  num++;
-  string path_name = "path" + to_string(num) + "_points.txt";
 
   pose2d currentPoint = input_arcs[0].a[0].start;
   final_path.poses.push_back(currentPoint.to_Pose());
@@ -79,7 +75,8 @@ std::deque<arcs> dubinCurve::calculateMultiPoint(pose2d start, pose2d end, std::
   float angle_dif = 2* M_PI / (float(n_angles));
   pose2d x1 = end;
   pose2d x0 = start;
-  for (auto i = mid_points.size(); i > 0; i--)
+  cout << angle_dif << " angle dif" <<endl;
+  for (int i = mid_points.size(); i > 0; i--)
   {
     
     x0.x = mid_points[i-1];
@@ -88,12 +85,12 @@ std::deque<arcs> dubinCurve::calculateMultiPoint(pose2d start, pose2d end, std::
     float best_theta;
     for (float theta = 0.0f; theta < 2* M_PI; theta += angle_dif)
       {
-        // cout << theta << "theta" << i << endl;
+        // cout << theta << " theta " << i << endl;
         x0.theta = theta;
         
         auto solution = calculateSinglePath(x0, x1);
         arcs A = arcs(x0, solution);
-        //if (map->colliding(A) ) continue;
+        if (map->colliding(A) ) continue;
         if (A.L < best_solution.L )
         {
           best_solution = A;
