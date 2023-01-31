@@ -249,10 +249,10 @@ void MissionPlanner::build_roadmap()
     vec_vert.push_back(t3);
     vec_vert.push_back(t4);
 
-    point2d p1(-2.0, -8.0);
+    point2d p1(-2.0, -5.0);
     point2d p2(-2.0, 2.0);
     point2d p3(2.0,2.0);
-    point2d p4(2.0, -8.0);
+    point2d p4(2.0, -5.0);
     
     vector<point2d> obs_vert;
     obs_vert.push_back(p1);
@@ -261,8 +261,8 @@ void MissionPlanner::build_roadmap()
     obs_vert.push_back(p4);
 
     point2d p21(-2.0, 3.0);
-    point2d p22(-2.0, 8.0);
-    point2d p23(2.0, 8.0);
+    point2d p22(-2.0, 5.0);
+    point2d p23(2.0, 5.0);
     point2d p24(2.0, 3.0);
     
     vector<point2d> obs_vert2;
@@ -292,7 +292,26 @@ void MissionPlanner::build_roadmap()
     d->map = map;
     d->_K = conf->getK();
 
-    planner = new GeometricPRMstar(map);
+    std::string planner_type = conf->getPlannerType();
+
+    cout << planner_type << " ------- WTF??!" << endl;
+    cout << conf->getPlannerType() << " ------- HOHOHO??!" << endl;
+
+    if (planner_type == "DPRMstar")
+    {
+        planner = new DPRMstar(map);
+        cout << "got planner type well";
+    }
+    else if (planner_type == "GeometricPRMstar")
+    {
+        planner = new GeometricPRMstar(map);
+        cout << "did not got planner type well";
+    }
+    else
+    {
+        planner = new ExactCell(map);
+        cout << "did not got planner type well";
+    }
     planner->config = conf;
     planner->graph->config = conf;
     RCLCPP_INFO(this->get_logger(),"Planner made");
@@ -333,7 +352,9 @@ void MissionPlanner::test()
     pose2d e2(5.0,5.0,0.0);
     pose2d e3(5.0,-5.0,0.0);
 
-    auto path = planner->getPath(e.x, e2.x);
+    deque<arcs> path;
+    if (conf->getPlannerType() == "DPRMstar") path = planner->getPath(e,e2);
+    else path = planner->getPath(e.x, e2.x);
     cout << " -----------   " << path.size()<< endl;
     auto traj = d->arcs_to_path(path, 0.1);
 

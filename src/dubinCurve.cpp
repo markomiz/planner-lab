@@ -20,8 +20,6 @@
 #include "Planner.h"
 #include "dubinCurve.h"
 
-int num = 0;
-
 using namespace std::chrono_literals;
 
 nav_msgs::msg::Path dubinCurve::generatePathFromDubins(pose2d start, std::vector<dubins_params> sub_paths, float delta) // DONE
@@ -50,9 +48,6 @@ nav_msgs::msg::Path dubinCurve::arcs_to_path(deque<arcs> input_arcs, float delta
 {
   nav_msgs::msg::Path final_path;
   final_path.header.frame_id = "map";
-  num++;
-  string path_name = "path" + to_string(num) + "_points.txt";
-  ofstream myfile (path_name);
 
   pose2d currentPoint = input_arcs[0].a[0].start;
 
@@ -69,12 +64,10 @@ nav_msgs::msg::Path dubinCurve::arcs_to_path(deque<arcs> input_arcs, float delta
         currentPoint = arc::next_pose(a.start, ds, a.K);
         final_path.poses.push_back(currentPoint.to_Pose());
       }
-      myfile << currentPoint.x.x << "; " << currentPoint.x.y << "; " << input_arcs[i].a[j].K << "\n"; 
       currentPoint = a.end;
       final_path.poses.push_back(currentPoint.to_Pose());
     }
   }
-  myfile.close();
   return final_path;
 }
 std::deque<arcs> dubinCurve::calculateMultiPoint(pose2d start, pose2d end, std::deque<point2d> mid_points, int n_angles) // DONE

@@ -9,8 +9,6 @@ void DPRMstar::genRoadmap(int n, int angles)
     cout <<" gen roadmap pluss\n";
     float yprm  = sqrt(2*(1+ 1/2)) * sqrt(map->getFreeSpace()/M_PI) * config->getConnectDist();
     //  init empty graph
-    ofstream node_file ("nodes.txt");
-
     n_connections = 0;
     float d_ang = M_PI /float(angles);
     for (auto i = 0; i < config->getNumPoints(); i ++)
@@ -56,16 +54,13 @@ void DPRMstar::genRoadmap(int n, int angles)
                     }
                 }
             };
-            node_file << new_node->pt.x.x << "; " << new_node->pt.x.y << "\n";
             new_bundle->nodes.push_back(new_node);
             new_bundle->nodes.push_back(cor);
             graph->nodes.push_back(new_node);
             graph->nodes.push_back(cor);
-            
         }
         graph->points_quad.add_bundle(new_bundle);
     }
-    node_file.close();
     cout << n_connections <<" connections test \n";
 };
 
@@ -135,15 +130,12 @@ deque<arcs> DPRMstar::getPath(pose2d start, pose2d end)
     graph->nodes.push_back(cor);
     graph->nodes.push_back(cor_e);
 
-    cout << "hiit the graph \n";
     deque<arcs> points = graph->getPathPlus(start_node, end_node);
     return points;
 }
 
 deque<arcs> DPRMstar::getPathManyExits(pose2d start, vector<pose2d> end)
 {
-    cout << "Gate 1:" << end[0].x.x << "," << end[0].x.y << "," << end[0].theta << endl;
-    cout << "Gate 2:" << end[1].x.x << "," << end[1].x.y << "," << end[1].theta << endl;
     float TRSH = config->getStartEndThrsh();
     // fisrt connect start and end to graph
     std::vector<shared_ptr<Bundle>> nearest_s = graph->in_range(start.x, TRSH); // find all nodes within a Rad
@@ -209,8 +201,7 @@ deque<arcs> DPRMstar::getPathManyExits(pose2d start, vector<pose2d> end)
 
     graph->nodes.push_back(start_node);
     graph->nodes.push_back(cor);
-    
-    cout << "hiit the graph \n";
+
     deque<arcs> points = graph->getPathPlusManyExits(start_node, end_nodes);
 
     return points;

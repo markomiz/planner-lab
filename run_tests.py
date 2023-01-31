@@ -35,12 +35,12 @@ def store_output(dist, points, angles):
                     "length": length}
     results.append(result_entry)
 
-
+replace_param("planner_type", "DPRMstar")
 for dist in [ 1.0, 1.1, 1.2]:
     replace_param("connect_distance", dist)
     for points in [250,500,1000,4000,8000]:
         replace_param("num_points", points)
-        for angles in [12,36,360]:
+        for angles in [1,2,4,8]:
             replace_param("num_angles", angles)
             os.system("ros2 run dubin mission_planner")
             store_output(dist, points, angles)
