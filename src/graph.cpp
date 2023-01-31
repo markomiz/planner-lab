@@ -8,11 +8,7 @@ Graph::Graph(int max_depth, point2d tl, point2d br) : points_quad(-6.0, 6.0, -6.
 {
 
 };
-
-
 void quad::add_bundle(shared_ptr<Bundle> point){
-
-    //cout << " add node" << endl;
     if (children.size() == 0)
     {
         points.push_back(point);
@@ -46,7 +42,6 @@ void quad::add_bundle_to_children(shared_ptr<Bundle> point) {
     {    
         if (children[i].xmin <= x && x <= children[i].xmax && children[i].ymin <= y && y <= children[i].ymax)
         {
-            // cout << " x " << x << " y " << y << endl;
             children[i].add_bundle(point);
             break;
         }
@@ -205,7 +200,6 @@ deque<point2d> Graph::getPath(shared_ptr<Node> start_node, shared_ptr<Node> end_
     int count = 0;
     while (current->parent != start_node)
     {
-        //cout << " adding " << count<< endl;
         count++;
         points.push_front(current->pt.x);
         current = current->parent;

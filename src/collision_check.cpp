@@ -19,8 +19,8 @@ bool CollisionCheck::line_line_intersect2(line l1, line l2)
         float l2ymin = (l2.p_initial.y > l2.p_final.y) ? l2.p_final.y : l2.p_initial.y;
         float l2ymax = (l2.p_initial.y < l2.p_final.y) ? l2.p_final.y : l2.p_initial.y;
 
-        if (l1xmin > l2xmax || l2xmin > l2xmax) return false;
-        if (l1ymin > l2ymax || l2ymin > l2ymax) return false;
+        if (l1xmin > l2xmax || l2xmin > l1xmax) return false;
+        if (l1ymin > l2ymax || l2ymin > l1ymax) return false;
 
         point2d p1 = l1.p_initial;
         point2d p2 = l1.p_final;
@@ -300,9 +300,7 @@ bool CollisionCheck::arc_with_polygon(arc a, Polygon shape)
     // for each line of polygon - see if arc crosses
     for (auto j = 0; j < shape.edges.size(); j++)
     {
-        // cout << "\n intersection result \n";
         intersection_result i = line_arc_intersect(shape.edges[j], a);
-
         if (i.intersects) return true;
     }
 

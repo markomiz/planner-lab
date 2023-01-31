@@ -38,24 +38,33 @@ void ConfigParams::addParam(string name, string value)
 {
 
     if (name ==  "planner_type:"){
-        _planner_type = (value == "PRMstar") ? 0 : 1;
+        if (value == "DPRMstar")
+        {
+            _planner_type = "DPRMstar";
+        }
+        else if (value == "GeometricPRMstar")
+        {
+            _planner_type = "GeometricPRMstar";
+        }
+        else
+        {
+            _planner_type = "ExactCell";
+        }
+        cout << "got planner! " << _planner_type << " \n";
     }
     else if (name ==  "num_points:"){
-        
         _num_points = stoi(value);
         cout << "got num points! " << _num_points << " \n";
     }
     else if (name ==  "num_angles:"){
-        
         _num_angles = stoi(value);
         cout << "got num angles! " << _num_angles<< " \n";
     }
     else if (name ==  "K:"){
-        
         _K = stof(value);
     }
     else if (name ==  "sample_type:"){
-        _planner_type = (value == "Uniform") ? 0 : 1;
+        _sample_type = (value == "Uniform") ? 0 : 1;
     }
     else if (name ==  "connect_distance:"){
         _connect_dist = stof(value);
@@ -72,11 +81,9 @@ void ConfigParams::addParam(string name, string value)
     }
         else if (name ==  "start_end_thrsh:"){
         _start_end_thrsh = stof(value);
-    }
-
-        
+    }   
 };
-int ConfigParams::getPlannerType()
+std::string ConfigParams::getPlannerType()
 {
     return _planner_type;
 };

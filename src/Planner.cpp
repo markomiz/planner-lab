@@ -76,7 +76,7 @@ deque<arcs> Planner::smoothWithMulti(deque<arcs> original)
         mids.push_back(original[i].a[0].start.x);
     }
     // mids.push_back(point2d(-4,-5));
-    auto p = dCurve->calculateMultiPoint(start, end, mids, 36 );
+    auto p = dCurve->calculateMultiPoint(start, end, mids, 360 );
     // deque<arcs> p2 = arcs(start, p);
     return p;
 
