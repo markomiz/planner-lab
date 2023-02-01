@@ -43,4 +43,6 @@ class dubinCurve
 
   shared_ptr<Map> map;
 
+  int file_var = 1;
+
 };

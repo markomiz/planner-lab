@@ -83,6 +83,15 @@ void MissionPlanner::subscribe_to_pose2()
     name2, qos_pose, std::bind(&MissionPlanner::pose2_topic_callback, this, _1));
 };
 
+void MissionPlanner::subscribe_to_pose3()
+{
+    string name2 = "shelfino3/transform"; 
+    RCLCPP_INFO(this->get_logger(), "Getting position info for shelfino 3");
+    rclcpp::QoS qos_pose = rclcpp::QoS(rclcpp::KeepLast(1), rmw_qos_profile_sensor_data);
+    pose3_subscription_ = this->create_subscription<geometry_msgs::msg::TransformStamped>(
+    name2, qos_pose, std::bind(&MissionPlanner::pose3_topic_callback, this, _1));
+};
+
 void MissionPlanner::publish_path(string topic, deque<arcs> way)
 {
 
@@ -143,7 +152,7 @@ void MissionPlanner::obstacle_topic_callback(const obstacles_msgs::msg::Obstacle
             // RCLCPP_INFO(this->get_logger(), "Getting obs info: x = '%0.2f', y = '%0.2f'", temp.x, temp.y);
         }
         Polygon poly(polygon_input, conf->getExpandSize());
-        // poly.expandShape(conf->getExpandSize());
+
         obstacle_list.push_back(poly);
     }
     RCLCPP_INFO(this->get_logger(), "Got obstacles information");
@@ -231,23 +240,42 @@ void MissionPlanner::pose2_topic_callback(const geometry_msgs::msg::TransformSta
 
 };
 
+void MissionPlanner::pose3_topic_callback(const geometry_msgs::msg::TransformStamped t)
+{
+    if(has_received_pose3 || !has_received_pose1 || !has_received_pose2) return;
+    
+    pose2d temp_init_pose(__FLT_MAX__,__FLT_MAX__,__FLT_MAX__);
+    tf2::Quaternion q(t.transform.rotation.x,t.transform.rotation.y,t.transform.rotation.z,t.transform.rotation.w);
+    tf2::Matrix3x3 m(q);
+    double roll, pitch, yaw;
+    m.getRPY(roll, pitch, yaw);
+    temp_init_pose.x.x  = t.transform.translation.x;
+    temp_init_pose.x.y  = t.transform.translation.y;
+    temp_init_pose.theta = yaw;
+    initial_poses.push_back(temp_init_pose);
+    has_received_pose3 = true;
+    RCLCPP_INFO(this->get_logger(), "Got initial pose 3");
+    getPaths_and_Publish();
+
+};
+
 /*
 ----- Function for calculating paths and roadmap and publish -----------
 */
 
 void MissionPlanner::build_roadmap()
 {
-    // shared_ptr<Map> map (new Map(map_poly));
-    point2d t1(-5.0,-5.0);
-    point2d t2(-5.0,5.0);
-    point2d t3(5.0,5.0);
-    point2d t4(5.0,-5.0);
+    shared_ptr<Map> map (new Map(map_poly));
+    // point2d t1(-5.0,-5.0);
+    // point2d t2(-5.0,5.0);
+    // point2d t3(5.0,5.0);
+    // point2d t4(5.0,-5.0);
     
-    vector<point2d> vec_vert;
-    vec_vert.push_back(t1);
-    vec_vert.push_back(t2);
-    vec_vert.push_back(t3);
-    vec_vert.push_back(t4);
+    // vector<point2d> vec_vert;
+    // vec_vert.push_back(t1);
+    // vec_vert.push_back(t2);
+    // vec_vert.push_back(t3);
+    // vec_vert.push_back(t4);
 
     // point2d p1(-1.0, -5.0);
     // point2d p2(-1.0, 2.0);
@@ -273,35 +301,36 @@ void MissionPlanner::build_roadmap()
 
     
 
-    Polygon test_map(vec_vert); 
+    // Polygon test_map(vec_vert); 
     // Polygon test_obs(obs_vert);
     // Polygon test_obs1(obs_vert2);
-
-    shared_ptr<Map> map (new Map(test_map));
-    for (int i = -4; i < 4; i+=3)
-    {
-        for (int j = -5; j < 4; j+=3)
-        {
-            point2d p1(i,  j);
-            point2d p2(i+1, j);
-            point2d p3(i+1,j+1);
-            point2d p4(i, j+1);
-            vector<point2d> check_vert;
-            check_vert.push_back(p1);
-            check_vert.push_back(p2);
-            check_vert.push_back(p3);
-            check_vert.push_back(p4);
-            Polygon check(check_vert, 0.0); 
-            map->addObstacle(check);
-        }
-    }
-
-    // for (auto i = 0; i < obstacle_list.size(); i++)
-    // {
-    //     map->addObstacle(obstacle_list[i]);
-    // }
     // map->addObstacle(test_obs);
     // map->addObstacle(test_obs1);
+
+    // shared_ptr<Map> map (new Map(test_map));
+    // for (int i = -4; i < 4; i+=3)
+    // {
+    //     for (int j = -5; j < 4; j+=3)
+    //     {
+    //         point2d p1(i,  j);
+    //         point2d p2(i+1, j);
+    //         point2d p3(i+1,j+1);
+    //         point2d p4(i, j+1);
+    //         vector<point2d> check_vert;
+    //         check_vert.push_back(p1);
+    //         check_vert.push_back(p2);
+    //         check_vert.push_back(p3);
+    //         check_vert.push_back(p4);
+    //         Polygon check(check_vert, 0.0); 
+    //         map->addObstacle(check);
+    //     }
+    // }
+
+    for (auto i = 0; i < obstacle_list.size(); i++)
+    {
+        map->addObstacle(obstacle_list[i]);
+    }
+
 
     RCLCPP_INFO(this->get_logger(),"Map made and Obstacles included. Free space = %0.2f", map->getFreeSpace());
 
@@ -334,7 +363,7 @@ void MissionPlanner::build_roadmap()
 void MissionPlanner::getPaths_and_Publish()
 {
     if (path_done) return;
-    if(has_received_map && has_received_gate && has_received_obs && has_received_pose1 && has_received_pose2)
+    if(has_received_map && has_received_gate && has_received_obs && has_received_pose1 && has_received_pose2 && has_received_pose3)
     {        
         RCLCPP_INFO(this->get_logger(), "Got all information from simulation");
         RCLCPP_INFO(this->get_logger(), "Calculating Roadmap");
@@ -342,12 +371,14 @@ void MissionPlanner::getPaths_and_Publish()
         build_roadmap();
         clock_t afterTime = clock() - beforeTime;
         cout << "Building the roadmap took " <<(float)afterTime/CLOCKS_PER_SEC << " seconds." << endl;        
+
         for (auto rob = 1; rob <= initial_poses.size(); rob++)
         {
             pose2d gate(2.5, -5, -M_PI);
+
             cout << "Pose is: " << initial_poses[rob-1].x.x << ", " << initial_poses[rob-1].x.y << ", " << initial_poses[rob-1].theta << endl;
+            // deque<arcs> path = planner->getPathManyExits(initial_poses[rob-1], gates);
             deque<arcs> path = planner->getPath(initial_poses[rob-1], gates[0]);
-            // deque<arcs> path = planner->getPath(initial_poses[rob-1], gate);
             publish_path("shelfino" + to_string(rob) + "/follow_path", path);
         }
         path_done = true;

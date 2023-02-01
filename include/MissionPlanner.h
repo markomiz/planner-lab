@@ -54,6 +54,7 @@ class MissionPlanner : public rclcpp::Node
         rclcpp::Subscription<geometry_msgs::msg::PoseArray>::SharedPtr gate_subscription_;
         rclcpp::Subscription<geometry_msgs::msg::TransformStamped>::SharedPtr pose1_subscription_;
         rclcpp::Subscription<geometry_msgs::msg::TransformStamped>::SharedPtr pose2_subscription_;
+        rclcpp::Subscription<geometry_msgs::msg::TransformStamped>::SharedPtr pose3_subscription_;
 
         rclcpp::TimerBase::SharedPtr timer_;
         std::shared_ptr<ConfigParams> conf;
@@ -64,6 +65,7 @@ class MissionPlanner : public rclcpp::Node
         bool has_received_obs = false;
         bool has_received_pose1 = false;
         bool has_received_pose2 = false;
+        bool has_received_pose3 = false;
 
         
         //Subscribers
@@ -72,6 +74,7 @@ class MissionPlanner : public rclcpp::Node
         void gate_topic_callback(const geometry_msgs::msg::PoseArray outline_message);
         void pose1_topic_callback(const geometry_msgs::msg::TransformStamped outline_message);
         void pose2_topic_callback(const geometry_msgs::msg::TransformStamped outline_message);
+        void pose3_topic_callback(const geometry_msgs::msg::TransformStamped outline_message);
 
         void build_roadmap();
 
@@ -82,6 +85,7 @@ class MissionPlanner : public rclcpp::Node
         void subscribe_to_gate();
         void subscribe_to_pose1();
         void subscribe_to_pose2();
+        void subscribe_to_pose3();
 
         void print_message()
         {
@@ -99,11 +103,12 @@ class MissionPlanner : public rclcpp::Node
             path_done = false;
             conf = std::shared_ptr<ConfigParams>(new ConfigParams("config.txt"));
             d = std::shared_ptr<dubinCurve>(new dubinCurve());
-            // subscribe_to_map();
-            // subscribe_to_obstacles();
-            // subscribe_to_gate();
-            // subscribe_to_pose1();
-            // subscribe_to_pose2();
-            test();
+            subscribe_to_map();
+            subscribe_to_obstacles();
+            subscribe_to_gate();
+            subscribe_to_pose1();
+            subscribe_to_pose2();
+            subscribe_to_pose3();
+            // test();
         }       
 };

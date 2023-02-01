@@ -179,7 +179,11 @@ bool Map::colliding(line l)
         // second check more detailed check if rough pass not passing
         for (auto j = 0; j < obstacles[i].edges.size(); j++)
         {
-            if (CollisionCheck::line_line_intersect(obstacles[i].edges[j], l).intersects)
+            // if (CollisionCheck::line_line_intersect(obstacles[i].edges[j], l).intersects)
+            // {
+            //     return true;
+            // } 
+            if (CollisionCheck::line_line_intersect2(obstacles[i].edges[j], l))
             {
                 return true;
             } 

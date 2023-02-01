@@ -2,8 +2,6 @@
 #include "geometry.h"
 #include <memory>
 
-class Map;
-
 class Polygon
 {
     public:
@@ -29,7 +27,6 @@ class Polygon
         void processEdges();
         void expandShape(float size);
         void getMinMax();
-        // Map toMap();
         point2d center;
         float radius;
         float area = 0;
