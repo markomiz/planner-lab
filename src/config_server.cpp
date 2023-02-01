@@ -24,7 +24,6 @@ void ConfigParams::loadParams()
     string str; 
     while (getline(file, str))
     {
-        
         vector<string> results;
         boost::split(results, str, [](char c){return c == ' ';});
         if (results.size() < 2) continue;

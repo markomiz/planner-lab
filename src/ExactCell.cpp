@@ -57,7 +57,7 @@ void ExactCell::genRoadmap(int not_used, int angles_not_used)
         }
         if (self_intersections < 2)
         {
-            cout << "First check: " << points[i].x << "; " << points[i].y << endl;
+            // cout << "First check: " << points[i].x << "; " << points[i].y << endl;
             float dist = __FLT_MAX__;
             point2d node(points[i].x, points[i].y);
             for (int j = 0; j < obstacles.size(); j++)
@@ -67,7 +67,7 @@ void ExactCell::genRoadmap(int not_used, int angles_not_used)
                 {
                     if (CollisionCheck::line_line_intersect(obstacles[j].edges[edge_num], l_down).intersects)
                     {
-                        cout << "Inter check: " << CollisionCheck::line_line_intersect(obstacles[j].edges[edge_num], l_down).intersection.x << "; " << CollisionCheck::line_line_intersect(obstacles[j].edges[edge_num], l_down).intersection.y << endl;
+                        // cout << "Inter check: " << CollisionCheck::line_line_intersect(obstacles[j].edges[edge_num], l_down).intersection.x << "; " << CollisionCheck::line_line_intersect(obstacles[j].edges[edge_num], l_down).intersection.y << endl;
                         double new_dist = (CollisionCheck::line_line_intersect(obstacles[j].edges[edge_num], l_down).intersection - temp_pt).norm();
                         if (new_dist < dist) 
                         {
@@ -78,7 +78,11 @@ void ExactCell::genRoadmap(int not_used, int angles_not_used)
                 
             }
             if (l_down.length() == 0) {}
-            else if (dist == __FLT_MAX__) node.y -= (node.y-miny)/2;
+            else if (dist == __FLT_MAX__)
+            {
+                node.y -= (node.y-miny)/2;
+                // cout << "did the math"<< node.x << ";"<<node.y<<endl;;
+            }
             else node.y -= dist/2;
             roadmap_points.push_back(node);
         }
@@ -93,7 +97,7 @@ void ExactCell::genRoadmap(int not_used, int angles_not_used)
         }
         if (self_intersections < 2)
         {
-            cout << "Second check: " << points[i].x << "; " << points[i].y << endl;
+            // cout << "Second check: " << points[i].x << "; " << points[i].y << endl;
             float dist = __FLT_MAX__;
             point2d node(points[i].x, points[i].y);
             for (int j = 0; j < obstacles.size(); j++)
@@ -103,7 +107,7 @@ void ExactCell::genRoadmap(int not_used, int angles_not_used)
                 {
                     if (CollisionCheck::line_line_intersect(obstacles[j].edges[edge_num], l_up).intersects)
                     {
-                        cout << "Inter check: " << CollisionCheck::line_line_intersect(obstacles[j].edges[edge_num], l_up).intersection.x << "; " << CollisionCheck::line_line_intersect(obstacles[j].edges[edge_num], l_up).intersection.y << endl;
+                        // cout << "Inter check: " << CollisionCheck::line_line_intersect(obstacles[j].edges[edge_num], l_up).intersection.x << "; " << CollisionCheck::line_line_intersect(obstacles[j].edges[edge_num], l_up).intersection.y << endl;
                         double new_dist = (CollisionCheck::line_line_intersect(obstacles[j].edges[edge_num], l_up).intersection - temp_pt).norm();
                         if (new_dist < dist) 
                         {
@@ -126,7 +130,7 @@ void ExactCell::genRoadmap(int not_used, int angles_not_used)
 
     
     ofstream node_file ("nodes.txt");
-    int cons = 0;
+    n_connections = 0;
 
     for (auto i = 0; i < roadmap_points.size(); i++)
     {
@@ -144,19 +148,16 @@ void ExactCell::genRoadmap(int not_used, int angles_not_used)
             line l(new_pose.x, graph->nodes[j]->pt.x);
             if (!map->colliding(l))
             {
+                cout << graph->nodes[j]->pt.x.x << "; " << graph->nodes[j]->pt.x.y << endl;
                 graph->add(new_node, graph->nodes[j]);
-                cons ++;
-            } else cout << "collided" << endl;
+                n_connections++;
+            } 
+            // else cout << "collided" << endl;
         }
         graph->points_quad.add_bundle(new_bundle);
-        
-        for (int numb = 0; numb < graph->nodes[i]->connected.size(); numb++)
-        {
-            cout << graph->nodes[i]->connected[numb].node->pt.x.x << "; " << graph->nodes[i]->connected[numb].node->pt.x.y << endl;
-        }    
     }
     node_file.close();
-    cout << cons <<" connections test \n";
+    cout << n_connections <<" connections test \n";
 };
 
 int ExactCell::partition(vector<exactpoint2d> &points, int low, int high) {

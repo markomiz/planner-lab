@@ -11,11 +11,11 @@ void DPRMstar::genRoadmap(int n, int angles)
     //  init empty graph
     n_connections = 0;
     float d_ang = M_PI /float(angles);
+    int halton_index = 0;
     for (auto i = 0; i < config->getNumPoints(); i ++)
     {
-
         point2d new_p;
-        new_p = map->halton_sample(i);
+        new_p = map->halton_sample(halton_index);
         //if (map->colliding(new_p)) continue;
         float rad = yprm*sqrt(log(i+1)/(i+1));
         pose2d new_pose;

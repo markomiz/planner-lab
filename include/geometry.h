@@ -53,7 +53,7 @@ struct exactpoint2d : public point2d {
 struct pose2d 
 {
   point2d x;
-  float theta;
+  float theta = 0;
   pose2d(){};
   pose2d(float xx,float yy,float th)
   {

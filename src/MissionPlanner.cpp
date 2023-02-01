@@ -249,42 +249,58 @@ void MissionPlanner::build_roadmap()
     vec_vert.push_back(t3);
     vec_vert.push_back(t4);
 
-    point2d p1(-2.0, -5.0);
-    point2d p2(-2.0, 2.0);
-    point2d p3(2.0,2.0);
-    point2d p4(2.0, -5.0);
+    // point2d p1(-1.0, -5.0);
+    // point2d p2(-1.0, 2.0);
+    // point2d p3(1.0, 2.0);
+    // point2d p4(1.0, -5.0);
     
-    vector<point2d> obs_vert;
-    obs_vert.push_back(p1);
-    obs_vert.push_back(p2);
-    obs_vert.push_back(p3);
-    obs_vert.push_back(p4);
+    // vector<point2d> obs_vert;
+    // obs_vert.push_back(p1);
+    // obs_vert.push_back(p2);
+    // obs_vert.push_back(p3);
+    // obs_vert.push_back(p4);
 
-    point2d p21(-2.0, 3.0);
-    point2d p22(-2.0, 5.0);
-    point2d p23(2.0, 5.0);
-    point2d p24(2.0, 3.0);
+    // point2d p21(-2.0, 3.0);
+    // point2d p22(-2.0, 5.0);
+    // point2d p23(2.0, 5.0);
+    // point2d p24(2.0, 3.0);
     
-    vector<point2d> obs_vert2;
-    obs_vert2.push_back(p21);
-    obs_vert2.push_back(p22);
-    obs_vert2.push_back(p23);
-    obs_vert2.push_back(p24);
+    // vector<point2d> obs_vert2;
+    // obs_vert2.push_back(p21);
+    // obs_vert2.push_back(p22);
+    // obs_vert2.push_back(p23);
+    // obs_vert2.push_back(p24);
 
+    
 
-
-    Polygon test_map(vec_vert, conf->getExpandSize()); 
-    Polygon test_obs(obs_vert);
-    Polygon test_obs1(obs_vert2);
+    Polygon test_map(vec_vert); 
+    // Polygon test_obs(obs_vert);
+    // Polygon test_obs1(obs_vert2);
 
     shared_ptr<Map> map (new Map(test_map));
-
+    for (int i = -4; i < 4; i+=3)
+    {
+        for (int j = -5; j < 4; j+=3)
+        {
+            point2d p1(i,  j);
+            point2d p2(i+1, j);
+            point2d p3(i+1,j+1);
+            point2d p4(i, j+1);
+            vector<point2d> check_vert;
+            check_vert.push_back(p1);
+            check_vert.push_back(p2);
+            check_vert.push_back(p3);
+            check_vert.push_back(p4);
+            Polygon check(check_vert, 0.0); 
+            map->addObstacle(check);
+        }
+    }
 
     // for (auto i = 0; i < obstacle_list.size(); i++)
     // {
     //     map->addObstacle(obstacle_list[i]);
     // }
-    map->addObstacle(test_obs);
+    // map->addObstacle(test_obs);
     // map->addObstacle(test_obs1);
 
     RCLCPP_INFO(this->get_logger(),"Map made and Obstacles included. Free space = %0.2f", map->getFreeSpace());
@@ -294,23 +310,17 @@ void MissionPlanner::build_roadmap()
 
     std::string planner_type = conf->getPlannerType();
 
-    cout << planner_type << " ------- WTF??!" << endl;
-    cout << conf->getPlannerType() << " ------- HOHOHO??!" << endl;
-
     if (planner_type == "DPRMstar")
     {
         planner = new DPRMstar(map);
-        cout << "got planner type well";
     }
     else if (planner_type == "GeometricPRMstar")
     {
         planner = new GeometricPRMstar(map);
-        cout << "did not got planner type well";
     }
     else
     {
         planner = new ExactCell(map);
-        cout << "did not got planner type well";
     }
     planner->config = conf;
     planner->graph->config = conf;
@@ -348,9 +358,9 @@ void MissionPlanner::test()
 {
     clock_t beforeTime = clock();
     build_roadmap();
-    pose2d e(-5.0,-5.0,0.0);
-    pose2d e2(5.0,5.0,0.0);
-    pose2d e3(5.0,-5.0,0.0);
+    pose2d e(-4.9,-4.9,0.0);
+    pose2d e2(4.9,4.9,0.0);
+    pose2d e3(4.9,-4.9,0.0);
 
     deque<arcs> path;
     if (conf->getPlannerType() == "DPRMstar") path = planner->getPath(e,e2);
