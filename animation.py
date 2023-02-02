@@ -80,7 +80,13 @@ def animate(i):
     line1.set_data(ax1, ay1)
     line2.set_data(ax2, ay2)
     line3.set_data(ax3, ay3)
+    print(ax1)
     return line1, line2, line3
+anim = FuncAnimation(fig, animate, init_func = init, frames = 214, interval = 20, blit = True)
 
-anim = FuncAnimation(fig, animate, init_func = init, frames = 200, interval = 20, blit = True)
 plt.show()
+
+f = r"/home/ricardo/ros2_ws/src/dubin/animation1.gif" 
+writergif = animation.PillowWriter(fps=30) 
+anim.save(f, writer=writergif)
+

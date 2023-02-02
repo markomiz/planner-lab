@@ -129,7 +129,7 @@ bool CollisionCheck::line_arc_intersect(line l1, arc arc1)
     d.y = k* ab.y;
     d = d + l1.p_initial;
 
-    point2d dc = d - arc1.center;
+    point2d dc = arc1.center - d;
     float dcnorm = dc.norm();
     if (dcnorm > arc1.radius) return false; // too far to intersect
 
@@ -153,17 +153,17 @@ bool CollisionCheck::line_arc_intersect(line l1, arc arc1)
 
     if (!int1on && !int2on) return false;
 
-    point2d cS = arc1.center - arc1.start.x;
-    point2d cF = arc1.center - arc1.end.x;
+    point2d cS =  arc1.start.x - arc1.center;
+    point2d cF = arc1.end.x - arc1.center;
 
     float thS = atan2(cS.y, cS.x); 
     float thF = atan2(cF.y, cF.x);
 
-    point2d vint1 = arc1.center - int1;
-    point2d vint2 = arc1.center - int2;
+    point2d cint1 = int1 - arc1.center;
+    point2d cint2 = int2 - arc1.center;
 
-    float thint1 = atan2(vint1.y,vint1.x);
-    float thint2 = atan2(vint2.y,vint2.x);
+    float thint1 = atan2(cint1.y,cint1.x);
+    float thint2 = atan2(cint2.y,cint2.x);
 
     if (arc1.K > 0 && thS > thF)
     {
@@ -185,7 +185,6 @@ bool CollisionCheck::line_arc_intersect(line l1, arc arc1)
         if (thint1 <= thS || thint1 >= thF && int1on) return true;
         if (thint2 <= thS || thint2 >= thF && int2on) return true;
     }
-
     return false;
 }
 /// @brief determines if a point is inside or outside a polygon using the infinite line method. Also works for non-convex case.
