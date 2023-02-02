@@ -6,6 +6,11 @@
 float CollisionCheck::distance(point2d p1, point2d p2){
     return (p2 - p1).norm();
 }
+
+/// @brief Determines if two lines intersect efficiently, the triangles method
+/// @param l1 first line to consider
+/// @param l2 second line to consider
+/// @return true if intersect, false if not
 bool CollisionCheck::line_line_intersect2(line l1, line l2)
 {
 
@@ -40,7 +45,10 @@ bool CollisionCheck::line_line_intersect2(line l1, line l2)
         return true;
 }
 
-
+/// @brief Determines if two lines intersect also returning the intersection point. Required for exact cell decomposition
+/// @param l1 first line to consider
+/// @param l2 second line to consider
+/// @return intersection result object, containing a bool (true if intersect, false if not) and the intersection point
 intersection_result CollisionCheck::line_line_intersect(line l1, line l2)
 {
     intersection_result result;
@@ -105,172 +113,136 @@ intersection_result CollisionCheck::line_line_intersect(line l1, line l2)
     }
 }
 
+/// @brief Determine if a line and a circular arc intersect
+/// @param l1 line to consider
+/// @param arc1 arc to consider
+/// @return intersection result object, containing a bool (true if intersect, false if not) and the intersection point 
+
 intersection_result CollisionCheck::line_arc_intersect(line l1, arc arc1)
 {
     intersection_result result;
-    point2d line_vector;
-    line_vector.x = l1.p_final.x-l1.p_initial.x;
-    line_vector.y = l1.p_final.y-l1.p_initial.y;
-    
-    point2d center2initial;
-    
-    center2initial.x = l1.p_initial.x - arc1.center.x;
-    center2initial.y = l1.p_initial.y - arc1.center.y;
-    float angle_start;
-    float angle_end;
-    if (arc1.K < 0)
-    {
-        angle_end = atan2(arc1.start.x.y-arc1.center.y, arc1.start.x.x-arc1.center.x);
-        angle_start = atan2(arc1.end.x.y-arc1.center.y, arc1.end.x.x-arc1.center.x);
-    }
-    else
-    {
-        angle_start = atan2(arc1.start.x.y-arc1.center.y, arc1.start.x.x-arc1.center.x);
-        angle_end = atan2(arc1.end.x.y-arc1.center.y, arc1.end.x.x-arc1.center.x);
-    }
+    point2d ab = l1.p_final - l1.p_initial; // line as vector
+    point2d ac = arc1.center - l1.p_initial; // line from start to center
 
-    float a = line_vector.x*line_vector.x + line_vector.y*line_vector.y;
-    float b = 2*(center2initial.x*line_vector.x + center2initial.y*line_vector.y);
-    float c = (center2initial.x*center2initial.x + center2initial.y*center2initial.y) - arc1.radius*arc1.radius;
-    
-    float discriminant = b*b-4*a*c;
-    
-    if(discriminant < 0)
-    {
-        // no intersection
+    point2d d;
+    float k = (ac.x*ab.x + ac.y*ab.y) / (ab.x*ab.x + ab.y*ab.y) ;
+    d.x = k* ab.x;
+    d.y = k* ab.y;
+    d = d + l1.p_initial;
+
+    point2d dc = d - arc1.center;
+    float dcnorm = dc.norm();
+    if (dcnorm > arc1.radius)
+    { 
         result.intersects = false;
+        return result;
     }
-    else if (discriminant == 0)
+    point2d ab_unit = ab; // unit vector in the direction of ab
+    float ab_norm = ab.norm();
+    ab_unit.x /= ab_norm;
+    ab_unit.y /= ab_norm;
+
+    float theta = acos(dcnorm/arc1.radius);
+    float l = arc1.radius * sin(theta); // length of line from D to intersection
+
+    point2d dif = ab_unit;
+    dif.x *= l;
+    dif.y *= l;
+
+    point2d int1 = d + dif; // one intersection point
+    point2d int2 = d - dif; // other intersection point
+
+    bool int1on = (int1 - l1.p_initial).norm() < ab_norm;
+    bool int2on = (int2 - l1.p_initial).norm() < ab_norm;
+
+    if (int1on && int2on)
+    { 
+        result.intersects = false;
+        return result;
+    }
+
+    point2d cS = arc1.center - l1.p_initial;
+    point2d cF = arc1.center - l1.p_final;
+
+    float thS = atan2(cS.y, cS.x) + M_PI; 
+    float thF = atan2(cF.y, cF.x) + M_PI;
+
+    float thint1 = atan2(int1.y,int1.x) + M_PI;
+    float thint2 = atan2(int2.y,int2.x) + M_PI;
+
+    if (thS < thF)
     {
-        float t = -b/(2*a);
-        if (t >= 0 && t <= 1)
+        thF -= thS;
+        thint1 -= thS;
+        thint2 -= thS;
+        if (arc1.K > 0)
         {
-            result.intersection.x = l1.p_initial.x + t*line_vector.x;
-            result.intersection.y = l1.p_initial.y + t*line_vector.y;
-            float angle = atan2(result.intersection.y - arc1.center.y, result.intersection.x - arc1.center.x);
-            if (angle_start < angle_end)
+            if (thint1 < thF  && thint1 > 0 && int1on)
             {
-                if (angle >= angle_start && angle <= angle_end)
-                {
-                    result.intersects = true;
-                }
-                else
-                {
-                    result.intersects = false;
-                }
-            } else
-            {
-                if ((angle >= angle_start && angle <= M_PI) || (angle >= - M_PI && angle <= angle_end))
-                {
-                    result.intersects = true;
-                }
-                else
-                {
-                    result.intersects = false;
-                }
+                result.intersects = true;
+                return result;
             }
-        }
-    }
-    else
-    {   
-        discriminant = sqrt(discriminant);
-        float t1 = (-b - discriminant)/(2*a);
-        float t2 = (-b + discriminant)/(2*a);
-
-        if((t1 >= 0 && t1 <= 1))
-        {
-            intersection_result temp1;
-            temp1.intersection.x = l1.p_initial.x + t1*line_vector.x;
-            temp1.intersection.y = l1.p_initial.y + t1*line_vector.y;
-
-            float angle1 = atan2(temp1.intersection.y - arc1.center.y, temp1.intersection.x - arc1.center.x);
-            if((t2 >= 0 && t2 <= 1))
+            if (thint2 < thF && thint2 > 0 && int2on)
             {
-                intersection_result temp2;
-                temp2.intersection.x = l1.p_initial.x + t2*line_vector.x;
-                temp2.intersection.y = l1.p_initial.y + t2*line_vector.y;
-                float angle2 = atan2(temp2.intersection.y - arc1.center.y, temp2.intersection.x - arc1.center.x);
-                if (angle_start < angle_end)
-                {
-                    if ((angle1 >= angle_start && angle1 <= angle_end)||(angle2 >= angle_start && angle2 <= angle_end))
-                    {
-                        result.intersects = true;
-                    }
-                    else
-                    {
-                        result.intersects = false;
-                    }
-                } else
-                {
-                    if (((angle1 >= angle_start && angle1 <= M_PI) || (angle1 >= - M_PI && angle1 <= angle_end))||((angle2 >= angle_start && angle2 <= M_PI) || (angle2 >= - M_PI && angle2 <= angle_end)))
-                    {
-                        result.intersects = true;
-                    }
-                    else
-                    {
-                        result.intersects = false;
-                    }
-                }
-            }
-            
-            if (angle_start < angle_end)
-            {
-                if ((angle1 >= angle_start && angle1 <= angle_end))
-                {
-                    result.intersects = true;
-                }
-                else
-                {
-                    result.intersects = false;
-                }
-            } else
-            {
-                if (((angle1 >= angle_start && angle1 <= M_PI) || (angle1 >= - M_PI && angle1 <= angle_end)))
-                {
-                    result.intersects = true;
-                }
-                else
-                {
-                    result.intersects = false;
-                }
-            }
-        }
-        else if(t2 >= 0 && t2 <= 1)
-        {
-            intersection_result temp2;
-            temp2.intersection.x = l1.p_initial.x + t2*line_vector.x;
-            temp2.intersection.y = l1.p_initial.y + t2*line_vector.y;
-            float angle2 = atan2(temp2.intersection.y - arc1.center.y, temp2.intersection.x - arc1.center.x);
-            if (angle_start < angle_end)
-            {
-                if (angle2 >= angle_start && angle2 <= angle_end)
-                {
-                    result.intersects = true;
-                }
-                else
-                {
-                    result.intersects = false;
-                }
-            } else
-            {
-                if (((angle2 >= angle_start && angle2 <= M_PI) || (angle2 >= - M_PI && angle2 <= angle_end)))
-                {
-                    result.intersects = true;
-                }
-                else
-                {
-                    result.intersects = false;
-                }
+                result.intersects = true;
+                return result;
             }
         }
         else
         {
-            result.intersects = false;
+            if (thint1 > thF && thint1 < 2* M_PI && int1on)
+            {
+                result.intersects = true;
+                return result;
+            }
+            if (thint2 > thF && thint1 < 2* M_PI && int2on)
+            {
+                result.intersects = true;
+                return result;
+            }
         }
     }
+    else 
+    {
+        thS -= thF;
+        thint1 -=thF;
+        thint2 -= thF;
+
+        if (arc1.K > 0)
+        {
+            if (thint1 > thS  && thint1 < 2* M_PI && int1on)
+            {
+                result.intersects = true;
+                return result;
+            }
+            if (thint2 > thS && thint2 < 2*M_PI && int2on)
+            {
+                result.intersects = true;
+                return result;
+            }
+        }
+        else
+        {
+            if (thint1 < thS && thint1 > 0 && int1on)
+            {
+                result.intersects = true;
+                return result;
+            }
+            if (thint2 < thS && thint1 > 0 && int2on)
+            {
+                result.intersects = true;
+                return result;
+            }
+        }
+    }
+    result.intersects = false;
     return result;
 }
 
+/// @brief determines if a point is inside or outside a polygon using the infinite line method. Also works for non-convex case.
+/// @param p 
+/// @param shape 
+/// @return true if point is inside, false if it isnt
 bool CollisionCheck::point_in_polygon(point2d p, Polygon shape)
 {
     // for each line of polygon - see if line from point crosses
@@ -296,6 +268,11 @@ bool CollisionCheck::point_in_polygon(point2d p, Polygon shape)
     return true;
 };
 
+
+/// @brief Uses arc line intersection function to calculate if an arc intersects with a polygon
+/// @param a arc input
+/// @param shape polygon to consider
+/// @return true if intersects, false if not
 bool CollisionCheck::arc_with_polygon(arc a, Polygon shape)
 {
     // for each line of polygon - see if arc crosses
@@ -307,6 +284,7 @@ bool CollisionCheck::arc_with_polygon(arc a, Polygon shape)
 
     return false;
 };
+
 
 float CollisionCheck::point_lineseg_dist(point2d p, line l)
 {

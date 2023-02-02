@@ -96,6 +96,15 @@ void MissionPlanner::publish_path(string topic, deque<arcs> way)
 {
 
     nav_msgs::msg::Path path = d->arcs_to_path(way, 0.05);
+    ofstream myfile;
+    string file_name =  "shelfino" + to_string(filenum) + ".csv";
+    filenum++;
+    myfile.open(file_name);
+    for (int i = 0; i < path.poses.size(); i++)
+    {
+        myfile << path.poses[i].pose.position.x << "," << path.poses[i].pose.position.y << endl;
+    }
+    myfile.close();
     RCLCPP_INFO(this->get_logger(),"Path %s found", topic.c_str());
     // Publish results
     RCLCPP_INFO(this->get_logger(), "Publishing path");
@@ -265,49 +274,48 @@ void MissionPlanner::pose3_topic_callback(const geometry_msgs::msg::TransformSta
 
 void MissionPlanner::build_roadmap()
 {
-    shared_ptr<Map> map (new Map(map_poly));
-    // point2d t1(-5.0,-5.0);
-    // point2d t2(-5.0,5.0);
-    // point2d t3(5.0,5.0);
-    // point2d t4(5.0,-5.0);
+    // shared_ptr<Map> map (new Map(map_poly));
+    point2d t1(-5.0,-5.0);
+    point2d t2(-5.0,5.0);
+    point2d t3(5.0,5.0);
+    point2d t4(5.0,-5.0);
     
-    // vector<point2d> vec_vert;
-    // vec_vert.push_back(t1);
-    // vec_vert.push_back(t2);
-    // vec_vert.push_back(t3);
-    // vec_vert.push_back(t4);
+    vector<point2d> vec_vert;
+    vec_vert.push_back(t1);
+    vec_vert.push_back(t2);
+    vec_vert.push_back(t3);
+    vec_vert.push_back(t4);
 
-    // point2d p1(-1.0, -5.0);
-    // point2d p2(-1.0, 2.0);
-    // point2d p3(1.0, 2.0);
-    // point2d p4(1.0, -5.0);
+    point2d p1(-1.0, -5.0);
+    point2d p2(-1.0, 2.0);
+    point2d p3(1.0, 2.0);
+    point2d p4(1.0, -5.0);
     
-    // vector<point2d> obs_vert;
-    // obs_vert.push_back(p1);
-    // obs_vert.push_back(p2);
-    // obs_vert.push_back(p3);
-    // obs_vert.push_back(p4);
+    vector<point2d> obs_vert;
+    obs_vert.push_back(p1);
+    obs_vert.push_back(p2);
+    obs_vert.push_back(p3);
+    obs_vert.push_back(p4);
 
-    // point2d p21(-2.0, 3.0);
-    // point2d p22(-2.0, 5.0);
-    // point2d p23(2.0, 5.0);
-    // point2d p24(2.0, 3.0);
+    point2d p21(-2.0, 3.0);
+    point2d p22(-2.0, 5.0);
+    point2d p23(2.0, 5.0);
+    point2d p24(2.0, 3.0);
     
-    // vector<point2d> obs_vert2;
-    // obs_vert2.push_back(p21);
-    // obs_vert2.push_back(p22);
-    // obs_vert2.push_back(p23);
-    // obs_vert2.push_back(p24);
+    vector<point2d> obs_vert2;
+    obs_vert2.push_back(p21);
+    obs_vert2.push_back(p22);
+    obs_vert2.push_back(p23);
+    obs_vert2.push_back(p24);   
 
+    Polygon test_map(vec_vert); 
+    Polygon test_obs(obs_vert);
+    Polygon test_obs1(obs_vert2);
+    shared_ptr<Map> map (new Map(test_map));
+    map->addObstacle(test_obs);
+    map->addObstacle(test_obs1);
     
 
-    // Polygon test_map(vec_vert); 
-    // Polygon test_obs(obs_vert);
-    // Polygon test_obs1(obs_vert2);
-    // map->addObstacle(test_obs);
-    // map->addObstacle(test_obs1);
-
-    // shared_ptr<Map> map (new Map(test_map));
     // for (int i = -4; i < 4; i+=3)
     // {
     //     for (int j = -5; j < 4; j+=3)
@@ -326,10 +334,10 @@ void MissionPlanner::build_roadmap()
     //     }
     // }
 
-    for (auto i = 0; i < obstacle_list.size(); i++)
-    {
-        map->addObstacle(obstacle_list[i]);
-    }
+    // for (auto i = 0; i < obstacle_list.size(); i++)
+    // {
+    //     map->addObstacle(obstacle_list[i]);
+    // }
 
 
     RCLCPP_INFO(this->get_logger(),"Map made and Obstacles included. Free space = %0.2f", map->getFreeSpace());
@@ -374,11 +382,9 @@ void MissionPlanner::getPaths_and_Publish()
 
         for (auto rob = 1; rob <= initial_poses.size(); rob++)
         {
-            pose2d gate(2.5, -5, -M_PI);
-
             cout << "Pose is: " << initial_poses[rob-1].x.x << ", " << initial_poses[rob-1].x.y << ", " << initial_poses[rob-1].theta << endl;
-            // deque<arcs> path = planner->getPathManyExits(initial_poses[rob-1], gates);
-            deque<arcs> path = planner->getPath(initial_poses[rob-1], gates[0]);
+            deque<arcs> path = planner->getPathManyExits(initial_poses[rob-1], gates);
+            // deque<arcs> path = planner->getPath(initial_poses[rob-1], gates[0]);
             publish_path("shelfino" + to_string(rob) + "/follow_path", path);
         }
         path_done = true;
@@ -389,33 +395,45 @@ void MissionPlanner::test()
 {
     clock_t beforeTime = clock();
     build_roadmap();
-    pose2d e(-4.9,-4.9,0.0);
-    pose2d e2(4.9,4.9,0.0);
-    pose2d e3(4.9,-4.9,0.0);
-
+    pose2d s1(-4,-4,0.0);
+    pose2d s2(-4,-2,0.0);
+    pose2d s3(-4,0,0.0);
+    pose2d e2(4,4,0.0);
+    pose2d e3(4,-4,0.0);
+    vector<pose2d> gates;
+    vector<pose2d> starts;
+    starts.push_back(s1);
+    starts.push_back(s2);
+    starts.push_back(s3);
+    gates.push_back(e2);
+    gates.push_back(e3);
     deque<arcs> path;
-    if (conf->getPlannerType() == "DPRMstar") path = planner->getPath(e,e2);
-    else path = planner->getPath(e.x, e2.x);
-    cout << " -----------   " << path.size()<< endl;
-    auto traj = d->arcs_to_path(path, 0.1);
+    for (int i = 0; i < starts.size(); i++)
+    {
+        if (conf->getPlannerType() == "DPRMstar") path = planner->getPathManyExits(starts[i], gates);
+        else path = planner->getPath(starts[i].x, gates[0].x);
+        cout << " -----------   " << path.size()<< endl;
+        auto traj = d->arcs_to_path(path, 0.1);
 
-    clock_t afterTime = clock() - beforeTime;
-    float comp_time = (float)afterTime/CLOCKS_PER_SEC;
-    float path_length = 0.0;
-    for (int i = 0; i < path.size(); i++)
-    {
-        path_length += path[i].L;
+        clock_t afterTime = clock() - beforeTime;
+        float comp_time = (float)afterTime/CLOCKS_PER_SEC;
+        float path_length = 0.0;
+        for (int i = 0; i < path.size(); i++)
+        {
+            path_length += path[i].L;
+        }
+        ofstream myfile;
+        string file_name = "path" + to_string(i) + ".csv";
+        myfile.open(file_name);
+        for (int i = 0; i < traj.poses.size(); i++)
+        {
+            myfile << traj.poses[i].pose.position.x << "," << traj.poses[i].pose.position.y << endl;
+        }
+        myfile.close();
+        myfile.open ("results.txt");
+        myfile << comp_time << "," << path_length<< "," << planner->n_connections;
+        myfile.close();
     }
-    ofstream myfile;
-    myfile.open("path.csv");
-    for (int i = 0; i < traj.poses.size(); i++)
-    {
-        myfile << traj.poses[i].pose.position.x << "," << traj.poses[i].pose.position.y << endl;
-    }
-    myfile.close();
-    myfile.open ("results.txt");
-    myfile << comp_time << "," << path_length<< "," << planner->n_connections;
-    myfile.close();
     exit(0);
 }
 

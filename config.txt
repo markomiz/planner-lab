@@ -4,7 +4,7 @@ num_angles: 4
 K: 3.0
 sample_type: Halton
 connect_distance: 1.0
-tprm_t: 0.2
-tprm_d: 0.4
-expand_distance: 0.5
+tprm_t: 3.0
+tprm_d: 5.0
+expand_distance: 0.4
 start_end_thrsh: 1.0

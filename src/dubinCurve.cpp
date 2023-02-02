@@ -44,21 +44,22 @@ nav_msgs::msg::Path dubinCurve::generatePathFromDubins(pose2d start, std::vector
   }
   return final_path;
 };
+
 nav_msgs::msg::Path dubinCurve::arcs_to_path(deque<arcs> input_arcs, float delta)
 {
   nav_msgs::msg::Path final_path;
   final_path.header.frame_id = "map";
 
-  string path_name = "path" + to_string(file_var) + "_points.txt";
-  file_var++;
-  ofstream myfile (path_name);
+  // string path_name = "path" + to_string(file_var) + "_points.txt";
+  // file_var++;
+  // ofstream myfile (path_name);
 
   pose2d currentPoint = input_arcs[0].a[0].start;
   final_path.poses.push_back(currentPoint.to_Pose());
   for (auto i = 0; i < int(input_arcs.size()); i++)
   {
     currentPoint =  input_arcs[i].a[0].start;
-    myfile << input_arcs[i].a[0].start.x.x << ";" << input_arcs[i].a[0].start.x.y << endl;
+    // myfile << input_arcs[i].a[0].start.x.x << ";" << input_arcs[i].a[0].start.x.y << endl;
     for (auto j = 0; j < 3; j++)
     {
       arc &a = input_arcs[i].a[j];
@@ -72,10 +73,10 @@ nav_msgs::msg::Path dubinCurve::arcs_to_path(deque<arcs> input_arcs, float delta
       currentPoint = a.end;
       final_path.poses.push_back(currentPoint.to_Pose());
 
-      myfile << currentPoint.x.x << "; " << currentPoint.x.y << endl;
+      // myfile << currentPoint.x.x << "; " << currentPoint.x.y << endl;
     }
   }
-  myfile.close();
+  // myfile.close();
   return final_path;
 }
 std::deque<arcs> dubinCurve::calculateMultiPoint(pose2d start, pose2d end, std::deque<point2d> mid_points, int n_angles) // DONE

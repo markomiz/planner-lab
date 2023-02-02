@@ -12,6 +12,7 @@ void DPRMstar::genRoadmap(int n, int angles)
     n_connections = 0;
     float d_ang = M_PI /float(angles);
     int halton_index = 0;
+    ofstream myfile("nodes.txt");
     for (auto i = 0; i < config->getNumPoints(); i ++)
     {
         point2d new_p;
@@ -58,10 +59,12 @@ void DPRMstar::genRoadmap(int n, int angles)
             new_bundle->nodes.push_back(cor);
             graph->nodes.push_back(new_node);
             graph->nodes.push_back(cor);
+            myfile << new_node->pt.x.x << "; " << new_node->pt.x.y << endl;
         }
         graph->points_quad.add_bundle(new_bundle);
     }
     cout << n_connections <<" connections test \n";
+    myfile.close();
 };
 
 deque<arcs> DPRMstar::getPath(pose2d start, pose2d end)

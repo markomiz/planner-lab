@@ -35,7 +35,7 @@ def store_output(dist, points, angles):
                     "length": length}
     results.append(result_entry)
 
-
+replace_param("expand_distance", 0.4)
 replace_param("planner_type", "DPRMstar")
 for dist in [0.9, 1.0, 1.1]:
     replace_param("connect_distance", dist)
