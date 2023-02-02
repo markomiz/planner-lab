@@ -408,10 +408,11 @@ void MissionPlanner::test()
     gates.push_back(e2);
     gates.push_back(e3);
     deque<arcs> path;
-    for (int i = 0; i < starts.size(); i++)
-    {
-        if (conf->getPlannerType() == "DPRMstar") path = planner->getPathManyExits(starts[i], gates);
-        else path = planner->getPath(starts[i].x, gates[0].x);
+    // for (int i = 0; i < starts.size(); i++)
+    // {
+        // if (conf->getPlannerType() == "DPRMstar") path = planner->getPathManyExits(starts[i], gates);
+        if (conf->getPlannerType() == "DPRMstar") path = planner->getPath(starts[0], gates[0]);
+        else path = planner->getPath(starts[0].x, gates[0].x);
         cout << " -----------   " << path.size()<< endl;
         auto traj = d->arcs_to_path(path, 0.1);
 
@@ -423,7 +424,8 @@ void MissionPlanner::test()
             path_length += path[i].L;
         }
         ofstream myfile;
-        string file_name = "path" + to_string(i) + ".csv";
+        // string file_name = "path" + to_string(i) + ".csv";
+        string file_name = "path" + to_string(0) + ".csv";
         myfile.open(file_name);
         for (int i = 0; i < traj.poses.size(); i++)
         {
@@ -433,7 +435,7 @@ void MissionPlanner::test()
         myfile.open ("results.txt");
         myfile << comp_time << "," << path_length<< "," << planner->n_connections;
         myfile.close();
-    }
+    // }
     exit(0);
 }
 

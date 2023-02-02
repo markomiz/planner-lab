@@ -1,9 +1,9 @@
-planner_type: DPRMstar
-num_points: 250
-num_angles: 4
+planner_type: GeometricPRMstar
+num_points: 500
+num_angles: 360
 K: 3.0
 sample_type: Halton
-connect_distance: 1.0
+connect_distance: 1.1
 tprm_t: 0.5
 tprm_d: 0.5
 expand_distance: 0.0
