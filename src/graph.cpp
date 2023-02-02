@@ -253,14 +253,15 @@ deque<arcs> Graph::getPathPlus(shared_ptr<Node> start_node, shared_ptr<Node> end
                 // Check if node is available at that time
                 float length = current->cost + con.cost;
                 float time_stamp = length;
-                
+                cout << "Time Threshold: " << config->getTPRM_T() << endl;
                 if (!con.node->check_availability(time_stamp, config->getTPRM_T()))
                 {
+                    cout << "skipped the node" << endl;
                     continue; //skip to the next node connected to current
                 }
                 else
                 {
-                   con.node->parent = current; // ok
+                    con.node->parent = current; // ok
                     con.node->parent_connection = make_shared<connection>(con); // something wrong here/
                     OPEN.push_back(con.node);
                     con.node->opened = true;
@@ -276,16 +277,19 @@ deque<arcs> Graph::getPathPlus(shared_ptr<Node> start_node, shared_ptr<Node> end
         return points;
     }
     int count = 0;
-    while (current->parent )
+    while (current->parent)
     {
         count++;
         points.push_front(current->parent_connection->A);
         float node_time = current->cost;
         current->arrival_time.push_back(node_time);
         point2d current_point = current->pt.x;
+        cout << "TPRM dist: " << config->getTPRM_D() << endl;
         vector<shared_ptr<Bundle>> nearby = points_quad.get_nearest(current_point, config->getTPRM_D()); 
+        cout << "NR of nearby bundles: " << nearby.size() << endl;
         for (auto i = 0; i < nearby.size() ; i++)
         {
+            cout << "NR of nearby nodes: " << nearby[i]->nodes.size() << endl;
             for (auto a = 0; a < nearby[i]->nodes.size(); a++)
             {
                nearby[i]->nodes[a]->arrival_time.push_back(node_time);  
@@ -349,7 +353,6 @@ deque<arcs> Graph::getPathPlusManyExits(shared_ptr<Node> start_node, vector<shar
                 // Check if node is available at that time
                 float length = current->cost + con.cost;
                 float time_stamp = length;
-                
                 if (!con.node->check_availability(time_stamp, config->getTPRM_T()))
                 {
                     continue; //skip to the next node connected to current
@@ -378,13 +381,12 @@ deque<arcs> Graph::getPathPlusManyExits(shared_ptr<Node> start_node, vector<shar
         points.push_front(current->parent_connection->A);
         float node_time = current->cost;
         current->arrival_time.push_back(node_time);
-
         point2d current_point = current->pt.x;
         vector<shared_ptr<Bundle>> nearby = points_quad.get_nearest(current_point, config->getTPRM_D()); 
         for (auto i = 0; i < nearby.size() ; i++)
         {
             for (auto a = 0; a < nearby[i]->nodes.size(); a++)
-            {
+            {   
                nearby[i]->nodes[a]->arrival_time.push_back(node_time);  
             }
                 

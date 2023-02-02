@@ -72,7 +72,7 @@ void ConfigParams::addParam(string name, string value)
     else if (name ==  "tprm_t:"){
         _tprm_t = stof(value);
     }
-    else if (name ==  "tprm_t:"){
+    else if (name ==  "tprm_d:"){
         _tprm_d = stof(value);
     }
     else if (name ==  "expand_distance:"){
